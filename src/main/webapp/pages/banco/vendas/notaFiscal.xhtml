@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    
+
+ <h:body style="background:white;" > 
+        <h:form id="idFrmCadVendas" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			  <br />
+			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="font-size:16px;color:gray;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
+			</p:commandLink>  
+            <p:commandLink id="backoffice" value="&nbsp;&nbsp;&nbsp;&nbsp;Back Office&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.backOffice()}" update="@all" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Back Office">
+			</p:commandLink>
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Recebimento&nbsp;&nbsp;&nbsp;&nbsp;"   action="#{cadVendasMB.recebimento()}" style=" font-size:16px;color:#696969;border: 2px solid; text-decoration:none; border-color:#696969;" title="Recebimento" ajax="false">
+			</p:commandLink>
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.notaFiscal()}" style="background:#E8E8E8;font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
+			</p:commandLink>
+            <br /><br /><br />
+            
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    		</p:confirmDialog>
+            <h:panelGrid columns="1" style="margin-left:1%;">
+                 <p:outputLabel value="Nome Completo" for="nomeC" class="left"/>
+                 <p:inputText id="nomeC"  value="#{cadVendasMB.emissaonota.nome}"  size="93" class="left"/>
+             </h:panelGrid> 
+             <br />
+             <h:panelGrid columns="1" style="margin-left:1%;">
+                 <p:outputLabel value="Endereço" for="endereco" class="left"/>
+                 <p:inputText id="endereco"  value="#{cadVendasMB.emissaonota.endereco}"  size="93" class="left"/>
+             </h:panelGrid>
+             <br />
+             <h:panelGrid columns="1" style="margin-left:1%;">
+                 <p:outputLabel value="Complemento" for="complemento" class="left"/>
+                 <p:inputText id="complemento"  value="#{cadVendasMB.emissaonota.complemento}"  size="40" class="left"/>
+             </h:panelGrid>
+             <h:panelGrid columns="1" style="margin-left:52%; margin-top:-9.5%;">
+                 <p:outputLabel value="Bairro" for="bairro" class="left"/>
+                 <p:inputText id="bairro"  value="#{cadVendasMB.emissaonota.bairro}"  size="41" class="left"/>
+             </h:panelGrid>
+             <br />
+             <h:panelGrid columns="1" style="margin-left:1%;">
+                 <p:outputLabel value="Cidade" for="cidade" class="left"/>
+                 <p:inputText id="cidade"  value="#{cadVendasMB.emissaonota.cidade}"  size="40" class="left"/>
+             </h:panelGrid>
+             <h:panelGrid columns="1" style="margin-left:48.5%; margin-top:-9.5%;">
+                 <p:outputLabel value="Estado" class="usuario3"/>
+                 <p:selectOneMenu id="estado" value="#{cadVendasMB.emissaonota.estado}" class="" style="width:70px"> 
+                        <f:selectItem itemLabel="AC" itemValue="AC" /> 
+                        <f:selectItem itemLabel="AL" itemValue="AL" /> 
+                        <f:selectItem itemLabel="AP" itemValue="AP" />  
+                        <f:selectItem itemLabel="AM" itemValue="AM" />  
+                        <f:selectItem itemLabel="BA" itemValue="BA" />  
+                        <f:selectItem itemLabel="CE" itemValue="CE" />  
+                        <f:selectItem itemLabel="DF" itemValue="DF" />  
+                        <f:selectItem itemLabel="ES" itemValue="" />  
+                        <f:selectItem itemLabel="GO" itemValue="GO" />  
+                        <f:selectItem itemLabel="MA" itemValue="MA" />  
+                        <f:selectItem itemLabel="MT" itemValue="MT" />  
+                        <f:selectItem itemLabel="MS" itemValue="MS" />  
+                        <f:selectItem itemLabel="MG" itemValue="MG" />  
+                        <f:selectItem itemLabel="PA" itemValue="PA" />  
+                        <f:selectItem itemLabel="PB" itemValue="PB" />  
+                        <f:selectItem itemLabel="PR" itemValue="PR" />  
+                        <f:selectItem itemLabel="PE" itemValue="PE" />  
+                        <f:selectItem itemLabel="PI" itemValue="PI" />  
+                        <f:selectItem itemLabel="RJ" itemValue="RJ" />  
+                        <f:selectItem itemLabel="RN" itemValue="RN" />  
+                        <f:selectItem itemLabel="RS" itemValue="RS" />  
+                        <f:selectItem itemLabel="RO" itemValue="RO" />  
+                        <f:selectItem itemLabel="RR" itemValue="RR" />  
+                        <f:selectItem itemLabel="SC" itemValue="SC" />  
+                        <f:selectItem itemLabel="SP" itemValue="SP" />  
+                        <f:selectItem itemLabel="SE" itemValue="SE" />  
+                        <f:selectItem itemLabel="TO" itemValue="TO" /> 
+                 </p:selectOneMenu>
+             </h:panelGrid>
+             <h:panelGrid columns="1" style="margin-left:62.7%; margin-top:-9.7%;">
+                <p:outputLabel value="CEP" for="cep" class="left15"/>
+                <p:inputMask id="cep" size="30" maxlength="9" class="left1" value="#{cadVendasMB.emissaonota.cep}" mask="99999-999"/>     
+             </h:panelGrid>
+             <br />
+             <h:panelGrid columns="1" style="margin-left:1%;">
+                 <p:outputLabel value="CNPJ/CPF" for="cpf" class="left"/>
+                 <p:inputText id="cpf"  value="#{cadVendasMB.emissaonota.cpnj}"  size="40" class="left"/>
+             </h:panelGrid>
+             <h:panelGrid columns="1" style="margin-left:52%; margin-top:-9.6%;">
+                 <p:outputLabel value="I.E" for="ie" class="left"/>
+                 <p:inputText id="ie"  value="#{cadVendasMB.emissaonota.ie}"  size="41" class="left"/>
+             </h:panelGrid>
+             <br />
+             <hr />
+             <br />
+           <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    	   </p:confirmDialog>
+           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+                <p:confirm  header="Confirmação" message="#{cadVendasMB.salvarVendaSemFormaRecebimento()}" icon="ui-icon-alert" />
+           </p:commandLink> 
+           <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+           </p:commandLink>
+       </h:form>
+   </h:body>
+            
+</html>

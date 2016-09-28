@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/pages/templates/default.xhtml">
+	<ui:define name="corpo">
+		<h:form id="frmConsultaTipoPlanoConta">
+		<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
+		<br/> <br/> <br/> 
+			<p:commandLink   action="#{tipoPlanoContaMB.novo()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
+				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
+				<p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogNovo}" update="growl, idTabelaTipoPlanoConta"/>
+            </p:commandLink>
+            <br /><br />
+            <h2 style="margin-left:50%;">Consulta Tipo de plano de contas</h2>
+             <hr style="margin-left:17%; width:80%;"/>  
+                    <p:contextMenu for="idTabelaTipoPlanoConta" style="background:white;">
+                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{tipoPlanoContaMB.editar(tipoPlanoContaMB.tipoplanocontas)}" update="idTabelaTipoPlanoConta" /> 
+                    </p:contextMenu> 
+                    <p:dataTable id="idTabelaTipoPlanoConta"  var="tipoPlanoConta"  value="#{tipoPlanoContaMB.listarTipoPlanoContas}" style="border:none;" class="tabelacontas" 
+                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{tipoPlanoContaMB.tipoplanocontas}" selectionMode="single" rowKey="#{tipoPlanoConta.idtipoplanocontas}">
+                    		  
+                    	<p:column headerText="Descrição"  sortBy="#{tipoPlanoConta.descricao}" style="width:95%; font-size:12px; background:white; color:black; border:none; text-align:left;">
+                            <h:outputText value="#{tipoPlanoConta.descricao}" style="color:black;"/> 
+                        </p:column>
+                        <p:column  style=" background:white; color:black; border:none;">
+                            <p:selectBooleanCheckbox value="#{tipoPlanoConta.selecionado}"/>
+                        </p:column>
+                    </p:dataTable>
+      </h:form>
+   </ui:define>
+</ui:composition>
+</html>

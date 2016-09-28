@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/pages/templates/default.xhtml">
+	<ui:define name="corpo">
+		<h:form id="frmConsultaUsuario">
+		<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
+		<br/> <br/> <br/>  
+			<p:commandLink   action="#{usuarioMB.novo()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
+				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
+				<p:ajax event="dialogReturn" listener="#{usuarioMB.retornoDialogNovo}" update="growl, idTabelaUsuario"/>
+            </p:commandLink>
+            <br /><br /> 
+            <h2 style="margin-left:50%;">Consulta Usuário</h2>
+             <hr style="margin-left:17%; width:80%;"/>  
+                    <p:contextMenu for="idTabelaUsuario" style="background:white;">
+                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{usuarioMB.editar(usuarioMB.usuario)}" update="idTabelaUsuario" /> 
+                    </p:contextMenu> 
+                    <p:dataTable id="idTabelaUsuario"  var="usuario"  value="#{usuarioMB.listaUsuario}" style="border:none;" class="tabelacontas" 
+                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{usuarioMB.usuario}" selectionMode="single" rowKey="#{usuario.idusuario}">
+                       
+                        <p:column headerText="Nome" sortBy="#{usuario.nome}" style="width:22%; font-size:12px; background:white; color:black; border:none;text-align:left;">
+                            <h:outputText  value="#{usuario.nome}" />
+                        </p:column> 
+                        <p:column headerText="Login" sortBy="#{usuario.login}" style="width:15%; text-align:left; font-size:12px; background:white; color:black; border:#fff;">
+                            <h:outputText value="#{usuario.login}"/>
+                        </p:column> 
+                        <p:column headerText="Email" sortBy="#{usuario.email}" style="widht:50%; text-align:left; font-size:12px; background:white; color:black; border:none;" >
+                            <h:outputText value="#{usuario.email}"/>
+                        </p:column>
+                    </p:dataTable> 
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

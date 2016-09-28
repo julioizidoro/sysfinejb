@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    
+
+ <h:body style="background:white;" > 
+ <br />
+        <h:form id="idFrmCadVendas" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog  widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+
+            <title  >Nova Venda</title>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			  <br />
+			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="background:#E8E8E8;font-size:16px;color:#696969;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
+			</p:commandLink>  
+            <p:commandLink id="backoffice" value="&nbsp;&nbsp;&nbsp;&nbsp;Back Office&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.backOffice()}" update="@all" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Back Office">
+			</p:commandLink>
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Recebimento&nbsp;&nbsp;&nbsp;&nbsp;"   action="#{cadVendasMB.recebimento()}" style=" font-size:16px;color:gray;border: 2px solid; text-decoration:none; border-color:#696969;" title="Recebimento" ajax="false">
+			</p:commandLink>
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.notaFiscal()}" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
+			</p:commandLink>
+            <br /><br /><br />
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    		</p:confirmDialog>
+            <h:panelGrid>
+                <p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 10%"/>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
+	            <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadVendasMB.cliente}" converter="ClienteConverter"
+	                          filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadVendasMB.habilitarUnidade}">
+	                <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+	                <f:selectItems  value="#{cadVendasMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+	                <f:attribute name="listaCliente" value="#{cadVendasMB.listaCliente}"/>
+	            	 <p:ajax event="change" listener="#{cadVendasMB.gerarListaProduto()}" update="idproduto"/>
+                </p:selectOneMenu>
+            </h:panelGrid> 
+             <h:panelGrid columns="2" style="margin-left:67.6%; margin-top:-6.2%;"> 
+	            <p:outputLabel value="Data Venda" for="dataVen" class="left3" /> 
+	            
+	            <p:inputMask id="dataVen" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.vendas.dataVenda}"   style="margin-left: 2%;">
+	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+	            </p:inputMask>
+            </h:panelGrid>
+            <br />
+            <hr />
+            <br />
+            <h:panelGrid style="margin-left:1%;">
+           		<p:outputLabel value="Cliente" />
+           </h:panelGrid>
+           <h:panelGrid style="margin-left:9%; margin-top:-4.5%;">
+           		<p:inputText value="#{cadVendasMB.vendas.nomeCliente}" size="86" />
+           </h:panelGrid> 
+           <br />
+           <h:panelGrid>
+               <p:outputLabel value="Produto" for="cliente"  class="left3" style="margin-left: 10%"/>
+           </h:panelGrid>
+           <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
+	           <p:selectOneMenu  id="idproduto"  style="width: 200px;margin-left: 1%"  value="#{cadVendasMB.produto}" converter="ProdutoConverter"
+	                         filter="true" filterMatchMode="contains" panelStyle="width:180px">
+	               <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+	               <f:selectItems  value="#{cadVendasMB.listaProduto}" var="produtoselecionado" itemLabel="#{produtoselecionado.descricao}" itemValue="#{produtoselecionado}"/>
+	               <f:attribute name="listaProduto" value="#{cadVendasMB.listaProduto}"/>
+	           </p:selectOneMenu> 
+           </h:panelGrid>
+           <h:panelGrid style="margin-left:45%; margin-top:-5%;">
+           		<p:outputLabel value="Vendedor" />
+           </h:panelGrid>
+           <h:panelGrid style="margin-left:55%; margin-top:-5%;">
+           		<p:inputText value="#{cadVendasMB.vendas.consultor}" size="38" />
+           </h:panelGrid>
+           <br />
+           <h:panelGrid columns="1" style="margin-left:1%;">
+           		<p:outputLabel value="Valor Bruto" style="margin-left:17%;"/>
+           		<p:inputText value="#{cadVendasMB.vendas.valorBruto}" size="12" style="text-align: right;">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
+           		</p:inputText>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
+           		<p:outputLabel value="Desconto" style="margin-left:18%;"/>
+           		<p:inputText value="#{cadVendasMB.vendas.valorDesconto}"  size="12" style="text-align: right;">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
+           		</p:inputText>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:54%; margin-top:-9.3%;">
+           		<p:outputLabel value="Juros" style="margin-left:28%;"/> 
+           		<p:inputText value="#{cadVendasMB.vendas.valorJuros}" size="12" style="text-align: right;">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
+           		</p:inputText>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:80%; margin-top:-9.3%;"> 
+           		<p:outputLabel value="Total" style="margin-left:28%;"/>
+           		<p:inputText id="total" value="#{cadVendasMB.vendas.valorLiquido}" size="12" disabled="true" style="text-align: right;">
+           			<f:convertNumber currencySymbol="" type="currency"/>
+           		</p:inputText>
+           </h:panelGrid>
+           <br />
+           <hr />
+           <br />
+           <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    	   </p:confirmDialog>
+           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+                <p:confirm  header="Confirmação" message="#{cadVendasMB.salvarVendaSemFormaRecebimento()}" icon="ui-icon-alert" />
+           </p:commandLink> 
+           <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+           </p:commandLink>
+            <br></br>     
+        </h:form>
+</h:body>
+</html>

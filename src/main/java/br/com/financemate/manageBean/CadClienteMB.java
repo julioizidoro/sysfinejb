@@ -1,0 +1,131 @@
+package br.com.financemate.manageBean;
+
+import br.com.financemate.dao.ClienteDao;
+import br.com.financemate.dao.TipoPlanoContasDao;
+import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.HttpSession;
+
+import org.primefaces.context.RequestContext;
+
+import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Tipoplanocontas;
+import javax.ejb.EJB;
+
+@Named
+@ViewScoped
+public class CadClienteMB implements Serializable {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
+    @Inject
+    private UsuarioLogadoMB usuarioLogadoMB;
+    private Cliente cliente;
+    private List<Tipoplanocontas> listarTipoPlanoContas;
+    private Tipoplanocontas tipoplanocontas;
+    @EJB
+    private ClienteDao clienteDao;
+    @EJB
+    private TipoPlanoContasDao tipoPlanoContasDao;
+
+    @PostConstruct
+    public void init() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        cliente = (Cliente) session.getAttribute("cliente");
+        session.removeAttribute("cliente");
+        gerarListaTipoPlanoContas();
+        if (cliente == null) {
+            cliente = new Cliente();
+        } else {
+            tipoplanocontas = cliente.getTipoplanocontas();
+        }
+    }
+
+    public Tipoplanocontas getTipoplanocontas() {
+        return tipoplanocontas;
+    }
+
+    public void setTipoplanocontas(Tipoplanocontas tipoplanocontas) {
+        this.tipoplanocontas = tipoplanocontas;
+    }
+
+    public UsuarioLogadoMB getUsuarioLogadoMB() {
+        return usuarioLogadoMB;
+    }
+
+    public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
+        this.usuarioLogadoMB = usuarioLogadoMB;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Tipoplanocontas> getListarTipoPlanoContas() {
+        return listarTipoPlanoContas;
+    }
+
+    public void setListarTipoPlanoContas(List<Tipoplanocontas> listarTipoPlanoContas) {
+        this.listarTipoPlanoContas = listarTipoPlanoContas;
+    }
+
+    public ClienteDao getClienteDao() {
+        return clienteDao;
+    }
+
+    public void setClienteDao(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
+
+    public TipoPlanoContasDao getTipoPlanoContasDao() {
+        return tipoPlanoContasDao;
+    }
+
+    public void setTipoPlanoContasDao(TipoPlanoContasDao tipoPlanoContasDao) {
+        this.tipoPlanoContasDao = tipoPlanoContasDao;
+    }
+
+    public String cancelar() {
+        RequestContext.getCurrentInstance().closeDialog(null);
+        return null;
+    }
+
+    public void gerarListaTipoPlanoContas() {
+        listarTipoPlanoContas = tipoPlanoContasDao.list("select t from Tipoplanocontas t order by t.descricao");
+        if (listarTipoPlanoContas == null) {
+            listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
+        }
+    }
+
+    public void mostrarMensagem(Exception ex, String erro, String titulo) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        erro = erro + " - " + ex;
+        context.addMessage(null, new FacesMessage(titulo, erro));
+    }
+
+    public void salvar() {
+        cliente.setTipoplanocontas(tipoplanocontas);
+        cliente = clienteDao.update(cliente);
+        RequestContext.getCurrentInstance().closeDialog(cliente);
+    }
+
+}

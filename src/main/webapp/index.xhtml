@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head><meta charset="utf-8"/>  
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/> 
+        <title>Login SysFin</title>  
+        <link href="resources/css/cssLogin.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" href="resources/img/iconesysfin.png" type="image/x-icon" />
+    </h:head> 
+    <h:body style="width:100%;"> 
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+        	<p:outputLabel value="Aguarde.."/>
+        	<br/> 
+            <img src="resources/img/ajax-carregando.gif" />
+        </p:dialog>
+        <p:growl id="growl" showDetail="true" sticky="false" />
+        <h:form id="login">
+            <div id="tudo">  
+            	<img src="resources/img/loginSysfin.jpg" width="100%" height="659px;"/>
+            	  <h:panelGrid columns="4" style=" margin-left:8%; margin-top:-12%;">
+	            	<h:panelGrid >   
+	            		<p:outputLabel value="Nome do usuário" style="color:white"/> 
+	                    <p:inputText id="nome" size="23" style="padding:2px;"  class="meio" value="#{usuarioLogadoMB.usuario.login}" required="required" requiredMessage="Campo Obrigatorio"/>
+	                </h:panelGrid>   
+	                <h:panelGrid style=" margin-left:10%;">
+	                	<p:outputLabel value="Senha" style="color:white"/>
+	                    <p:password id="senha" size="23" style="padding:2px;"  class="meio" value="#{usuarioLogadoMB.usuario.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
+	                </h:panelGrid>
+	              </h:panelGrid>  
+                <h:panelGrid columns="1" style="margin-left:46%; margin-top:-3.5%;">  
+                	<p:commandLink title="Entra"   style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" update="growl">
+                		<img src="resources/img/iconeEntrar.png" width="20" height="20"/>
+            		</p:commandLink> 
+            		<p:commandLink title="Alterar Senha" style="text-decoration: none" update="growl" action="#{usuarioLogadoMB.validarTrocarSenha()}" >
+                		<p:ajax event="dialogReturn" listener="#{usuarioLogadoMB.retornoDialogAlteracaoSenha}" update="growl"/>
+                		<img src="resources/img/iconeTrocaSenha.png" width="20" height="20"/>
+            		</p:commandLink>
+                </h:panelGrid>
+            </div>
+        </h:form>
+    </h:body> 
+</html>

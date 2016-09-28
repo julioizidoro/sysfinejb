@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/pages/templates/default.xhtml">
+	<ui:define name="corpo">
+		<h:form id="frmConsultaProduto">
+			<br/> <br /><br />
+			<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
+			<p:commandLink   action="#{produtoMB.novoProduto()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
+				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
+				<p:ajax event="dialogReturn" listener="#{produtoMB.retornoDialog}" update="growl, idTabelaProduto"/>
+            </p:commandLink>
+             <br /><br />
+             <h2 style="margin-left:50%;">Consulta Produto</h2>
+             <hr style="margin-left:17%; width:80%;"/>     
+             <p:contextMenu for="idTabelaProduto" style="background:white;">
+                   <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{produtoMB.editar(produtoMB.produto)}" update="idTabelaProduto" /> 
+             </p:contextMenu> 
+             <p:dataTable id="idTabelaProduto"  var="produto"  value="#{produtoMB.listaProduto}" style="border:none;" class="tabelacontas" 
+                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{produtoMB.produto}" selectionMode="single" rowKey="#{produto.idproduto}">
+             	<p:column headerText="Código" sortBy="#{produto.codigosystm}" style="width:70px; background:white; font-size:12px; color:black; border:none; text-align:center;">
+                   <h:outputText value="#{produto.codigosystm}" />
+              	</p:column> 
+              	<p:column headerText="Descrição" sortBy="#{produto.descricao}" style="; background:white; font-size:12px; color:black; border:none;text-align:left;">
+                   <h:outputText   value="#{produto.descricao}"/> 
+              	</p:column>
+              	<p:column headerText="Cliente"  sortBy="#{produto.cliente.nomeFantasia}" style="width:140px; background:white; font-size:12px; color:black; border:none;text-align:left;">
+                  	<h:outputText value="#{produto.cliente.nomeFantasia}"/>
+              	</p:column>
+             </p:dataTable>
+		</h:form> 
+	</ui:define>
+</ui:composition>
+</html>

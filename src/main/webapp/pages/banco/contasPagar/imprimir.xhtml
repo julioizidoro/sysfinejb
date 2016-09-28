@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+ <h:body > 
+ 		
+        <h:form id="idImprimir" class="body2" style="font-size: 12px; background-color: white;">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+
+            <title>Imprimir</title>
+            <br />
+            <h:panelGrid style="margin-left:1%;">
+            	<p:outputLabel value="Relatório" class="left2"/>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
+	            <p:selectOneMenu id="idRelatorio" class="left5" style="width:220px"  value="#{imprimirRelatorioMB.relatorio}" 
+	            					filter="true" filterMatchMode="contains" panelStyle="width:100px">
+	                <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+	                <f:selectItem itemLabel="Fluxo de Caixa" itemValue="fluxo de caixa" />  
+	                <f:selectItem itemLabel="Pagamentos" itemValue="Pagamentos" />
+	                <f:selectItem itemLabel="Pagamentos Vencidos" itemValue="pagamento vencidas" />
+	                <f:selectItem itemLabel="Pagamentos Sintético" itemValue="pagamentoSintetico" />
+	            	<p:ajax event="change" listener="#{imprimirRelatorioMB.habilitarCompetencia()}" update="competencia"/>
+	            	<p:ajax event="change" listener="#{imprimirRelatorioMB.habilitarBanco()}" update="idconta"/>
+	            </p:selectOneMenu>   
+             </h:panelGrid> 
+             <h:panelGrid style="margin-left:53%; margin-top:-5.3%"> 
+                	<p:outputLabel value="Unidade" for="cliente"  class="left3"/>
+             </h:panelGrid> 
+             <h:panelGrid style="margin-left:61%; margin-top: -5%;">
+                <p:selectOneMenu  id="cliente"  style="width: 220px;margin-left: 2%;"  value="#{imprimirRelatorioMB.cliente}" converter="ClienteConverter"
+                             filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{imprimirRelatorioMB.habilitarUnidade}">
+                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems value="#{imprimirRelatorioMB.listaCliente}" var="clienteselecionado" style="font-size:10px;" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                    <f:attribute name="listaCliente" value="#{imprimirRelatorioMB.listaCliente}" style="font-size:10px;"/>
+                    <p:ajax event="change" listener="#{imprimirRelatorioMB.gerarListaBanco()}" update="idconta"/>
+                    <p:ajax event="change" listener="#{imprimirRelatorioMB.nomeComboConta()}" update="idconta"/>
+                </p:selectOneMenu> 
+             </h:panelGrid>
+             <br />  
+             <h:panelGrid columns="3" style="margin-left:1%;" >
+             	<p:outputLabel value="Periodo" class="left3"/>
+             	<p:inputMask id="dataIni" mask="99/99/9999"  size="15" maxlength="15" value="#{imprimirRelatorioMB.dataInicial}" class="tabelaRecebimento" placeholder="Data Inicial" style="margin-left:1%;">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask> 
+                <p:inputMask id="dataFinal"  mask="99/99/9999" size="15" maxlength="15" class="left6" placeholder="Data Final" style="margin-left:1%;" value="#{imprimirRelatorioMB.dataFinal}">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask> 
+             </h:panelGrid>
+             <h:panelGrid style="margin-left:67%; margin-top:-5.5%;" columns="2">
+             	<p:outputLabel value="Conta" for="idconta" class="left3"/>
+	              <p:selectOneMenu id="idconta" class="left3" style="width:150px;" disabled="#{imprimirRelatorioMB.desabilitarBanco}" value="#{imprimirRelatorioMB.banco}"  converter="BancoConverter"
+	                                 filter="true" filterMatchMode="contains" panelStyle="width:150px">
+	                    <f:selectItem itemLabel="#{imprimirRelatorioMB.nomeComboBanco}" itemValue="0" noSelectionOption="true" /> 
+	                    <f:selectItems value="#{imprimirRelatorioMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+	                    <f:attribute name="listaBanco" value="#{imprimirRelatorioMB.listaBanco}" />
+	              </p:selectOneMenu>  
+             </h:panelGrid>
+             <br />   
+             <h:panelGrid columns="2" style="margin-left:1%;">
+             	<p:outputLabel value="Competência" for="competencia" class="left5"/> 
+             	<p:inputMask style="margin-left:2%;" disabled="#{imprimirRelatorioMB.desabilitarCompetencia}" id="competencia" label="competencia" value="#{imprimirRelatorioMB.competencia}" size="8" mask="99/9999"  class="left1"/>
+             		
+             </h:panelGrid>
+             <br /><br /><br /><br /><br /> 
+             <hr />
+             <p:commandLink title="Confirmar"  target="_blank"  style="margin-left: 40%;text-decoration: none"   action="#{imprimirRelatorioMB.gerarRelatorio()}" ajax="false">
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+             </p:commandLink>
+             <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{imprimirRelatorioMB.cancelar()}" >
+             	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+             </p:commandLink>     
+             <br />    
+		</h:form>
+</h:body>
+</html>

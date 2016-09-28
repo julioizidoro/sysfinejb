@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    
+
+ <h:body style="background:white;" > 
+        <h:form id="idFrmCadTransferencia" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+
+            <title  >Nova Transferência</title>
+			<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
+              
+			<h:panelGrid columns="2" style="margin-left:2%;width:99%">
+                <p:outputLabel value="Unidade" for="cliente"  class="left3"/>
+                <p:outputLabel value="Conta Debito" for="bancodebito" style="margin-left:24%;"/>
+             </h:panelGrid> 
+             <h:panelGrid style="margin-left:2%;" columns="2">
+                <p:selectOneMenu  id="cliente"  style="width: 200px;"  value="#{cadTransferenciaMB.cliente}" converter="ClienteConverter"
+                             filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems  value="#{cadTransferenciaMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                    <f:attribute name="listaCliente" value="#{cadTransferenciaMB.listaCliente}"/>
+                    <p:ajax event="change" listener="#{cadTransferenciaMB.gerarListaBanco()}" update="bancodebito, bancocredito"/>
+                </p:selectOneMenu> 
+                
+                <p:selectOneMenu  id="bancodebito"  style="width: 200px;margin-left: 20%"  value="#{cadTransferenciaMB.bancoDebito}" converter="BancoConverter"
+                             filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems  value="#{cadTransferenciaMB.listaBancoDebito}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+                    <f:attribute name="listaBanco" value="#{cadTransferenciaMB.listaBancoDebito}"/>
+                </p:selectOneMenu> 
+             </h:panelGrid>
+             <br/>  
+             <h:panelGrid style="margin-left:2%;width:99%;" columns="3">
+             	 <p:outputLabel value="Conta Credito"  for="bancocredito" class="leftvalor"/>
+            	 <p:outputLabel value="Valor "  for="valor" class="leftvalor" style="margin-left:20%;"/>
+	             <p:outputLabel value="Data Registro" for="dataReg" style="margin-left:35%;"/>  
+             </h:panelGrid>
+            <h:panelGrid style="margin-left:2%;" columns="3"> 
+            	<p:selectOneMenu id="bancocredito" class="left3" style="width:200px;"  value="#{cadTransferenciaMB.bancoCredito}"  converter="BancoConverter"
+	                                 filter="true" filterMatchMode="contains" panelStyle="width:150px">
+	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+	                    <f:selectItems value="#{cadTransferenciaMB.listaBancoCredito}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+	                    <f:attribute name="listaBanco" value="#{cadTransferenciaMB.listaBancoCredito}" />
+	            </p:selectOneMenu>  
+             	<p:inputText maxlength="10"  id="valor" size="12"  class="valorr"  value="#{cadTransferenciaMB.valor}" style="text-align: right;margin-left:10%;">
+             		<f:convertNumber pattern="##,###,###,###.##"/>
+             	</p:inputText>
+             	 <p:inputMask id="dataReg" mask="99/99/9999" size="13"  class="left3" value="#{cadTransferenciaMB.outroslancamentos.dataRegistro}"   style="margin-left: 17%;" readonly="true">
+	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+	            </p:inputMask>
+            </h:panelGrid>
+             <br/> <br/> <br/> 
+             <hr/>
+             <br/>
+	         <h:panelGrid columns="3" style="margin-left:40%;" > 
+                <p:commandLink title="Confirmar" style="text-decoration: none" update="growl"  action="#{cadTransferenciaMB.salvar()}" >
+                    <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+                </p:commandLink>
+                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadTransferenciaMB.cancelar()}" >
+                    <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+                </p:commandLink>
+             </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>

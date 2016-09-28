@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    
+
+ <h:body style="background:white" > 
+        <h:form id="idDialogConciliarTransacao" style="text-align:left;font-size: 10px; margin-left: 1%; ">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+           
+			<title  >Nova Conciliação</title>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <h:panelGrid columns="1" style="margin-left:7%;">
+				<p:outputLabel value="Plano de contas" for="planocontas"  class="left3"/>
+				<p:selectOneMenu  id="planocontas"  style="width: 390px;"  value="#{cadConciliacaoMB.planoconta}" converter="PlanoContasConverter"
+                             filter="true" filterMatchMode="contains" panelStyle="width:180px" >
+                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems  value="#{cadConciliacaoMB.listaPlanoConta}" var="planoselecionado" itemLabel="#{planoselecionado.descricao}" itemValue="#{planoselecionado}"/>
+                    <f:attribute name="listaPlanoConta" value="#{cadConciliacaoMB.listaPlanoConta}"/>
+                </p:selectOneMenu> 
+            </h:panelGrid>  
+            <h:panelGrid columns="1" style="margin-left:78%;margin-top:-8%;">
+				<p:outputLabel value="Compensação" for="dataCompensacao" class="fontebranca" /> 
+                <p:inputText id="dataCompensacao"  value="#{cadConciliacaoMB.transacaoBean.data}"  style="width:65px;">
+                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputText>
+            </h:panelGrid>
+            <br /> 
+            <h:panelGrid columns="1" style="margin-left:7%;">
+            	<p:outputLabel value="Descrição" for="descricao" class="fontebranca" /> 
+                <p:inputText id="descricao"  value="#{cadConciliacaoMB.transacaoBean.descricao}"  style="width:382px;"/>
+            </h:panelGrid>
+            <h:panelGrid columns="1" style="margin-left:75%;margin-top:-8%;">
+            	<p:outputLabel value="#{cadConciliacaoMB.nomeCampoValor()}" for="valor" class="fontebranca" /> 
+                <p:inputText id="valor"  value="#{cadConciliacaoMB.valor}"  style="width:80px; text-align:right;">
+                	<f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+                </p:inputText>
+            </h:panelGrid>
+            <br/> 
+            <h:panelGrid columns="1" style="margin-left:7%;"> 
+				<p:outputLabel value="Competência" for="competencia" class="fontebranca" /> 
+                <p:inputMask id="competencia" class="espacocobranca20" size="8"   mask="99/9999"  maxlength="15" value="#{cadConciliacaoMB.outroslancamentos.compentencia}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="1" style="margin-left:30%; margin-top:-8.1%;">
+				<p:outputLabel value="Vencimento" for="dataVencimento" class="fontebranca" /> 
+                <p:inputMask id="dataVencimento" class="espacocobranca20" size="10"   mask="99/99/9999"  maxlength="15" value="#{cadConciliacaoMB.outroslancamentos.dataVencimento}">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+               </p:inputMask>
+            </h:panelGrid>    
+            <br /><br /><br /><br /><br /><br /><br /><br />
+             <p:commandLink title="Confirmar" style="text-decoration: none;margin-left:40%;" ajax="false"  action="#{cadConciliacaoMB.salvarConciliacao()}" >
+                   <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+             </p:commandLink>
+             <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none"  action="#{cadConciliacaoMB.cancelar()}" >
+                  <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+             </p:commandLink>
+        </h:form>
+ </h:body>
+</html>

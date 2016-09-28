@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+ <h:body > 
+ 		
+        <h:form id="idFrmPesquisaConsContaPagar" class="body2" style="font-size: 12px; background-color: white;">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+
+            <title  >Novo Filtro</title>
+            			<br />
+            
+            <h:panelGrid style="margin-left:1%;">
+            	<p:outputLabel value="Unidade" class="left3"/>
+            </h:panelGrid>
+           <h:panelGrid style="margin-left:10%;margin-top:-4.5%;">
+           		<p:selectOneMenu  id="cliente"  style="width: 150px;"  value="#{contasPagarMB.cliente}" converter="ClienteConverter"
+                             filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{contasPagarMB.habilitarUnidade}">
+                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems value="#{contasPagarMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                    <f:attribute name="listaCliente" value="#{contasPagarMB.listaCliente}"/>
+                </p:selectOneMenu>
+           </h:panelGrid> 
+           <h:panelGrid style="margin-left:35%; margin-top:-5.5%;">
+           	<p:outputLabel value="Plano Contas" for="idPlanoConta" class="left3"/>
+           </h:panelGrid> 
+           <h:panelGrid style="margin-left: 48%; margin-top:-4.5%;"> 
+	       		<p:selectOneMenu id="idPlanoConta" class="left3" style="width:315px;"  value="#{contasPagarMB.planocontas}" converter="PlanoContasConverter"
+	              				filter="true" filterMatchMode="contains" panelStyle="width:200px">
+	       			<f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+	       			<f:selectItems value="#{contasPagarMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
+	                <f:attribute name="listaPlanoConta" value="#{contasPagarMB.listaPlanoContas}"/>
+	       		</p:selectOneMenu>  
+           </h:panelGrid>
+           <br />
+           <h:panelGrid style="margin-left: 1%;">  
+            	<p:outputLabel value="Descrição" for="descricao" class="left3" /> 
+           </h:panelGrid>
+           <h:panelGrid style="margin-left:11%; margin-top:-5%;">   
+                <p:inputText rows="3" size="57" cols="68" id="descricao"  class="left3"  value="#{contasPagarMB.descricao}"/>
+           </h:panelGrid> 
+           <h:panelGrid columns="4" style="margin-left:74%; margin-top:-4.5%;">
+           		<p:selectBooleanCheckbox  class="left" value="#{contasPagarMB.liberadas}"/>
+          		<h:outputText value="Liberadas"  style="margin-left: 1%"/>
+           		<p:selectBooleanCheckbox   value="#{contasPagarMB.autorizadas}" style="margin-left: 4%"/>
+           		<h:outputText value="Autorizadas"  style="margin-left: 1%"/>
+           </h:panelGrid>		
+           <br />		  
+           <h:panelGrid columns="5"  style="margin-left: 1%; marign-top:-70%;"> 
+           		<p:outputLabel value="Peridodo" class="left3" style="margin-left:1%;"/>	
+           		<p:inputMask id="dataIni" mask="99/99/9999"  size="15" maxlength="15" value="#{contasPagarMB.dataInicio}" class="tabelaRecebimento"  placeholder="Data Inicial" >
+                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask>
+                <p:inputMask id="dataFinal"  mask="99/99/9999" size="15" maxlength="15" class="left6" value="#{contasPagarMB.dataFinal}"  placeholder="Data Final">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask> 
+           </h:panelGrid>
+            <h:panelGrid style="margin-left: 70%; margin-top:-5.5%;">
+	            <p:outputLabel value="Status" for="status"  />
+	       </h:panelGrid>
+           <h:panelGrid style="margin-left: 77.5%; margin-top:-4.6%;"> 
+	            	<p:selectOneMenu id="status" style="width:130px;" value="#{contasPagarMB.status}">
+	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+	                    <f:selectItem itemLabel="Ativo" itemValue="Ativo" />  
+	                    <f:selectItem itemLabel="Canceladas" itemValue="Canceladas" />
+	                </p:selectOneMenu>
+	       </h:panelGrid>  
+                     
+                    <br /><br /> <br /> <br /> <br /> <br /> <br /> 
+                    <hr />
+                    <p:commandLink title="Pesquisar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{contasPagarMB.filtrar()}" >
+                    	<img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+                	</p:commandLink>
+                    <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadContasPagarMB.cancelar()}" >
+                    	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+                	</p:commandLink>
+		</h:form> 
+</h:body>
+</html>

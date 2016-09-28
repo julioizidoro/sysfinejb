@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    
+
+ <h:body style="background:white;" > 
+        <h:form id="idFrmCadVendas" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+
+            <title  >Editar Parcela</title>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			
+			 <h:panelGrid columns="1" style="margin-left:15%;">
+           		<p:outputLabel value="Valor" style="margin-left:30%;"/>
+           		<p:inputText value="#{editarParcelaMB.valorEditado}" size="12" style="text-align: right;"/>
+             </h:panelGrid>
+             
+             <h:panelGrid style="margin-left:55%; margin-top:-9%;">   
+                <p:outputLabel value="Tipo de Documento" for="tipoDoc" class="left2"/>
+                <p:selectOneMenu id="tipoDoc" class="left5" style="width:156px"  value="#{editarParcelaMB.tipoDocumento}">
+                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                    <f:selectItem itemLabel="Cartão" itemValue="Cartão" />  
+                    <f:selectItem itemLabel="Débito em Conta" itemValue="debito em conta" /> 
+                    <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
+                    <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
+                    <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
+                    <f:selectItem itemLabel="Depósito" itemValue="Depósito" />
+                </p:selectOneMenu>
+             </h:panelGrid>
+             <br />
+			 <h:panelGrid columns="1" style="margin-left:15%;"> 
+	            <p:outputLabel value="1° Vencimento" for="venc" class="left3" style="margin-left:10%;"/>  
+	            <p:inputMask id="venc" mask="99/99/9999" size="13"  class="left3" value="#{editarParcelaMB.contasReceber.dataVencimento}">
+	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+	            </p:inputMask>
+            </h:panelGrid>
+            <h:panelGrid columns="1" style="margin-left:60%; margin-top:-9.5%;">
+            	<p:outputLabel value="Nº Documento" for="nDocumento"  class="left2" style="margin-left:10%;"/>
+                <p:inputText id="nDocumento" size="13"  class="left4" value="#{editarParcelaMB.contasReceber.numeroDocumento}" style="margin-left: 5px;"/>
+            </h:panelGrid> 
+			<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+			<p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{editarParcelaMB.SalvarParcelaEditada()}" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+			<p:commandLink title="Cancelar" style="margin-left: 5%;text-decoration: none" action="#{gerarParcelaMB.CancelarEdicao()}" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/> 
+            </p:commandLink> 
+		</h:form>
+ </h:body>
+</html>

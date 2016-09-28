@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+
+<ui:composition template="/pages/templates/default.xhtml">
+	<ui:define name="corpo">
+		<h:form id="frmConsultaPlanoConta">
+		<br/> <br/> <br/>  
+		
+		<p:dialog  widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+        </p:dialog>
+		<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
+			<p:commandLink   action="#{planoContaMB.novo()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
+				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
+				<p:ajax event="dialogReturn" listener="#{planoContaMB.retornoDialog}" update="growl, idTabelaPlanoConta"/>
+            </p:commandLink> 
+            <br /><br /> 
+           	<h2 style="margin-left:50%;">Consulta Plano de conta</h2>
+             <hr style="margin-left:17%; width:80%;"/>  
+                    <p:contextMenu for="idTabelaPlanoConta" style="background:white;">
+                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"   action="#{planoContaMB.editar(planoContaMB.planocontas)}" update="idTabelaPlanoConta"/>
+                    </p:contextMenu>  
+                    <p:dataTable id="idTabelaPlanoConta"  var="planoConta"  value="#{planoContaMB.listarPlanoContas}" style="border:none;" class="tabelacontas" 
+                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{planoContaMB.planocontas}" selectionMode="single" rowKey="#{planoConta.idplanoContas}">
+                    		 
+                    	<p:column headerText="Número"  sortBy="#{planoConta.numeroConta}" style="width:8%; font-size:12px; background:white; color:black; border:none; text-align:center;">
+                            <h:outputText value="#{planoConta.numeroConta}" style="color:black;" /> 
+                        </p:column> 
+                        <p:column headerText="Descrição"  sortBy="#{planoConta.descricao}" style=" font-size:12px; background:white; color:black; border:none; text-align:left;">
+                            <h:outputText value="#{planoConta.descricao}" style="color:black;"/> 
+                        </p:column>
+                         
+                    </p:dataTable> 
+                    <br /><br />
+      </h:form>
+    </ui:define>
+ </ui:composition>
+</html>

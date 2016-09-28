@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="sysfinPU" transaction-type="JTA">
+    <jta-data-source>java:/sysfinDS</jta-data-source>
+    <class>br.com.financemate.model.Acesso</class>
+    <class>br.com.financemate.model.Arquivocontaspagar</class>
+    <class>br.com.financemate.model.Banco</class>
+    <class>br.com.financemate.model.Cliente</class>
+    <class>br.com.financemate.model.Cobranca</class>
+    <class>br.com.financemate.model.Cobrancaparcelas</class>
+    <class>br.com.financemate.model.Contaspagar</class>
+    <class>br.com.financemate.model.Contasreceber</class>
+    <class>br.com.financemate.model.Cptransferencia</class>
+    <class>br.com.financemate.model.Dadosmunicipais</class>
+    <class>br.com.financemate.model.Emissaonota</class>
+    <class>br.com.financemate.model.Fluxocaixa</class>
+    <class>br.com.financemate.model.Formapagamento</class>
+    <class>br.com.financemate.model.Ftpdados</class>
+    <class>br.com.financemate.model.Historicocobranca</class>
+    <class>br.com.financemate.model.Nomearquivo</class>
+    <class>br.com.financemate.model.Operacaousuairo</class>
+    <class>br.com.financemate.model.Outroslancamentos</class>
+    <class>br.com.financemate.model.Planocontas</class>
+    <class>br.com.financemate.model.Planocontatipo</class>
+    <class>br.com.financemate.model.Produto</class>
+    <class>br.com.financemate.model.Produtovalores</class>
+    <class>br.com.financemate.model.Saldo</class>
+    <class>br.com.financemate.model.Tipoacesso</class>
+    <class>br.com.financemate.model.Tipoplanocontas</class>
+    <class>br.com.financemate.model.Usuario</class>
+    <class>br.com.financemate.model.Vendas</class>
+    <class>br.com.financemate.model.Vendascontasreceber</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <validation-mode>NONE</validation-mode>
+  </persistence-unit> 
+</persistence>  

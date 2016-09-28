@@ -1,0 +1,31 @@
+body {
+    font-family: tahoma;
+    background-color: #F8F8F8;
+    color: #333;
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	width: 100%;
+}
+
+html{
+	width: 100%;
+	height: 100%;
+}
+
+#tudo{
+	width: 100%;
+	height: 100%
+}
+
+#login{
+	width: 100%;
+	height: 100%;
+}
+
+
+.meio{ 
+	font-size: 16px;
+	margin: 0px;
+	padding: 0px;
+}

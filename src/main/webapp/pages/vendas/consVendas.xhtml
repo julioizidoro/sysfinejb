@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/pages/templates/default.xhtml">
+	<ui:define name="corpo">
+	<h:form id="frmConsultaReceber">
+				<br /> <br /> 
+				<p:growl id="growl" showDetail="true" sticky="false" life="3000"/>	
+				<br/>   
+					<p:commandLink   action="#{vendasMB.novaVenda()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
+						<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
+						<p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogNovo}" update="growl, idTabelaVendas"/>
+					</p:commandLink>  
+		            <p:commandLink id="idImagemFiltro"  action="#{vendasMB.coresFiltrar()}" update="idImagemFiltro, idTabelaVendas" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
+						<img  src="#{vendasMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+		           		<p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogFiltrar}" update="idTabelaVendas"/>
+		           	</p:commandLink>
+		            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
+						<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+						<p:dataExporter type="xls" target="idTabelaVendas" fileName="vendas" />
+		            </p:commandLink>
+		            <p:commandLink   action="#{vendasMB.novaImpressao()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
+						<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
+		            </p:commandLink>   
+		            <br /><br /> 
+            		<h2 style="margin-left:50%;">Consulta Vendas</h2>
+             		<hr style="margin-left:17%; width:80%;"/>  
+            		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        					<p:commandButton style="margin-left:35%;" value="Sim" action="#{vendasMB.cancelarVenda(vendasMB.venda)}" type="button" styleClass="ui-confirmdialog-yes"  />
+        					<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    	   			</p:confirmDialog>
+            		<p:contextMenu for="idTabelaVendas" style="background:white;" ajax="onclick" id="_context_menu">  
+                        <p:menuitem value="Gerar Parcela"   icon=" ui-icon-plus"  action="#{vendasMB.gerarParcelas(vendasMB.venda)}" />
+                        <p:menuitem value="Cancelar"   icon=" ui-icon-close" action="#{mensagem.cancelado()}"  actionListener="#{vendasMB.cancelarVenda(vendasMB.venda)}" update="growl, idTabelaVendas">
+                        	<p:confirm  header="Confirmação" message="Tem certeza que deseja cancelar essa venda ?" icon="ui-icon-alert" />
+                        </p:menuitem>  
+                    	<p:menuitem value="Editar" icon="ui-icon-pencil" action="#{vendasMB.editar(vendasMB.venda)}"/>
+                    </p:contextMenu> 
+                    <p:dataTable id="idTabelaVendas"  var="vendas"  value="#{vendasMB.listaVendas}" style="border:none;" class="tabelacontas" 
+                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{vendasMB.venda}" selectionMode="single" rowKey="#{vendas.idvendas}">
+                        
+                        <p:column headerText="Situação"  style="width:8%; text-align:center; background:white; color:black; border:none; font-size:12px;" styleClass="alinharCenter">
+                            <p:commandLink>
+                                <img src="#{vendasMB.verStatus(vendas)}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        <p:column headerText="N° Venda" style="width:7%; background:white;text-align:center; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
+                             <h:outputText  value="#{vendas.idvendas}" style="font-size:12px;"/>                                     
+                        </p:column>
+                        <p:column headerText=" Data Venda" sortBy="#{vendas.dataVenda}" style="text-align:center;width:12%; font-size:12px; background:white; color:black; border:none;">
+                            <h:outputText  value="#{vendas.dataVenda}" style="font-size:12px;" > 
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/> 
+                            </h:outputText> 
+                        </p:column> 
+                        <p:column headerText="Unidade" sortBy="#{vendas.cliente.nomeFantasia}"   style=" font-size:12px; background:white; color:black; border:none;" styleClass="alinhar" >
+                             <h:outputText  value="#{vendas.cliente.nomeFantasia}" style="margin-right:10%; font-size:12px; text-align:center;"/>
+                        </p:column> 
+                        <p:column headerText="Cliente" sortBy="#{vendas.nomeCliente}"   style=" font-size:12px; background:white; color:black; border:none;" >
+                             <h:outputText  value="#{vendas.nomeCliente}" style=" font-size:12px; text-align:center;"/>
+                        </p:column>
+                        <p:column headerText="Valor" sortBy="#{vendas.valorLiquido}" style="text-align:right; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="#{vendas.valorLiquido}" style="font-size:12px;"> 
+                                <f:convertNumber currencySymbol="" type="currency"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Produto" sortBy="#{vendas.produto}" style="text-align:left; font-size:11.5px; background:white; color:black; border:none;">
+                            <h:outputText value="#{vendas.produto.descricao}" style="font-size:12px;"/> 
+                        </p:column>
+                      </p:dataTable>
+      </h:form>
+</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head> 
+
+    <h:body >
+
+        <h:form id="frmidCadBackOffice" class="body2" style="font-size: 12px;background: white">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+            
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			  <br />
+			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="font-size:16px;color:gray;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
+			</p:commandLink>  
+            <p:commandLink id="backoffice" value="&nbsp;&nbsp;&nbsp;&nbsp;Back Office&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.backOffice()}" update="@all" style="background:#E8E8E8;font-size:16px;color:#696969;text-decoration:none;border: 2px solid; border-color:#696969;" title="Back Office">
+			</p:commandLink>
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Recebimento&nbsp;&nbsp;&nbsp;&nbsp;"   action="#{cadVendasMB.recebimento()}" style=" font-size:16px;color:gray;border: 2px solid; text-decoration:none; border-color:#696969;" title="Recebimento" ajax="false">
+			</p:commandLink>
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.notaFiscal()}" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
+			</p:commandLink>
+            <br /><br /><br />
+            
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    		</p:confirmDialog>
+            <h:panelGrid columns="1" style="margin-left:1%;">
+           		<p:outputLabel value="Comissão" style="margin-left:17%;"/>
+           		<p:inputText value="#{cadVendasMB.vendas.comissaoLiquidaTotal}" size="12" style="text-align: right;">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
+           		</p:inputText>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
+           		<p:outputLabel value="Desp. Financeiras" />
+           		<p:inputText value="#{cadVendasMB.vendas.despesasFinanceiras}" size="12" style="text-align: right;">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
+           		</p:inputText>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:54%; margin-top:-9.3%;">
+           		<p:outputLabel value="Comis. Vendedor"/> 
+           		<p:inputText value="#{cadVendasMB.vendas.comissaoFuncionarios}" size="12" style="text-align: right;">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
+           		</p:inputText>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;"> 
+           		<p:outputLabel value="Comis. Terceiros" />
+           		<p:inputText value="#{cadVendasMB.vendas.comissaoTerceiros}" size="12" style="text-align: right;">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
+           		</p:inputText>
+           </h:panelGrid>
+           <br />
+           <h:panelGrid columns="1" style="margin-left:1%;">
+           		<p:outputLabel value="Líquido da Venda"/>
+           		<p:inputText id="idliquidoVenda" value="#{cadVendasMB.vendas.liquidoVendas}" size="12" disabled="true" style="text-align: right;">
+           			<f:convertNumber currencySymbol="" type="currency"/>
+           		</p:inputText> 
+           </h:panelGrid>
+            <h:panelGrid columns="1" style="margin-left:28.5%; margin-top:-9.3%;">
+           		<p:outputLabel value="Observação" />
+           		<p:inputText value="#{cadVendasMB.vendas.observacao}" size="66"/>
+           </h:panelGrid>
+           <br />
+           <h:panelGrid columns="1" style="margin-left:1%;">
+           		<p:outputLabel value="Fornecedor" />
+           		<p:inputText value="#{cadVendasMB.vendas.nomeFornecedor}" size="60"/>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:68%; margin-top:-9.3%;">
+           		<p:outputLabel value="Pgto Cliente direto fornecedor"/>
+           		<p:inputText value="#{cadVendasMB.vendas.valorPagoFornecedor}" title="Inserir o valor pago pelo cliente direto para o fornecedor. Este valor será abatido do contas a receber e do valor a ser pago ao fornecedor" size="18" style="text-align: right;margin-left:10%;">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
+           		</p:inputText>
+           </h:panelGrid>
+           <br />
+           <h:panelGrid columns="1" style="margin-left:1%;">
+           		<p:outputLabel value="Pagar/Receber" style="margin-left:9%;" /> 
+           		<p:inputText id="idTotalPagRec" value="#{cadVendasMB.valorPagarReceber}" readonly="true" size="12" style="text-align: right;#{cadVendasMB.corPagarReceber}">
+           			<f:convertNumber currencySymbol="" type="currency"/>
+           		</p:inputText>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:35.5%; margin-top:-9.1%;"> 
+	            <p:outputLabel value="Data Pgto/Rcbto Fornecedor" for="dataPgRb" class="left3" />  
+	            
+	            <p:inputMask id="dataPgRb" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.vendas.dataPagamentoFornecedor}"  style="margin-left: 18%;">
+	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+	            </p:inputMask>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left: 85%; margin-top:-7.5%;"> 
+            	<p:commandLink title="Adicionar uma conta" style="text-decoration: none"   action="#{cadVendasMB.adicionarConta()}" >
+                	<img src="../../resources/img/iconeplus.png" width="40" height="40"/>
+            	</p:commandLink>
+            </h:panelGrid> 
+             <br /> 
+           <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    	   </p:confirmDialog>
+           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+                <p:confirm  header="Confirmação" message="#{cadVendasMB.salvarVendaSemFormaRecebimento()}" icon="ui-icon-alert" />
+           </p:commandLink>  
+            <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink> 
+        </h:form>
+    </h:body>
+</html>

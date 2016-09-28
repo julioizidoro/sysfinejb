@@ -1,0 +1,373 @@
+package br.com.financemate.manageBean.outrosLancamentos;
+
+import br.com.financemate.dao.BancoDao;
+import br.com.financemate.dao.ClienteDao;
+import br.com.financemate.dao.OutrosLancamentosDao;
+import br.com.financemate.dao.PlanoContaTipoDao;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.HttpSession;
+
+import org.primefaces.context.RequestContext;
+
+import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
+import br.com.financemate.model.Banco;
+import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Planocontatipo;
+import javax.ejb.EJB;
+
+@Named
+@ViewScoped
+public class cadOutrosLancamentosMB implements Serializable {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
+    @Inject
+    private UsuarioLogadoMB usuarioLogadoMB;
+    private Outroslancamentos outrosLancamentos;
+    private Cliente cliente;
+    private List<Cliente> listaCliente;
+    private Banco banco;
+    private List<Banco> listaBanco;
+    private Boolean habilitarUnidade = false;
+    private Planocontas planoContas;
+    private List<Planocontas> listaPlanoContas;
+    private String tipoDocumento;
+    private Planocontatipo planocontatipo;
+    private List<Planocontatipo> listaPlanoContaTipo;
+    @EJB
+    private BancoDao bancoDao;
+    @EJB
+    private ClienteDao clienteDao;
+    @EJB
+    private OutrosLancamentosDao outrosLancamentosDao;
+    @EJB
+    private PlanoContaTipoDao planoContaTipoDao;
+
+    @PostConstruct
+    public void init() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        outrosLancamentos = (Outroslancamentos) session.getAttribute("outroslancamentos");
+        session.removeAttribute("outroslancamentos");
+        if (outrosLancamentos == null) {
+            outrosLancamentos = new Outroslancamentos();
+        } else {
+            cliente = outrosLancamentos.getCliente();
+            planoContas = outrosLancamentos.getPlanocontas();
+            banco = outrosLancamentos.getBanco();
+            tipoDocumento = outrosLancamentos.getTipoDocumento();
+            gerarListaBanco();
+            gerarListaPlanoContas();
+        }
+        gerarListaCliente();
+        //gerarListaPlanoContas();
+        desabilitarUnidade();
+        outrosLancamentos.setDataRegistro(new Date());
+    }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public List<Planocontas> getListaPlanoContas() {
+        return listaPlanoContas;
+    }
+
+    public void setListaPlanoContas(List<Planocontas> listaPlanoContas) {
+        this.listaPlanoContas = listaPlanoContas;
+    }
+
+    public Planocontas getPlanoContas() {
+        return planoContas;
+    }
+
+    public void setPlanoContas(Planocontas planoContas) {
+        this.planoContas = planoContas;
+    }
+
+    public Boolean getHabilitarUnidade() {
+        return habilitarUnidade;
+    }
+
+    public void setHabilitarUnidade(Boolean habilitarUnidade) {
+        this.habilitarUnidade = habilitarUnidade;
+    }
+
+    public UsuarioLogadoMB getUsuarioLogadoMB() {
+        return usuarioLogadoMB;
+    }
+
+    public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
+        this.usuarioLogadoMB = usuarioLogadoMB;
+    }
+
+    public Outroslancamentos getOutrosLancamentos() {
+        return outrosLancamentos;
+    }
+
+    public void setOutrosLancamentos(Outroslancamentos outrosLancamentos) {
+        this.outrosLancamentos = outrosLancamentos;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Cliente> getListaCliente() {
+        return listaCliente;
+    }
+
+    public void setListaCliente(List<Cliente> listaCliente) {
+        this.listaCliente = listaCliente;
+    }
+
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
+
+    public List<Banco> getListaBanco() {
+        return listaBanco;
+    }
+
+    public void setListaBanco(List<Banco> listaBanco) {
+        this.listaBanco = listaBanco;
+    }
+
+    public Planocontatipo getPlanocontatipo() {
+        return planocontatipo;
+    }
+
+    public void setPlanocontatipo(Planocontatipo planocontatipo) {
+        this.planocontatipo = planocontatipo;
+    }
+
+    public List<Planocontatipo> getListaPlanoContaTipo() {
+        return listaPlanoContaTipo;
+    }
+
+    public void setListaPlanoContaTipo(List<Planocontatipo> listaPlanoContaTipo) {
+        this.listaPlanoContaTipo = listaPlanoContaTipo;
+    }
+
+    public BancoDao getBancoDao() {
+        return bancoDao;
+    }
+
+    public void setBancoDao(BancoDao bancoDao) {
+        this.bancoDao = bancoDao;
+    }
+
+    public ClienteDao getClienteDao() {
+        return clienteDao;
+    }
+
+    public void setClienteDao(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
+
+    public OutrosLancamentosDao getOutrosLancamentosDao() {
+        return outrosLancamentosDao;
+    }
+
+    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
+        this.outrosLancamentosDao = outrosLancamentosDao;
+    }
+
+    public PlanoContaTipoDao getPlanoContaTipoDao() {
+        return planoContaTipoDao;
+    }
+
+    public void setPlanoContaTipoDao(PlanoContaTipoDao planoContaTipoDao) {
+        this.planoContaTipoDao = planoContaTipoDao;
+    }
+
+    public void gerarListaBanco() {
+        if (cliente != null) {
+            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            listaBanco = bancoDao.list(sql);
+            if (listaBanco == null) {
+                listaBanco = new ArrayList<Banco>();
+            }
+        } else {
+            listaBanco = new ArrayList<Banco>();
+        }
+    }
+
+    public void gerarListaCliente() {
+        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        if (listaCliente == null || listaCliente.isEmpty()) {
+            listaCliente = new ArrayList<Cliente>();
+        }
+    }
+
+    public void mostrarMensagem(Exception ex, String erro, String titulo) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        erro = erro + " - " + ex;
+        context.addMessage(null, new FacesMessage(titulo, erro));
+    }
+
+    public void salvar() {
+        outrosLancamentos = setaValoresOutrosLancamentos(outrosLancamentos);
+        String mensagem = validarDados();
+        if (mensagem == "") {
+            outrosLancamentos = outrosLancamentosDao.update(outrosLancamentos);
+            mensagem msg = new mensagem();
+            msg.saveMessagem();
+            RequestContext.getCurrentInstance().closeDialog(outrosLancamentos);
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(mensagem, ""));
+        }
+
+    }
+
+    public void salvarRepetir() {
+        outrosLancamentos = setaValoresOutrosLancamentos(outrosLancamentos);
+        String mensagem = validarDados();
+        if (mensagem == "") {
+            outrosLancamentos = outrosLancamentosDao.update(outrosLancamentos);
+            Outroslancamentos copia = new Outroslancamentos();
+            copia = outrosLancamentos;
+            outrosLancamentos = repetirValoresOutrosLancamentos(copia);
+            mensagem msg = new mensagem();
+            msg.saveMessagem();
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(mensagem, ""));
+        }
+
+    }
+
+    public void desabilitarUnidade() {
+        if (usuarioLogadoMB.getCliente() != null) {
+            habilitarUnidade = true;
+        } else {
+            habilitarUnidade = false;
+        }
+
+    }
+
+    public String validarDados() {
+        String mensagem = "";
+        if (outrosLancamentos.getCliente() == null) {
+            mensagem = mensagem + "Unidade n�o informada \r\n";
+        }
+        if (outrosLancamentos.getDataRegistro().equals(null)) {
+            mensagem = mensagem + " Data de Registro n�o informada \n";
+        }
+        if (outrosLancamentos.getTipoDocumento().equalsIgnoreCase(null)) {
+            mensagem = mensagem + "Tipo de documento n�o informado \r\n";
+        }
+        if (outrosLancamentos.getBanco().equals(null)) {
+            mensagem = mensagem + "Conta n�o selecionada \r\n";
+        }
+        if (outrosLancamentos.getDataVencimento().equals(null)) {
+            mensagem = mensagem + "Data de Vencimento n�o informada \r\n";
+        }
+        if (outrosLancamentos.getValorEntrada() == null) {
+            mensagem = mensagem + "Valor de entrada n�o informada \r\n";
+        }
+        if (outrosLancamentos.getValorSaida() == null) {
+            mensagem = mensagem + "Valor de saida n�o informada \r\n";
+        }
+        if (outrosLancamentos.getDescricao().equalsIgnoreCase(null)) {
+            mensagem = mensagem + "Descri��o n�o informada \r\n";
+        }
+        if (outrosLancamentos.getPlanocontas() == null) {
+            mensagem = mensagem + "Plano de contas n�o informada \r\n";
+        }
+        if (outrosLancamentos.getDataCompensacao() == null) {
+            mensagem = mensagem + "Data de compensa��o n�o informada \r\n";
+        }
+
+        return mensagem;
+    }
+
+    //public void gerarListaPlanoContas() {
+    //	PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+    //	try {
+    //		listaPlanoContas = planoContasFacade.listar();
+    //		if (listaPlanoContas == null) {
+    //		listaPlanoContas = new ArrayList<Planocontas>();
+    //		}
+    //} catch (Exception ex) {
+    //		Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+    //		mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
+    //	}
+    //}
+    public void cancelar() {
+        RequestContext.getCurrentInstance().closeDialog(null);
+    }
+
+    public Outroslancamentos setaValoresOutrosLancamentos(Outroslancamentos outros) {
+        outros.setBanco(banco);
+        outros.setCliente(cliente);
+        outros.setPlanocontas(planoContas);
+        outros.setTipoDocumento(tipoDocumento);
+        outros.setUsuario(usuarioLogadoMB.getUsuario());
+        return outros;
+    }
+
+    public Outroslancamentos repetirValoresOutrosLancamentos(Outroslancamentos outros) {
+        outrosLancamentos = new Outroslancamentos();
+        outrosLancamentos.setBanco(outros.getBanco());
+        outrosLancamentos.setCliente(outros.getCliente());
+        outrosLancamentos.setCompentencia(outros.getCompentencia());
+        outrosLancamentos.setDataCompensacao(outros.getDataCompensacao());
+        outrosLancamentos.setDataRegistro(outros.getDataCompensacao());
+        outrosLancamentos.setDataVencimento(outros.getDataVencimento());
+        outrosLancamentos.setDescricao(outros.getDescricao());
+        outrosLancamentos.setPlanocontas(outros.getPlanocontas());
+        outrosLancamentos.setSaldo(outros.getSaldo());
+        outrosLancamentos.setTipoDocumento(outros.getTipoDocumento());
+        outrosLancamentos.setUsuario(outros.getUsuario());
+        outrosLancamentos.setValorEntrada(outros.getValorEntrada());
+        outrosLancamentos.setValorSaida(outros.getValorSaida());
+        return outrosLancamentos;
+    }
+
+    public void gerarListaPlanoContas() {
+        try {
+            listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
+            if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
+                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+            }
+            listaPlanoContas = new ArrayList<Planocontas>();
+            for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
+                listaPlanoContas.add(listaPlanoContaTipo.get(i).getPlanocontas());
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+}

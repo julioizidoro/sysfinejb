@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+ <h:body > 
+ 		
+        <h:form id="idFrmPesquisaConsContaPagar" class="body2" style="font-size: 12px; background-color: white;">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+
+            <title  >Novo Filtro</title>
+            			<br />
+            
+            <h:panelGrid style="margin-left:1%;">
+            	<p:outputLabel value="Unidade" class="left3"/>
+            </h:panelGrid>
+           <h:panelGrid style="margin-left:10%;margin-top:-4.5%;">
+           		<p:selectOneMenu  id="cliente"  style="width: 200px;"  value="#{contasReceberMB.cliente}" converter="ClienteConverter"
+                             filter="true" filterMatchMode="contains" panelStyle="width:180px" >
+                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems value="#{contasReceberMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                    <f:attribute name="listaCliente" value="#{contasReceberMB.listaCliente}"/>
+                    <p:ajax event="change" listener="#{contasReceberMB.gerarListaBanco()}" update="idconta"/>
+                </p:selectOneMenu>
+           </h:panelGrid>
+           <h:panelGrid columns="5"  style="margin-left: 48%; margin-top:-6%;"> 
+           		<p:outputLabel value="Vencimento" class="left3" style="margin-left:1%;"/>	
+           		<p:inputMask id="dataIni" mask="99/99/9999"  size="15" maxlength="15" value="#{contasReceberMB.dataInicial}" class="tabelaRecebimento"  placeholder="Data Inicial" >
+                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask>
+                <p:inputMask id="dataFinal"  mask="99/99/9999" size="15" maxlength="15" class="left6" value="#{contasReceberMB.dataFinal}"  placeholder="Data Final">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask> 
+           </h:panelGrid>
+           <br /> 
+           <h:panelGrid style="margin-left:1%;">
+           		<p:outputLabel value="N° Venda"/>
+           </h:panelGrid>
+           <h:panelGrid style="margin-left:11%; margin-top:-4.5%;">
+           		 <p:inputText size="10"  value="#{contasReceberMB.nVenda}"/> 
+           </h:panelGrid>
+           <h:panelGrid style="margin-left:30%; margin-top:-4.5%;">
+           		<p:outputLabel value="Cliente" />
+           </h:panelGrid>
+           <h:panelGrid style="margin-left:38%; margin-top:-4.5%;">
+           		<p:inputText value="#{contasReceberMB.nomeCliente}" size="56" />
+           </h:panelGrid>
+           <br />
+            <h:panelGrid style="margin-left:1%;">
+            	<p:outputLabel value="Banco" for="idconta"/>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:8%; margin-top:-4.5%;">
+            	<p:selectOneMenu id="idconta"  style="width:150px;"  value="#{contasReceberMB.banco}"
+                    converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
+                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems value="#{contasReceberMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+                    <f:attribute name="listaBanco" value="#{contasReceberMB.listaBanco}"/>
+                </p:selectOneMenu>  
+            </h:panelGrid>
+           <h:panelGrid style="margin-left: 38%; margin-top:-5.5%;">
+	            <p:outputLabel value="Status" for="status"  />
+	       </h:panelGrid>
+	      <h:panelGrid style="margin-left: 45%; margin-top:-4.5%;"> 
+	            	<p:selectOneMenu id="status" style="width:130px;" value="#{contasReceberMB.status}">
+	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
+	                    <f:selectItem itemLabel="Vencidas" itemValue="Vencidas" />  
+	                    <f:selectItem itemLabel="A vencer" itemValue="A vencer" /> 
+	                    <f:selectItem itemLabel="Recebidas" itemValue="Recebidas" />  
+	                    <f:selectItem itemLabel="Canceladas" itemValue="Canceladas" />
+	                </p:selectOneMenu>
+	       </h:panelGrid>  
+	       <h:panelGrid style="margin-left:70%; margin-top:-5.5%;">
+	       		<p:outputLabel value="Valor"/>
+	       </h:panelGrid>
+	       <h:panelGrid style="margin-left:76%; margin-top:-4.5%;">
+	       		<p:inputText size="16" value="#{contasReceberMB.valorParcela}" style="text-align: right;"/>
+	       </h:panelGrid>
+	       <br />
+            <h:panelGrid columns="5"  style="margin-left: 1%;"> 
+           		<p:outputLabel value="Data de Recebimento" class="left3" />	
+           		<p:inputMask id="dataIniRec" mask="99/99/9999"  size="15" maxlength="15" value="#{contasReceberMB.dataRecebimentoInicial}" class="tabelaRecebimento"  placeholder="Data Inicial" >
+                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask>
+                <p:inputMask id="dataFinalRec"  mask="99/99/9999" size="15" maxlength="15" class="left6" value="#{contasReceberMB.dataRecebimentoFinal}"  placeholder="Data Final">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask> 
+           </h:panelGrid>
+           <br />
+           <br /><br /><br /><br /><br /><br /><br /><br /><br />          
+                    
+                    <hr />
+                    <p:commandLink title="Pesquisar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{contasReceberMB.filtrar()}" >
+                    	<img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+                	</p:commandLink>
+                    <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadContasPagarMB.cancelar()}" >
+                    	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+                	</p:commandLink>
+		</h:form> 
+</h:body>
+</html>

@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>...SysFIN...</title>
+        <link href="resources/css/css.css" rel="stylesheet" media="screen" />
+        <link href="resources/css/css.css" rel="stylesheet" media="screen" />
+        <link rel="icon" href="resources/img/iconesysfin.png" type="image/x-icon" />
+
+        <!-- Bootstrap core CSS -->
+        <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="resources/css/font-awesome.min.css" rel="stylesheet"/>
+
+        <!-- Pace -->
+        <link href="resources/css/pace.css" rel="stylesheet"/>
+
+        <!-- Color box -->
+        <link href="resources/css/colorbox/colorbox.css" rel="stylesheet"/>
+
+        <!-- Morris -->
+        <link href="resources/css/morris.css" rel="stylesheet"/>	
+
+        <!-- Endless -->
+        <link href="resources/css/endless.min.css" rel="stylesheet"/>
+        <link href="resources/css/endless-skin.css" rel="stylesheet"/>
+
+    </h:head>
+
+    <h:body style="color:#E7EBEB !important; background:white;" onload="startTime()">
+        <!-- rolando o titulo da pagina -->
+        <script> var repeat = 1 // 0 para rolar uma vez, 1 para rolar infinitamente
+            var title = document.title
+            var leng = title.length
+            var start = 1
+            function titlemove() {
+                titl = title.substring(start, leng) + title.substring(0, start)
+                document.title = titl
+                start++
+                if (start == leng + 1) {
+                    start = 0
+                    if (repeat == 0)
+                        return
+                }
+                setTimeout("titlemove()", 300)  // aqui vc pode aumentar ou diminuir a velocidade 
+            }
+            if (document.title)
+                titlemove()
+        </script>
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+            <br/> 
+            <img src="resources/img/ajax-carregando.gif" />
+        </p:dialog>
+        <h:form style="display:block;" id="formLogin">
+            <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
+
+            <div id="top-nav" class="fixed skin-6" style="position:fixed;background:#302E2E;">
+                <a href="#" class="brand" style="background:#302E2E;">
+                    <span style="margin-left:4%;">
+                        <img src="resources/img/iconeUsuario.png" style="width: 15%; margin-left:2%;"/>
+                    </span>
+                    <span class="text-toggle"> Bem vindo,
+                        <h:outputText style="font-size:18px;" value="#{usuarioLogadoMB.usuario.nome}" />
+                    </span>			
+                </a><!-- /brand -->
+                <ul class="nav-notification" style="float:right;background:#302E2E;">
+                    <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style=" text-decoration:none;" title="Sair">
+                        <img src="resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-top:25%;"/>
+                    </p:commandLink>
+                </ul>
+                <ul style="float:right;background:#302E2E;">
+                    <h:outputText style="font-size: 30px;color:white; margin-left:-600px; font-family:Trebuchet MS; " value="SYSFIN" />
+                </ul>
+            </div><!-- /top-nav-->
+
+            <aside class="fixed skin-6" style="background:#302E2E;display:block;width:15%;">
+                <div class="sidebar-inner scrollable-sidebar" style="background:#302E2E;">
+                    <br/><br/>
+                    <div class="main-menu">
+                        <ul>
+                            <li  style="background:#302E2E;">
+                                <a href="principal.jsf">
+                                    <span class="menu-icon">
+                                        <i>
+                                            <img src="resources/img/iconeVisaoGeralSysfin.png" style="width: 14%;"/> 
+                                        </i> 
+                                    </span>
+                                    <span class="text">
+                                        Visão Geral
+                                    </span>
+                                    <span class="menu-hover"></span>
+                                </a>
+                            </li>
+                            <li class="openable open" style="background:#302E2E;">
+                                <a href="#">
+                                    <span class="menu-icon">
+                                        <img src="resources/img/iconeCadastroSysfin.png" style="width: 14%;"/>
+                                    </span>
+                                    <span class="text">
+                                        Cadastro
+                                        <i class="fa fa-caret-down"/>
+                                    </span>
+                                    <span class="menu-hover"></span>
+                                </a>
+                                <ul class="submenu" style="background:#302E2E;">
+                                    <li><a href="pages/banco/consBanco.jsf"><span class="submenu-label">Banco</span></a></li>
+                                    <li><a href="pages/cliente/consCliente.jsf"><span class="submenu-label">Cliente</span></a></li>
+                                    <li><a href="pages/planoconta/consPlanoConta.jsf"><span class="submenu-label">Plano de Conta</span></a></li>
+                                    <li><a href="pages/produto/consProduto.jsf"><span class="submenu-label">Produto</span></a></li>
+                                    <li><a href="pages/tipoPlanoConta/consTipoPlanoConta.jsf"><span class="submenu-label">Tipo Plano Conta</span></a></li>
+                                    <li><a href="pages/usuario/consUsuario.jsf"><span class="submenu-label">Usuário</span></a></li>
+                                </ul>
+                            </li> 
+                            <li class="openable" style="background:#302E2E;">
+                                <a href="#">
+                                    <span class="menu-icon">
+                                        <img src="resources/img/iconeContasReceberSysfin.png" style="width: 14%;"/>
+                                    </span>
+                                    <span class="text">
+                                        Contas a Pagar
+                                        <i class="fa fa-caret-down"/>
+                                    </span>
+                                    <span class="menu-hover"></span>
+                                </a>
+                                <ul class="submenu">
+                                    <li><p:commandLink action="#{contasPagarMB.novaConta()}"><span class="submenu-label">Novo Lançamentos</span></p:commandLink></li>
+                                    <li><a href="pages/contasPagar/consContaPagar.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+                                    <li><p:commandLink action="#{contasPagarMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
+                                </ul>
+                            </li>
+
+                            <li class="openable" style="background:#302E2E;">
+                                <a href="#">
+                                    <span class="menu-icon">
+                                        <img src="resources/img/iconeContasPagarSysfin.png" style="width: 14%;"/>
+                                    </span>
+                                    <span class="text">
+                                        Contas a Receber
+                                        <i class="fa fa-caret-down"/>
+                                    </span>
+                                    <span class="menu-hover"></span>
+                                </a>
+                                <ul class="submenu">
+                                    <li><p:commandLink  action="#{contasReceberMB.novaConta()}"><span  class="submenu-label">Novo Lançamento</span></p:commandLink></li>
+                                    <li><a href="pages/contasReceber/consContasReceber.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+                                    <li><p:commandLink action="#{contasReceberMB.novaImpressao()}"><span class="submenu-label">Reltarótio</span></p:commandLink></li>
+                                </ul>
+                            </li>
+
+                            <li class="openable" style="background:#302E2E;">
+                                <a href="#">
+                                    <span class="menu-icon">
+                                        <img src="resources/img/iconeVendasSysfin.png" style="width: 14%;"/>
+                                    </span>
+                                    <span class="text">
+                                        Vendas
+                                        <i class="fa fa-caret-down"/>
+                                    </span>
+                                    <span class="menu-hover"></span>
+                                </a>
+                                <ul class="submenu">
+                                    <li><p:commandLink action="#{vendasMB.novaVenda()}"><span class="submenu-label">Novo Lançamentos</span></p:commandLink></li>
+                                    <li><a href="pages/vendas/consVendas.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+                                    <li><p:commandLink action="#{vendasMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
+                                </ul>
+                            </li>
+                            <li class="openable" style="background:#302E2E;">
+                                <a href="#">
+                                    <span class="menu-icon">
+                                        <img src="resources/img/iconeOutrosLancamentosSysfin.png" style="width: 14%;"/> 
+                                    </span>
+                                    <span class="text">
+                                        Outros Lançamentos
+                                        <i class="fa fa-caret-down"/>
+                                    </span>
+                                    <span class="menu-hover"></span>
+                                </a>
+                                <ul class="submenu">
+                                    <li><p:commandLink action="#{outrosLancamentosMB.novoLancamento()}"><span class="submenu-label">Novo Lançamentos</span></p:commandLink></li>
+                                    <li><a href="pages/outroslancamentos/consOutrosLancamentos.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+                                    <li><p:commandLink action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
+                                </ul>
+                            </li>
+                            <li class="openable" style="background:#302E2E;">
+                                <a href="#">
+                                    <span class="menu-icon">
+                                        <img src="resources/img/iconeRelatoriosSysfin.png" style="width: 14%;"/> 
+                                    </span>
+                                    <span class="text">
+                                        Relatórios
+                                        <i class="fa fa-caret-down"/>
+                                    </span>
+                                    <span class="menu-hover"></span>
+                                </a>
+                                <ul class="submenu">
+                                    <li><p:commandLink action="#{contasPagarMB.novaImpressao()}"><span class="submenu-label">Contas a Pagar</span></p:commandLink></li>
+                                    <li><p:commandLink action="#{contasReceberMB.novaImpressao()}"><span class="submenu-label">Contas a Receber</span></p:commandLink></li>
+                                    <li><p:commandLink action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}"><span class="submenu-label">Outros Lançamentos</span></p:commandLink></li>
+                                    <li><p:commandLink action="#{vendasMB.novaImpressao()}"><span class="submenu-label">Vendas</span></p:commandLink></li>
+                                </ul>
+                            </li>
+                            <li  style="background:#302E2E;">
+                                <p:commandLink action="#{principalMB.mensagemEmBreve()}">
+                                    <span class="menu-icon">
+                                        <i>
+                                            <img src="resources/img/iconeAreaClienteSysfin.png" style="width: 14%;"/>
+                                        </i> 
+                                    </span>
+                                    <span class="text">
+                                        Área do Cliente
+                                    </span> 
+                                    <span class="menu-hover"></span>
+                                </p:commandLink>
+                            </li>
+                            <li  style="background:#302E2E;">
+                                <a href="http://www.financemate.com.br/" target="_blank">
+                                    <span class="menu-icon">
+                                        <i>
+                                            <img src="resources/img/iconeLogoNavegadorTeste.gif" style="width: 14%;"/>
+                                        </i> 
+                                    </span>
+                                    <span class="text">
+                                        Sobre Financemate
+                                    </span>
+                                    <span class="menu-hover"></span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div><!-- /main-menu -->
+                </div><!-- /sidebar-inner -->
+            </aside>
+            <br /><br />
+        </h:form>
+        <h:form style="margin-left:16%;">
+            <div class="padding-md"> 
+                <div class="row"> 
+                    <div class="col-md-9">
+                        <h3 style=" color:black;">VENDAS</h3>
+                        <p:chart type="bar" model="#{grafico.animatedModel2}" style="width:100%;" responsive="true"/>
+                    </div>>
+                    <div class="col-md-3">
+                        <div class="panel-stat3 bg-success">  
+                            <h4>FATURAMENTO </h4>
+                            <h3 class="m-top-none" id="userCount" style="color:black;">R$: #{grafico.valorTotalFaturamento}</h3>
+                            <span class="m-left-xs" style="color:black;">em 2016</span>
+                            <div class="stat-icon">
+                                <i class="fa fa-usd fa-3x"></i> 
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="panel-stat3 bg-info">
+                            <h4>CONTAS A RECEBER</h4>
+                            <h3 class="m-top-none" style="color:black;">R$: #{calculosContasMB.crVencendo}</h3>
+                            <span class="m-left-xs" style="color:black;">para o dia de hoje</span>
+                            <div class="stat-icon">
+                                <i class="fa fa-signal fa-3x"></i> 
+                            </div>
+
+                        </div>
+                        <br/>
+                    </div>
+                </div><!-- /.col -->
+            </div> 
+            <div class="row">
+                <div class="col-md-5">
+                    <h4 style="color:black;">ÚLTIMAS VENDAS</h4>
+                    <h5 style="color:#302E2E;">#{principalMB.pegarMesAno()}</h5>
+                    <p:dataTable reflow="true" styleClass="table table-striped dt-responsive" value="#{principalMB.lista10Vendas}"
+                                 var="venda" style="color:black; width:100%;" rows="5" >
+                        <f:facet name="header"> TOTAL DO MÊS DE #{principalMB.pegarMes()}: R$ #{principalMB.valorTotalMesVendas}</f:facet>
+                        <p:column headerText="ID" style="background:white;color:black;">
+                            <h:outputText value="#{venda.idvendas}" />
+                        </p:column>
+                        <p:column headerText="Cliente" style="background:white;color:black;">
+                            <h:outputText value="#{venda.nomeCliente}" style="float:left;"/>
+                        </p:column>
+                        <p:column headerText="Produto" style="background:white;color:black;">
+                            <h:outputText value="#{venda.produto.descricao}" />
+                        </p:column>
+                        <p:column headerText="Data" style="background:white;color:black;">
+                            <h:outputText value="#{venda.dataVenda}">
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </h:outputText>
+                        </p:column> 
+                        <p:column headerText="Valor" style="background:white;color:black;" >
+                            <h:outputText value="#{venda.valorLiquido}" style="text-align:right;float:right;">
+                                <f:convertNumber currencySymbol="" type="currency"/>
+                            </h:outputText>
+                        </p:column>
+
+                    </p:dataTable>
+                </div>
+                <div class="col-md-4">
+                    <h4 style="color:black;" >FLUXO DE CAIXA</h4>
+                    <h5 style="color:black;" > Diario - #{principalMB.pegarMesAno()}</h5>
+                    <p:chart type="line" model="#{grafico.animatedModel1}" style="width:100%;" responsive="true"/>
+                </div>
+                <div class="col-md-3">
+
+                    <div class="panel-stat3 bg-danger" style="margin-right: 6%;">
+                        <h4>CONTAS A PAGAR</h4>
+                        <h3 class="m-top-none" id="visitorCount" style="color:black;">R$:  #{contasPagarMB.totalVencendo}</h3>
+                        <span class="m-left-xs" style="color:black;">para o dia de hoje</span>
+                        <div class="stat-icon">
+                            <i class="fa fa-signal fa-flip-horizontal fa-rotate-180 fa-3x"></i> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /panel --> 
+        </h:form>  
+
+        <!-- Sparkline -->
+        <script src='resources/js/jquery.sparkline.min.js'></script>
+
+        <!-- Pace -->
+        <script src='resources/js/uncompressed/pace.js'></script>
+
+        <!-- Popup Overlay -->
+        <script src='resources/js/jquery.popupoverlay.min.js'></script>
+
+        <!-- Slimscroll -->
+        <script src='resources/js/jquery.slimscroll.min.js'></script>
+
+        <!-- Modernizr -->
+        <script src='resources/js/modernizr.min.js'></script>
+
+        <!-- Cookie -->
+        <script src='resources/js/jquery.cookie.min.js'></script>
+
+        <!-- Endless -->
+        <script src="resources/js/endless/endless.js"></script>
+
+    </h:body>
+</html>
+

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+    
+     <navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+    
+    <navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consContaPagar</from-outcome>
+			<to-view-id>/pages/contasPagar/consContaPagar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>ContaPagar</from-outcome>
+			<to-view-id>/pages/contasPagar/cadContasPagar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consCliente</from-outcome>
+			<to-view-id>/pages/cliente/consCliente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consBanco</from-outcome>
+			<to-view-id>/pages/banco/consBanco.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>principal</from-outcome>
+			<to-view-id>principal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>Imprimir</from-outcome>
+			<to-view-id>/pages/contasPagar/imprimir.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>Download</from-outcome>
+			<to-view-id>200.175.61.147:82/ftproot/sysfin/contasPagar/</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>relatorioContasPagar</from-outcome>
+			<to-view-id>/pages/contasPagar/imprimir.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consContasReceber</from-outcome>
+			<to-view-id>/pages/contasReceber/consContasReceber.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consTipoPlanoConta</from-outcome>
+			<to-view-id>/pages/tipoPlanoConta/consTipoPlanoConta.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consOutrosLancamentos</from-outcome>
+			<to-view-id>/pages/outroslancamentos/consOutrosLancamentos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+	  <from-view-id>*</from-view-id>
+	  <navigation-case>
+	   <from-outcome>conciliacaoBancaria</from-outcome>
+	   <to-view-id>/pages/outroslancamentos/conciliacaoBancaria.xhtml</to-view-id>
+	   <redirect/>
+	  </navigation-case>
+ 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consPlanoConta</from-outcome>
+			<to-view-id>/pages/planoconta/consPlanoConta.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consVendas</from-outcome>
+			<to-view-id>/pages/vendas/consVendas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadVendas</from-outcome>
+			<to-view-id>/pages/vendas/cadVendas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>imprimirVendas</from-outcome>
+			<to-view-id>/pages/vendas/imprimirVendas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadContasPagar</from-outcome>
+			<to-view-id>/pages/contasPagar/cadContasPagar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>filtrarConsContaPagar</from-outcome>
+			<to-view-id>/pages/contasPagar/filtrarConsContaPagar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>imprimir</from-outcome>
+			<to-view-id>/pages/contasPagar/imprimir.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadContasReceber</from-outcome>
+			<to-view-id>/pages/contasReceber/cadContasReceber.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>imprimirContasReceber</from-outcome>
+			<to-view-id>/pages/contasReceber/imprimirContasReceber.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadOutrosLancamentos</from-outcome>
+			<to-view-id>/pages/outroslancamentos/cadOutrosLancamentos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>imprimirOutrosLancamentos</from-outcome>
+			<to-view-id>/pages/outroslancamentos/imprimirOutrosLancamentos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadProduto</from-outcome>
+			<to-view-id>/pages/produtos/cadProduto.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consProduto</from-outcome>
+			<to-view-id>/pages/produtos/consProduto.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consUsuario</from-outcome>
+			<to-view-id>/pages/usuario/consUsuario.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>FinanceMate</from-outcome>
+			<to-view-id>http://www.financemate.com.br/</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>relatoriocobranca</from-outcome>
+			<to-view-id>/pages/contasReceber/relatoriocobranca.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<application>
+        <action-listener>
+            org.primefaces.application.DialogActionListener
+        </action-listener>
+        <navigation-handler>
+            org.primefaces.application.DialogNavigationHandler
+        </navigation-handler>
+        <view-handler>
+            org.primefaces.application.DialogViewHandler
+        </view-handler>
+    </application>
+
+</faces-config>

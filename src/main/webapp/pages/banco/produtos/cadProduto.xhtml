@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+ <h:body > 
+        <h:form id="idFrmCadProduto" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+
+            <title  >Novo Produto</title>
+            
+            <br></br>
+            
+            <h:panelGrid columns="2"  style="margin-left: 1%;">
+                <p:outputLabel value="Unidade" for="cliente"  class="left3"/>
+                <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadProdutoMB.cliente}" converter="ClienteConverter"
+                             filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems  value="#{cadProdutoMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                    <f:attribute name="listaCliente" value="#{cadProdutoMB.listaCliente}"/>
+                </p:selectOneMenu> 
+            </h:panelGrid> 
+            <h:panelGrid columns="2" style="margin-left:70%; margin-top:-5.2%;">
+	            <p:outputLabel value="Código" for="codigo" />
+	            <p:inputText id="codigo" size="10" value="#{cadProdutoMB.produto.codigosystm}"/>
+	        </h:panelGrid>
+	        <br/>
+            <h:panelGrid columns="2" style="margin-left:1%;">
+            	<p:outputLabel value="Descrição" for="descricao"  />
+                <p:inputText id="descricao" size="86" value="#{cadProdutoMB.produto.descricao}"/>
+            </h:panelGrid>
+			
+			<br/>
+			<hr />
+			<br />
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{cadProdutoMB.salvar()}" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+                <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" ajax="false" action="#{cadProdutoMB.cancelar()}" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <br></br>
+            <br></br>
+            
+        </h:form>
+</h:body>
+</html>

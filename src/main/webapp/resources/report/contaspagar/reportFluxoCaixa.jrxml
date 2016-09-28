@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório de Pagamentos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="feecb075-5a7f-42f6-832b-1a654a7aa009">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="periodo" class="java.lang.String"/>
+	<parameter name="sql" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nomeFantasia" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[$P!{sql}]]>
+	</queryString>
+	<field name="idfluxoCaixa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valorContasPagar" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valorContasReceber" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="saldo" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliente_idcliente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="totalReceber" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{valorContasReceber}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="totalPagar" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{valorContasPagar}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="totalSaldo" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="197" splitType="Stretch">
+			<image>
+				<reportElement x="8" y="6" width="255" height="94" uuid="40fae967-115c-4cd6-8e9d-2e8b709725db"/>
+				<imageExpression><![CDATA["logo.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="89" y="149" width="246" height="20" uuid="97f66d0c-62c8-4c04-b2db-46022e48e104"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomeFantasia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="1" y="106" width="553" height="33" uuid="7ab278a3-567e-4655-aabb-0e815544389f"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório de Fluxo de Caixa"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="13" y="149" width="71" height="20" uuid="13cfd098-24aa-4c01-af9f-397e884c05f6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Unidade : "]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="13" y="176" width="473" height="20" uuid="893c68dc-007c-4929-819c-088093de6ff8"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{periodo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24">
+			<staticText>
+				<reportElement x="7" y="4" width="87" height="15" uuid="64d7f30a-4fdb-49d6-82f0-f2d203399bcd"/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="462" y="4" width="70" height="14" uuid="f80638d3-8726-4c31-a593-89ae0faac252"/>
+				<text><![CDATA[Saldo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="4" width="116" height="15" uuid="7ef86535-7884-4360-86af-4bcfe34c019a"/>
+				<text><![CDATA[Valor Contas Receber]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="554" height="1" uuid="0259c984-82ea-4f89-88d4-dace79723aa8"/>
+			</line>
+			<line>
+				<reportElement x="0" y="21" width="554" height="1" uuid="a2660627-9a9e-4d29-906d-eb2b90bf545f"/>
+			</line>
+			<staticText>
+				<reportElement x="244" y="4" width="116" height="15" uuid="1e31b1bf-1fa3-45bb-9dc7-8b4366480bdb"/>
+				<text><![CDATA[Valor Contas Pagar]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="6" y="2" width="89" height="13" uuid="70db5651-a531-4147-b2f1-7201baf66f18"/>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="417" y="2" width="115" height="13" uuid="65e603e4-1486-4f72-bdcf-c8c0639a36c7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="106" y="2" width="116" height="13" uuid="636877fc-bc73-452c-a238-6aa15e0dbae8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{valorContasReceber}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="244" y="2" width="116" height="13" uuid="9124ba1f-4fe7-4744-929e-b64a4e2e1aa3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{valorContasPagar}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="49" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="6" y="32" width="127" height="14" uuid="7ae4e633-e737-4a5a-acbf-bd9d128532ca"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="1" width="554" height="1" uuid="4ba21f34-2453-4c55-a360-ae335e90fc1b"/>
+			</line>
+			<textField>
+				<reportElement x="419" y="32" width="80" height="14" uuid="d6a8b6e3-019d-48d8-ab61-09b61af8dfe3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="509" y="32" width="40" height="14" uuid="cae9b9ca-2d3d-468c-9660-ef67fa87025c"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="1" y="5" width="94" height="20" uuid="25985412-8c83-4500-8cb7-5ab5969fb6c6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="95" y="5" width="137" height="20" uuid="06fc9d70-9436-4261-a908-ddb685b94265"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="232" y="5" width="157" height="20" uuid="93ffe4a8-f9e4-46e2-bf36-86b59df5e1ec"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="389" y="5" width="166" height="20" uuid="f47119ad-bba7-459e-85e0-f1988fe63cbe"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="8" y="9" width="50" height="13" uuid="0c405ae1-f39c-43f6-80e2-add9817fe9ea"/>
+				<text><![CDATA[Totais]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="106" y="9" width="116" height="13" uuid="9ca75c53-9742-416e-939b-b84f62ce8b60"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalReceber}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="244" y="9" width="116" height="13" uuid="3e2014af-5600-4bca-abd0-cdc3da724095"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalPagar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="417" y="9" width="115" height="13" uuid="1f34f2f8-0d5d-4b54-a2da-f35a9b34ecd2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalSaldo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
