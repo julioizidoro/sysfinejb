@@ -4,8 +4,11 @@ import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasPagarDao;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -15,6 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import br.com.financemate.manageBean.contasReceber.ContasReceberMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
@@ -41,7 +45,7 @@ public class EditarBancoMB implements Serializable {
     private BancoDao bancoDao;
     @EJB
     private ClienteDao clienteDao;
-    @EJB 
+    @EJB
     private ContasPagarDao contasPagarDao;
 
     @PostConstruct
@@ -121,34 +125,8 @@ public class EditarBancoMB implements Serializable {
         this.conta = conta;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public ContasPagarDao getContasPagarDao() {
-        return contasPagarDao;
-    }
-
-    public void setContasPagarDao(ContasPagarDao contasPagarDao) {
-        this.contasPagarDao = contasPagarDao;
-    }
-    
-    
-
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }

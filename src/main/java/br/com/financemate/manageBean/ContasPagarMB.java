@@ -7,6 +7,7 @@ import br.com.financemate.dao.NomeArquivoDao;
 import br.com.financemate.dao.OperacaoUsuarioDao;
 import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -319,56 +320,6 @@ public class ContasPagarMB implements Serializable {
         this.dataLiberacao = dataLiberacao;
     }
 
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public ContasPagarDao getContasPagarDao() {
-        return contasPagarDao;
-    }
-
-    public void setContasPagarDao(ContasPagarDao contasPagarDao) {
-        this.contasPagarDao = contasPagarDao;
-    }
-
-    public CpTransferenciaDao getCpTransferenciaDao() {
-        return cpTransferenciaDao;
-    }
-
-    public void setCpTransferenciaDao(CpTransferenciaDao cpTransferenciaDao) {
-        this.cpTransferenciaDao = cpTransferenciaDao;
-    }
-
-    public NomeArquivoDao getNomeArquivoDao() {
-        return nomeArquivoDao;
-    }
-
-    public void setNomeArquivoDao(NomeArquivoDao nomeArquivoDao) {
-        this.nomeArquivoDao = nomeArquivoDao;
-    }
-
-    public OperacaoUsuarioDao getOperacaoUsuarioDao() {
-        return operacaoUsuarioDao;
-    }
-
-    public void setOperacaoUsuarioDao(OperacaoUsuarioDao operacaoUsuarioDao) {
-        this.operacaoUsuarioDao = operacaoUsuarioDao;
-    }
-
-    public PlanoContasDao getPlanoContasDao() {
-        return planoContasDao;
-    }
-
-    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
-        this.planoContasDao = planoContasDao;
-    }
-    
-    
-
     public String verStatus(Contaspagar contaspagar) {
         Date data = new Date();
         String diaData = Formatacao.ConvercaoDataPadrao(data);
@@ -443,10 +394,11 @@ public class ContasPagarMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
+
     }
 
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
@@ -524,7 +476,7 @@ public class ContasPagarMB implements Serializable {
             Operacaousuairo operacaousuairo = new Operacaousuairo();
             operacaousuairo.setContaspagar(contaspagar);
             operacaousuairo.setData(new Date());
-            operacaousuairo.setTipooperacao("Usuário Autorizou");
+            operacaousuairo.setTipooperacao("Usu�rio Autorizou");
             operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
             operacaoUsuarioDao.update(operacaousuairo);
         }

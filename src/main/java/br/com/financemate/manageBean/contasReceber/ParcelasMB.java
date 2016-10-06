@@ -70,14 +70,6 @@ public class ParcelasMB implements Serializable {
         this.contasreceber = contasreceber;
     }
 
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
     public void totalParcela() {
         for (int i = 0; i < listaParcela.size(); i++) {
             total = total + listaParcela.get(i).getValorParcela();

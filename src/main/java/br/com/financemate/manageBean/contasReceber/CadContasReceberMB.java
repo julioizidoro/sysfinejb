@@ -5,6 +5,7 @@ import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 
+import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
@@ -65,11 +67,11 @@ public class CadContasReceberMB implements Serializable {
     @EJB
     private BancoDao bancoDao;
     @EJB
+    private PlanoContasDao planoContasDao;
+    @EJB
     private ClienteDao clienteDao;
     @EJB
     private ContasReceberDao contasReceberDao;
-    @EJB
-    private PlanoContasDao planoContasDao;
 
     @PostConstruct
     public void init() {
@@ -237,48 +239,17 @@ public class CadContasReceberMB implements Serializable {
         this.contasReceber = contasReceber;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
-    }
 
-    public PlanoContasDao getPlanoContasDao() {
-        return planoContasDao;
-    }
-
-    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
-        this.planoContasDao = planoContasDao;
     }
 
     public void gerarListaPlanoContas() {
         try {
-            listaPlanoContas = planoContasDao.list("Select p from Planocontas p  order by p.descricao");
+            listaPlanoContas = planoContasDao.list("Select p From Planocontas p order by p.descricao");
         } catch (Exception ex) {
             Logger.getLogger(CadContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro ao lista Plano de contas", "Erro");

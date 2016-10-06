@@ -92,24 +92,6 @@ public class CadSaldoInicialMB implements Serializable {
         this.listaBanco = listaBanco;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public SaldoDao getSaldoDao() {
-        return saldoDao;
-    }
-
-    public void setSaldoDao(SaldoDao saldoDao) {
-        this.saldoDao = saldoDao;
-    }
-    
-    
-
     public void gerarListaBanco() {
         if (cliente != null) {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";

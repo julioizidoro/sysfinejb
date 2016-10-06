@@ -83,25 +83,9 @@ public class PlanoContaMB implements Serializable {
         this.listarTipoPlanoContas = listarTipoPlanoContas;
     }
 
-    public PlanoContasDao getPlanoContasDao() {
-        return planoContasDao;
-    }
-
-    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
-        this.planoContasDao = planoContasDao;
-    }
-
-    public TipoPlanoContasDao getTipoPlanoContasDao() {
-        return tipoPlanoContasDao;
-    }
-
-    public void setTipoPlanoContasDao(TipoPlanoContasDao tipoPlanoContasDao) {
-        this.tipoPlanoContasDao = tipoPlanoContasDao;
-    }
-
     public void gerarListaPlanoConta() {
         try {
-            listarPlanoContas = planoContasDao.list("Select p from Planocontas p  order by p.descricao");
+            listarPlanoContas = planoContasDao.list("Select p From Planocontas p order by p.descricao");
             if (listarPlanoContas == null) {
                 listarPlanoContas = new ArrayList<Planocontas>();
             }
@@ -114,7 +98,7 @@ public class PlanoContaMB implements Serializable {
     }
 
     public void gerarlistaTipoPlanoContas() {
-        listarTipoPlanoContas = tipoPlanoContasDao.list("select t from Tipoplanocontas t order by t.descricao");
+        listarTipoPlanoContas = tipoPlanoContasDao.list("Select t From Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas != null) {
             listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
         }

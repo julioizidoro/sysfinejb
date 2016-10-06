@@ -47,9 +47,9 @@ public class LiberarContasPagarMB implements Serializable {
     @EJB
     private ContasPagarDao contasPagarDao;
     @EJB
-    private OperacaoUsuarioDao operacaoUsuarioDao;
-    @EJB
     private OutrosLancamentosDao outrosLancamentosDao;
+    @EJB
+    private OperacaoUsuarioDao operacaoUsuarioDao;
 
     @PostConstruct
     public void init() {
@@ -132,30 +132,6 @@ public class LiberarContasPagarMB implements Serializable {
         dataLiberacao = new Date();
         contasPagar.setDataLiberacao(dataLiberacao);
         return dataLiberacao;
-    }
-
-    public ContasPagarDao getContasPagarDao() {
-        return contasPagarDao;
-    }
-
-    public void setContasPagarDao(ContasPagarDao contasPagarDao) {
-        this.contasPagarDao = contasPagarDao;
-    }
-
-    public OperacaoUsuarioDao getOperacaoUsuarioDao() {
-        return operacaoUsuarioDao;
-    }
-
-    public void setOperacaoUsuarioDao(OperacaoUsuarioDao operacaoUsuarioDao) {
-        this.operacaoUsuarioDao = operacaoUsuarioDao;
-    }
-
-    public OutrosLancamentosDao getOutrosLancamentosDao() {
-        return outrosLancamentosDao;
-    }
-
-    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
-        this.outrosLancamentosDao = outrosLancamentosDao;
     }
 
     public String salvarContasLiberadas(Contaspagar conta) {

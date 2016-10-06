@@ -14,7 +14,7 @@ public class ConciliacaoBean {
     public Date getDataCompensacao() {
         return dataCompensacao;
     }
-
+ 
     public void setDataCompensacao(Date dataCompensacao) {
         this.dataCompensacao = dataCompensacao;
     }

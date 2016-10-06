@@ -10,6 +10,12 @@
 	<h:form id="frmConsultaReceber">
 				<br /> <br /> 
 				<p:growl id="growl" showDetail="true" sticky="false" life="3000"/>	
+				<p:dialog  widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                	<p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        			<br/> 
+                	<img src="../../resources/img/ajax-carregando.gif" />
+            	</p:dialog>
+				
 				<br/>   
 					<p:commandLink   action="#{vendasMB.novaVenda()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
 						<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
@@ -23,9 +29,12 @@
 						<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 						<p:dataExporter type="xls" target="idTabelaVendas" fileName="vendas" />
 		            </p:commandLink>
+		            <p:commandLink action="#{vendasMB.importarVenda()}" title="Importar Venda do Systm" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;">
+                 		<img src="../../resources/img/iconeImportar.png" width="32" height="32" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+            		</p:commandLink>
 		            <p:commandLink   action="#{vendasMB.novaImpressao()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 						<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
-		            </p:commandLink>   
+		            </p:commandLink>    
 		            <br /><br /> 
             		<h2 style="margin-left:50%;">Consulta Vendas</h2>
              		<hr style="margin-left:17%; width:80%;"/>  
@@ -33,7 +42,7 @@
         					<p:commandButton style="margin-left:35%;" value="Sim" action="#{vendasMB.cancelarVenda(vendasMB.venda)}" type="button" styleClass="ui-confirmdialog-yes"  />
         					<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
     	   			</p:confirmDialog>
-            		<p:contextMenu for="idTabelaVendas" style="background:white;" ajax="onclick" id="_context_menu">  
+            		<p:contextMenu for="idTabelaVendas" style="background:white;"  id="_context_menu">  
                         <p:menuitem value="Gerar Parcela"   icon=" ui-icon-plus"  action="#{vendasMB.gerarParcelas(vendasMB.venda)}" />
                         <p:menuitem value="Cancelar"   icon=" ui-icon-close" action="#{mensagem.cancelado()}"  actionListener="#{vendasMB.cancelarVenda(vendasMB.venda)}" update="growl, idTabelaVendas">
                         	<p:confirm  header="Confirmação" message="Tem certeza que deseja cancelar essa venda ?" icon="ui-icon-alert" />

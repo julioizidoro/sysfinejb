@@ -99,35 +99,12 @@ public class SaldoInicialMB implements Serializable {
         this.listaBanco = listaBanco;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public SaldoDao getSaldoDao() {
-        return saldoDao;
-    }
-
-    public void setSaldoDao(SaldoDao saldoDao) {
-        this.saldoDao = saldoDao;
-    }
-
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
+
     }
 
     public void gerarListaBanco() {

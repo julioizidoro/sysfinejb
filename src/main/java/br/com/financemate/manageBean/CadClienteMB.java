@@ -3,11 +3,8 @@ package br.com.financemate.manageBean;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.TipoPlanoContasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -40,7 +37,7 @@ public class CadClienteMB implements Serializable {
     @EJB
     private ClienteDao clienteDao;
     @EJB
-    private TipoPlanoContasDao tipoPlanoContasDao;
+    private TipoPlanoContasDao tipoPlanoContaDao;
 
     @PostConstruct
     public void init() {
@@ -88,29 +85,13 @@ public class CadClienteMB implements Serializable {
         this.listarTipoPlanoContas = listarTipoPlanoContas;
     }
 
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public TipoPlanoContasDao getTipoPlanoContasDao() {
-        return tipoPlanoContasDao;
-    }
-
-    public void setTipoPlanoContasDao(TipoPlanoContasDao tipoPlanoContasDao) {
-        this.tipoPlanoContasDao = tipoPlanoContasDao;
-    }
-
     public String cancelar() {
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
     }
 
     public void gerarListaTipoPlanoContas() {
-        listarTipoPlanoContas = tipoPlanoContasDao.list("select t from Tipoplanocontas t order by t.descricao");
+        listarTipoPlanoContas = tipoPlanoContaDao.list("select t from Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas == null) {
             listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
         }

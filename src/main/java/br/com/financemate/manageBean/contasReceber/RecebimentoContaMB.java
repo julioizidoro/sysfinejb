@@ -52,13 +52,13 @@ public class RecebimentoContaMB implements Serializable {
     private Float valorPagoParcial;
     private Float valorTotal;
     @EJB
-    private BancoDao bancoDao;
-    @EJB
-    private ClienteDao clienteDao;
+    private OutrosLancamentosDao outrosLancamentosDao;
     @EJB
     private ContasReceberDao contasReceberDao;
     @EJB
-    private OutrosLancamentosDao outrosLancamentosDao;
+    private ClienteDao clienteDao;
+    @EJB
+    private BancoDao bancoDao;
 
     @PostConstruct
     public void init() {
@@ -181,38 +181,6 @@ public class RecebimentoContaMB implements Serializable {
         this.valorTotal = valorTotal;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
-    public OutrosLancamentosDao getOutrosLancamentosDao() {
-        return outrosLancamentosDao;
-    }
-
-    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
-        this.outrosLancamentosDao = outrosLancamentosDao;
-    }
-
     public void gerarListaBanco() {
         if (cliente != null) {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
@@ -226,7 +194,7 @@ public class RecebimentoContaMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
             listaCliente = new ArrayList<Cliente>();
         }
@@ -359,7 +327,7 @@ public class RecebimentoContaMB implements Serializable {
         outroslancamentos.setValorEntrada(conta.getValorPago());
         outroslancamentos.setValorSaida(0f);
         outroslancamentos.setDataRegistro(new Date());
-        outroslancamentos.setDescricao("Recebimento através do contas a receber de " + conta.getNomeCliente());
+        outroslancamentos.setDescricao("Recebimento atrav�s do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
         outroslancamentos = outrosLancamentosDao.update(outroslancamentos);
 
@@ -393,7 +361,7 @@ public class RecebimentoContaMB implements Serializable {
         outroslancamentos.setValorEntrada(valorParcial);
         outroslancamentos.setValorSaida(0f);
         outroslancamentos.setDataRegistro(new Date());
-        outroslancamentos.setDescricao("Recebimento parcial através do contas a receber de " + conta.getNomeCliente());
+        outroslancamentos.setDescricao("Recebimento parcial atrav�s do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
         outroslancamentos = outrosLancamentosDao.update(outroslancamentos);
 
@@ -402,7 +370,7 @@ public class RecebimentoContaMB implements Serializable {
     public String validarDadosRecebimentoParcial() {
         String msg = "";
         if (dataRecebimentoParcial == null) {
-            msg = msg + "Data de recebimento não informado";
+            msg = msg + "Data de recebimento n�o informado";
         }
         return msg;
     }
@@ -410,7 +378,7 @@ public class RecebimentoContaMB implements Serializable {
     public String validarDadosRecebimentoTotal() {
         String msg = "";
         if (contasReceber.getDataPagamento() == null) {
-            msg = msg + " Data de recebimento não informado";
+            msg = msg + " Data de recebimento n�o informado";
         }
         return msg;
     }

@@ -28,7 +28,7 @@ import javax.servlet.ServletContext;
 
 import org.primefaces.context.RequestContext;
 
-
+import br.com.financemate.manageBean.ImprimirRelatorioMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -197,42 +197,8 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         this.habilitarUnidade = habilitarUnidade;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public OutrosLancamentosDao getOutrosLancamentosDao() {
-        return outrosLancamentosDao;
-    }
-
-    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
-        this.outrosLancamentosDao = outrosLancamentosDao;
-    }
-
-    public PlanoContasDao getPlanoContasDao() {
-        return planoContasDao;
-    }
-
-    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
-        this.planoContasDao = planoContasDao;
-    }
-    
-    
-
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
@@ -298,7 +264,9 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         try {
             gerarRelatorio.gerarRelatorioDSPDF(caminhoRelatorio, parameters, jrds, nomeRelatorio);
         } catch (JRException ex) {
-            Logger.getLogger(ImprimirOutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
     }
@@ -364,7 +332,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 
     public void gerarListaPlanoContas() {
         try {
-            listaPlanoContas = planoContasDao.list("Select p from Planocontas p  order by p.descricao");
+            listaPlanoContas = planoContasDao.list("Select p From Planocontas p");
             if (listaPlanoContas == null) {
                 listaPlanoContas = new ArrayList<Planocontas>();
             }

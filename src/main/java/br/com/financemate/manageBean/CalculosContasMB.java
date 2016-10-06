@@ -13,8 +13,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.financemate.util.Formatacao;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 
 @Named
@@ -146,32 +144,6 @@ public class CalculosContasMB implements Serializable {
         this.habilitarDesabilitarSemCompra = habilitarDesabilitarSemCompra;
     }
 
-    public Boolean getHabilitarDesabilitarComCompra() {
-        return habilitarDesabilitarComCompra;
-    }
-
-    public void setHabilitarDesabilitarComCompra(Boolean habilitarDesabilitarComCompra) {
-        this.habilitarDesabilitarComCompra = habilitarDesabilitarComCompra;
-    }
-
-    public ContasPagarDao getContasPagarDao() {
-        return contasPagarDao;
-    }
-
-    public void setContasPagarDao(ContasPagarDao contasPagarDao) {
-        this.contasPagarDao = contasPagarDao;
-    }
-
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-    
-    
-
     public void calcularTotalContasPagar() {
         Float vencida = 0.0f;
         Float vencendo = 0.0f;
@@ -185,8 +157,8 @@ public class CalculosContasMB implements Serializable {
         }
         try {
             listaTotais = contasPagarDao.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()), idcliente);
-        } catch (SQLException ex) {
-            Logger.getLogger(CalculosContasMB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         if (listaTotais != null) {
             vencida = listaTotais.get(0).floatValue();

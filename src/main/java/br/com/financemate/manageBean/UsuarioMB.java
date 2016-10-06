@@ -2,6 +2,7 @@ package br.com.financemate.manageBean;
 
 import br.com.financemate.dao.UsuarioDao;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,18 +67,10 @@ public class UsuarioMB implements Serializable {
         this.usuarioLogadoMB = usuarioLogadoMB;
     }
 
-    public UsuarioDao getUsuarioDao() {
-        return usuarioDao;
-    }
-
-    public void setUsuarioDao(UsuarioDao usuarioDao) {
-        this.usuarioDao = usuarioDao;
-    }
-
     public void gerarListaUsuario() {
         // TODO Auto-generated catch block
 
-        listaUsuario = usuarioDao.list("Select u from Usuario u");
+        listaUsuario = usuarioDao.list("Select u From Usuario u");
         if (listaUsuario == null || listaUsuario.isEmpty()) {
             listaUsuario = new ArrayList<Usuario>();
         }

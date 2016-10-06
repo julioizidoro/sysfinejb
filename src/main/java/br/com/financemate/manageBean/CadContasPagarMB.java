@@ -79,17 +79,17 @@ public class CadContasPagarMB implements Serializable {
     @EJB
     private ClienteDao clienteDao;
     @EJB
-    private ContasPagarDao contasPagarDao;
-    @EJB
     private CpTransferenciaDao cpTransferenciaDao;
+    @EJB
+    private ContasPagarDao contasPagarDao;
     @EJB
     private FtpDadosDao ftpDadosDao;
     @EJB
     private NomeArquivoDao nomeArquivoDao;
     @EJB
-    private OperacaoUsuarioDao operacaoUsuarioDao;
-    @EJB
     private PlanoContaTipoDao planoContaTipoDao;
+    @EJB
+    private OperacaoUsuarioDao operacaoUsuarioDao;
     @EJB
     private PlanoContasDao planoContasDao;
 
@@ -311,84 +311,11 @@ public class CadContasPagarMB implements Serializable {
         this.planocontatipo = planocontatipo;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public ContasPagarDao getContasPagarDao() {
-        return contasPagarDao;
-    }
-
-    public void setContasPagarDao(ContasPagarDao contasPagarDao) {
-        this.contasPagarDao = contasPagarDao;
-    }
-
-    public CpTransferenciaDao getCpTransferenciaDao() {
-        return cpTransferenciaDao;
-    }
-
-    public void setCpTransferenciaDao(CpTransferenciaDao cpTransferenciaDao) {
-        this.cpTransferenciaDao = cpTransferenciaDao;
-    }
-
-    public FtpDadosDao getFtpDadosDao() {
-        return ftpDadosDao;
-    }
-
-    public void setFtpDadosDao(FtpDadosDao ftpDadosDao) {
-        this.ftpDadosDao = ftpDadosDao;
-    }
-
-    public NomeArquivoDao getNomeArquivoDao() {
-        return nomeArquivoDao;
-    }
-
-    public void setNomeArquivoDao(NomeArquivoDao nomeArquivoDao) {
-        this.nomeArquivoDao = nomeArquivoDao;
-    }
-
-    public OperacaoUsuarioDao getOperacaoUsuarioDao() {
-        return operacaoUsuarioDao;
-    }
-
-    public void setOperacaoUsuarioDao(OperacaoUsuarioDao operacaoUsuarioDao) {
-        this.operacaoUsuarioDao = operacaoUsuarioDao;
-    }
-
-    public PlanoContaTipoDao getPlanoContaTipoDao() {
-        return planoContaTipoDao;
-    }
-
-    public void setPlanoContaTipoDao(PlanoContaTipoDao planoContaTipoDao) {
-        this.planoContaTipoDao = planoContaTipoDao;
-    }
-
-    public PlanoContasDao getPlanoContasDao() {
-        return planoContasDao;
-    }
-
-    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
-        this.planoContasDao = planoContasDao;
-    }
-
-    public String cancelar() {
+    public void cancelar() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.removeAttribute("file");
         RequestContext.getCurrentInstance().closeDialog(null);
-        return null;
     }
 
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
@@ -398,7 +325,7 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
@@ -572,7 +499,7 @@ public class CadContasPagarMB implements Serializable {
     public String validarDados() {
         String mensagem = "";
         if (contaPagar.getFornecedor() == null) {
-            mensagem = mensagem + "Fornecedor não informado \r\n";
+            mensagem = mensagem + "Fornecedor n�o informado \r\n";
         }
         if (contaPagar.getValor().equals(0f)) {
             mensagem = mensagem + "Valor n�o informado \n";
@@ -619,7 +546,7 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public String nomeAnexo() {
-        if (consultarArquivos().equalsIgnoreCase("Não existe arquivo anexado")) {
+        if (consultarArquivos().equalsIgnoreCase("N�o existe arquivo anexado")) {
             nomeAnexo = "Anexar";
             return nomeAnexo;
         } else {
@@ -645,7 +572,7 @@ public class CadContasPagarMB implements Serializable {
 
     public boolean salvarArquivoFTP() {
         Ftpdados dadosFTP = null;
-        dadosFTP = ftpDadosDao.find("select f from Ftpdados f");
+        dadosFTP = ftpDadosDao.find("Select f From FtpDados f");
         if (dadosFTP == null) {
             return false;
         }
@@ -686,7 +613,7 @@ public class CadContasPagarMB implements Serializable {
 
     public boolean salvarArquivoFTP(String nomeArquivoLocal, String nomeArquivoFTP) {
         Ftpdados dadosFTP = null;
-        dadosFTP = ftpDadosDao.find("select f from Ftpdados f");
+        dadosFTP = ftpDadosDao.find("Select f From FtpDados f");
         if (dadosFTP == null) {
             return false;
         }
@@ -816,7 +743,7 @@ public class CadContasPagarMB implements Serializable {
             nomearquivo = nomeArquivoDao.find("SELECT n FROM Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
             if (nomearquivo == null) {
                 nomearquivo = new Nomearquivo();
-                nomearquivo.setNomearquivo01("Não existe arquivo anexado");
+                nomearquivo.setNomearquivo01("N�o existe arquivo anexado");
 
             }
             nomeFile = nomearquivo.getNomearquivo01();

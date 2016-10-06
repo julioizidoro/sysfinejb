@@ -113,16 +113,10 @@ public class OperacoesUsuarioMB implements Serializable {
         this.contasPagar = contasPagar;
     }
 
-    public OperacaoUsuarioDao getOperacaoUsuarioDao() {
-        return operacaoUsuarioDao;
-    }
-
-    public void setOperacaoUsuarioDao(OperacaoUsuarioDao operacaoUsuarioDao) {
-        this.operacaoUsuarioDao = operacaoUsuarioDao;
-    }
-
     public void gerarListaOperacoesUsuarios() {
         if (contasPagar != null) {
+            // TODO Auto-generated catch block
+
             listaOperacaousuairo = operacaoUsuarioDao.list("SELECT o FROM Operacaousuairo o "
                     + " WHERE o.contaspagar.idcontasPagar=" + contasPagar.getIdcontasPagar());
             if (listaOperacaousuairo == null) {

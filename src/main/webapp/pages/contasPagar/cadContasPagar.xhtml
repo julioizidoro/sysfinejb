@@ -209,7 +209,7 @@
         			<p:menuitem value="Salvar" action="#{cadContasPagarMB.salvar()}" update="growl" icon="ui-icon-disk"/>
         			<p:menuitem value="Salvar e repetir"  action="#{cadContasPagarMB.salvarRepetir()}" ajax="false" icon="ui-icon-arrowrefresh-1-w" actionListener="#{mensagem.saveMessagem()}" update="growl"/>
     			</p:menuButton>
-                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" actionListener="#{contasPagarMB.coresFiltrar()}"  action="#{cadContasPagarMB.cancelar()}" >
+                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none"   action="#{cadContasPagarMB.cancelar()}" >
                     <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>
              </h:panelGrid>

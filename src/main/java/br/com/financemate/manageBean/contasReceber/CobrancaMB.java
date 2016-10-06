@@ -6,11 +6,14 @@ import br.com.financemate.dao.CobrancaParcelasDao;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.HistoricoCobrancaDao;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -52,11 +55,11 @@ public class CobrancaMB implements Serializable {
     private List<Contasreceber> listaContasSelecionadas;
     private Cobrancaparcelas cobrancaParcela;
     @EJB
-    private ClienteDao clienteDao;
-    @EJB
     private CobrancaDao cobrancaDao;
     @EJB
-    private CobrancaParcelasDao cobrancaParcelasDao;
+    private ClienteDao clienteDao;
+    @EJB
+    private CobrancaParcelasDao cobrancaParcelaDao;
     @EJB
     private ContasReceberDao contasReceberDao;
     @EJB
@@ -179,50 +182,8 @@ public class CobrancaMB implements Serializable {
         this.contasReceber = contasReceber;
     }
 
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public CobrancaDao getCobrancaDao() {
-        return cobrancaDao;
-    }
-
-    public void setCobrancaDao(CobrancaDao cobrancaDao) {
-        this.cobrancaDao = cobrancaDao;
-    }
-
-    public CobrancaParcelasDao getCobrancaParcelasDao() {
-        return cobrancaParcelasDao;
-    }
-
-    public void setCobrancaParcelasDao(CobrancaParcelasDao cobrancaParcelasDao) {
-        this.cobrancaParcelasDao = cobrancaParcelasDao;
-    }
-
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
-    public HistoricoCobrancaDao getHistoricoCobrancaDao() {
-        return historicoCobrancaDao;
-    }
-
-    public void setHistoricoCobrancaDao(HistoricoCobrancaDao historicoCobrancaDao) {
-        this.historicoCobrancaDao = historicoCobrancaDao;
-    }
-    
-    
-
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
             listaCliente = new ArrayList<Cliente>();
         }
@@ -271,7 +232,11 @@ public class CobrancaMB implements Serializable {
         historico.setData(new Date());
         historico.setCobranca(cobranca);
         historico.setUsuario(usuarioLogadoMB.getUsuario());
-        //historico = cobrancaDao.update(historico);
+        try {
+            historico = cobrancaDao.salvar(historico);
+        } catch (SQLException ex) {
+            Logger.getLogger(CobrancaMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cobranca.getHistoricocobrancaList().add(historico);
         FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Historico de Cobran�a Salvo.");
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
@@ -381,14 +346,14 @@ public class CobrancaMB implements Serializable {
         String sql = "Select cp From Cobrancaparcelas cp Join Contasreceber c on  cp.contasreceber.idcontasReceber=c.idcontasReceber";
         sql = sql + " Join Cobranca co on cp.cobranca.idcobranca=co.idcobranca Where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber();
         sql = sql + " and cp.cobranca.idcobranca=" + cobranca.getIdcobranca();
-        listaCobrancaParcelas = cobrancaParcelasDao.list(sql);
+        listaCobrancaParcelas = cobrancaParcelaDao.list(sql);
         if (listaCobrancaParcelas.size() == 0) {
             for (int i = 0; i < listaContasSelecionadas.size(); i++) {
                 if (cobranca != null && contasReceber != null) {
                     cobrancaParcela = new Cobrancaparcelas();
                     cobrancaParcela.setCobranca(cobranca);
                     cobrancaParcela.setContasreceber(listaContasSelecionadas.get(i));
-                    cobrancaParcelasDao.update(cobrancaParcela);
+                    cobrancaParcelaDao.update(cobrancaParcela);
                     session.removeAttribute("listaContasSelecionadas");
                 }
             }

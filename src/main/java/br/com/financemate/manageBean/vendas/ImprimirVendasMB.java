@@ -15,6 +15,8 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -31,8 +33,6 @@ import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import net.sf.jasperreports.engine.JRException;
 
@@ -289,35 +289,12 @@ public class ImprimirVendasMB implements Serializable {
         this.dataFinal = dataFinal;
     }
 
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
-    public VendasDao getVendasDao() {
-        return vendasDao;
-    }
-
-    public void setVendasDao(VendasDao vendasDao) {
-        this.vendasDao = vendasDao;
-    }
-
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
+
     }
 
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
@@ -381,6 +358,8 @@ public class ImprimirVendasMB implements Serializable {
         try {
             gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio, null);
         } catch (JRException ex) {
+            Logger.getLogger(ImprimirVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(ImprimirVendasMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";

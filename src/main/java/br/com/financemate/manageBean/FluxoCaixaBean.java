@@ -13,8 +13,6 @@ import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Fluxocaixa;
 import br.com.financemate.util.Formatacao;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 
 public class FluxoCaixaBean {
@@ -25,9 +23,9 @@ public class FluxoCaixaBean {
     @EJB
     private ContasPagarDao contasPagarDao;
     @EJB
-    private ContasReceberDao contasReceberDao;
-    @EJB
     private FluxoCaixaDao fluxoCaixaDao;
+    @EJB
+    private ContasReceberDao contasReceberDao;
 
     public FluxoCaixaBean(Date dataInicial, Date dataFinal, Cliente cliente, String tipo) {
         this.cliente = cliente;
@@ -58,11 +56,7 @@ public class FluxoCaixaBean {
                 + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
                 + "' order by v.dataVencimento";
         List<Contaspagar> listaContasPagar = new ArrayList<Contaspagar>();
-        try {
-            listaContasPagar = contasPagarDao.listaFluxo(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(FluxoCaixaBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        listaContasPagar = contasPagarDao.list(sql);
         if (listaContasPagar != null) {
             for (int i = 0; i < listaContasPagar.size(); i++) {
                 acharDataContasPagar(listaContasPagar.get(i));
@@ -87,12 +81,7 @@ public class FluxoCaixaBean {
                 + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
                 + "' order by v.dataVencimento";
         List<Contasreceber> listaContasReceber = new ArrayList<Contasreceber>();
-        try {
-            listaContasReceber = contasReceberDao.listaFluxo(sql);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        listaContasReceber = contasReceberDao.list(sql);
         if (listaContasReceber != null) {
             for (int i = 0; i < listaContasReceber.size(); i++) {
                 acharDataContasReceber(listaContasReceber.get(i));

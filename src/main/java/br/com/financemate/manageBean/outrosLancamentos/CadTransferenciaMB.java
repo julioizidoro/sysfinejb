@@ -137,38 +137,6 @@ public class CadTransferenciaMB implements Serializable {
         this.usuarioLogadoMB = usuarioLogadoMB;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public OutrosLancamentosDao getOutrosLancamentosDao() {
-        return outrosLancamentosDao;
-    }
-
-    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
-        this.outrosLancamentosDao = outrosLancamentosDao;
-    }
-
-    public PlanoContasDao getPlanoContasDao() {
-        return planoContasDao;
-    }
-
-    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
-        this.planoContasDao = planoContasDao;
-    }
-
     public void gerarListaBanco() {
         String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente();
         listaBancoDebito = bancoDao.list(sql);
@@ -197,7 +165,7 @@ public class CadTransferenciaMB implements Serializable {
         credito = pegarCredito(credito);
         credito.setPlanocontas(planocontas);
         outrosLancamentosDao.update(credito);
-        RequestContext.getCurrentInstance().closeDialog("Transferência feita com sucesso");
+        RequestContext.getCurrentInstance().closeDialog("Transfer�ncia feita com sucesso");
     }
 
     public Outroslancamentos pegarDebitar(Outroslancamentos debito) {
@@ -235,9 +203,7 @@ public class CadTransferenciaMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        // TODO Auto-generated catch block
-
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
             listaCliente = new ArrayList<Cliente>();
         }

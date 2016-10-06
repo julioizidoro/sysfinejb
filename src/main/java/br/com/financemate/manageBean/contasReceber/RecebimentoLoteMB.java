@@ -48,9 +48,9 @@ public class RecebimentoLoteMB implements Serializable {
     private Cliente cliente;
     private Date dataPagamento;
     @EJB
-    private ContasReceberDao contasReceberDao;
-    @EJB
     private OutrosLancamentosDao outrosLancamentosDao;
+    @EJB
+    private ContasReceberDao contasReceberDao;
 
     @PostConstruct
     public void init() {
@@ -132,22 +132,6 @@ public class RecebimentoLoteMB implements Serializable {
 
     public void setTotalReceberLote(String totalReceberLote) {
         this.totalReceberLote = totalReceberLote;
-    }
-
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
-    public OutrosLancamentosDao getOutrosLancamentosDao() {
-        return outrosLancamentosDao;
-    }
-
-    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
-        this.outrosLancamentosDao = outrosLancamentosDao;
     }
 
     public String salvarContasReceberLote() {

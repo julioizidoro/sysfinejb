@@ -26,7 +26,7 @@ public class importaVendasBean {
 		VendasSystmBean vendaImportada = new VendasSystmBean();
 		try {
 
-			URL url = new URL("http://localhost:8080/teste/webresources/generic/retornoVenda");
+			URL url = new URL("http://192.168.1.150:8080/wssysfin/webresources/generic/retornoVenda");
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 			con.setRequestProperty("Accept", "application/json");
@@ -56,7 +56,7 @@ public class importaVendasBean {
 		VendasSystmBean[] vendasSystmBean;
 		try {
 
-			URL url = new URL("http://191.191.20.138:8080/wssysfin/webresources/generic/listaVenda");
+			URL url = new URL("http://192.168.1.150:8080/wssysfin/webresources/generic/listaVenda");
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 			con.setRequestProperty("Accept", "application/json");
@@ -92,7 +92,7 @@ public class importaVendasBean {
             String vendasSystmJSon = gson.toJson(idVendaSystm);
             
             try {
-            	URL url = new URL("http://localhost:8080/teste/webresources/generic/salvarImportacao");
+            	URL url = new URL("http://192.168.1.150:8080/wssysfin/webresources/generic/salvarImportacao");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/json");

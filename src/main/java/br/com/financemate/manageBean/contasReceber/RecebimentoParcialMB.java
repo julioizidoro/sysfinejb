@@ -87,14 +87,6 @@ public class RecebimentoParcialMB implements Serializable {
         this.contasReceber = contasReceber;
     }
 
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
     public String voltar() {
         return "recebimentoConta";
     }

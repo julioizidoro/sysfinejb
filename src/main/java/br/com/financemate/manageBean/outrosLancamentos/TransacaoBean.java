@@ -13,7 +13,7 @@ public class TransacaoBean {
 	private Float valorEntrada;
 	private Float valorSaida;
 	@Transient
-	private Boolean conciliada;
+	private Boolean conciliada = false;
 	@Transient
 	private boolean selecionado;
 	

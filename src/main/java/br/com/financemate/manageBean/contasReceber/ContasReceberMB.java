@@ -7,7 +7,6 @@ import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.OutrosLancamentosDao;
 import br.com.financemate.dao.VendasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -96,9 +95,9 @@ public class ContasReceberMB implements Serializable {
     @EJB
     private ContasReceberDao contasReceberDao;
     @EJB
-    private OutrosLancamentosDao outrosLancamentosDao;
-    @EJB
     private VendasDao vendasDao;
+    @EJB
+    private OutrosLancamentosDao outrosLancamentosDao;
 
     @PostConstruct
     public void init() {
@@ -428,54 +427,6 @@ public class ContasReceberMB implements Serializable {
         this.valorTotalRecebido = valorTotalRecebido;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public CobrancaParcelasDao getCobrancaParcelasDao() {
-        return cobrancaParcelasDao;
-    }
-
-    public void setCobrancaParcelasDao(CobrancaParcelasDao cobrancaParcelasDao) {
-        this.cobrancaParcelasDao = cobrancaParcelasDao;
-    }
-
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
-    public OutrosLancamentosDao getOutrosLancamentosDao() {
-        return outrosLancamentosDao;
-    }
-
-    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
-        this.outrosLancamentosDao = outrosLancamentosDao;
-    }
-
-    public VendasDao getVendasDao() {
-        return vendasDao;
-    }
-
-    public void setVendasDao(VendasDao vendasDao) {
-        this.vendasDao = vendasDao;
-    }
-
     public String novaConta() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("closable", false);
@@ -603,7 +554,7 @@ public class ContasReceberMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
@@ -839,7 +790,10 @@ public class ContasReceberMB implements Serializable {
             imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
         } else if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")) {
             listaContasReceber = null;
-            criarConsultaContaReceber();
+            if (cliente == null) {
+            } else {
+                criarConsultaContaReceber();
+            }
             imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
         }
         return "";
@@ -972,9 +926,6 @@ public class ContasReceberMB implements Serializable {
 
     public String limparConsulta() {
         listaContasReceber = contasReceberDao.list(sql);
-        if (listaContasReceber == null || listaContasReceber.isEmpty()) {
-            listaContasReceber = new ArrayList<Contasreceber>();
-        }
         return "";
 
     }
@@ -1010,6 +961,7 @@ public class ContasReceberMB implements Serializable {
             cob = 0;
         }
         return cob;
+
     }
 
     public void desabilitarUnidade() {
