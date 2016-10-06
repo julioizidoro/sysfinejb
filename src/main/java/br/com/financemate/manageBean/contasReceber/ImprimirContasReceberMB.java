@@ -238,11 +238,11 @@ public class ImprimirContasReceberMB implements Serializable {
         parameters.put("periodo", periodo);
         String titulo = null;
         if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")) {
-            titulo = "RELAT�RIO DE CONTAS RECEBIDAS";
+            titulo = "RELATÓRIO DE CONTAS RECEBIDAS";
         } else if (nomeDosRelatorio.equalsIgnoreCase("contasAberto")) {
-            titulo = "RELAT�RIO DE CONTAS EM ABERTO";
+            titulo = "RELATÓRIO DE CONTAS EM ABERTO";
         } else {
-            titulo = "RELAT�RIO DE CONTAS A RECEBER";
+            titulo = "RELATÓRIO DE CONTAS A RECEBER";
         }
         if (cliente == null) {
             parameters.put("unidade", "TODAS AS UNIDADES");
@@ -275,7 +275,7 @@ public class ImprimirContasReceberMB implements Serializable {
                 sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
                 sql = sql + " and contasreceber.dataPagamento is null ";
                 ordem = " order by contasReceber.dataVencimento";
-            }
+            } 
             if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")) {
                 sql = sql + " contasreceber.datapagamento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
                 sql = sql + " and contasreceber.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";

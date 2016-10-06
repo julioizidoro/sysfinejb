@@ -69,6 +69,7 @@ public class GerarRelatorio {
         HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
         response.reset();
         response.setContentType("application/pdf");
+        facesContext.responseComplete();   
         ServletOutputStream servletOutputStream = response.getOutputStream();
         RequestContext.getCurrentInstance().closeDialog(null);
 

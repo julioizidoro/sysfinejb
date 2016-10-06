@@ -880,8 +880,8 @@ public class CadVendasMB implements Serializable {
     }
 
     public String salvarVendaSemFormaRecebimento() {
-        if (listaFormaPagamento == null || listaFormaPagamento.size() == 0) {
-            return "A forma de recebimento ainda n�o foi informada, deseja continuar?";
+        if (listaFormaPagamento == null || listaFormaPagamento.isEmpty()) {
+            return "A forma de recebimento ainda não foi informada, deseja continuar?";
         } else {
             return "Deseja finalizar o cadastro de uma venda?";
         }

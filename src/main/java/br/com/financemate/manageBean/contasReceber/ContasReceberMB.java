@@ -953,7 +953,7 @@ public class ContasReceberMB implements Serializable {
     }
 
     public Integer numeroCob(int contasreceber) {
-        String sql = "Select cp From Cobrancaparcelas cp Join Contasreceber c on cp.contasreceber.idcontasReceber=c.idcontasReceber Where cp.contasreceber.idcontasReceber=" + contasreceber;
+        String sql = "Select cp From Cobrancaparcelas cp  Where cp.contasreceber.idcontasReceber=" + contasreceber;
         listaCob = cobrancaParcelasDao.list(sql);
         if (listaCob.size() > 0) {
             cob = listaCob.size();

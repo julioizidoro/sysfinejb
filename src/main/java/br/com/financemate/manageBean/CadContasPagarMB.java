@@ -315,6 +315,8 @@ public class CadContasPagarMB implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.removeAttribute("file");
+        planoContas = planoContasDao.find(1);
+        listaPlanoContas = new ArrayList<>();
         RequestContext.getCurrentInstance().closeDialog(null);
     }
 

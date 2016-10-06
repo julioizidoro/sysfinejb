@@ -79,9 +79,8 @@ public class CobrancaMB implements Serializable {
         cliente = contasReceber.getCliente();
         cobranca = (Cobranca) session.getAttribute("cobranca");
         if (cobranca == null) {
-            cobranca = cobrancaDao.find("Select c From Cobranca c Join Cobrancaparcelas cp on"
-                    + " c.idcobranca=cp.cobranca.idcobranca Join Contasreceber co on cp.contasreceber.idcontasReceber=co.idcontasReceber"
-                    + " Where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber());
+            cobranca = cobrancaDao.find("Select c.cobranca From Cobrancaparcelas c "
+                    + " Where c.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber());
         }
         if (cobranca == null) {
             cobranca = new Cobranca();
