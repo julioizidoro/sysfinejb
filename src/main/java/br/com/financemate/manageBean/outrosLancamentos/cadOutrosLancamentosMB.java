@@ -4,10 +4,14 @@ import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.OutrosLancamentosDao;
 import br.com.financemate.dao.PlanoContaTipoDao;
+import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -58,6 +62,8 @@ public class cadOutrosLancamentosMB implements Serializable {
     private OutrosLancamentosDao outrosLancamentosDao;
     @EJB
     private PlanoContaTipoDao planoContaTipoDao;
+    @EJB
+    private PlanoContasDao planoContasDao;
 
     @PostConstruct
     public void init() {
@@ -177,38 +183,6 @@ public class cadOutrosLancamentosMB implements Serializable {
         this.listaPlanoContaTipo = listaPlanoContaTipo;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public OutrosLancamentosDao getOutrosLancamentosDao() {
-        return outrosLancamentosDao;
-    }
-
-    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
-        this.outrosLancamentosDao = outrosLancamentosDao;
-    }
-
-    public PlanoContaTipoDao getPlanoContaTipoDao() {
-        return planoContaTipoDao;
-    }
-
-    public void setPlanoContaTipoDao(PlanoContaTipoDao planoContaTipoDao) {
-        this.planoContaTipoDao = planoContaTipoDao;
-    }
-
     public void gerarListaBanco() {
         if (cliente != null) {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
@@ -222,10 +196,7 @@ public class cadOutrosLancamentosMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
-        if (listaCliente == null || listaCliente.isEmpty()) {
-            listaCliente = new ArrayList<Cliente>();
-        }
+        listaCliente = clienteDao.list("Select c From Cliente c");
     }
 
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
@@ -356,7 +327,8 @@ public class cadOutrosLancamentosMB implements Serializable {
 
     public void gerarListaPlanoContas() {
         try {
-            listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
+            listaPlanoContaTipo = planoContaTipoDao.list("Select p From Planocontatipo p Where tipoplanocontas.idtipoplanocontas="
+                    + cliente.getTipoplanocontas().getIdtipoplanocontas());
             if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
                 listaPlanoContaTipo = new ArrayList<Planocontatipo>();
             }

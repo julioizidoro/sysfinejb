@@ -3,7 +3,6 @@ package br.com.financemate.manageBean;
 import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,24 +94,6 @@ public class CadBancoMB implements Serializable {
         this.banco = banco;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-    
-    
-
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
@@ -131,7 +112,9 @@ public class CadBancoMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        // TODO Auto-generated catch block
+
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }

@@ -4,8 +4,11 @@ import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasReceberDao;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -39,11 +42,11 @@ public class EditarBancoRecebimentoLoteMB implements Serializable {
     private Boolean habilitarUnidade = false;
     private String totalReceberLote;
     @EJB
+    private ContasReceberDao contasReceberDao;
+    @EJB
     private BancoDao bancoDao;
     @EJB
     private ClienteDao clienteDao;
-    @EJB
-    private ContasReceberDao contasReceberDao;
 
     @PostConstruct
     public void init() {
@@ -132,32 +135,8 @@ public class EditarBancoRecebimentoLoteMB implements Serializable {
         this.conta = conta;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }

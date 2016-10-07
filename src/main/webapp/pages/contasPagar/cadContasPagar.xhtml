@@ -4,8 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:pe="http://primefaces.org/ui/extensions">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -87,7 +86,7 @@
             	<p:outputLabel value="Descrição" for="descricao" class="left3" style="margin-left: 9%;"/> 
             </h:panelGrid>
             <h:panelGrid style="margin-left:36.7%; margin-top:-4.5%;">   
-                <p:inputText rows="3" size="57" cols="68" id="descricao"  class="left3"  value="#{cadContasPagarMB.contaPagar.descricao}">
+                <p:inputText  size="57"  id="descricao"  class="left3"  value="#{cadContasPagarMB.contaPagar.descricao}">
                 	
                 </p:inputText>
             </h:panelGrid>
@@ -209,7 +208,7 @@
         			<p:menuitem value="Salvar" action="#{cadContasPagarMB.salvar()}" update="growl" icon="ui-icon-disk"/>
         			<p:menuitem value="Salvar e repetir"  action="#{cadContasPagarMB.salvarRepetir()}" ajax="false" icon="ui-icon-arrowrefresh-1-w" actionListener="#{mensagem.saveMessagem()}" update="growl"/>
     			</p:menuButton>
-                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" actionListener="#{contasPagarMB.coresFiltrar()}"  action="#{cadContasPagarMB.cancelar()}" >
+                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none"   action="#{cadContasPagarMB.cancelar()}" >
                     <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>
              </h:panelGrid>

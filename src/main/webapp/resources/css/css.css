@@ -345,7 +345,6 @@ div.jqplot-table-legend-swatch{
     -khtml-box-shadow: 5px 4px 10px #828282;
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4)"; /* IE8+ */
     filter:progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4); /* IE7 and lower */
-  
 }
 .tabelacontas{
     font-size:10px;
@@ -1339,7 +1338,6 @@ button.principal{
     -khtml-box-shadow: 5px 4px 10px #828282;
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4)"; /* IE8+ */
     filter:progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4); /* IE7 and lower */
- 
 }
 button.editar {
     margin-left:50px;

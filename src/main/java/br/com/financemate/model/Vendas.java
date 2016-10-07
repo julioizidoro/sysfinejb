@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
@@ -98,6 +99,8 @@ public class Vendas implements Serializable {
     @JoinColumn(name = "cliente_idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false)
     private Cliente cliente;
+    @Transient
+    private int idVendaSystm;
 
     public Vendas() {
     }
@@ -313,8 +316,18 @@ public class Vendas implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+    
+    
 
-    @Override
+    public int getIdVendaSystm() {
+		return idVendaSystm;
+	}
+
+	public void setIdVendaSystm(int idVendaSystm) {
+		this.idVendaSystm = idVendaSystm;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idvendas != null ? idvendas.hashCode() : 0);

@@ -14,6 +14,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jfree.data.time.Year;
+
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
@@ -82,14 +84,6 @@ public class PrincipalMB implements Serializable {
         this.vendas = vendas;
     }
 
-    public VendasDao getVendasDao() {
-        return vendasDao;
-    }
-
-    public void setVendasDao(VendasDao vendasDao) {
-        this.vendasDao = vendasDao;
-    }
-
     public void gerarListaUltimasVendas() {
         List<Vendas> listaVendas;
         lista10Vendas = new ArrayList<Vendas>();
@@ -112,8 +106,8 @@ public class PrincipalMB implements Serializable {
         if (mes < 10) {
             messql = "0" + mes;
         }
-        String sql = "Select v From Vendas v where v.dataVenda>='" + Formatacao.getAnoData(new Date()) + "-" + messql + "-01'"
-                + " and v.dataVenda<='" + Formatacao.getAnoData(new Date()) + "-" + messql + "-" + dia + "'";
+        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-" + messql + "-01'"
+                + " and v.dataVenda<='" + new Year() + "-" + messql + "-" + dia + "'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
         }
@@ -129,7 +123,7 @@ public class PrincipalMB implements Serializable {
     public String pegarMesAno() {
         String mes = "";
         String ano = "";
-        ano = "" + Formatacao.getAnoData(new Date());
+        ano = "" + new Year();
         Calendar cal = new GregorianCalendar();
         mes = "" + (cal.get(Calendar.MONDAY) + 1);
         if (mes.equalsIgnoreCase("1")) {

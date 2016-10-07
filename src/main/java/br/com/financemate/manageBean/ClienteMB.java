@@ -113,22 +113,6 @@ public class ClienteMB implements Serializable {
         this.listarTipoPlanoContas = listarTipoPlanoContas;
     }
 
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public TipoPlanoContasDao getTipoPlanoContasDao() {
-        return tipoPlanoContasDao;
-    }
-
-    public void setTipoPlanoContasDao(TipoPlanoContasDao tipoPlanoContasDao) {
-        this.tipoPlanoContasDao = tipoPlanoContasDao;
-    }
-
     public void gerarListaClientes() {
         if (nomeCliente == null) {
             nomeCliente = "";
@@ -209,7 +193,7 @@ public class ClienteMB implements Serializable {
     }
 
     public void listarTipoPlanoContas() throws SQLException {
-        listarTipoPlanoContas = tipoPlanoContasDao.list("select t from Tipoplanocontas t order by t.descricao");
+        listarTipoPlanoContas = tipoPlanoContasDao.list("Select t From Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas == null) {
             listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
         }

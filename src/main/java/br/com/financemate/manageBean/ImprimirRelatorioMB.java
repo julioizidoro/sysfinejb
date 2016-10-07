@@ -174,24 +174,8 @@ public class ImprimirRelatorioMB implements Serializable {
         this.listaCliente = listaCliente;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
@@ -253,6 +237,8 @@ public class ImprimirRelatorioMB implements Serializable {
         try {
             gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, "fluxocaixa", null);
         } catch (JRException ex) {
+            Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";

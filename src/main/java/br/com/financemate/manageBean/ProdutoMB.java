@@ -38,9 +38,9 @@ public class ProdutoMB implements Serializable {
     @Inject
     private UsuarioLogadoMB usuarioLogadoMB;
     @EJB
-    private ClienteDao clienteDao;
-    @EJB
     private ProdutoDao produtoDao;
+    @EJB
+    private ClienteDao clienteDao;
 
     @PostConstruct
     public void init() {
@@ -80,34 +80,10 @@ public class ProdutoMB implements Serializable {
         this.listaCliente = listaCliente;
     }
 
-    public UsuarioLogadoMB getUsuarioLogadoMB() {
-        return usuarioLogadoMB;
-    }
-
-    public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
-        this.usuarioLogadoMB = usuarioLogadoMB;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public ProdutoDao getProdutoDao() {
-        return produtoDao;
-    }
-
-    public void setProdutoDao(ProdutoDao produtoDao) {
-        this.produtoDao = produtoDao;
-    }
-
     public void gerarListaCliente() {
         // TODO Auto-generated catch block
 
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
@@ -117,7 +93,7 @@ public class ProdutoMB implements Serializable {
         // TODO Auto-generated catch block
 
         if (usuarioLogadoMB.getCliente() == null) {
-            listaProduto = produtoDao.list("Select p from Produto p");
+            listaProduto = produtoDao.list("Select p From Produto p");
         } else {
             listaProduto = produtoDao.list("Select p from Produto p where p.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente());
         }

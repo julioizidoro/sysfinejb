@@ -4,8 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:pe="http://primefaces.org/ui/extensions">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -124,7 +123,7 @@
     	   </p:confirmDialog>
            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-                <p:confirm  header="Confirmação" message="#{cadVendasMB.salvarVendaSemFormaRecebimento()}" icon="ui-icon-alert" />
+                <p:confirm  header="Confirmação" message="Deseja Confirmar" icon="ui-icon-alert" />
            </p:commandLink> 
            <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>

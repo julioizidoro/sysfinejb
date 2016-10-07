@@ -41,11 +41,11 @@ public class CadUsuarioMB implements Serializable {
     private boolean habilitarCliente = false;
     private boolean eCliente;
     @EJB
-    private ClienteDao clienteDao;
+    private UsuarioDao usuarioDao;
     @EJB
     private TipoAcessoDao tipoAcessoDao;
     @EJB
-    private UsuarioDao usuarioDao;
+    private ClienteDao clienteDao;
 
     @PostConstruct
     public void init() {
@@ -133,30 +133,6 @@ public class CadUsuarioMB implements Serializable {
         this.eCliente = eCliente;
     }
 
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public TipoAcessoDao getTipoAcessoDao() {
-        return tipoAcessoDao;
-    }
-
-    public void setTipoAcessoDao(TipoAcessoDao tipoAcessoDao) {
-        this.tipoAcessoDao = tipoAcessoDao;
-    }
-
-    public UsuarioDao getUsuarioDao() {
-        return usuarioDao;
-    }
-
-    public void setUsuarioDao(UsuarioDao usuarioDao) {
-        this.usuarioDao = usuarioDao;
-    }
-
     public void gerarListaTipoAcesso() {
         listaTipoAcesso = tipoAcessoDao.list("select t from Tipoacesso t order by t.descricao");
         if (listaTipoAcesso == null || listaTipoAcesso.isEmpty()) {
@@ -220,7 +196,7 @@ public class CadUsuarioMB implements Serializable {
     }
 
     public boolean verificacaoLogin() {
-        Usuario user = usuarioDao.find("select u from Usuario u where u.login='" + usuario.getLogin() + "' order by u.nome");
+        Usuario user = usuarioDao.find("Select u From Usuario u Where u.Login='" + usuario.getLogin() + "'");
         if (user == null) {
             return true;
         } else {
@@ -229,7 +205,9 @@ public class CadUsuarioMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        // TODO Auto-generated catch block
+
+        listaCliente = clienteDao.list("Select From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }

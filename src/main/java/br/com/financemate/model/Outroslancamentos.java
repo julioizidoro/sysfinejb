@@ -75,7 +75,7 @@ public class Outroslancamentos implements Serializable {
     @Column(name = "conciliacao")
     private String conciliacao;
     @Transient
-    private Boolean conciliada;
+    private Boolean conciliada = false;
     
 
     public Outroslancamentos() {

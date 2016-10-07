@@ -4,8 +4,11 @@ import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.CobrancaDao;
 import br.com.financemate.dao.HistoricoCobrancaDao;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -41,11 +44,11 @@ public class HistoricoMB implements Serializable {
     private Historicocobranca historicaCobranca;
     private Cobranca cobranca;
     @EJB
-    private ClienteDao clienteDao;
+    private HistoricoCobrancaDao historicoCobrancaDao;
     @EJB
     private CobrancaDao cobrancaDao;
     @EJB
-    private HistoricoCobrancaDao historicoCobrancaDao;
+    private ClienteDao clienteDao;
 
     @PostConstruct
     public void init() {
@@ -118,32 +121,8 @@ public class HistoricoMB implements Serializable {
         this.listaContasReceber = listaContasReceber;
     }
 
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public CobrancaDao getCobrancaDao() {
-        return cobrancaDao;
-    }
-
-    public void setCobrancaDao(CobrancaDao cobrancaDao) {
-        this.cobrancaDao = cobrancaDao;
-    }
-
-    public HistoricoCobrancaDao getHistoricoCobrancaDao() {
-        return historicoCobrancaDao;
-    }
-
-    public void setHistoricoCobrancaDao(HistoricoCobrancaDao historicoCobrancaDao) {
-        this.historicoCobrancaDao = historicoCobrancaDao;
-    }
-
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
             listaCliente = new ArrayList<Cliente>();
         }
@@ -164,7 +143,7 @@ public class HistoricoMB implements Serializable {
         historicaCobranca.setData(new Date());
         historicaCobranca.setCobranca(cobranca);
         historicaCobranca.setUsuario(usuarioLogadoMB.getUsuario());
-        //historicaCobranca = cobrancaDao.update(historicaCobranca);
+        historicaCobranca = historicoCobrancaDao.update(historicaCobranca);
         cobranca.getHistoricocobrancaList().add(historicaCobranca);
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -183,7 +162,11 @@ public class HistoricoMB implements Serializable {
         historicaCobranca.setData(new Date());
         historicaCobranca.setCobranca(cobranca);
         historicaCobranca.setUsuario(usuarioLogadoMB.getUsuario());
-        //historicaCobranca = cobrancaDao.update(historicaCobranca);
+        try {
+            historicaCobranca = cobrancaDao.salvar(historicaCobranca);
+        } catch (SQLException ex) {
+            Logger.getLogger(HistoricoMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cobranca.getHistoricocobrancaList().add(historicaCobranca);
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);

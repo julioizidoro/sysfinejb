@@ -3,11 +3,8 @@ package br.com.financemate.manageBean;
 import br.com.financemate.dao.PlanoContasDao;
 import br.com.financemate.dao.TipoPlanoContasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -87,22 +84,6 @@ public class CadPlanoContaMB implements Serializable {
 
     public void setListarTipoPlanoContas(List<Tipoplanocontas> listarTipoPlanoContas) {
         this.listarTipoPlanoContas = listarTipoPlanoContas;
-    }
-
-    public PlanoContasDao getPlanoContasDao() {
-        return planoContasDao;
-    }
-
-    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
-        this.planoContasDao = planoContasDao;
-    }
-
-    public TipoPlanoContasDao getTipoPlanoContasDao() {
-        return tipoPlanoContasDao;
-    }
-
-    public void setTipoPlanoContasDao(TipoPlanoContasDao tipoPlanoContasDao) {
-        this.tipoPlanoContasDao = tipoPlanoContasDao;
     }
 
     public void gerarlistaTipoPlanoContas() {

@@ -43,11 +43,11 @@ public class CadTipoPlanoContaMB implements Serializable {
     private Planocontatipo planocontastipo;
     private Planocontas planocontas;
     @EJB
-    private PlanoContaTipoDao planoContaTipoDao;
-    @EJB
     private PlanoContasDao planoContasDao;
     @EJB
     private TipoPlanoContasDao tipoPlanoContasDao;
+    @EJB
+    private PlanoContaTipoDao planoContaTipoDao;
 
     @PostConstruct
     public void init() {
@@ -127,30 +127,6 @@ public class CadTipoPlanoContaMB implements Serializable {
 
     public void setPlanocontas(Planocontas planocontas) {
         this.planocontas = planocontas;
-    }
-
-    public PlanoContaTipoDao getPlanoContaTipoDao() {
-        return planoContaTipoDao;
-    }
-
-    public void setPlanoContaTipoDao(PlanoContaTipoDao planoContaTipoDao) {
-        this.planoContaTipoDao = planoContaTipoDao;
-    }
-
-    public PlanoContasDao getPlanoContasDao() {
-        return planoContasDao;
-    }
-
-    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
-        this.planoContasDao = planoContasDao;
-    }
-
-    public TipoPlanoContasDao getTipoPlanoContasDao() {
-        return tipoPlanoContasDao;
-    }
-
-    public void setTipoPlanoContasDao(TipoPlanoContasDao tipoPlanoContasDao) {
-        this.tipoPlanoContasDao = tipoPlanoContasDao;
     }
 
     public String salvar() {

@@ -80,17 +80,17 @@
 	                    <h:panelGrid columns="1" style="width:60%; background-color:white; border-radius:5px; border:solid; border-left-color:red; text-align:right; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
 		                	<br />
 				            <tt style="margin-right:20%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
-				            <h:outputText id="contasVenc"  class="totallancamentos" style="font-size:20px;font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalVencidas}" />
+				            <h:outputText id="contasVenc"  size="20" maxlength="100" class="totallancamentos" style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalVencidas}"  readonly="true"/>
 		        		</h:panelGrid>
 		        		<h:panelGrid columns="1" style="width:70%; text-align:right;  margin-left:-40%; background-color:white; border-radius:5px; border:solid; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB; border-left-color:green;">
 		        			<br />
 				            <tt style="margin-right: 30%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total a Pagar Hoje</tt>
-				            <h:outputText id="contasVencendo"  class="totallancamentos" style="font-size:20px;font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalVencendo}"/>
+				            <h:outputText id="contasVencendo" size="20" maxlength="100" class="totallancamentos" style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalVencendo}" readonly="true"/>
 		        		</h:panelGrid>
 		        		<h:panelGrid  style="width:60%;  margin-left:-50%; background-color:white; border-radius:5px; border:solid; text-align:right; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB; border-left-color:blue;">
 		        			<br /> 
 				            <tt style="margin-right: 25%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Pagar</tt>
-				            <h:outputText id="contasPagar"  class="totallancamentos" style="font-size:20px;font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.total}"/>
+				            <h:outputText id="contasPagar" size="20" maxlength="100" class="totallancamentos" style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.total}"  readonly="true"/>
 				             
 		        		</h:panelGrid>
 		        	</h:panelGrid>

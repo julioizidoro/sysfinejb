@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 public class Formatacao {
 
     @EJB
-    private ClienteDao clienteDao;
+    private static ClienteDao clinteDao;
 
     public static String foramtarDoubleString(Double valor) {
         NumberFormat format = new DecimalFormat("#,##0.00");
@@ -775,6 +775,18 @@ public class Formatacao {
         return formattedDate;
     }
 
+    public static Cliente consultarCliente(UsuarioLogadoMB usuarioLogadoMB) {
+        Cliente cliente = null;
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            cliente = clinteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+            if (cliente != null) {
+                return cliente;
+            }
+
+        }
+        return null;
+    }
+
     public static String retirarNegativo(String valor) {
         String novoValor = "";
         for (int i = 0; i < valor.length(); i++) {
@@ -821,12 +833,5 @@ public class Formatacao {
         calendario.setTime(data);
         int diaSemana = calendario.get(Calendar.DAY_OF_WEEK);
         return diaSemana;
-    }
-
-    public static int getAnoData(Date data) {
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTime(data);
-        int ano = calendar.get(GregorianCalendar.YEAR);
-        return ano;
     }
 }

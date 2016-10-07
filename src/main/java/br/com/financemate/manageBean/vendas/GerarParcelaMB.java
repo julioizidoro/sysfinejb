@@ -215,54 +215,6 @@ public class GerarParcelaMB implements Serializable {
         this.usuarioLogadoMB = usuarioLogadoMB;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
-    public FormaPagamentoDao getFormaPagamentoDao() {
-        return formaPagamentoDao;
-    }
-
-    public void setFormaPagamentoDao(FormaPagamentoDao formaPagamentoDao) {
-        this.formaPagamentoDao = formaPagamentoDao;
-    }
-
-    public PlanoContasDao getPlanoContasDao() {
-        return planoContasDao;
-    }
-
-    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
-        this.planoContasDao = planoContasDao;
-    }
-
-    public VendasDao getVendasDao() {
-        return vendasDao;
-    }
-
-    public void setVendasDao(VendasDao vendasDao) {
-        this.vendasDao = vendasDao;
-    }
-
     public String editarParcela(Contasreceber contasreceber) {
         if (contasreceber != null) {
             FacesContext fc = FacesContext.getCurrentInstance();
@@ -308,19 +260,18 @@ public class GerarParcelaMB implements Serializable {
                     contasreceber.setNumeroParcela(i + 1 + "/" + vezes);
                     contasreceber.setStatus("Ativo");
                     if (vendas.getCliente() != null) {
-                        banco = bancoDao.find("Select b from Banco b where b.cliente.idcliente=" + vendas.getCliente().getIdcliente()
-                                + " and b.nome='" + "Nenhum" + "'");
+                        banco = bancoDao.find("Select b From Banco b Where b.cliente.idcliente=" + vendas.getCliente().getIdcliente()
+                                + " and b.nome='Nenhum'");
                         contasreceber.setBanco(banco);
                         contasreceber.setCliente(vendas.getCliente());
                         planocontas = planoContasDao.find(1);
                         contasreceber.setPlanocontas(planocontas);
                     } else {
-                        banco = bancoDao.find("Select b from Banco b where b.cliente.idcliente=" + 8
-                                + " and b.nome='" + "Nenhum" + "'");
+                        banco = bancoDao.find("Select b From Banco b Where b.cliente.idcliente=8 and b.nome='Nenhum'");
                         contasreceber.setBanco(banco);
                         cliente = clienteDao.find(8);
                         contasreceber.setCliente(cliente);
-                        planocontas = planoContasDao.find(1);
+                        planocontas = planoContasDao.find(8);
                         contasreceber.setPlanocontas(planocontas);
 
                     }
@@ -374,7 +325,7 @@ public class GerarParcelaMB implements Serializable {
     }
 
     public void gerarListaFormaPagamento() {
-        listaFormapagamento = formaPagamentoDao.list("select f from Formapagamento f where f.vendas.idvendas=" + vendas.getIdvendas());
+        listaFormaPagamento = formaPagamentoDao.list("Select f From Formapagamento f Where f.vendas.idvendas=" + vendas.getIdvendas());
         if (listaFormapagamento == null) {
             listaFormapagamento = new ArrayList<Formapagamento>();
         }

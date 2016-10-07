@@ -98,7 +98,7 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 .paging_two_button .ui-button {
 	float: left;
 	cursor: pointer;
-	 *cursor: hand;
+	*cursor: hand;
 }
 
 .paging_full_numbers .ui-button {

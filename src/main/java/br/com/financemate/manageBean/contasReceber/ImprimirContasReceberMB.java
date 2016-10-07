@@ -1,6 +1,5 @@
 package br.com.financemate.manageBean.contasReceber;
 
-import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.CobrancaParcelasDao;
 import br.com.financemate.dao.ContasReceberDao;
@@ -14,6 +13,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 
+import br.com.financemate.manageBean.ImprimirRelatorioMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobranca;
@@ -34,8 +36,6 @@ import br.com.financemate.model.Cobrancaparcelas;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import net.sf.jasperreports.engine.JRException;
 
@@ -65,13 +65,11 @@ public class ImprimirContasReceberMB implements Serializable {
     private String tipoDocumento;
     private List<RelatorioCobrancaBean> listaRelatorio;
     @EJB
-    private BancoDao bancoDao;
+    private ContasReceberDao contasReceberDao;
     @EJB
     private ClienteDao clienteDao;
     @EJB
     private CobrancaParcelasDao cobrancaParcelasDao;
-    @EJB
-    private ContasReceberDao contasReceberDao;
 
     @PostConstruct
     public void init() {
@@ -202,40 +200,8 @@ public class ImprimirContasReceberMB implements Serializable {
         this.selecionadoTipoDocumento = selecionadoTipoDocumento;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public CobrancaParcelasDao getCobrancaParcelasDao() {
-        return cobrancaParcelasDao;
-    }
-
-    public void setCobrancaParcelasDao(CobrancaParcelasDao cobrancaParcelasDao) {
-        this.cobrancaParcelasDao = cobrancaParcelasDao;
-    }
-
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
@@ -272,11 +238,11 @@ public class ImprimirContasReceberMB implements Serializable {
         parameters.put("periodo", periodo);
         String titulo = null;
         if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")) {
-            titulo = "RELAT�RIO DE CONTAS RECEBIDAS";
+            titulo = "RELATÓRIO DE CONTAS RECEBIDAS";
         } else if (nomeDosRelatorio.equalsIgnoreCase("contasAberto")) {
-            titulo = "RELAT�RIO DE CONTAS EM ABERTO";
+            titulo = "RELATÓRIO DE CONTAS EM ABERTO";
         } else {
-            titulo = "RELAT�RIO DE CONTAS A RECEBER";
+            titulo = "RELATÓRIO DE CONTAS A RECEBER";
         }
         if (cliente == null) {
             parameters.put("unidade", "TODAS AS UNIDADES");
@@ -288,7 +254,9 @@ public class ImprimirContasReceberMB implements Serializable {
         try {
             gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio, null);
         } catch (JRException ex) {
-            Logger.getLogger(ImprimirContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
     }
@@ -307,7 +275,7 @@ public class ImprimirContasReceberMB implements Serializable {
                 sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
                 sql = sql + " and contasreceber.dataPagamento is null ";
                 ordem = " order by contasReceber.dataVencimento";
-            }
+            } 
             if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")) {
                 sql = sql + " contasreceber.datapagamento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
                 sql = sql + " and contasreceber.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";

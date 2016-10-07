@@ -1,4 +1,3 @@
-
 $(function	()	{
 
 	// Cookie validation
@@ -270,20 +269,6 @@ $(function	()	{
 	)
 
 	//upload file
-	$('.upload-demo').change(function()	{
-		var filename = $(this).val().split('\\').pop();
-		$(this).parent().find('span').attr('data-title',filename);
-		$(this).parent().find('label').attr('data-title','Change file');
-		$(this).parent().find('label').addClass('selected');
-	});
-
-	$('.remove-file').click(function()	{
-		$(this).parent().find('span').attr('data-title','No file...');
-		$(this).parent().find('label').attr('data-title','Select file');
-		$(this).parent().find('label').removeClass('selected');
-
-		return false;
-	});	
 
 	//theme setting
 	$("#theme-setting-icon").click(function()	{ 
@@ -320,13 +305,7 @@ $(function	()	{
 		}, 1000);
 			
 		return false;
-	});
-	
-	// Popover
-    $("[data-toggle=popover]").popover();
-	
-	// Tooltip
-    $("[data-toggle=tooltip]").tooltip();
+	}); 
 	
 });
 

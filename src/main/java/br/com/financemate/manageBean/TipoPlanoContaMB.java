@@ -69,16 +69,8 @@ public class TipoPlanoContaMB implements Serializable {
         this.usuarioLogadoMB = usuarioLogadoMB;
     }
 
-    public TipoPlanoContasDao getTipoPlanoContasDao() {
-        return tipoPlanoContasDao;
-    }
-
-    public void setTipoPlanoContasDao(TipoPlanoContasDao tipoPlanoContasDao) {
-        this.tipoPlanoContasDao = tipoPlanoContasDao;
-    }
-
     public void gerarListaTipoPlanoConta() {
-        listarTipoPlanoContas = tipoPlanoContasDao.list("select t from Tipoplanocontas t order by t.descricao");
+        listarTipoPlanoContas = tipoPlanoContasDao.list("Select t From Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas == null) {
             listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
         }

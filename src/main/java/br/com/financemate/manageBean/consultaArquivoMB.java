@@ -84,29 +84,13 @@ public class consultaArquivoMB implements Serializable {
         this.nomeArquivo = nomeArquivo;
     }
 
-    public FtpDadosDao getFtpDadosDao() {
-        return ftpDadosDao;
-    }
-
-    public void setFtpDadosDao(FtpDadosDao ftpDadosDao) {
-        this.ftpDadosDao = ftpDadosDao;
-    }
-
-    public NomeArquivoDao getNomeArquivoDao() {
-        return nomeArquivoDao;
-    }
-
-    public void setNomeArquivoDao(NomeArquivoDao nomeArquivoDao) {
-        this.nomeArquivoDao = nomeArquivoDao;
-    }
-
     public void consultarArquivos() {
         // TODO Auto-generated catch block
 
-        nomeArquivo = nomeArquivoDao.find("SELECT n FROM Nomearquivo n where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
+        nomeArquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
         if (nomeArquivo == null) {
             nomeArquivo = new Nomearquivo();
-            nomeArquivo.setNomearquivo01("Não existe arquivo anexado");
+            nomeArquivo.setNomearquivo01("N�o existe arquivo anexado");
         }
     }
 
@@ -118,7 +102,7 @@ public class consultaArquivoMB implements Serializable {
 
     public boolean salvarArquivoFTP(String nomeArquivoLocal, String nomeArquivoFTP) {
         Ftpdados dadosFTP = null;
-        dadosFTP = ftpDadosDao.find("select f from Ftpdados f");
+        dadosFTP = ftpDadosDao.find("Select f From Ftpdados f");
         if (dadosFTP == null) {
             return false;
         }

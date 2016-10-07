@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -34,8 +36,6 @@ import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Planocontatipo;
 import br.com.financemate.model.Tipoplanocontas;
 import br.com.financemate.util.Formatacao;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 
 @Named
@@ -73,7 +73,7 @@ public class OutrosLancamentosMB implements Serializable {
     @EJB
     private OutrosLancamentosDao outrosLancamentosDao;
     @EJB
-    private PlanoContaTipoDao planoContatipoDao;
+    private PlanoContaTipoDao planoContaTipoDao;
     @EJB
     private PlanoContasDao planoContasDao;
     @EJB
@@ -236,54 +236,6 @@ public class OutrosLancamentosMB implements Serializable {
         this.verCliente = verCliente;
     }
 
-    public BancoDao getBancoDao() {
-        return bancoDao;
-    }
-
-    public void setBancoDao(BancoDao bancoDao) {
-        this.bancoDao = bancoDao;
-    }
-
-    public ClienteDao getClienteDao() {
-        return clienteDao;
-    }
-
-    public void setClienteDao(ClienteDao clienteDao) {
-        this.clienteDao = clienteDao;
-    }
-
-    public OutrosLancamentosDao getOutrosLancamentosDao() {
-        return outrosLancamentosDao;
-    }
-
-    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
-        this.outrosLancamentosDao = outrosLancamentosDao;
-    }
-
-    public PlanoContaTipoDao getPlanoContatipoDao() {
-        return planoContatipoDao;
-    }
-
-    public void setPlanoContatipoDao(PlanoContaTipoDao planoContatipoDao) {
-        this.planoContatipoDao = planoContatipoDao;
-    }
-
-    public PlanoContasDao getPlanoContasDao() {
-        return planoContasDao;
-    }
-
-    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
-        this.planoContasDao = planoContasDao;
-    }
-
-    public SaldoDao getSaldoDao() {
-        return saldoDao;
-    }
-
-    public void setSaldoDao(SaldoDao saldoDao) {
-        this.saldoDao = saldoDao;
-    }
-
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
@@ -316,7 +268,7 @@ public class OutrosLancamentosMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaClientes = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        listaClientes = clienteDao.list("Select c From Cliente c");
         if (listaClientes == null || listaClientes.isEmpty()) {
             listaClientes = new ArrayList<Cliente>();
         }
@@ -407,13 +359,13 @@ public class OutrosLancamentosMB implements Serializable {
         Planocontatipo planocontatipo;
         Tipoplanocontas tipoplanocontas = new Tipoplanocontas();
         planocontas = planoContasDao.find(23);
-        List<Cliente> listaCliente = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + "" + "%' order by c.razaoSocial");
+        List<Cliente> listaCliente = clienteDao.list("Select c From Cliente c");
         for (int i = 0; i < listaCliente.size(); i++) {
             tipoplanocontas = listaCliente.get(i).getTipoplanocontas();
             planocontatipo = new Planocontatipo();
             planocontatipo.setTipoplanocontas(tipoplanocontas);
             planocontatipo.setPlanocontas(planocontas);
-            planoContatipoDao.update(planocontatipo);
+            planoContaTipoDao.update(planocontatipo);
         }
     }
 
@@ -510,7 +462,7 @@ public class OutrosLancamentosMB implements Serializable {
             for (int i = 0; i < listaBanco.size(); i++) {
                 String sql3 = "Select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBanco.get(i).getIdbanco();
                 try {
-                    saldoInicial = saldoInicial + saldoDao.consultar(sql3);
+                    saldoDao.consultar(sql3);
                 } catch (SQLException ex) {
                     Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -545,6 +497,7 @@ public class OutrosLancamentosMB implements Serializable {
             }
         }
         return saldoInicial;
+
     }
 
     public String conciliacaoBancaria() {

@@ -2,7 +2,6 @@ package br.com.financemate.manageBean.vendas;
 
 import br.com.financemate.dao.ContasReceberDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,14 +99,6 @@ public class EditarParcelaMB implements Serializable {
         this.tipoDocumento = tipoDocumento;
     }
 
-    public ContasReceberDao getContasReceberDao() {
-        return contasReceberDao;
-    }
-
-    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
-        this.contasReceberDao = contasReceberDao;
-    }
-
     public String SalvarParcelaEditada() {
         Float valorDividir;
         Float valorDivido = 0f;
@@ -136,7 +127,6 @@ public class EditarParcelaMB implements Serializable {
                 totalParcela = contasReceber.getValorParcela() + valorDivido;
                 listarConta.get(i).setValorParcela(totalParcela);
             }
-
             contasReceberDao.update(listarConta.get(i));
         }
         FacesContext fc = FacesContext.getCurrentInstance();
