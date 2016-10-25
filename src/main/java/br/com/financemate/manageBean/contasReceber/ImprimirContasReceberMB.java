@@ -228,7 +228,7 @@ public class ImprimirContasReceberMB implements Serializable {
             return "relatoriocobranca";
         }
         parameters.put("sql", gerarSql());
-        File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
+        File f = new File(servletContext.getRealPath("resources/img/logo.jpg"));
         BufferedImage logo = ImageIO.read(f);
         parameters.put("nomeFantasia", cliente.getNomeFantasia());
         parameters.put("logo", logo);
@@ -252,10 +252,8 @@ public class ImprimirContasReceberMB implements Serializable {
         parameters.put("titulo", titulo);
         GerarRelatorio gerarRelatorio = new GerarRelatorio();
         try {
-            gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio, null);
+            gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio);
         } catch (JRException ex) {
-            Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
             Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
@@ -274,18 +272,18 @@ public class ImprimirContasReceberMB implements Serializable {
                 sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
                 sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
                 sql = sql + " and contasreceber.dataPagamento is null ";
-                ordem = " order by contasReceber.dataVencimento";
+                ordem = " order by contasreceber.dataVencimento";
             } 
             if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")) {
                 sql = sql + " contasreceber.datapagamento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
                 sql = sql + " and contasreceber.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
                 sql = sql + " and valorPago>0 ";
-                ordem = " order by contasReceber.dataPagamento";
+                ordem = " order by contasreceber.dataPagamento";
             }
             if (nomeDosRelatorio.equalsIgnoreCase("todascontas")) {
                 sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
                 sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
-                ordem = " order by contasReceber.dataVencimento";
+                ordem = " order by contasreceber.dataVencimento";
             }
             if (cliente != null) {
                 sql = sql + " and cliente.idcliente=" + cliente.getIdcliente() + "";

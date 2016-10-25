@@ -76,8 +76,8 @@ public class ContasReceberMB implements Serializable {
     private Date dataRecebimentoLote;
     private String nomeCliente;
     private float valorParcela;
-    private Integer nVenda;
-    private String status;
+    private int nVenda;
+    private String status = "";
     private Float valorPagoParcial;
     private Integer totalParcela;
     private List<Contasreceber> listaTotalParcela;
@@ -179,13 +179,63 @@ public class ContasReceberMB implements Serializable {
         this.status = status;
     }
 
-    public Integer getnVenda() {
+    public int getnVenda() {
         return nVenda;
     }
 
-    public void setnVenda(Integer nVenda) {
+    public void setnVenda(int nVenda) {
         this.nVenda = nVenda;
     }
+
+    public BancoDao getBancoDao() {
+        return bancoDao;
+    }
+
+    public void setBancoDao(BancoDao bancoDao) {
+        this.bancoDao = bancoDao;
+    }
+
+    public ClienteDao getClienteDao() {
+        return clienteDao;
+    }
+
+    public void setClienteDao(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
+
+    public CobrancaParcelasDao getCobrancaParcelasDao() {
+        return cobrancaParcelasDao;
+    }
+
+    public void setCobrancaParcelasDao(CobrancaParcelasDao cobrancaParcelasDao) {
+        this.cobrancaParcelasDao = cobrancaParcelasDao;
+    }
+
+    public ContasReceberDao getContasReceberDao() {
+        return contasReceberDao;
+    }
+
+    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
+        this.contasReceberDao = contasReceberDao;
+    }
+
+    public VendasDao getVendasDao() {
+        return vendasDao;
+    }
+
+    public void setVendasDao(VendasDao vendasDao) {
+        this.vendasDao = vendasDao;
+    }
+
+    public OutrosLancamentosDao getOutrosLancamentosDao() {
+        return outrosLancamentosDao;
+    }
+
+    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
+        this.outrosLancamentosDao = outrosLancamentosDao;
+    }
+
+    
 
     public float getValorParcela() {
         return valorParcela;
@@ -523,13 +573,16 @@ public class ContasReceberMB implements Serializable {
         String diaData = Formatacao.ConvercaoDataPadrao(data);
         for (int i = 0; i < listaContasReceber.size(); i++) {
             String vencData = Formatacao.ConvercaoDataPadrao(listaContasReceber.get(i).getDataVencimento());
-            if (diaData.equalsIgnoreCase(vencData)) {
-                vencendo = vencendo + listaContasReceber.get(i).getValorParcela();
-            } else if (listaContasReceber.get(i).getDataVencimento().before(data)) {
-                vencida = vencida + listaContasReceber.get(i).getValorParcela();
-            } else if (listaContasReceber.get(i).getDataVencimento().after(data)) {
-                vencer = vencer + listaContasReceber.get(i).getValorParcela();
-            }
+            if (listaContasReceber.get(i).getValorParcela() == null) {
+            }else{
+                if (diaData.equalsIgnoreCase(vencData)) {
+                    vencendo = vencendo + listaContasReceber.get(i).getValorParcela();
+                } else if (listaContasReceber.get(i).getDataVencimento().before(data)) {
+                    vencida = vencida + listaContasReceber.get(i).getValorParcela();
+                } else if (listaContasReceber.get(i).getDataVencimento().after(data)) {
+                    vencer = vencer + listaContasReceber.get(i).getValorParcela();
+                }
+            } 
 
         }
         setTotalVencidas(Formatacao.foramtarFloatString(vencida));
@@ -656,7 +709,7 @@ public class ContasReceberMB implements Serializable {
                 sql = sql + " and ";
             } else if (banco != null && banco.getIdbanco() != null) {
                 sql = sql + " and ";
-            } else if (status != null && status != "") {
+            } else if (status != null && !status.equalsIgnoreCase("sn")) {
                 sql = sql + " and ";
             } else if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
@@ -673,7 +726,7 @@ public class ContasReceberMB implements Serializable {
                 sql = sql + " and ";
             } else if (banco != null && banco.getIdbanco() != null) {
                 sql = sql + " and ";
-            } else if (status != null && status != "") {
+            } else if (status != null && !status.equalsIgnoreCase("sn")) {
                 sql = sql + " and ";
             } else if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
@@ -690,7 +743,7 @@ public class ContasReceberMB implements Serializable {
                 sql = sql + " and ";
             } else if (banco != null && banco.getIdbanco() != null) {
                 sql = sql + " and ";
-            } else if (status != null && status != "") {
+            } else if (status != null && !status.equalsIgnoreCase("sn")) {
                 sql = sql + " and ";
             } else if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
@@ -705,7 +758,7 @@ public class ContasReceberMB implements Serializable {
                 sql = sql + " and ";
             } else if (banco != null && banco.getIdbanco() != null) {
                 sql = sql + " and ";
-            } else if (status != null && status != "") {
+            } else if (status != null && !status.equalsIgnoreCase("sn")) {
                 sql = sql + " and ";
             } else if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
@@ -718,7 +771,7 @@ public class ContasReceberMB implements Serializable {
             sql = sql + " v.idcontasReceber=" + nVenda;
             if (banco != null && banco.getIdbanco() != null) {
                 sql = sql + " and ";
-            } else if (status != null && status != "") {
+            } else if (status != null && !status.equalsIgnoreCase("sn")) {
                 sql = sql + " and ";
             } else if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
@@ -729,7 +782,7 @@ public class ContasReceberMB implements Serializable {
 
         if (banco != null && banco.getIdbanco() != null) {
             sql = sql + " v.banco.idbanco=" + banco.getIdbanco();
-            if (status != null && status != "") {
+            if (status != null && !status.equalsIgnoreCase("sn")) {
                 sql = sql + " and ";
             } else if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
@@ -773,7 +826,7 @@ public class ContasReceberMB implements Serializable {
                     + "' and v.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataRecebimentoFinal) + "'";
             if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
-            }
+            }  
         }
 
         if ((dataInicial != null) && (dataFinal != null)) {

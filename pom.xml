@@ -77,7 +77,8 @@
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
-            <version>3.7.5</version>
+            <version>5.6.0</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>net.sf.ofx4j</groupId>

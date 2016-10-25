@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.faces.context.FacesContext;
@@ -50,21 +51,11 @@ public class GerarRelatorio {
         facesContext.responseComplete();
     }
 
-    public void gerarRelatorioSqlPDF(String caminhoRelatorio, Map<String, Object> parameters, String nomeArquivo, String subDir) throws JRException, IOException, SQLException {
+    public void gerarRelatorioSqlPDF(String caminhoRelatorio, Map<String, Object> parameters, String nomeArquivo) throws JRException, IOException, SQLException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         InputStream reportStream = facesContext.getExternalContext().getResourceAsStream(caminhoRelatorio);
-        EntityManager mg = ConectionFactory.getConnection();
-        mg.getTransaction().begin();
-        Connection conn = ConectionFactory.getConexao();
 
-        if (subDir != null) {
-            subDir = servletContext.getRealPath(subDir);
-            subDir = subDir + File.separator + "a";
-            subDir = subDir.substring(0, (subDir.length() - 1));
-            System.out.println(subDir);
-            parameters.put("SUBREPORT_DIR", subDir);
-        }
         JasperPrint arquivoPrint = null;
         HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
         response.reset();
@@ -72,8 +63,7 @@ public class GerarRelatorio {
         facesContext.responseComplete();   
         ServletOutputStream servletOutputStream = response.getOutputStream();
         RequestContext.getCurrentInstance().closeDialog(null);
-
-        // envia para o navegador o PDF gerado  
+        Connection conn = getConexao();
         JasperRunManager.runReportToPdfStream(reportStream,
                 servletOutputStream, parameters, conn);
 
@@ -81,6 +71,18 @@ public class GerarRelatorio {
         servletOutputStream.close();
 
         facesContext.responseComplete();
+    }
+    
+    
+    public static Connection getConexao(){
+    	Connection conexao = null;
+		try {
+			conexao = DriverManager.getConnection("jdbc:mysql://191.191.20.138:8082/sysfin", "root", "jfhmaster123");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return conexao;
     }
 
 }

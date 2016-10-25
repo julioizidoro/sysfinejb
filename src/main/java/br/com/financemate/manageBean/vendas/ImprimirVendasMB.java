@@ -348,7 +348,7 @@ public class ImprimirVendasMB implements Serializable {
             parameters.put("data3", terceiraData);
             zerarValores();
         }
-        File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
+        File f = new File(servletContext.getRealPath("resources/img/logo.jpg"));
         BufferedImage logo = ImageIO.read(f);
         parameters.put("sql", gerarSqlImpresssao());
         parameters.put("dataInicial", dataInicial);
@@ -356,12 +356,10 @@ public class ImprimirVendasMB implements Serializable {
         parameters.put("logo", logo);
         GerarRelatorio gerarRelatorio = new GerarRelatorio();
         try {
-            gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio, null);
+            gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio);
         } catch (JRException ex) {
             Logger.getLogger(ImprimirVendasMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ImprimirVendasMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         return "";
     }
 
