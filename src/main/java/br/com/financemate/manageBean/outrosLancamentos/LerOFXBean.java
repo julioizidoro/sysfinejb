@@ -1,6 +1,7 @@
 package br.com.financemate.manageBean.outrosLancamentos;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class LerOFXBean {
 	private String agencia;
 	private String conta;
 	
-	public void iniciarLeitura(FileInputStream file){
+	public void iniciarLeitura(InputStream file){
 
 		try{
 			AggregateUnmarshaller<ResponseEnvelope> unmarshaller = new AggregateUnmarshaller<ResponseEnvelope>(ResponseEnvelope.class);
@@ -32,7 +33,7 @@ public class LerOFXBean {
 					conta = dados.substring(4,dados.length()-1);
 					System.out.println("cc: " + b.getMessage().getAccount().getAccountNumber());
 					System.out.println("ag: " + b.getMessage().getAccount().getBranchId());
-					System.out.println("balanço final: " + b.getMessage().getLedgerBalance().getAmount());
+					System.out.println("balanï¿½o final: " + b.getMessage().getLedgerBalance().getAmount());
 					System.out.println("dataDoArquivo: " + b.getMessage().getLedgerBalance().getAsOfDate());
 					BankStatementResponse message = b.getMessage();
 					List<Transaction> listTransactions = message.getTransactionList().getTransactions();

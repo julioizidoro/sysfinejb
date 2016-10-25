@@ -30,9 +30,9 @@
 					<p:inputText id="agencia" size="10" maxlength="15" class="left6" value="#{conciliacaoMB.banco.agencia}" style="margin-left:2%;"  readonly="true"/>
 					<p:inputText id="conta" size="10" maxlength="15" class="left6" value="#{conciliacaoMB.banco.conta}" style="margin-left:4.2%;" readonly="true"/>
 					<br/><br/>
-					<p:fileUpload  fileUploadListener="#{conciliacaoMB.carregarArquivo}" label="Carregar"  value="#{conciliacaoMB.arquivo}" mode="advanced"
-	                     update="tabelaConciliacao, banco, agencia, conta, cliente, dataIni, dataFinal" auto="true" style="width:39%;margin-left:2%;">
-	                </p:fileUpload>
+                                        <p:fileUpload  fileUploadListener="#{conciliacaoMB.carregarArquivo}" label="Carregar"  value="#{conciliacaoMB.arquivo}" mode="advanced"
+                                                       update="tabelaConciliacao, banco, agencia, conta, cliente, dataIni, dataFinal" auto="true" style="width:39%;margin-left:2%;">
+                                        </p:fileUpload>
 				</div>
 				<br /><br /> <br /> 
 				<hr style="width:84%; margin-left:16%;"/>

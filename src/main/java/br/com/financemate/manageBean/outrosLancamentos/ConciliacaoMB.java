@@ -25,6 +25,7 @@ import org.primefaces.model.UploadedFile;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.util.Formatacao;
+import java.io.InputStream;
 import javax.ejb.EJB;
 
 @Named
@@ -161,9 +162,9 @@ public class ConciliacaoMB implements Serializable {
         listaConciliacaoBancaria = null;
         arquivo = e.getFile();
         File arq = new File(arquivo.getFileName());
-        FileInputStream file = null;
+        InputStream file = null;
         try {
-            file = (FileInputStream) arquivo.getInputstream();
+            file =  arquivo.getInputstream();
         } catch (Exception ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();

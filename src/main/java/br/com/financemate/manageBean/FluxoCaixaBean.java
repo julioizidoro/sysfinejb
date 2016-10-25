@@ -24,11 +24,15 @@ public class FluxoCaixaBean {
     private ContasPagarDao contasPagarDao;
     @EJB
     private FluxoCaixaDao fluxoCaixaDao;
-    @EJB
+    @EJB 
     private ContasReceberDao contasReceberDao;
+    private List<Contaspagar> listaContasPagar;
+    private List<Contasreceber> listaContasReceber;
 
-    public FluxoCaixaBean(Date dataInicial, Date dataFinal, Cliente cliente, String tipo) {
+    public FluxoCaixaBean(Date dataInicial, Date dataFinal, Cliente cliente, String tipo, List<Contaspagar> listaContasPagar, List<Contasreceber> listaContasReceber) {
         this.cliente = cliente;
+        this.listaContasPagar = listaContasPagar;
+        this.listaContasReceber = listaContasReceber;
         carregarDias(dataInicial, dataFinal);
         gerarListaContasPagar(dataInicial, dataFinal, cliente);
         gerarListaContasReceber(dataInicial, dataFinal, cliente);
@@ -51,12 +55,6 @@ public class FluxoCaixaBean {
     }
 
     public void gerarListaContasPagar(Date dataInicial, Date dataFinal, Cliente cliente) {
-        String sql = "Select v from Contaspagar v where v.cliente.idcliente=" + cliente.getIdcliente()
-                + " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
-                + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
-                + "' order by v.dataVencimento";
-        List<Contaspagar> listaContasPagar = new ArrayList<Contaspagar>();
-        listaContasPagar = contasPagarDao.list(sql);
         if (listaContasPagar != null) {
             for (int i = 0; i < listaContasPagar.size(); i++) {
                 acharDataContasPagar(listaContasPagar.get(i));
@@ -76,12 +74,6 @@ public class FluxoCaixaBean {
     }
 
     public void gerarListaContasReceber(Date dataInicial, Date dataFinal, Cliente cliente) {
-        String sql = "Select v from Contasreceber v where v.cliente.idcliente=" + cliente.getIdcliente()
-                + " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
-                + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
-                + "' order by v.dataVencimento";
-        List<Contasreceber> listaContasReceber = new ArrayList<Contasreceber>();
-        listaContasReceber = contasReceberDao.list(sql);
         if (listaContasReceber != null) {
             for (int i = 0; i < listaContasReceber.size(); i++) {
                 acharDataContasReceber(listaContasReceber.get(i));
@@ -109,7 +101,7 @@ public class FluxoCaixaBean {
                 Fluxocaixa fluxo = listaFluxo.get(i);
                 saldo = saldo + (fluxo.getValorContasReceber() - fluxo.getValorContasPagar());
                 fluxo.setSaldo(saldo);
-                fluxoCaixaDao.update(fluxo);
+                //fluxoCaixaDao.update(fluxo);
             }
         }
     }

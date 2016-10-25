@@ -2,6 +2,8 @@ package br.com.financemate.manageBean;
 
 import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
+import br.com.financemate.dao.ContasPagarDao;
+import br.com.financemate.dao.ContasReceberDao;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +30,8 @@ import org.primefaces.context.RequestContext;
 
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Contasreceber;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
 import javax.ejb.EJB;
@@ -60,6 +64,10 @@ public class ImprimirRelatorioMB implements Serializable {
     private BancoDao bancoDao;
     @EJB
     private ClienteDao clienteDao;
+    @EJB
+    private ContasPagarDao contasPagarDao;
+    @EJB
+    private ContasReceberDao contasReceberDao;
 
     @PostConstruct
     public void init() {
@@ -173,6 +181,40 @@ public class ImprimirRelatorioMB implements Serializable {
     public void setListaCliente(List<Cliente> listaCliente) {
         this.listaCliente = listaCliente;
     }
+
+    public BancoDao getBancoDao() {
+        return bancoDao;
+    }
+
+    public void setBancoDao(BancoDao bancoDao) {
+        this.bancoDao = bancoDao;
+    }
+
+    public ClienteDao getClienteDao() {
+        return clienteDao;
+    }
+
+    public void setClienteDao(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
+
+    public ContasPagarDao getContasPagarDao() {
+        return contasPagarDao;
+    }
+
+    public void setContasPagarDao(ContasPagarDao contasPagarDao) {
+        this.contasPagarDao = contasPagarDao;
+    }
+
+    public ContasReceberDao getContasReceberDao() {
+        return contasReceberDao;
+    }
+
+    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
+        this.contasReceberDao = contasReceberDao;
+    }
+    
+    
 
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
@@ -358,7 +400,15 @@ public class ImprimirRelatorioMB implements Serializable {
     }
 
     private void validarRelatorioFluxoCaixa() {
-        FluxoCaixaBean fluxoCaixaBean = new FluxoCaixaBean(dataInicial, dataFinal, cliente, "R");
+        List<Contaspagar> listaContaspagar = contasPagarDao.list("Select v from Contaspagar v where v.cliente.idcliente=" + cliente.getIdcliente()
+                + " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+                + "' order by v.dataVencimento");
+        List<Contasreceber> listaContasreceber = contasReceberDao.list("Select v from Contasreceber v where v.cliente.idcliente=" + cliente.getIdcliente()
+                + " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+                + "' order by v.dataVencimento"); 
+        FluxoCaixaBean fluxoCaixaBean = new FluxoCaixaBean(dataInicial, dataFinal, cliente, "R", listaContaspagar, listaContasreceber);
     }
 
 }

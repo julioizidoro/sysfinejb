@@ -207,7 +207,7 @@ public class CadUsuarioMB implements Serializable {
     public void gerarListaCliente() {
         // TODO Auto-generated catch block
 
-        listaCliente = clienteDao.list("Select From Cliente c");
+        listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
