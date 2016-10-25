@@ -5,7 +5,6 @@
  */
 package br.com.financemate.util;
 
-import br.com.financemate.connection.ConectionFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +14,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
