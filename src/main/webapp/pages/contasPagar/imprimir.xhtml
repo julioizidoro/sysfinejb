@@ -47,8 +47,8 @@
                 <p:selectOneMenu  id="cliente"  style="width: 220px;margin-left: 2%;"  value="#{imprimirRelatorioMB.cliente}" converter="ClienteConverter"
                              filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{imprimirRelatorioMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    <f:selectItems value="#{imprimirRelatorioMB.listaCliente}" var="clienteselecionado" style="font-size:10px;" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
-                    <f:attribute name="listaCliente" value="#{imprimirRelatorioMB.listaCliente}" style="font-size:10px;"/>
+                    <f:selectItems value="#{imprimirRelatorioMB.listaCliente}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                    <f:attribute name="listaCliente" value="#{imprimirRelatorioMB.listaCliente}" />
                     <p:ajax event="change" listener="#{imprimirRelatorioMB.gerarListaBanco()}" update="idconta"/>
                     <p:ajax event="change" listener="#{imprimirRelatorioMB.nomeComboConta()}" update="idconta"/>
                 </p:selectOneMenu> 

@@ -73,6 +73,8 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
     private OutrosLancamentosDao outrosLancamentosDao;
     @EJB
     private PlanoContasDao planoContasDao;
+    private float totalEntrada = 0.0f;
+    private float totalSaida = 0.0f;
 
     @PostConstruct
     public void init() {
@@ -197,6 +199,56 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         this.habilitarUnidade = habilitarUnidade;
     }
 
+    public BancoDao getBancoDao() {
+        return bancoDao;
+    }
+
+    public void setBancoDao(BancoDao bancoDao) {
+        this.bancoDao = bancoDao;
+    }
+
+    public ClienteDao getClienteDao() {
+        return clienteDao;
+    }
+
+    public void setClienteDao(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
+
+    public OutrosLancamentosDao getOutrosLancamentosDao() {
+        return outrosLancamentosDao;
+    }
+
+    public void setOutrosLancamentosDao(OutrosLancamentosDao outrosLancamentosDao) {
+        this.outrosLancamentosDao = outrosLancamentosDao;
+    }
+
+    public PlanoContasDao getPlanoContasDao() {
+        return planoContasDao;
+    }
+
+    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
+        this.planoContasDao = planoContasDao;
+    }
+
+    public float getTotalEntrada() {
+        return totalEntrada;
+    }
+
+    public void setTotalEntrada(float totalEntrada) {
+        this.totalEntrada = totalEntrada;
+    }
+
+    public float getTotalSaida() {
+        return totalSaida;
+    }
+
+    public void setTotalSaida(float totalSaida) {
+        this.totalSaida = totalSaida;
+    }
+    
+    
+
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
@@ -245,7 +297,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         caminhoRelatorio = "reports/Relatorios/outroslancamentos/reportConciliacao.jasper";
         nomeRelatorio = "Conciliacao";
         List<ConciliacaoBean> lista = gerarListaConciliacao();
-        File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
+        File f = new File(servletContext.getRealPath("resources/img/logo.jpg"));
         BufferedImage logo = ImageIO.read(f);
         parameters.put("logo", logo);
         parameters.put("dataInicial", dataIncial);
@@ -308,8 +360,17 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         lista = outrosLancamentosDao.list(sql);
         List<ConciliacaoBean> listaConciliacao = new ArrayList<ConciliacaoBean>();
         if (lista != null) {
-            saldoInicial = geralSqlSaldo();
-            Float saldoAtual = saldoInicial;
+            //saldoInicial = geralSqlSaldo();
+            List<Outroslancamentos> listaOutros = outrosLancamentosDao.list("SELECT o FROM Outroslancamentos o"  +
+        									" where o.dataVencimento<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'");
+            for (int i = 0; i < listaOutros.size(); i++) {
+                if (listaOutros.get(i).getValorEntrada() > 0f) {
+                    totalEntrada = totalEntrada + listaOutros.get(i).getValorEntrada();
+                }else if(listaOutros.get(i).getValorSaida() > 0f){
+                    totalSaida = totalSaida + listaOutros.get(i).getValorSaida();
+                }
+            }
+            Float saldoAtual = totalEntrada - totalSaida;
             for (int i = 0; i < lista.size(); i++) {
                 ConciliacaoBean conciliacao = new ConciliacaoBean();
                 conciliacao.setDataCompensacao(lista.get(i).getDataCompensacao());

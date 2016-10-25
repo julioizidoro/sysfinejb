@@ -572,7 +572,7 @@ public class CadContasPagarMB implements Serializable {
 
     public boolean salvarArquivoFTP() {
         Ftpdados dadosFTP = null;
-        dadosFTP = ftpDadosDao.find("Select f From FtpDados f");
+        dadosFTP = ftpDadosDao.find(1);
         if (dadosFTP == null) {
             return false;
         }

@@ -6,7 +6,6 @@
 
 package br.com.financemate.dao;
 
-import br.com.financemate.connection.ConectionFactory;
 import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.util.Formatacao;
 

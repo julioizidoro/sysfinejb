@@ -40,8 +40,10 @@ public class GerarRelatorio {
 
         JasperPrint arquivoPrint = null;
         HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+        response.reset();
         response.setContentType("application/pdf");
         response.addHeader("Content-disposition", "attachment; filename=\"" + nomeArquivo + ".pdf\"");
+        facesContext.responseComplete();
         arquivoPrint = JasperFillManager.fillReport(caminhoRelatorio, parameters, jrds);
         JasperExportManager.exportReportToPdfStream(arquivoPrint, response.getOutputStream());
         facesContext.getApplication().getStateManager().saveView(facesContext);
