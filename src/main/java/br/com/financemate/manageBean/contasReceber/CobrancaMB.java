@@ -260,6 +260,7 @@ public class CobrancaMB implements Serializable {
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("historico", historico);
             session.setAttribute("cobranca", cobranca);
+            session.setAttribute("contasReceber", contasReceber);
         }
         return "editarHistoricos";
     }

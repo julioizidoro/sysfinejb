@@ -27,9 +27,7 @@ public class VendasDao extends AbstractDao<Vendas>{
     }
     
     public Emissaonota getEmissao(int idVendas) throws SQLException{
-        manager.getTransaction().begin();
         Query q = manager.createQuery("select e from Emissaonota e where e.vendas.idvendas=" + idVendas);
-        manager.getTransaction().commit();
         Emissaonota emissor = null;
         if (q.getResultList().size()>0){
             emissor = (Emissaonota) q.getResultList().get(0);
@@ -39,9 +37,7 @@ public class VendasDao extends AbstractDao<Vendas>{
     
     
      public Emissaonota salvar(Emissaonota emissaonota)throws SQLException{
-        manager.getTransaction().begin();
         emissaonota = manager.merge(emissaonota);
-        manager.getTransaction().commit();
         return emissaonota;
     }
     

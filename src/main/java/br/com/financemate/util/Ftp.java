@@ -29,7 +29,7 @@ public class Ftp {
             return true;
         }else return false;
     }
-    
+      
     public String enviarArquivo(UploadedFile uploadedFile, String arquivoFTP) throws IOException{
         ftpClient.changeWorkingDirectory("/sysfin/contasPagar"); 
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
@@ -42,7 +42,7 @@ public class Ftp {
         	System.out.println(ftpClient.getReplyString());
             return "Erro Salvar Arquivo";
         }
-    }
+    }  
     
     public void desconectar() throws IOException{
         ftpClient.logout();

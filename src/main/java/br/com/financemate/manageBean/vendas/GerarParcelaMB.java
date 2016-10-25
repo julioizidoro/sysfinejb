@@ -348,7 +348,7 @@ public class GerarParcelaMB implements Serializable {
     }
 
     public void gerarListaParcelas() {
-        listarContasreceber = contasReceberDao.list("Select c from Contasreceber c Join Vendas v on c.venda=v.idvendas"
+        listarContasreceber = contasReceberDao.list("Select c from Contasreceber c "
                 + " where c.venda=" + vendas.getIdvendas());
         if (listarContasreceber == null) {
             listarContasreceber = new ArrayList<Contasreceber>();

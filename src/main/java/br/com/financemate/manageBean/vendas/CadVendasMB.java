@@ -456,9 +456,9 @@ public class CadVendasMB implements Serializable {
 
     public String nomeConta() {
         if (corPagarReceber.equalsIgnoreCase("color:red;")) {
-            return "Lan�ar Conta a Pagar";
+            return "Lançar Conta a Pagar";
         } else if (corPagarReceber.equalsIgnoreCase("color:blue;")) {
-            return "Lan�ar Conta a Receber";
+            return "Lançar Conta a Receber";
         } else {
             return "Valor Zerado";
         }
