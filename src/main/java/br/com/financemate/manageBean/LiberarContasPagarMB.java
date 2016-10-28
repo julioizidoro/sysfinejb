@@ -202,16 +202,16 @@ public class LiberarContasPagarMB implements Serializable {
     public String validarDados(Contaspagar contaspagar) {
         String mensagem = "";
         if (contaspagar.getCompetencia().equalsIgnoreCase("")) {
-            mensagem = mensagem + "Compet�ncia n�oo informada \r\n";
+            mensagem = mensagem + "Competência não informada \r\n";
         }
         if (contaspagar.getPlanocontas() == null) {
-            mensagem = mensagem + "Plano de contas n�o informado \r\n";
+            mensagem = mensagem + "Plano de contas não informado \r\n";
         }
         if (contaspagar.getDataCompensacao() == null) {
-            mensagem = mensagem + "Data de Compensa��o n�o informado \r\n";
+            mensagem = mensagem + "Data de Compensação não informado \r\n";
         }
         if (contaspagar.getDataAgendamento() == null) {
-            mensagem = mensagem + "Data de Agendamento n�o informado \r\n";
+            mensagem = mensagem + "Data de Agendamento não informado \r\n";
         }
         return mensagem;
     }
@@ -228,7 +228,7 @@ public class LiberarContasPagarMB implements Serializable {
             Operacaousuairo operacaousuairo = new Operacaousuairo();
             operacaousuairo.setContaspagar(contaspagar);
             operacaousuairo.setData(new Date());
-            operacaousuairo.setTipooperacao("Usu�rio Liberou");
+            operacaousuairo.setTipooperacao("Usuário Liberou");
             operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
             operacaoUsuarioDao.update(operacaousuairo);
         }

@@ -44,8 +44,8 @@
                 <p:selectOneMenu  id="cliente"  style="width: 220px;margin-left: 2%;"  value="#{imprimirContasReceberMB.cliente}" converter="ClienteConverter"
                              filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{imprimirContasReceberMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    <f:selectItems value="#{imprimirContasReceberMB.listaCliente}" var="clienteselecionado" style="font-size:10px;" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
-                    <f:attribute name="listaCliente" value="#{imprimirContasReceberMB.listaCliente}" style="font-size:10px;"/>
+                    <f:selectItems value="#{imprimirContasReceberMB.listaCliente}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                    <f:attribute name="listaCliente" value="#{imprimirContasReceberMB.listaCliente}" />
                 </p:selectOneMenu> 
              </h:panelGrid>
              <br />  
@@ -61,14 +61,14 @@
              <h:panelGrid style="margin-left: 1%;" columns="2" rendered="#{imprimirContasReceberMB.selecionadoTipoDocumento}">
             	 <p:outputLabel value="Tipo Documento" for="tipoDocumento"  />
             	<p:selectOneMenu id="tipoDocumento" style="width:194px;"  value="#{imprimirContasReceberMB.tipoDocumento}">
-                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
+                    <f:selectItem itemLabel="Todas" itemValue="Todos" noSelectionOption="true"/> 
                     <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
                     <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" /> 
                     <f:selectItem itemLabel="Cartão" itemValue="cartao" /> 
                     <f:selectItem itemLabel="Cheque" itemValue="Cheque" />
                     <f:selectItem itemLabel="Depósito" itemValue="Deposito" />
                 </p:selectOneMenu>
-            </h:panelGrid>
+            </h:panelGrid>  
              <br />
              <h:panelGrid id="idTipoRelatorio" rendered="#{imprimirContasReceberMB.selecionado}">
              	<h:panelGrid columns="3">

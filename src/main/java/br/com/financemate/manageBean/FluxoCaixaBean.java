@@ -3,7 +3,6 @@ package br.com.financemate.manageBean;
 import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.FluxoCaixaDao;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

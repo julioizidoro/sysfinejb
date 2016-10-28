@@ -143,6 +143,9 @@ public class CadVendasMB implements Serializable {
         } else {
             TipoDocumento = formapagamento.getTipoDocumento();
         }
+        if (importadoSystm == null) {
+            importadoSystm = false;
+        }
         gerarListaPlanoContas();
     }
 
@@ -402,6 +405,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("cliente", cliente);
         session.setAttribute("valorPagarReceber", valorPagarReceber);
         session.setAttribute("corPagarReceber", corPagarReceber);
+        session.setAttribute("importadoSystm", importadoSystm);
         return "cadBackOffice";
     }
 
@@ -414,6 +418,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("cliente", cliente);
         session.setAttribute("valorPagarReceber", valorPagarReceber);
         session.setAttribute("corPagarReceber", corPagarReceber);
+        session.setAttribute("importadoSystm", importadoSystm);
         return "cadVendas";
     }
 
@@ -438,6 +443,7 @@ public class CadVendasMB implements Serializable {
         }
         session.setAttribute("listaFormaPagamento", listaFormaPagamento);
         session.setAttribute("corPagarReceber", corPagarReceber);
+        session.setAttribute("importadoSystm", importadoSystm);
         return "cadRecebimento";
     }
 
@@ -477,6 +483,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("vendas", vendas);
         session.setAttribute("saldoRestante", saldoRestante);
         session.setAttribute("corPagarReceber", corPagarReceber);
+        session.setAttribute("importadoSystm", importadoSystm);
         return "lancaFormaPagamento";
     }
 
@@ -488,6 +495,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("produto", produto);
         session.setAttribute("cliente", cliente);
         session.setAttribute("corPagarReceber", corPagarReceber);
+        session.setAttribute("importadoSystm", importadoSystm);
         return "notaFiscal";
     }
 
@@ -549,6 +557,7 @@ public class CadVendasMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("valorPagarReceber", valorPagarReceber);
         session.setAttribute("vendas", vendas);
+        session.setAttribute("importadoSystm", importadoSystm);
     }
 
     public void escolherCorPagarReceber() {
@@ -624,6 +633,7 @@ public class CadVendasMB implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("planocontas", planocontas);
+        session.setAttribute("importadoSystm", importadoSystm);
         return "cadBackOffice";
     }
 
@@ -726,16 +736,16 @@ public class CadVendasMB implements Serializable {
     public String validarDados() {
         String mensagem = "";
         if (vendas.getNomeCliente() == null) {
-            mensagem = mensagem + "Cliente n�o informado \r\n";
+            mensagem = mensagem + "Cliente não informado \r\n";
         }
         if (vendas.getProduto().getIdproduto() == null) {
-            mensagem = mensagem + " Produto n�o informado \r\n";
+            mensagem = mensagem + " Produto não informado \r\n";
         }
         if (vendas.getValorBruto() == null) {
-            mensagem = mensagem + " Valor bruto n�o informado \r\n";
+            mensagem = mensagem + " Valor bruto não informado \r\n";
         }
         if (vendas.getDataVenda() == null) {
-            mensagem = mensagem + " Data da venda n�o informada \r\n";
+            mensagem = mensagem + " Data da venda não informada \r\n";
         }
         return mensagem;
     }
@@ -917,9 +927,11 @@ public class CadVendasMB implements Serializable {
             session.setAttribute("tipoDocumento", tipoDocumento);
             session.setAttribute("dataVencimento", dataVencimento);
             session.setAttribute("valorParcela", valorParcela);
+        session.setAttribute("importadoSystm", importadoSystm);
         }
         session.setAttribute("vendas", vendas);
         session.removeAttribute("listaFormaPagamento");
+        session.setAttribute("importadoSystm", importadoSystm);
         return "gerarParcelas";
     }
 
@@ -936,6 +948,7 @@ public class CadVendasMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
         session.setAttribute("formapagamento", formapagamento);
+        session.setAttribute("importadoSystm", importadoSystm);
         return "lancaFormaPagamento";
     }
 

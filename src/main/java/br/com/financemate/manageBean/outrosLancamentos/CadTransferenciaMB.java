@@ -165,7 +165,7 @@ public class CadTransferenciaMB implements Serializable {
         credito = pegarCredito(credito);
         credito.setPlanocontas(planocontas);
         outrosLancamentosDao.update(credito);
-        RequestContext.getCurrentInstance().closeDialog("Transfer�ncia feita com sucesso");
+        RequestContext.getCurrentInstance().closeDialog("Transferência feita com sucesso");
     }
 
     public Outroslancamentos pegarDebitar(Outroslancamentos debito) {

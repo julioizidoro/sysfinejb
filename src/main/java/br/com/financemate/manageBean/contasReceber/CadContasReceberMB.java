@@ -376,22 +376,22 @@ public class CadContasReceberMB implements Serializable {
     public String validarDados() {
         String mensagem = "";
         if (contasReceber.getCliente().equals("")) {
-            mensagem = mensagem + "Unidade n�o selecionada \r\n";
+            mensagem = mensagem + "Unidade não selecionada \r\n";
         }
         if (contasReceber.getNomeCliente().equals("")) {
-            mensagem = mensagem + "Nome do Cliente n�o informado \r\n";
+            mensagem = mensagem + "Nome do Cliente não informado \r\n";
         }
         if (contasReceber.getDataVencimento().equals(null)) {
-            mensagem = mensagem + "Data de vencimento n�o informado \r\n";
+            mensagem = mensagem + "Data de vencimento não informado \r\n";
         }
         if (contasReceber.getValorParcela().equals("")) {
-            mensagem = mensagem + "Valor n�o informado \r\n";
+            mensagem = mensagem + "Valor não informado \r\n";
         }
         if (contasReceber.getBanco().equals(null)) {
-            mensagem = mensagem + "Banco n�o selecionado";
+            mensagem = mensagem + "Banco não selecionado";
         }
         if (contasReceber.getNumeroDocumento().equalsIgnoreCase("")) {
-            mensagem = mensagem + "N�mero de documento n�o informado \r\n";
+            mensagem = mensagem + "Número de documento não informado \r\n";
         }
         return mensagem;
     }

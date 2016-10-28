@@ -59,6 +59,8 @@ public class RecebimentoContaMB implements Serializable {
     private ClienteDao clienteDao;
     @EJB
     private BancoDao bancoDao;
+    private Float valorAnteriorJuros = 0.0f;
+    private Float valorAnteriorDesagio= 0.0f;
 
     @PostConstruct
     public void init() {
@@ -327,7 +329,7 @@ public class RecebimentoContaMB implements Serializable {
         outroslancamentos.setValorEntrada(conta.getValorPago());
         outroslancamentos.setValorSaida(0f);
         outroslancamentos.setDataRegistro(new Date());
-        outroslancamentos.setDescricao("Recebimento atrav�s do contas a receber de " + conta.getNomeCliente());
+        outroslancamentos.setDescricao("Recebimento através do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
         outroslancamentos = outrosLancamentosDao.update(outroslancamentos);
 
@@ -337,16 +339,30 @@ public class RecebimentoContaMB implements Serializable {
         if (contasReceber.getJuros() == null && contasReceber.getJuros() == 0) {
             contasReceber.setJuros(0f);
         }
-
-        valorTotal = valorTotal + contasReceber.getJuros();
+        
+        if (valorAnteriorJuros == 0.0f) {
+            valorTotal = valorTotal + contasReceber.getJuros();
+            valorAnteriorJuros = contasReceber.getJuros();
+        }else{
+            valorTotal = valorTotal - valorAnteriorJuros;
+            valorTotal = valorTotal + contasReceber.getJuros();
+            valorAnteriorJuros = contasReceber.getJuros();
+        }
     }
 
     public void DebitarDesagio() {
         if (contasReceber.getDesagio() == null && contasReceber.getDesagio() == 0) {
             contasReceber.setDesagio(0f);
         }
+        if (valorAnteriorDesagio == 0.0f) {
+            valorTotal = valorTotal - contasReceber.getDesagio();
+            valorAnteriorDesagio = contasReceber.getDesagio();
+        }else{
+            valorTotal = valorTotal + valorAnteriorDesagio;
+            valorTotal = valorTotal - contasReceber.getDesagio();
+            valorAnteriorDesagio = contasReceber.getDesagio();
+        }
 
-        valorTotal = valorTotal - contasReceber.getDesagio();
     }
 
     public void lancaOutrosLancamentosParcial(Contasreceber conta) {
@@ -361,7 +377,7 @@ public class RecebimentoContaMB implements Serializable {
         outroslancamentos.setValorEntrada(valorParcial);
         outroslancamentos.setValorSaida(0f);
         outroslancamentos.setDataRegistro(new Date());
-        outroslancamentos.setDescricao("Recebimento parcial atrav�s do contas a receber de " + conta.getNomeCliente());
+        outroslancamentos.setDescricao("Recebimento parcial através do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
         outroslancamentos = outrosLancamentosDao.update(outroslancamentos);
 
@@ -370,7 +386,7 @@ public class RecebimentoContaMB implements Serializable {
     public String validarDadosRecebimentoParcial() {
         String msg = "";
         if (dataRecebimentoParcial == null) {
-            msg = msg + "Data de recebimento n�o informado";
+            msg = msg + "Data de recebimento não informado";
         }
         return msg;
     }
@@ -378,7 +394,7 @@ public class RecebimentoContaMB implements Serializable {
     public String validarDadosRecebimentoTotal() {
         String msg = "";
         if (contasReceber.getDataPagamento() == null) {
-            msg = msg + " Data de recebimento n�o informado";
+            msg = msg + " Data de recebimento não informado";
         }
         return msg;
     }

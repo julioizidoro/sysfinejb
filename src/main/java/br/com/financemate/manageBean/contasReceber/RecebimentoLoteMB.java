@@ -156,7 +156,7 @@ public class RecebimentoLoteMB implements Serializable {
     public String validarDadosRecebimentoLote() {
         String msg = "";
         if (dataPagamento == null) {
-            msg = msg + " Data de recebimento n�o informado";
+            msg = msg + " Data de recebimento não informado";
         }
         return msg;
     }
@@ -178,7 +178,7 @@ public class RecebimentoLoteMB implements Serializable {
         outroslancamentos.setValorEntrada(conta.getValorPago());
         outroslancamentos.setValorSaida(0f);
         outroslancamentos.setDataRegistro(new Date());
-        outroslancamentos.setDescricao("Recebimento atrav�s do contas a receber de " + conta.getNomeCliente());
+        outroslancamentos.setDescricao("Recebimento através do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
         outroslancamentos = outrosLancamentosDao.update(outroslancamentos);
 

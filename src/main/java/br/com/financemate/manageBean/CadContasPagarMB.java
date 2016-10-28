@@ -325,7 +325,7 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("Select c From Cliente c order by c.nomeFantasia");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
