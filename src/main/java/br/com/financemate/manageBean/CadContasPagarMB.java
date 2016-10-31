@@ -315,7 +315,7 @@ public class CadContasPagarMB implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.removeAttribute("file");
-        RequestContext.getCurrentInstance().closeDialog(null);
+        RequestContext.getCurrentInstance().closeDialog(new Contaspagar());
     }
 
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
@@ -772,6 +772,10 @@ public class CadContasPagarMB implements Serializable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    
+    public void gerarListaTotalPlanoConta(){
+        listaPlanoContas = planoContasDao.list("Select p From Planoconta p");
     }
 
 }

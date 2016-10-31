@@ -38,6 +38,8 @@ public class CadClienteMB implements Serializable {
     private ClienteDao clienteDao;
     @EJB
     private TipoPlanoContasDao tipoPlanoContaDao;
+    private Boolean noveDigito = false;
+    private String maskTelefone = "(99)9999-9999";
 
     @PostConstruct
     public void init() {
@@ -85,8 +87,45 @@ public class CadClienteMB implements Serializable {
         this.listarTipoPlanoContas = listarTipoPlanoContas;
     }
 
+    public ClienteDao getClienteDao() {
+        return clienteDao;
+    }
+
+    public void setClienteDao(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
+
+    public TipoPlanoContasDao getTipoPlanoContaDao() {
+        return tipoPlanoContaDao;
+    }
+
+    public void setTipoPlanoContaDao(TipoPlanoContasDao tipoPlanoContaDao) {
+        this.tipoPlanoContaDao = tipoPlanoContaDao;
+    }
+
+
+    public String getMaskTelefone() {
+        return maskTelefone;
+    }
+
+    public void setMaskTelefone(String maskTelefone) {
+        this.maskTelefone = maskTelefone;
+    }
+
+    public Boolean getNoveDigito() {
+        return noveDigito;
+    }
+
+    public void setNoveDigito(Boolean noveDigito) {
+        this.noveDigito = noveDigito;
+    }
+
+    
+    
+    
+
     public String cancelar() {
-        RequestContext.getCurrentInstance().closeDialog(null);
+        RequestContext.getCurrentInstance().closeDialog(new Cliente());
         return null;
     }
 
@@ -108,5 +147,15 @@ public class CadClienteMB implements Serializable {
         cliente = clienteDao.update(cliente);
         RequestContext.getCurrentInstance().closeDialog(cliente);
     }
+    
+    
+    public void verificarDigitoTelefone(){
+        if (noveDigito) {
+            maskTelefone = "(99)99999-9999";
+        }else{
+            maskTelefone = "(99)9999-9999";
+        }
+    }
+      
 
 }

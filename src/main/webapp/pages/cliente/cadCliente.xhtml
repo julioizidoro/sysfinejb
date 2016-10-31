@@ -15,7 +15,7 @@
  <h:body > 
         <h:form id="idFrmCadCliente" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-
+ 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
         		<br/> 
@@ -24,24 +24,30 @@
 
             <title  >Novo Cliente</title>
                 <br/>
+                <h:panelGrid columns="2" style="margin-left:74%;" id="panelCheckBoxTelefone">
+                    <p:selectBooleanCheckbox value="#{cadClienteMB.noveDigito}">
+                        <p:ajax listener="#{cadClienteMB.verificarDigitoTelefone()}" update="panelTelefone, telefone, panelCheckBoxTelefone" event="change"/>
+                    </p:selectBooleanCheckbox>
+                    <p:outputLabel value="9 digitos"/>
+                </h:panelGrid> 
                 <h:panelGrid columns="2" style="margin-left:4.8%;">
                 	<p:outputLabel value="Razão Social" for="razaosocial"  class="left" />
                 	<p:inputText id="razaosocial"  size="45" maxlength="100" class="left"  value="#{cadClienteMB.cliente.razaoSocial}" /> 
+                </h:panelGrid> 
+                <h:panelGrid columns="2" style="margin-left:65.8%; margin-top:-5.5%;" id="panelTelefone">
+                     <p:outputLabel value="Telefone" for="telefone"  class="cliente2"/> 
+                     <p:inputMask id="telefone" size="22" maxlength="100" class="left" mask="#{cadClienteMB.maskTelefone}" value="#{cadClienteMB.cliente.foneFixo}"/>
                 </h:panelGrid>
+                <br/> 
+                <h:panelGrid columns="2" style="margin-left:2.7%;">
+                    <p:outputLabel value="Nome Fantasia" for="nomefantasia"  class="left" />
+                    <p:inputText id="nomefantasia"    size="43" maxlength="100" class="left"  value="#{cadClienteMB.cliente.nomeFantasia}"/> 
+                </h:panelGrid>  
                 <h:panelGrid columns="2" style="margin-left:68%; margin-top:-5.7%;"> 
                      <p:outputLabel value="CNPJ" for="cnpj"  class="cliente"/>
                     <p:inputMask id="cnpj" size="23" maxlength="100"  class="left" mask="99.999.999/9999-99" value="#{cadClienteMB.cliente.cnpj}"/>
                 </h:panelGrid>
-                <br/>
-                <h:panelGrid columns="2" style="margin-left:2.7%;">
-                    <p:outputLabel value="Nome Fantasia" for="nomefantasia"  class="left" />
-                    <p:inputText id="nomefantasia"    size="43" maxlength="100" class="left"  value="#{cadClienteMB.cliente.nomeFantasia}"/> 
-                </h:panelGrid>   
-                <h:panelGrid columns="2" style="margin-left:65.8%; margin-top:-5.5%;">
-                     <p:outputLabel value="Telefone" for="telefone"  class="cliente2"/> 
-                    <p:inputMask id="telefone" size="22" maxlength="100" class="left" mask="(99)9999-9999" value="#{cadClienteMB.cliente.foneFixo}"/>
-                </h:panelGrid>
-                    <br/>
+                    <br/> 
                     <h:panelGrid columns="2" style="margin-left:1%;">
 	                    <p:outputLabel value="Tipo Logradouro"  class="left"/>
 	                    <p:selectOneMenu id="tipologra" value="#{cadClienteMB.cliente.tipoLogradouro}" style="width:154px" class="left">

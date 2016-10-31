@@ -171,7 +171,7 @@ public class HistoricoMB implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.removeAttribute("historico");
-        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Hist�rico de Cobran�a Salvo.");
+        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Histórico de Cobrança Salvo.");
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
         return "historicoCobrancas";
     }

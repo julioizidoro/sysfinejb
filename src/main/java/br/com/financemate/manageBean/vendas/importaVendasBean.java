@@ -56,7 +56,7 @@ public class importaVendasBean {
 		VendasSystmBean[] vendasSystmBean;
 		try {
 
-			URL url = new URL("http://192.168.1.150:8080/wssysfin/webresources/generic/listaVenda");
+			URL url = new URL("http://localhost:8080/wssysfin-1.0-SNAPSHOT/webresources/generic/listaVenda");
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 			con.setRequestProperty("Accept", "application/json");

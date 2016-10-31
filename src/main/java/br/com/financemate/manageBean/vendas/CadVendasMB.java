@@ -95,6 +95,7 @@ public class CadVendasMB implements Serializable {
     private ProdutoDao produtoDao;
     @EJB
     private VendasDao vendasDao;
+    private Cliente clienteImportacao;
 
     @PostConstruct
     public void init() {
@@ -360,6 +361,80 @@ public class CadVendasMB implements Serializable {
     public void setImportadoSystm(Boolean importadoSystm) {
         this.importadoSystm = importadoSystm;
     }
+
+    public BancoDao getBancoDao() {
+        return bancoDao;
+    }
+
+    public void setBancoDao(BancoDao bancoDao) {
+        this.bancoDao = bancoDao;
+    }
+
+    public ClienteDao getClienteDao() {
+        return clienteDao;
+    }
+
+    public void setClienteDao(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
+
+    public ContasPagarDao getContasPagarDao() {
+        return contasPagarDao;
+    }
+
+    public void setContasPagarDao(ContasPagarDao contasPagarDao) {
+        this.contasPagarDao = contasPagarDao;
+    }
+
+    public ContasReceberDao getContasReceberDao() {
+        return contasReceberDao;
+    }
+
+    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
+        this.contasReceberDao = contasReceberDao;
+    }
+
+    public FormaPagamentoDao getFormaPagamentoDao() {
+        return formaPagamentoDao;
+    }
+
+    public void setFormaPagamentoDao(FormaPagamentoDao formaPagamentoDao) {
+        this.formaPagamentoDao = formaPagamentoDao;
+    }
+
+    public PlanoContasDao getPlanoContasDao() {
+        return planoContasDao;
+    }
+
+    public void setPlanoContasDao(PlanoContasDao planoContasDao) {
+        this.planoContasDao = planoContasDao;
+    }
+
+    public ProdutoDao getProdutoDao() {
+        return produtoDao;
+    }
+
+    public void setProdutoDao(ProdutoDao produtoDao) {
+        this.produtoDao = produtoDao;
+    }
+
+    public VendasDao getVendasDao() {
+        return vendasDao;
+    }
+
+    public void setVendasDao(VendasDao vendasDao) {
+        this.vendasDao = vendasDao;
+    }
+
+    public Cliente getClienteImportacao() {
+        return clienteImportacao;
+    }
+
+    public void setClienteImportacao(Cliente clienteImportacao) {
+        this.clienteImportacao = clienteImportacao;
+    }
+    
+    
 
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
@@ -927,7 +1002,7 @@ public class CadVendasMB implements Serializable {
             session.setAttribute("tipoDocumento", tipoDocumento);
             session.setAttribute("dataVencimento", dataVencimento);
             session.setAttribute("valorParcela", valorParcela);
-        session.setAttribute("importadoSystm", importadoSystm);
+            session.setAttribute("importadoSystm", importadoSystm);
         }
         session.setAttribute("vendas", vendas);
         session.removeAttribute("listaFormaPagamento");
@@ -1046,12 +1121,12 @@ public class CadVendasMB implements Serializable {
         }
         if (cliente != null) {
             gerarListaProduto();
-            List<Produto> listaProduto = produtoDao.list("Select p From Produto p Where p.idproduto=" + vendaImportada.getVendasSystmBean().getIdProduto()
+            List<Produto> listaProduto = produtoDao.list("Select p From Produto p Where p.codigosystm=" + vendaImportada.getVendasSystmBean().getIdProduto()
                     + " and p.cliente.idcliente=" + cliente.getIdcliente());
             for (int i = 0; i < listaProduto.size(); i++) {
                 produto = listaProduto.get(i);
-            }
-        }
+            } 
+        } 
         vendas.setNomeFornecedor(vendaImportada.getVendasSystmBean().getFornecedor());
         vendas.setConsultor(vendaImportada.getVendasSystmBean().getConsultor());
         vendas.setNomeCliente(vendaImportada.getVendasSystmBean().getNomeCliente());
@@ -1083,16 +1158,34 @@ public class CadVendasMB implements Serializable {
                 listaVendasSystm = new ArrayList<VendasSystmBean>();
             }
             for (int i = 0; i < listaVendasSystm.size(); i++) {
-                if (dataInicial == null && dataFinal == null) {
-                    vendaImportada = setandoVenda(listaVendasSystm.get(i));
-                    listaImportada.add(vendaImportada);
+                if (clienteImportacao != null) {
+                    if (clienteImportacao.getCodigosystm() == listaVendasSystm.get(i).getIdUnidade()) {
+                        if (dataInicial == null && dataFinal == null) {
+                            vendaImportada = setandoVenda(listaVendasSystm.get(i));
+                            listaImportada.add(vendaImportada);
+                        } else {
+                            String dataSystmImportada = Formatacao.ConvercaoDataSql(listaVendasSystm.get(i).getDataVenda());
+                            String dataInicialFiltro = Formatacao.ConvercaoDataSql(dataInicial);
+                            String dataFinalFiltro = Formatacao.ConvercaoDataSql(dataFinal);
+                            if ((dataSystmImportada.compareTo(dataInicialFiltro) >= 0) && (dataSystmImportada.compareTo(dataFinalFiltro) <= 0)) {
+                                vendaImportada = setandoVenda(listaVendasSystm.get(i));
+                                listaImportada.add(vendaImportada);
+                            }
+                        }
+
+                    }
                 } else {
-                    String dataSystmImportada = Formatacao.ConvercaoDataSql(listaVendasSystm.get(i).getDataVenda());
-                    String dataInicialFiltro = Formatacao.ConvercaoDataSql(dataInicial);
-                    String dataFinalFiltro = Formatacao.ConvercaoDataSql(dataFinal);
-                    if ((dataSystmImportada.compareTo(dataInicialFiltro) >= 0) && (dataSystmImportada.compareTo(dataFinalFiltro) <= 0)) {
+                    if (dataInicial == null && dataFinal == null) {
                         vendaImportada = setandoVenda(listaVendasSystm.get(i));
                         listaImportada.add(vendaImportada);
+                    } else {
+                        String dataSystmImportada = Formatacao.ConvercaoDataSql(listaVendasSystm.get(i).getDataVenda());
+                        String dataInicialFiltro = Formatacao.ConvercaoDataSql(dataInicial);
+                        String dataFinalFiltro = Formatacao.ConvercaoDataSql(dataFinal);
+                        if ((dataSystmImportada.compareTo(dataInicialFiltro) >= 0) && (dataSystmImportada.compareTo(dataFinalFiltro) <= 0)) {
+                            vendaImportada = setandoVenda(listaVendasSystm.get(i));
+                            listaImportada.add(vendaImportada);
+                        }
                     }
                 }
             }

@@ -64,6 +64,10 @@ public class CobrancaMB implements Serializable {
     private ContasReceberDao contasReceberDao;
     @EJB
     private HistoricoCobrancaDao historicoCobrancaDao;
+    private Boolean noveDigito1 = false;
+    private Boolean noveDigito2 = false;
+    private String maskFone1 = "(99) 9999-9999";
+    private String maskFone2 = "(99) 9999-9999";
 
     @PostConstruct
     public void init() {
@@ -176,6 +180,82 @@ public class CobrancaMB implements Serializable {
     public Contasreceber getContasReceber() {
         return contasReceber;
     }
+
+    public CobrancaDao getCobrancaDao() {
+        return cobrancaDao;
+    }
+
+    public void setCobrancaDao(CobrancaDao cobrancaDao) {
+        this.cobrancaDao = cobrancaDao;
+    }
+
+    public ClienteDao getClienteDao() {
+        return clienteDao;
+    }
+
+    public void setClienteDao(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
+
+    public CobrancaParcelasDao getCobrancaParcelaDao() {
+        return cobrancaParcelaDao;
+    }
+
+    public void setCobrancaParcelaDao(CobrancaParcelasDao cobrancaParcelaDao) {
+        this.cobrancaParcelaDao = cobrancaParcelaDao;
+    }
+
+    public ContasReceberDao getContasReceberDao() {
+        return contasReceberDao;
+    }
+
+    public void setContasReceberDao(ContasReceberDao contasReceberDao) {
+        this.contasReceberDao = contasReceberDao;
+    }
+
+    public HistoricoCobrancaDao getHistoricoCobrancaDao() {
+        return historicoCobrancaDao;
+    }
+
+    public void setHistoricoCobrancaDao(HistoricoCobrancaDao historicoCobrancaDao) {
+        this.historicoCobrancaDao = historicoCobrancaDao;
+    }
+
+    public Boolean getNoveDigito1() {
+        return noveDigito1;
+    }
+
+    public void setNoveDigito1(Boolean noveDigito1) {
+        this.noveDigito1 = noveDigito1;
+    }
+
+     
+
+    public Boolean getNoveDigito2() {
+        return noveDigito2;
+    }
+
+    public void setNoveDigito2(Boolean noveDigito2) {
+        this.noveDigito2 = noveDigito2;
+    }
+
+    public String getMaskFone1() {
+        return maskFone1;
+    }
+
+    public void setMaskFone1(String maskFone1) {
+        this.maskFone1 = maskFone1;
+    }
+
+    public String getMaskFone2() {
+        return maskFone2;
+    }
+
+    public void setMaskFone2(String maskFone2) {
+        this.maskFone2 = maskFone2;
+    }
+    
+    
 
     public void setContasReceber(Contasreceber contasReceber) {
         this.contasReceber = contasReceber;
@@ -359,6 +439,23 @@ public class CobrancaMB implements Serializable {
             }
         }
 
+    }
+    
+    public void verificarDigitoFone1(){
+        if (noveDigito1) {
+            maskFone1 = "(99) 99999-9999";
+        }else{
+            maskFone1 = "(99) 9999-9999";
+        }
+    }
+    
+    
+    public void verificarDigitoFone2(){
+        if (noveDigito2) {
+            maskFone2 = "(99) 99999-9999";
+        }else{
+            maskFone2 = "(99) 9999-9999";
+        }
     }
 
 }

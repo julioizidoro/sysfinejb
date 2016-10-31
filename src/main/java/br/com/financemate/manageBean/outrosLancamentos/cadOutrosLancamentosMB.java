@@ -6,12 +6,9 @@ import br.com.financemate.dao.OutrosLancamentosDao;
 import br.com.financemate.dao.PlanoContaTipoDao;
 import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -249,34 +246,34 @@ public class cadOutrosLancamentosMB implements Serializable {
     public String validarDados() {
         String mensagem = "";
         if (outrosLancamentos.getCliente() == null) {
-            mensagem = mensagem + "Unidade n�o informada \r\n";
+            mensagem = mensagem + "Unidade não informada \r\n";
         }
         if (outrosLancamentos.getDataRegistro().equals(null)) {
-            mensagem = mensagem + " Data de Registro n�o informada \n";
+            mensagem = mensagem + " Data de Registro não informada \n";
         }
         if (outrosLancamentos.getTipoDocumento().equalsIgnoreCase(null)) {
-            mensagem = mensagem + "Tipo de documento n�o informado \r\n";
+            mensagem = mensagem + "Tipo de documento não informado \r\n";
         }
         if (outrosLancamentos.getBanco().equals(null)) {
-            mensagem = mensagem + "Conta n�o selecionada \r\n";
+            mensagem = mensagem + "Conta não selecionada \r\n";
         }
         if (outrosLancamentos.getDataVencimento().equals(null)) {
-            mensagem = mensagem + "Data de Vencimento n�o informada \r\n";
+            mensagem = mensagem + "Data de Vencimento não informada \r\n";
         }
         if (outrosLancamentos.getValorEntrada() == null) {
-            mensagem = mensagem + "Valor de entrada n�o informada \r\n";
+            outrosLancamentos.setValorEntrada(0.0f);
         }
         if (outrosLancamentos.getValorSaida() == null) {
-            mensagem = mensagem + "Valor de saida n�o informada \r\n";
+            outrosLancamentos.setValorSaida(0.0f);
         }
         if (outrosLancamentos.getDescricao().equalsIgnoreCase(null)) {
-            mensagem = mensagem + "Descri��o n�o informada \r\n";
+            mensagem = mensagem + "Descrição não informada \r\n";
         }
         if (outrosLancamentos.getPlanocontas() == null) {
-            mensagem = mensagem + "Plano de contas n�o informada \r\n";
+            mensagem = mensagem + "Plano de contas não informada \r\n";
         }
         if (outrosLancamentos.getDataCompensacao() == null) {
-            mensagem = mensagem + "Data de compensa��o n�o informada \r\n";
+            mensagem = mensagem + "Data de compensação não informada \r\n";
         }
 
         return mensagem;

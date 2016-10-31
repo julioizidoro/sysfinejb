@@ -70,17 +70,27 @@
             <br />
             <hr />
             <br />
-            <h:panelGrid style="margin-left:1%;">
-            	<p:outputLabel value="Fone 1"/>
+            <h:panelGrid columns="4" id="panelCheckBoxTelefone">
+                <p:selectBooleanCheckbox value="#{cobrancaMB.noveDigito1}" style="margin-left: 78%;">
+                    <p:ajax listener="#{cobrancaMB.verificarDigitoFone1()}" update="idPanelFone1, idFone1, panelCheckBoxTelefone" event="change"/>
+                </p:selectBooleanCheckbox>
+                <p:outputLabel value="9 digitos"/>
+                <p:selectBooleanCheckbox value="#{cobrancaMB.noveDigito2}" style="margin-left:87%;">
+                    <p:ajax listener="#{cobrancaMB.verificarDigitoFone2()}" update="idPanelFone2, idFone2, panelCheckBoxTelefone" event="change"/>
+                </p:selectBooleanCheckbox>
+                <p:outputLabel value="9 digitos"/>
             </h:panelGrid>
-            <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
-            	<p:inputMask id="fone1" mask="(99) 9999-9999" value="#{cobrancaMB.cobranca.fone1}" size="17"/>
+            <h:panelGrid style="margin-left:1%;" >
+                <p:outputLabel value="Fone 1" />
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:10%; margin-top:-4.5%;" id="idPanelFone1">
+                <p:inputMask  mask="#{cobrancaMB.maskFone1}" value="#{cobrancaMB.cobranca.fone1}" size="17" id="idFone1"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:34%; margin-top:-4.5%;">
             	<p:outputLabel value="Fone 2" />
             </h:panelGrid>
-            <h:panelGrid style="margin-left:43%; margin-top:-5%;">
-            	<p:inputMask id="fone2" mask="(99) 9999-9999" value="#{cobrancaMB.cobranca.fone2}" size="17"/>
+            <h:panelGrid style="margin-left:43%; margin-top:-5%;" id="idPanelFone2">
+                <p:inputMask mask="#{cobrancaMB.maskFone2}" value="#{cobrancaMB.cobranca.fone2}" size="17" id="idFone2"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 67%; margin-top:-5%;">
             	<p:outputLabel value="Vcto. Original" for="dataVencOri" /> 

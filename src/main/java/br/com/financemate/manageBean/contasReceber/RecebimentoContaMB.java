@@ -342,13 +342,13 @@ public class RecebimentoContaMB implements Serializable {
         
         if (valorAnteriorJuros == 0.0f) {
             valorTotal = valorTotal + contasReceber.getJuros();
-            valorAnteriorJuros = contasReceber.getJuros();
+            valorAnteriorJuros = contasReceber.getJuros(); 
         }else{
             valorTotal = valorTotal - valorAnteriorJuros;
             valorTotal = valorTotal + contasReceber.getJuros();
             valorAnteriorJuros = contasReceber.getJuros();
         }
-    }
+    }  
 
     public void DebitarDesagio() {
         if (contasReceber.getDesagio() == null && contasReceber.getDesagio() == 0) {
