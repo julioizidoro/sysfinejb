@@ -313,7 +313,7 @@ public class CadContasPagarMB implements Serializable {
     public void setPlanocontatipo(Planocontatipo planocontatipo) {
         this.planocontatipo = planocontatipo;
     }
-  
+
     public void cancelar() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -398,12 +398,12 @@ public class CadContasPagarMB implements Serializable {
                 salvarTransferencia();
             }
             if (file != null) {
-                nomeArquivo();
+                String arquivoFtp = nomeArquivoSemId();
                 if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
-                        Nomearquivo nomearquivo = new Nomearquivo();
-                        nomearquivo.setNomearquivo01(nomeAquivoFTP);
-                        nomearquivo.setContaspagar(contaPagar);
-                        nomeArquivoDao.update(nomearquivo);
+                    Nomearquivo nomearquivo = new Nomearquivo();
+                    nomearquivo.setNomearquivo01(arquivoFtp);
+                    nomearquivo.setContaspagar(contaPagar);
+                    nomeArquivoDao.update(nomearquivo);
                 }
             }
             FacesContext fc = FacesContext.getCurrentInstance();
@@ -460,7 +460,13 @@ public class CadContasPagarMB implements Serializable {
                 cptransferencia = repetirValoresTransferencia(copiaTranferencia);
             }
             if (file != null) {
-                salvarArquivoFTP();
+                String arquivoFtp = nomeArquivoSemId();
+                if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
+                    Nomearquivo nomearquivo = new Nomearquivo();
+                    nomearquivo.setNomearquivo01(arquivoFtp);
+                    nomearquivo.setContaspagar(contaPagar);
+                    nomeArquivoDao.update(nomearquivo);
+                }
             }
             Contaspagar copia = new Contaspagar();
             copia = contaPagar;
@@ -597,7 +603,6 @@ public class CadContasPagarMB implements Serializable {
         try {
             nomeAquivoFTP = nomeArquivo();
             String msg = ftp.enviarArquivo(file, nomeAquivoFTP);
-            nomeArquivos.add(nomeAquivoFTP);
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(msg, ""));
             return true;
@@ -659,6 +664,11 @@ public class CadContasPagarMB implements Serializable {
         } else {
             nomeAquivoFTP = "ContasPagar-" + file.getFileName().trim();
         }
+        return nomeAquivoFTP;
+    }
+
+    public String nomeArquivoSemId() {
+        nomeAquivoFTP = "ContasPagar-" + file.getFileName().trim();
         return nomeAquivoFTP;
     }
 
@@ -776,8 +786,8 @@ public class CadContasPagarMB implements Serializable {
             e.printStackTrace();
         }
     }
-    
-    public void gerarListaTotalPlanoConta(){
+
+    public void gerarListaTotalPlanoConta() {
         listaPlanoContas = planoContasDao.list("Select p From Planoconta p");
     }
 
