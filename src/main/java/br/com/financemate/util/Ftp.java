@@ -1,8 +1,10 @@
 package br.com.financemate.util;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.primefaces.model.UploadedFile;
@@ -28,20 +30,21 @@ public class Ftp {
         if (ftpClient.isConnected()){
             return true;
         }else return false;
-    }
-      
+    } 
+       
     public String enviarArquivo(UploadedFile uploadedFile, String arquivoFTP) throws IOException{
-        ftpClient.changeWorkingDirectory("/sysfin/contasPagar");
+        ftpClient.changeWorkingDirectory("/sysfin/contasPagar/");
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-        FileInputStream arqEnviar = (FileInputStream) uploadedFile.getInputstream();
+        InputStream arquivo = null;  
+        arquivo = new BufferedInputStream(uploadedFile.getInputstream());
         arquivoFTP = new String(arquivoFTP.getBytes("ISO-8859-1"), "UTF-8");
-        if (ftpClient.storeFile(arquivoFTP, arqEnviar)) {
-        	arqEnviar.close();
+        if (ftpClient.storeFile(arquivoFTP, arquivo)) {
+        	arquivo.close();
             return "Arquivo: "+ arquivoFTP + " salvo com Sucesso";
         } else {
-        	arqEnviar.close();
+        	arquivo.close();
             return "Erro Salvar Arquivo";
-        }
+        }  
     }  
     
     public void desconectar() throws IOException{

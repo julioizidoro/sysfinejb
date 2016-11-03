@@ -11,9 +11,9 @@
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
     </h:head>
-    
 
- <h:body style="background:white;" > 
+
+    <h:body style="background:white;" > 
         <h:form id="idFrmCadContasPagar" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
@@ -21,21 +21,21 @@
                 <p:graphicImage name="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-			
-			<h:panelGrid style="margin-left:1%;">
-            	<p:fileUpload  label="#{cadContasPagarMB.AdicionarNomeAnexado()}" fileUploadListener="#{cadContasPagarMB.fileUploadListener}"  value="#{cadContasPagarMB.file}" mode="advanced"
-                     update="messages" auto="true">
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+            <h:panelGrid style="margin-left:1%;">
+                <p:fileUpload dragDropSupport="false" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|docx|xls|xlsx|doc|pptx|cdr|eps|bmp|mp4|ai|psd)$/" label="#{cadContasPagarMB.AdicionarNomeAnexado()}" fileUploadListener="#{cadContasPagarMB.fileUploadListener}"  value="#{cadContasPagarMB.file}" mode="advanced"
+                              update="messages" >
                 </p:fileUpload>
             </h:panelGrid>
-            
+
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                <p:commandLink title="Confirmar"  style="text-decoration: none; margin-left:35%;"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >
-                    <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-                </p:commandLink>
-                <p:commandLink title="Cancelar" style="margin-left: 10%;text-decoration: none"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >
-                    <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-                </p:commandLink>
+            <p:commandLink title="Confirmar"  style="text-decoration: none; margin-left:35%;"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <p:commandLink title="Cancelar" style="margin-left: 10%;text-decoration: none"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>
         </h:form> 
- </h:body>
+    </h:body>
 </html>

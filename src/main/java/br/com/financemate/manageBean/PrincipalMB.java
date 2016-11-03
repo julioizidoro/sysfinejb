@@ -146,7 +146,7 @@ public class PrincipalMB implements Serializable {
             mes = "SETEMBRO";
         } else if (mes.equalsIgnoreCase("10")) {
             mes = "OUTUBRO";
-        } else if (mes.equalsIgnoreCase("1")) {
+        } else if (mes.equalsIgnoreCase("11")) {
             mes = "NOVEMBRO";
         } else if (mes.equalsIgnoreCase("12")) {
             mes = "DEZEMBRO";
@@ -178,7 +178,7 @@ public class PrincipalMB implements Serializable {
             mes = "SETEMBRO";
         } else if (mes.equalsIgnoreCase("10")) {
             mes = "OUTUBRO";
-        } else if (mes.equalsIgnoreCase("1")) {
+        } else if (mes.equalsIgnoreCase("11")) {
             mes = "NOVEMBRO";
         } else if (mes.equalsIgnoreCase("12")) {
             mes = "DEZEMBRO";

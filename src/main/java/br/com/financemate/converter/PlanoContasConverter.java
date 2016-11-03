@@ -8,6 +8,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import br.com.financemate.model.Planocontas;
+import java.util.ArrayList;
 
 @FacesConverter(value = "PlanoContasConverter")
 public class PlanoContasConverter implements Converter {
@@ -15,6 +16,7 @@ public class PlanoContasConverter implements Converter {
     public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
         List<Planocontas> listaPlanoConta = (List<Planocontas>) arg1.getAttributes().get("listaPlanoConta");
         if (listaPlanoConta==null){
+            listaPlanoConta = new ArrayList<>();
             return null;
         }
         for (Planocontas planoConta : listaPlanoConta) {
