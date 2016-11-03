@@ -477,7 +477,7 @@ public class ContasPagarMB implements Serializable {
             Operacaousuairo operacaousuairo = new Operacaousuairo();
             operacaousuairo.setContaspagar(contaspagar);
             operacaousuairo.setData(new Date());
-            operacaousuairo.setTipooperacao("Usu�rio Autorizou");
+            operacaousuairo.setTipooperacao("Usuário Autorizou");
             operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
             operacaoUsuarioDao.update(operacaousuairo);
         }

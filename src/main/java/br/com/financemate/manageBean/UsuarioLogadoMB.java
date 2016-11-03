@@ -107,7 +107,7 @@ public class UsuarioLogadoMB implements Serializable {
             usuario.setSenha(senha);
             usuario = usuarioDao.find("Select u From Usuario u Where u.login='" + usuario.getLogin() + "' and u.senha='" + usuario.getSenha() + "'");
             if (usuario == null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aten��o!", "Acesso Negado."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atenção!", "Acesso Negado."));
             } else {
                 if (usuario.getCliente() > 0) {
                     cliente = clienteDao.find(usuario.getCliente());

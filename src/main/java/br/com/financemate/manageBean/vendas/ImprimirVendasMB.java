@@ -322,7 +322,7 @@ public class ImprimirVendasMB implements Serializable {
             nomeRelatorio = "Mapa de Vendas Gerencial";
         } else if (relatorio.equalsIgnoreCase("vendasRecebimento")) {
             caminhoRelatorio = "reports/Relatorios/vendas/reportVendasRecebimento.jasper";
-            nomeRelatorio = "Relat�rio de Vendas por Recebimentos";
+            nomeRelatorio = "Relatório de Vendas por Recebimentos";
         } else if (relatorio.equalsIgnoreCase("faturamentoRecebimento")) {
             caminhoRelatorio = "reports/Relatorios/vendas/reportFaturamentoRecebimento.jasper";
             nomeRelatorio = "Faturamento X Recebimento";

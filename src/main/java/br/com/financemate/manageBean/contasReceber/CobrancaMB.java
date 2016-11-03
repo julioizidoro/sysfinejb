@@ -317,7 +317,7 @@ public class CobrancaMB implements Serializable {
             Logger.getLogger(CobrancaMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         cobranca.getHistoricocobrancaList().add(historico);
-        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Historico de Cobran�a Salvo.");
+        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Historico de Cobrançaa Salvo.");
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
         return "cobranca";
     }

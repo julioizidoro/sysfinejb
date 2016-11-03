@@ -31,15 +31,15 @@ public class Ftp {
     }
       
     public String enviarArquivo(UploadedFile uploadedFile, String arquivoFTP) throws IOException{
-        ftpClient.changeWorkingDirectory("/sysfin/contasPagar"); 
+        ftpClient.changeWorkingDirectory("/sysfin/contasPagar");
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
         FileInputStream arqEnviar = (FileInputStream) uploadedFile.getInputstream();
+        arquivoFTP = new String(arquivoFTP.getBytes("ISO-8859-1"), "UTF-8");
         if (ftpClient.storeFile(arquivoFTP, arqEnviar)) {
-        	ftpClient.getReplyString();
-        	desconectar();
+        	arqEnviar.close();
             return "Arquivo: "+ arquivoFTP + " salvo com Sucesso";
         } else {
-        	System.out.println(ftpClient.getReplyString());
+        	arqEnviar.close();
             return "Erro Salvar Arquivo";
         }
     }  

@@ -30,7 +30,7 @@
     <class>br.com.financemate.model.Usuario</class>
     <class>br.com.financemate.model.Vendas</class>
     <class>br.com.financemate.model.Vendascontasreceber</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <validation-mode>NONE</validation-mode>
-  </persistence-unit> 
-</persistence>  
+  </persistence-unit>
+</persistence>

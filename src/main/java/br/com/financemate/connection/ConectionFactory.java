@@ -36,7 +36,7 @@ public class ConectionFactory {
         emf = Persistence.createEntityManagerFactory("sysfinPU");
         manager = emf.createEntityManager();
         if (!manager.isOpen()) {
-        	JOptionPane.showMessageDialog(null, "Conex�o fechada");
+        	JOptionPane.showMessageDialog(null, "Conexão fechada");
         }
         return manager;
     }

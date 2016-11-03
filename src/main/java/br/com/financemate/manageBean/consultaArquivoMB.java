@@ -90,7 +90,7 @@ public class consultaArquivoMB implements Serializable {
         nomeArquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
         if (nomeArquivo == null) {
             nomeArquivo = new Nomearquivo();
-            nomeArquivo.setNomearquivo01("N�o existe arquivo anexado");
+            nomeArquivo.setNomearquivo01("Não existe arquivo anexado");
         }
     }
 
@@ -143,7 +143,7 @@ public class consultaArquivoMB implements Serializable {
     }
 
     public boolean desabilitarDownload() {
-        if (nomeArquivo.getNomearquivo01().equalsIgnoreCase("N�o existe arquivo anexado")) {
+        if (nomeArquivo.getNomearquivo01().equalsIgnoreCase("Não existe arquivo anexado")) {
             return false;
         } else {
             return true;

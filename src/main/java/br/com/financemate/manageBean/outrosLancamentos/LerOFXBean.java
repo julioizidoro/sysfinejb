@@ -33,7 +33,7 @@ public class LerOFXBean {
 					conta = dados.substring(4,dados.length()-1);
 					System.out.println("cc: " + b.getMessage().getAccount().getAccountNumber());
 					System.out.println("ag: " + b.getMessage().getAccount().getBranchId());
-					System.out.println("balan�o final: " + b.getMessage().getLedgerBalance().getAmount());
+					System.out.println("balanço final: " + b.getMessage().getLedgerBalance().getAmount());
 					System.out.println("dataDoArquivo: " + b.getMessage().getLedgerBalance().getAsOfDate());
 					BankStatementResponse message = b.getMessage();
 					List<Transaction> listTransactions = message.getTransactionList().getTransactions();

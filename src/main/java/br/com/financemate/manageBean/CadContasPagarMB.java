@@ -11,7 +11,6 @@ import br.com.financemate.dao.PlanoContaTipoDao;
 import br.com.financemate.dao.PlanoContasDao;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -384,9 +383,9 @@ public class CadContasPagarMB implements Serializable {
         if (mensagem == "") {
             contaPagar.setStatus("Ativo");
             if (contaPagar.getIdcontasPagar() != null) {
-                operacaousuairo.setTipooperacao("Usu�rio Alterou");
+                operacaousuairo.setTipooperacao("Usuário Alterou");
             } else {
-                operacaousuairo.setTipooperacao("Usu�rio Cadastrou");
+                operacaousuairo.setTipooperacao("Usuário Cadastrou");
             }
             contaPagar = contasPagarDao.update(contaPagar);
             operacaousuairo = salvarOperacaoUsuario(contaPagar, operacaousuairo);
@@ -439,9 +438,9 @@ public class CadContasPagarMB implements Serializable {
         if (mensagem == "") {
             contaPagar.setStatus("Ativo");
             if (contaPagar.getIdcontasPagar() != null) {
-                operacaousuairo.setTipooperacao("Usu�rio Alterou");
+                operacaousuairo.setTipooperacao("Usuário Alterou");
             } else {
-                operacaousuairo.setTipooperacao("Usu�rio Cadastrou");
+                operacaousuairo.setTipooperacao("Usuário Cadastrou");
             }
             contaPagar = contasPagarDao.update(contaPagar);
             operacaousuairo = salvarOperacaoUsuario(contaPagar, operacaousuairo);
@@ -499,25 +498,25 @@ public class CadContasPagarMB implements Serializable {
     public String validarDados() {
         String mensagem = "";
         if (contaPagar.getFornecedor() == null) {
-            mensagem = mensagem + "Fornecedor n�o informado \r\n";
+            mensagem = mensagem + "Fornecedor não informado \r\n";
         }
         if (contaPagar.getValor().equals(0f)) {
-            mensagem = mensagem + "Valor n�o informado \n";
+            mensagem = mensagem + "Valor não informado \n";
         }
         if (contaPagar.getDescricao().equalsIgnoreCase("")) {
-            mensagem = mensagem + "Descri��o n�o informado \r\n";
+            mensagem = mensagem + "Descrição não informado \r\n";
         }
         if (contaPagar.getBanco() == null) {
-            mensagem = mensagem + "Conta n�o selecionada \r\n";
+            mensagem = mensagem + "Conta não selecionada \r\n";
         }
         if (contaPagar.getDataVencimento() == null) {
-            mensagem = mensagem + "Data de Vencimento n�o informada \r\n";
+            mensagem = mensagem + "Data de Vencimento não informada \r\n";
         }
         if (contaPagar.getFormaPagamento() == null) {
-            mensagem = mensagem + "Forma de Pagamento n�o selecionada \r\n";
+            mensagem = mensagem + "Forma de Pagamento não selecionada \r\n";
         }
         if (contaPagar.getNumeroDocumento() == "") {
-            mensagem = mensagem + "N�mero de documento n�o informado \r\n";
+            mensagem = mensagem + "Número de documento não informado \r\n";
         }
 
         return mensagem;
@@ -546,7 +545,7 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public String nomeAnexo() {
-        if (consultarArquivos().equalsIgnoreCase("N�o existe arquivo anexado")) {
+        if (consultarArquivos().equalsIgnoreCase("Não existe arquivo anexado")) {
             nomeAnexo = "Anexar";
             return nomeAnexo;
         } else {
@@ -743,7 +742,7 @@ public class CadContasPagarMB implements Serializable {
             nomearquivo = nomeArquivoDao.find("SELECT n FROM Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
             if (nomearquivo == null) {
                 nomearquivo = new Nomearquivo();
-                nomearquivo.setNomearquivo01("N�o existe arquivo anexado");
+                nomearquivo.setNomearquivo01("Não existe arquivo anexado");
 
             }
             nomeFile = nomearquivo.getNomearquivo01();
@@ -752,7 +751,7 @@ public class CadContasPagarMB implements Serializable {
             if (file != null) {
                 nomeFile = file.getFileName();
             } else {
-                nomeFile = "N�o existe arquivo anexado";
+                nomeFile = "Não existe arquivo anexado";
             }
             return nomeFile;
         }

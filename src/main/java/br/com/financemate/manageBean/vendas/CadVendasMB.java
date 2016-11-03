@@ -909,39 +909,39 @@ public class CadVendasMB implements Serializable {
     public String validaDadosDocumentoBoleto() {
         String msg = "";
         if (formapagamento.getCpf() == "") {
-            msg = msg + "Cpf n�o informado \r \n";
+            msg = msg + "Cpf não informado \r \n";
         }
 
         if (formapagamento.getTipoLogradouro() == "") {
-            msg = msg + " Tipo Logradouro n�o informado \r \n";
+            msg = msg + " Tipo Logradouro não informado \r \n";
         }
 
         if (formapagamento.getLogradouro() == "") {
-            msg = msg + " Logradouro n�o informado \r \n";
+            msg = msg + " Logradouro não informado \r \n";
         }
 
         if (formapagamento.getCep() == "") {
-            msg = msg + " Cep n�o informado \r \n";
+            msg = msg + " Cep não informado \r \n";
         }
 
         if (formapagamento.getNumero() == "") {
-            msg = msg + " N�mero do endere�o n�o informado \r \n";
+            msg = msg + " Número do endereço não informado \r \n";
         }
 
         if (formapagamento.getBairro() == "") {
-            msg = msg + " Bairro n�o informado \r \n";
+            msg = msg + " Bairro não informado \r \n";
         }
 
         if (formapagamento.getCidade() == "") {
-            msg = msg + " Cidade n�o informado \r \n";
+            msg = msg + " Cidade não informado \r \n";
         }
 
         if (formapagamento.getComplemento() == "") {
-            msg = msg + " Complemento n�o informado";
+            msg = msg + " Complemento não informado";
         }
 
         if (formapagamento.getEstado() == "") {
-            msg = msg + " Estado n�o informado";
+            msg = msg + " Estado não informado";
         }
 
         return msg;
@@ -1040,7 +1040,7 @@ public class CadVendasMB implements Serializable {
         emissaonota.setEstado(cliente.getEstado());
     }
 
-    /* -----PARA PEGAR S� 1 VENDA------
+    /* -----PARA PEGAR Só 1 VENDA------
 	
 	public void importaVenda(){
 		importaVendasBean importaVendasBean = new importaVendasBean();

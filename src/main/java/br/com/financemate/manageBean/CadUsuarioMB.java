@@ -184,13 +184,13 @@ public class CadUsuarioMB implements Serializable {
     public String validarDados() {
         String mensagem = "";
         if (usuario.getNome().equalsIgnoreCase("")) {
-            mensagem = mensagem + " Voc� N�o informou seu nome \r\n";
+            mensagem = mensagem + " Você Não informou seu nome \r\n";
         }
         if (usuario.getLogin().equalsIgnoreCase("")) {
-            mensagem = mensagem + " Voc� n�o informou seu login \r\n";
+            mensagem = mensagem + " Você não informou seu login \r\n";
         }
         if (usuario.getSenha().equalsIgnoreCase("")) {
-            mensagem = mensagem + " Voc� n�o informou sua senha \r\n";
+            mensagem = mensagem + " Você não informou sua senha \r\n";
         }
         return mensagem;
     }

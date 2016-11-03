@@ -266,7 +266,7 @@ public class ImprimirRelatorioMB implements Serializable {
                 periodo = "Periodo : " + Formatacao.ConvercaoDataPadrao(dataInicial)
                         + "    " + Formatacao.ConvercaoDataPadrao(dataFinal);
             } else {
-                periodo = "Compet�ncia : " + competencia;
+                periodo = "Competência : " + competencia;
             }
 
         } else {

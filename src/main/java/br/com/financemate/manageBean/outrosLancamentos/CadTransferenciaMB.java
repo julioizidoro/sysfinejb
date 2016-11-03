@@ -59,7 +59,7 @@ public class CadTransferenciaMB implements Serializable {
             bancoDebito = new Banco();
             bancoCredito = new Banco();
             outroslancamentos = new Outroslancamentos();
-            outroslancamentos.setDescricao("Transfer�ncia");
+            outroslancamentos.setDescricao("Transferência");
             outroslancamentos.setDataRegistro(new Date());
         }
         gerarListaCliente();
