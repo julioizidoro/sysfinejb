@@ -20,6 +20,10 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 import br.com.financemate.model.Usuario;
+import br.com.financemate.util.Criptografia;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 
 @Named
@@ -81,6 +85,7 @@ public class UsuarioMB implements Serializable {
         if (usuario.getIdusuario() != null) {
             mensagem mensagem = new mensagem();
             mensagem.saveMessagem();
+            gerarListaUsuario();
         }
     }
 
@@ -121,6 +126,22 @@ public class UsuarioMB implements Serializable {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
+        }
+    }
+    
+    
+    public void resetarSenhaUsuario(Usuario usuario) {
+        String senhaResetada;
+        try {
+            senhaResetada = Criptografia.encript("senha");
+            if (usuario != null) {
+                usuario.setSenha(senhaResetada);
+                usuarioDao.update(usuario);
+                mensagem mensagem = new mensagem();
+                mensagem.resetaSenha();
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UsuarioMB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

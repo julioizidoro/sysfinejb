@@ -196,7 +196,7 @@ public class CadUsuarioMB implements Serializable {
     }
 
     public boolean verificacaoLogin() {
-        Usuario user = usuarioDao.find("Select u From Usuario u Where u.Login='" + usuario.getLogin() + "'");
+        Usuario user = usuarioDao.find("Select u From Usuario u Where u.login='" + usuario.getLogin() + "'");
         if (user == null) {
             return true;
         } else {
@@ -220,5 +220,7 @@ public class CadUsuarioMB implements Serializable {
             habilitarCliente = false;
         }
     }
+    
+    
 
 }

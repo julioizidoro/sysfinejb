@@ -42,6 +42,7 @@ public class consultaArquivoMB implements Serializable {
     private FtpDadosDao ftpDadosDao;
     @EJB
     private NomeArquivoDao nomeArquivoDao;
+    private Ftpdados ftpdados;
 
     @PostConstruct
     public void init() {
@@ -50,6 +51,7 @@ public class consultaArquivoMB implements Serializable {
         contaspagar = (Contaspagar) session.getAttribute("contapagar");
         session.removeAttribute("contapagar");
         consultarArquivos();
+        ftpdados = ftpDadosDao.find(1);
     }
 
     public StreamedContent getFile() {
@@ -83,6 +85,16 @@ public class consultaArquivoMB implements Serializable {
     public void setNomeArquivo(Nomearquivo nomeArquivo) {
         this.nomeArquivo = nomeArquivo;
     }
+
+    public Ftpdados getFtpdados() {
+        return ftpdados;
+    }
+
+    public void setFtpdados(Ftpdados ftpdados) {
+        this.ftpdados = ftpdados;
+    }
+    
+    
 
     public void consultarArquivos() {
         // TODO Auto-generated catch block
@@ -148,6 +160,11 @@ public class consultaArquivoMB implements Serializable {
         } else {
             return true;
         }
+    }
+    
+    
+    public void pegarFtpDados(){
+        ftpdados = ftpDadosDao.find(1);
     }
 
 }

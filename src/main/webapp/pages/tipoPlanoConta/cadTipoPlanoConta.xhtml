@@ -39,11 +39,12 @@
 	                    <f:attribute name="listaPlanoConta" value="#{cadTipoPlanoContaMB.listarPlanoContas}"/>
 	                    
 	            </p:selectOneMenu> 
-	            <p:commandLink   action="#{cadTipoPlanoContaMB.adicionarPlanoConta()}" update="idPlanoContas" style="margin-left:25%;text-decoration:none;" title="Adicionar">
+	            <p:commandLink   action="#{cadTipoPlanoContaMB.adicionarPlanoConta()}" update="idPlanoContas, idPlanoConta" style="margin-left:25%;text-decoration:none;" title="Adicionar">
 					<img src="../../resources/img/iconeplus.png"/>
 				</p:commandLink>
-            </h:panelGrid>
+            </h:panelGrid>  
             <p:contextMenu  style="background:white;">
+                <p:menuitem value="Excluir"  icon=" ui-icon-pencil"  action="#{cadTipoPlanoContaMB.excluirPlanoConta(cadTipoPlanoContaMB.planocontastipo)}" update="idPlanoContas, idPlanoConta" /> 
             </p:contextMenu>   
             <p:dataTable id="idPlanoContas" var="planoContasTipo"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadTipoPlanoContaMB.listaPlanoContaTipo}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80"   rowKey="#{planoContasTipo.idplanocontatipo}"  rows="10" style="margin-bottom:20px;"> 
@@ -51,9 +52,9 @@
                 <p:column headerText="Descrição" style=" background:white; color:black; border:none; text-align:left;">
                     <h:outputText value="#{planoContasTipo.planocontas.descricao}" /> 
                 </p:column>
-            </p:dataTable>
+            </p:dataTable>  
 			<hr />
-			<br />
+			<br />  
             <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"  action="#{cadTipoPlanoContaMB.salvar()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>

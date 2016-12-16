@@ -19,6 +19,7 @@
              <hr style="margin-left:17%; width:80%;"/>  
                     <p:contextMenu for="idTabelaUsuario" style="background:white;">
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{usuarioMB.editar(usuarioMB.usuario)}" update="idTabelaUsuario" /> 
+                        <p:menuitem value="Resetar Senha"  icon=" ui-icon-trash" update="frmConsultaUsuario, :frmConsultaUsuario:growl"  action="#{usuarioMB.resetarSenhaUsuario(usuarioMB.usuario)}" /> 
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaUsuario"  var="usuario"  value="#{usuarioMB.listaUsuario}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{usuarioMB.usuario}" selectionMode="single" rowKey="#{usuario.idusuario}">

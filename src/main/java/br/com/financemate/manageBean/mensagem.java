@@ -38,7 +38,7 @@ public class mensagem {
     
     public void naoLiberar() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Você esta tentando liberar uma conta não autorizada", ""));
+        context.addMessage(null, new FacesMessage("Vocï¿½ esta tentando liberar uma conta nï¿½o autorizada", ""));
     }
     
     public void recebido() {
@@ -48,7 +48,7 @@ public class mensagem {
     
     public void informacaoNaoPreenchida() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Informações obrigatórias para gerar a parcela não informada", ""));
+        context.addMessage(null, new FacesMessage("Informaï¿½ï¿½es obrigatï¿½rias para gerar a parcela nï¿½o informada", ""));
     }
     
     public void recebidoParcial() {
@@ -58,7 +58,7 @@ public class mensagem {
     
     public void RecebimentoParcialAcimaValor() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Você inseriu um valor parcial maior que o valor da parcela", ""));
+        context.addMessage(null, new FacesMessage("Vocï¿½ inseriu um valor parcial maior que o valor da parcela", ""));
     }
     
     public void cancelado() {
@@ -73,7 +73,7 @@ public class mensagem {
     
     public void historico() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Histórico Salvo com Sucesso", ""));
+        context.addMessage(null, new FacesMessage("Histï¿½rico Salvo com Sucesso", ""));
     }
     
     public void acesso() {
@@ -88,12 +88,12 @@ public class mensagem {
     
     public void alteracao() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Alteração Negada", ""));
+        context.addMessage(null, new FacesMessage("Alteraï¿½ï¿½o Negada", ""));
     }
     
     public void competencia() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Competência, Data Agendamento, Plano de Contas ou Compensão", "Alguns dos itens citados não foram informados"));
+        context.addMessage(null, new FacesMessage("Competï¿½ncia, Data Agendamento, Plano de Contas ou Compensï¿½o", "Alguns dos itens citados nï¿½o foram informados"));
     }
     
     public void excluirConfirmacao() {
@@ -103,12 +103,12 @@ public class mensagem {
     
     public void cobrancasSelecionadas() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Cobranças selecionadas com sucesso", ""));
+        context.addMessage(null, new FacesMessage("Cobranï¿½as selecionadas com sucesso", ""));
     }
     
     public void cobrancasNaoSelecionadas() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Cobranças não selecionadas no modulo contas a receber", ""));
+        context.addMessage(null, new FacesMessage("Cobranï¿½as nï¿½o selecionadas no modulo contas a receber", ""));
     }
     
     public void valorAcimaPermitidoGerarParcela() {
@@ -123,27 +123,27 @@ public class mensagem {
     
     public void salvarVisualizarParcela() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Você precisa salvar a conta a receber para visualizar as parcelas", "Após salvar, vá em editar para visualizar"));
+        context.addMessage(null, new FacesMessage("Vocï¿½ precisa salvar a conta a receber para visualizar as parcelas", "Apï¿½s salvar, vï¿½ em editar para visualizar"));
     }
     
     public void numeroDocumentosIguais() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Você inseriu um número de documento que ja existe uma conta a receber", ""));
+        context.addMessage(null, new FacesMessage("Vocï¿½ inseriu um nï¿½mero de documento que ja existe uma conta a receber", ""));
     }
     
     public void tipoDocumentoNaoFormaPagamento() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Você não inseriu o tipo de documento", ""));
+        context.addMessage(null, new FacesMessage("Vocï¿½ nï¿½o inseriu o tipo de documento", ""));
     }
     
     public void dataNaoFormaPagamento() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Você não inseriu a data", ""));
+        context.addMessage(null, new FacesMessage("Vocï¿½ nï¿½o inseriu a data", ""));
     }
     
     public void alteracaoSenha() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Alteração de senha", ""));
+        context.addMessage(null, new FacesMessage("AlteraÃ§Ã£o de senha", ""));
     }
     
     public void valorSuperiorAoRestante() {
@@ -153,12 +153,12 @@ public class mensagem {
     
     public void naoContemVenda() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Não contém uma venda", ""));
+        context.addMessage(null, new FacesMessage("Nï¿½o contï¿½m uma venda", ""));
     }
     
     public void existeLogin() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(" Ja existe um cadastro de usuário com este login", ""));
+        context.addMessage(null, new FacesMessage(" Ja existe um cadastro de usuï¿½rio com este login", ""));
     }
     
     public void notificacao(String msg) {
@@ -166,7 +166,12 @@ public class mensagem {
         context.addMessage(null, new FacesMessage(msg, ""));
     }
     
+    public void resetaSenha() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Senha resetada com sucesso!!", ""));
+    }
+    
     public void warn() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenï¿½ï¿½o!", "Campos em vermelho nï¿½o preenchido."));
     }
 }

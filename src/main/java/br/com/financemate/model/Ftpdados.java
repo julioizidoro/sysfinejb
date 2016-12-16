@@ -29,6 +29,9 @@ public class Ftpdados implements Serializable {
     @Size(max = 20)
     @Column(name = "password")
     private String password;
+     @Size(max = 100)
+    @Column(name = "hostupload")
+    private String hostupload;
 
     public Ftpdados() {
     }
@@ -68,6 +71,16 @@ public class Ftpdados implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getHostupload() {
+        return hostupload;
+    }
+
+    public void setHostupload(String hostupload) {
+        this.hostupload = hostupload;
+    }
+    
+    
 
     @Override
     public int hashCode() {

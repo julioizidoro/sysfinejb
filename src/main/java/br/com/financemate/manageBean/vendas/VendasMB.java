@@ -82,6 +82,9 @@ public class VendasMB implements Serializable {
         }
         gerarListaCliente();
         desabilitarUnidade();
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            cliente =  clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+        }
     }
 
     public Formapagamento getFormapagamento() {

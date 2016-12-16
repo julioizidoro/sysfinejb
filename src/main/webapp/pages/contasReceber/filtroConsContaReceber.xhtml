@@ -29,9 +29,9 @@
             <h:panelGrid style="margin-left:1%;">
             	<p:outputLabel value="Unidade" class="left3"/>
             </h:panelGrid>
-           <h:panelGrid style="margin-left:10%;margin-top:-4.5%;">
+           <h:panelGrid style="margin-left:10%;margin-top:-4.5%;"> 
            		<p:selectOneMenu  id="cliente"  style="width: 200px;"  value="#{contasReceberMB.cliente}" converter="ClienteConverter"
-                             filter="true" filterMatchMode="contains" panelStyle="width:180px" >
+                                          filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{contasReceberMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems value="#{contasReceberMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{contasReceberMB.listaCliente}"/>
@@ -51,7 +51,7 @@
            <h:panelGrid style="margin-left:1%;">
            		<p:outputLabel value="N° Venda"/>
            </h:panelGrid>
-           <h:panelGrid style="margin-left:11%; margin-top:-4.5%;">
+           <h:panelGrid style="margin-left:11%; margin-top:-4.5%;"> 
            		 <p:inputText size="10"  value="#{contasReceberMB.nVenda}"/> 
            </h:panelGrid>
            <h:panelGrid style="margin-left:30%; margin-top:-4.5%;">

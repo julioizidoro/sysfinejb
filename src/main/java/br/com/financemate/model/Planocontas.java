@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -34,9 +32,6 @@ public class Planocontas implements Serializable {
     @Basic(optional = false)
     @Column(name = "idplanoContas")
     private Integer idplanoContas;
-    @Size(max = 20)
-    @Column(name = "numeroConta")
-    private String numeroConta;
     @Size(max = 100)
     @Column(name = "descricao")
     private String descricao;
@@ -65,14 +60,6 @@ public class Planocontas implements Serializable {
 
     public void setIdplanoContas(Integer idplanoContas) {
         this.idplanoContas = idplanoContas;
-    }
-
-    public String getNumeroConta() {
-        return numeroConta;
-    }
-
-    public void setNumeroConta(String numeroConta) {
-        this.numeroConta = numeroConta;
     }
 
     public String getDescricao() {

@@ -4,8 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:pe="http://primefaces.org/ui/extensions">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -26,11 +25,7 @@
 
             <title  >Novo Plano de Conta</title>
             
-            <h:panelGrid columns="2" style="margin-left:2%;">
-                 <p:outputLabel value="Número" for="numero"  class="left3"/>
-                 <p:inputText id="numero" size="8" style="text-align: right;"  class="left3" value="#{cadPlanoContaMB.planocontas.numeroConta}"/>
-             </h:panelGrid>
-             <h:panelGrid columns="2" style="margin-left:31%; margin-top:-7%;">
+             <h:panelGrid columns="2" style="margin-left:1%;">
                     <p:outputLabel value="Descrição" for="descricao" class="left3" />
                     <p:inputText size="40" id="descricao"  class="left3"  value="#{cadPlanoContaMB.planocontas.descricao}"/>
              </h:panelGrid>

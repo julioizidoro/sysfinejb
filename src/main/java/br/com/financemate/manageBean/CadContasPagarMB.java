@@ -113,6 +113,8 @@ public class CadContasPagarMB implements Serializable {
             contaPagar = new Contaspagar();
             if (usuarioLogadoMB.getCliente() != null) {
                 cliente = usuarioLogadoMB.getCliente();
+                gerarListaBanco();
+                gerarListaPlanoContas();
             } else if (cliente == null) {
                 cliente = new Cliente();
             }
@@ -590,7 +592,7 @@ public class CadContasPagarMB implements Serializable {
         if (dadosFTP == null) {
             return false;
         }
-        Ftp ftp = new Ftp(dadosFTP.getHost(), dadosFTP.getUser(), dadosFTP.getPassword());
+        Ftp ftp = new Ftp(dadosFTP.getHostupload(), dadosFTP.getUser(), dadosFTP.getPassword());
         try {
             if (!ftp.conectar()) {
                 mostrarMensagem(null, "Erro conectar FTP", "");
@@ -625,7 +627,7 @@ public class CadContasPagarMB implements Serializable {
         if (dadosFTP == null) {
             return false;
         }
-        Ftp ftp = new Ftp(dadosFTP.getHost(), dadosFTP.getUser(), dadosFTP.getPassword());
+        Ftp ftp = new Ftp(dadosFTP.getHostupload(), dadosFTP.getUser(), dadosFTP.getPassword());
         try {
             if (!ftp.conectar()) {
                 mostrarMensagem(null, "Erro conectar FTP", "Erro");

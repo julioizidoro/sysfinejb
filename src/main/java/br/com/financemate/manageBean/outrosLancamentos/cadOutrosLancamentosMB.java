@@ -82,6 +82,10 @@ public class cadOutrosLancamentosMB implements Serializable {
         //gerarListaPlanoContas();
         desabilitarUnidade();
         outrosLancamentos.setDataRegistro(new Date());
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+            gerarListaBanco();
+        }
     }
 
     public String getTipoDocumento() {

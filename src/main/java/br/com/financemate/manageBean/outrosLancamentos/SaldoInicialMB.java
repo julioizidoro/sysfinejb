@@ -3,12 +3,10 @@ package br.com.financemate.manageBean.outrosLancamentos;
 import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.SaldoDao;
+import br.com.financemate.manageBean.UsuarioLogadoMB;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -23,6 +21,7 @@ import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Saldo;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 
 @Named
 @ViewScoped
@@ -32,6 +31,8 @@ public class SaldoInicialMB implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
+    @Inject
+    private UsuarioLogadoMB usuarioLogadoMB;
     private Saldo saldo;
     private List<Saldo> listaSaldo;
     private Cliente cliente;
@@ -44,11 +45,17 @@ public class SaldoInicialMB implements Serializable {
     private ClienteDao clienteDao;
     @EJB
     private SaldoDao saldoDao;
+    private boolean habilitarUnidade;
 
     @PostConstruct
     public void init() {
         listaSaldo = new ArrayList<Saldo>();
         gerarListaCliente();
+        desabilitarUnidade();
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+            gerarListaBanco();
+        }
     }
 
     public Saldo getSaldo() {
@@ -99,6 +106,16 @@ public class SaldoInicialMB implements Serializable {
         this.listaBanco = listaBanco;
     }
 
+    public boolean isHabilitarUnidade() {
+        return habilitarUnidade;
+    }
+
+    public void setHabilitarUnidade(boolean habilitarUnidade) {
+        this.habilitarUnidade = habilitarUnidade;
+    }
+    
+    
+
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
@@ -142,6 +159,16 @@ public class SaldoInicialMB implements Serializable {
     public String cancelar() {
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
+    }
+    
+    
+     public void desabilitarUnidade() {
+        if (usuarioLogadoMB.getCliente() != null) {
+            habilitarUnidade = true;
+        } else {
+            habilitarUnidade = false;
+        }
+
     }
 
 }

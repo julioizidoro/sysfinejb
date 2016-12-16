@@ -30,7 +30,7 @@
 			 <h:panelGrid columns="2" style="margin-left:1%;">
            		<p:outputLabel value="Unidade"/>
            		<p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{saldoInicialMB.cliente}" converter="ClienteConverter"
-                             filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                                          filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{saldoInicialMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems  value="#{saldoInicialMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{saldoInicialMB.listaCliente}"/>

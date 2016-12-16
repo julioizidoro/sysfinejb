@@ -25,21 +25,17 @@
             	  <h:panelGrid columns="4" style=" margin-left:8%; margin-top:-12%;">
 	            	<h:panelGrid >   
 	            		<p:outputLabel value="Nome do usuário" style="color:white"/> 
-	                    <p:inputText id="nome" size="23" style="padding:2px;"  class="meio" value="#{usuarioLogadoMB.usuario.login}" required="required" requiredMessage="Campo Obrigatorio"/>
+	                    <p:inputText id="nome" size="23" style="padding:2px;"  class="meio" value="#{usuarioLogadoMB.login}" required="required" requiredMessage="Campo Obrigatorio"/>
 	                </h:panelGrid>   
 	                <h:panelGrid style=" margin-left:10%;">
 	                	<p:outputLabel value="Senha" style="color:white"/>
-	                    <p:password id="senha" size="23" style="padding:2px;"  class="meio" value="#{usuarioLogadoMB.usuario.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
+	                    <p:password id="senha" size="23" style="padding:2px;"  class="meio" value="#{usuarioLogadoMB.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
 	                </h:panelGrid>
 	              </h:panelGrid>  
-                <h:panelGrid columns="1" style="margin-left:46%; margin-top:-3.5%;">  
+                <h:panelGrid columns="1" style="margin-left:46%; margin-top:-2.5%;">  
                 	<p:commandLink title="Entra"   style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" update="growl">
                 		<img src="resources/img/iconeEntrar.png" width="20" height="20"/>
             		</p:commandLink> 
-            		<p:commandLink title="Alterar Senha" style="text-decoration: none" update="growl" action="#{usuarioLogadoMB.validarTrocarSenha()}" >
-                		<p:ajax event="dialogReturn" listener="#{usuarioLogadoMB.retornoDialogAlteracaoSenha}" update="growl"/>
-                		<img src="resources/img/iconeTrocaSenha.png" width="20" height="20"/>
-            		</p:commandLink>
                 </h:panelGrid>
             </div>
         </h:form>

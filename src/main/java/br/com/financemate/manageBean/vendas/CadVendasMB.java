@@ -148,6 +148,10 @@ public class CadVendasMB implements Serializable {
             importadoSystm = false;
         }
         gerarListaPlanoContas();
+        desabilitarUnidade();
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+        }
     }
 
     public List<Formapagamento> getListaSelecionadosFormaPagamentos() {

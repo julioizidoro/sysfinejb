@@ -52,6 +52,7 @@ public class CadTransferenciaMB implements Serializable {
     private OutrosLancamentosDao outrosLancamentosDao;
     @EJB
     private PlanoContasDao planoContasDao;
+    private boolean habilitarUnidade;
 
     @PostConstruct
     public void init() {
@@ -63,6 +64,12 @@ public class CadTransferenciaMB implements Serializable {
             outroslancamentos.setDataRegistro(new Date());
         }
         gerarListaCliente();
+        desabilitarUnidade();
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+            gerarListaBanco();
+        }
+        
     }
 
     public Banco getBancoCredito() {
@@ -137,6 +144,16 @@ public class CadTransferenciaMB implements Serializable {
         this.usuarioLogadoMB = usuarioLogadoMB;
     }
 
+    public boolean isHabilitarUnidade() {
+        return habilitarUnidade;
+    }
+
+    public void setHabilitarUnidade(boolean habilitarUnidade) {
+        this.habilitarUnidade = habilitarUnidade;
+    }
+    
+    
+
     public void gerarListaBanco() {
         String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente();
         listaBancoDebito = bancoDao.list(sql);
@@ -207,6 +224,16 @@ public class CadTransferenciaMB implements Serializable {
         if (listaCliente == null || listaCliente.isEmpty()) {
             listaCliente = new ArrayList<Cliente>();
         }
+    }
+    
+    
+     public void desabilitarUnidade() {
+        if (usuarioLogadoMB.getCliente() != null) {
+            habilitarUnidade = true;
+        } else {
+            habilitarUnidade = false;
+        }
+
     }
 
 }

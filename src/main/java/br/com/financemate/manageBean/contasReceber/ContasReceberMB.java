@@ -104,7 +104,11 @@ public class ContasReceberMB implements Serializable {
         gerarListaCliente();
         getUsuarioLogadoMB();
         verificarCliente();
-
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            desabilitarUnidade();
+            criarConsultaContaReceber();
+            cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+        }
     }
 
     public Date getDataRecebimentoInicial() {
@@ -476,6 +480,8 @@ public class ContasReceberMB implements Serializable {
     public void setValorTotalRecebido(float valorTotalRecebido) {
         this.valorTotalRecebido = valorTotalRecebido;
     }
+    
+    
 
     public String novaConta() {
         Map<String, Object> options = new HashMap<String, Object>();

@@ -255,8 +255,9 @@ public class grafico implements Serializable {
         animatedModel1 = initLinearModel();
         animatedModel1.setAnimate(true);
         animatedModel1.getAxes().put(AxisType.X, new CategoryAxis("Dia"));
-        animatedModel1.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
+       // animatedModel1.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         animatedModel1.setSeriesColors("66cc66, FE2E2E, A4A4A4");
+        animatedModel1.setLegendPosition("se");
         animatedModel1.setZoom(true);
         Axis yAxis = animatedModel1.getAxis(AxisType.Y);
         yAxis.setLabel("R$");

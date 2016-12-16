@@ -17,7 +17,7 @@
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog id="dialog" style="width:80%;" widgetVar="statusDialog" modal="true" header="Status"  draggable="false" closable="false" resizable="false" showHeader="false" >
-                <p:graphicImage  valor="../../resources/img/ajax-carregando.gif"/>
+                <p:graphicImage value="../../resources/img/ajax-carregando.gif"/>
             </p:dialog>
             <title  >Visualizar Arquivo</title>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
@@ -25,10 +25,13 @@
              <h:panelGrid style="margin-left: 1%" columns="3">
             	<p:outputLabel value="Nome do Arquivo" />
                 <p:inputText style="margin-left: 2%;" id="nomeArquivo" size="40" value="#{consultaArquivoMB.nomeArquivo.nomearquivo01}" readonly="true"/>
-	            <h:panelGroup  rendered="#{consultaArquivoMB.desabilitarDownload()}">
-	                <a title="Download" name="download" href="http://200.175.61.147:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank" style="text-decoration:none;font-size:18px;" type="button">
-	                	<img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
-	                </a>
+	            <h:panelGroup   rendered="#{consultaArquivoMB.desabilitarDownload()}"> 
+                        
+                        <a  title="Download" name="download" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank" style="text-decoration:none;font-size:18px;" type="button">
+                              
+                                <img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
+                          
+                            </a>
 	            </h:panelGroup>
              </h:panelGrid>
               

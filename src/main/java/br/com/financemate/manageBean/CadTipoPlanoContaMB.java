@@ -66,6 +66,7 @@ public class CadTipoPlanoContaMB implements Serializable {
                 if (listaPlanoContaTipo == null) {
                     listaPlanoContaTipo = new ArrayList<Planocontatipo>();
                 }
+                verificarListaPlanoContas();
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -198,7 +199,24 @@ public class CadTipoPlanoContaMB implements Serializable {
             planocontastipo = new Planocontatipo();
             planocontastipo.setPlanocontas(planocontas);
             listaPlanoContaTipo.add(planocontastipo);
+            listarPlanoContas.remove(planocontas);
         }
     }
 
+    
+    public void verificarListaPlanoContas(){
+        if (!listaPlanoContaTipo.isEmpty()) {
+            for (int i = 0; i < listarPlanoContas.size(); i++) {
+                if (listaPlanoContaTipo.get(i).getPlanocontas().getIdplanoContas() == listarPlanoContas.get(i).getIdplanoContas()) {
+                    listarPlanoContas.remove(listaPlanoContaTipo.get(i).getPlanocontas());
+                }
+            }
+        }
+    }
+    
+    
+    public void excluirPlanoConta(Planocontatipo planocontatipo){
+        listaPlanoContaTipo.remove(planocontatipo);
+        listarPlanoContas.add(planocontatipo.getPlanocontas());
+    }
 }

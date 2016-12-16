@@ -12,25 +12,25 @@
         <div class="updateGrowl">
          	<p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
          </div> 
-        <div id="top-nav" class="fixed skin-6" style="position:fixed;background:#302E2E;margin-top:-8px;">
-			<a href="#" class="brand" style="background:#302E2E;text-decoration:none;">
-				<span style="margin-left:4%;">
-					<img src="../../resources/img/iconeUsuario.png" style="width: 15%; margin-left:2%;"/>
-				</span>
-				<span class="text-toggle" > Bem vindo,
-					<h:outputText style="font-size:18px;" value="#{usuarioLogadoMB.usuario.nome}" />
-				</span>			
-			</a><!-- /brand -->
-			<ul class="nav-notification" style="float:right;background:#302E2E;">
-		        <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style=" text-decoration:none;" title="Sair">
-		            <img src="../../resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-top:25%;"/>
-		        </p:commandLink>
-			</ul>
-			<ul style="float:right;background:#302E2E;">
-				<h:outputText style="font-size: 30px;color:white; margin-left:-600px; font-family:Trebuchet MS; " value="SYSFIN" />
-			</ul>
-			<br/>
-		</div><!-- /top-nav-->
+      <div id="top-nav" class="fixed skin-6" style="position:fixed;background:#302E2E;margin-top: -1%;">
+                <h:panelGrid columns="6" width="100%">
+                    <a href="#" class="brand" style="background:#302E2E;text-decoration: none;">
+                        <span style="margin-left:4%;">
+                                <img src="../../resources/img/iconeUsuario.png" style="width: 15%;float: left;text-decoration: none;" >    
+                                    Bem vindo, #{usuarioLogadoMB.usuario.nome}
+                                </img>
+                            <p:commandLink action="#{usuarioLogadoMB.validarTrocarSenha()}" title="Trocar Senha">
+                                    <img src="../../resources/img/settings.png" style="width: 9%; margin-left:-167%;"/>
+                                </p:commandLink>
+                        </span>
+                    </a>
+                        <h:outputText style="font-size: 30px;color:white; margin-left:-59%; font-family:Trebuchet MS; " value="SYSFIN" />
+                        <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style=" text-decoration:none;" title="Sair">
+                            <img src="../../resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-top:0%;float:right;"/>
+                        </p:commandLink>
+                </h:panelGrid>  
+                <br/>
+            </div><!-- /top-nav-->
         
         <aside class="fixed skin-6" style="background:#302E2E;display:block;width:15%;">
         <br/><br/><br/>

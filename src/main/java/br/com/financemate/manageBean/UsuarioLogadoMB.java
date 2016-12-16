@@ -4,7 +4,6 @@ import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.UsuarioDao;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -39,6 +38,8 @@ public class UsuarioLogadoMB implements Serializable {
     private UsuarioDao usuarioDao;
     @EJB
     private ClienteDao clienteDao;
+    private String login;
+    private String senha;
 
     public UsuarioLogadoMB() {
         this.usuario = new Usuario();
@@ -92,20 +93,41 @@ public class UsuarioLogadoMB implements Serializable {
         this.senhaAtual = senhaAtual;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
+    
+
     public String validarUsuario() {
-        if ((usuario.getLogin() != null) && (usuario.getSenha() == null)) {
+        usuario = new Usuario();
+        if ((login != null) && (senha == null)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Login Invalido."));
         } else {
             String senha = "";
             try {
-                senha = Criptografia.encript(usuario.getSenha());
+                
+                senha = Criptografia.encript(this.senha);
+                this.senha = "";
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(UsuarioLogadoMB.class.getName()).log(Level.SEVERE, null, ex);
                 FacesMessage mensagem = new FacesMessage("Erro: " + ex);
                 FacesContext.getCurrentInstance().addMessage(null, mensagem);
             }
-            usuario.setSenha(senha);
-            usuario = usuarioDao.find("Select u From Usuario u Where u.login='" + usuario.getLogin() + "' and u.senha='" + usuario.getSenha() + "'");
+            usuario = usuarioDao.find("Select u From Usuario u Where u.login='" + login + "' and u.senha='" + senha + "'");
+            login = "";
             if (usuario == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atenção!", "Acesso Negado."));
             } else {
@@ -119,7 +141,6 @@ public class UsuarioLogadoMB implements Serializable {
                 return "principal";
             }
         }
-        usuario = new Usuario();
         return "";
     }
 
@@ -129,28 +150,13 @@ public class UsuarioLogadoMB implements Serializable {
     }
 
     public void validarTrocarSenha() {
-        if ((usuario.getLogin() != null) && (usuario.getSenha() == null) || (usuario.getLogin() == null) && (usuario.getSenha() != null)) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Login Invalido."));
+        if (usuario == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
         } else {
-            String senha = "";
-            try {
-                senha = Criptografia.encript(usuario.getSenha());
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(UsuarioLogadoMB.class.getName()).log(Level.SEVERE, null, ex);
-                FacesMessage mensagem = new FacesMessage("Erro: " + ex);
-                FacesContext.getCurrentInstance().addMessage(null, mensagem);
-            }
-            usuario.setSenha(senha);
-            usuario = usuarioDao.find("Select u From Usuario u Where u.login='" + usuario.getLogin() + "' and u.senha='" + usuario.getSenha() + "'");
-            if (usuario == null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
-            } else {
-                Map<String, Object> options = new HashMap<String, Object>();
-                options.put("contentWidth", 300);
-                options.put("closable", false);
-                RequestContext.getCurrentInstance().openDialog("cadNovaSenha", options, null);
-            }
-
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("contentWidth", 300);
+            options.put("closable", false);
+            RequestContext.getCurrentInstance().openDialog("cadNovaSenha", options, null);
         }
     }
 
