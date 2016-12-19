@@ -20,10 +20,7 @@ public class CobrancaDao extends AbstractDao<Cobranca>{
     
     
     public Historicocobranca salvar(Historicocobranca historicocobranca) throws SQLException{
-        manager.getTransaction().begin();
         historicocobranca = manager.merge(historicocobranca);
-        manager.getTransaction().commit();
-        manager.close();
         return historicocobranca;
     }
     

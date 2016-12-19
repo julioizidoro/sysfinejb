@@ -3,6 +3,7 @@ package br.com.financemate.manageBean.contasReceber;
 import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasReceberDao;
+import br.com.financemate.dao.PlanoContaTipoDao;
 import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -34,6 +35,7 @@ import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobranca;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Planocontatipo;
 import br.com.financemate.model.Vendas;
 import javax.ejb.EJB;
 
@@ -72,6 +74,10 @@ public class CadContasReceberMB implements Serializable {
     private ClienteDao clienteDao;
     @EJB
     private ContasReceberDao contasReceberDao;
+    private Planocontatipo planocontatipo;
+    private List<Planocontatipo> listaPlanoContaTipo;
+    @EJB
+    private PlanoContaTipoDao planoContaTipoDao;
 
     @PostConstruct
     public void init() {
@@ -83,7 +89,7 @@ public class CadContasReceberMB implements Serializable {
         session.removeAttribute("frequencia");
         session.removeAttribute("vezes");
         gerarListaCliente();
-        gerarListaPlanoContas();
+        //gerarListaPlanoContas();
         if (contasReceber == null) {
             contasReceber = new Contasreceber();
             cobranca = new Cobranca();
@@ -96,6 +102,7 @@ public class CadContasReceberMB implements Serializable {
             }
         } else {
             cliente = contasReceber.getCliente();
+            gerarListaPlanoContas();
             gerarListaBanco();
             planoContas = contasReceber.getPlanocontas();
             banco = contasReceber.getBanco();
@@ -239,6 +246,24 @@ public class CadContasReceberMB implements Serializable {
         this.contasReceber = contasReceber;
     }
 
+    public Planocontatipo getPlanocontatipo() {
+        return planocontatipo;
+    }
+
+    public void setPlanocontatipo(Planocontatipo planocontatipo) {
+        this.planocontatipo = planocontatipo;
+    }
+
+    public List<Planocontatipo> getListaPlanoContaTipo() {
+        return listaPlanoContaTipo;
+    }
+
+    public void setListaPlanoContaTipo(List<Planocontatipo> listaPlanoContaTipo) {
+        this.listaPlanoContaTipo = listaPlanoContaTipo;
+    }
+    
+    
+
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
@@ -247,14 +272,6 @@ public class CadContasReceberMB implements Serializable {
 
     }
 
-    public void gerarListaPlanoContas() {
-        try {
-            listaPlanoContas = planoContasDao.list("Select p From Planocontas p order by p.descricao");
-        } catch (Exception ex) {
-            Logger.getLogger(CadContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
-            mostrarMensagem(ex, "Erro ao lista Plano de contas", "Erro");
-        }
-    }
 
     public void gerarListaBanco() {
         if (cliente != null) {
@@ -422,6 +439,23 @@ public class CadContasReceberMB implements Serializable {
             habilitarUnidade = false;
         }
 
+    }
+    
+    
+    public void gerarListaPlanoContas() {
+        try {
+            listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
+            if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
+                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+            }
+            listaPlanoContas = new ArrayList<Planocontas>();
+            for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
+                listaPlanoContas.add(listaPlanoContaTipo.get(i).getPlanocontas());
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }

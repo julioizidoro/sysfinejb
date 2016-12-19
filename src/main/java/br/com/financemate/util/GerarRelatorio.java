@@ -77,7 +77,7 @@ public class GerarRelatorio {
     public static Connection getConexao(){
     	Connection conexao = null;
 		try {
-			conexao = DriverManager.getConnection("jdbc:mysql://191.191.20.138:8082/sysfin", "root", "jfhmaster123");
+			conexao = DriverManager.getConnection("jdbc:mysql://191.191.78.111:8082/sysfin", "root", "jfhmaster123");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

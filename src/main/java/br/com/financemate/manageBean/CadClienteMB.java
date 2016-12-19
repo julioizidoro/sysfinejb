@@ -1,7 +1,9 @@
 package br.com.financemate.manageBean;
 
+import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.TipoPlanoContasDao;
+import br.com.financemate.model.Banco;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,10 @@ public class CadClienteMB implements Serializable {
     private TipoPlanoContasDao tipoPlanoContaDao;
     private Boolean noveDigito = false;
     private String maskTelefone = "(99)9999-9999";
+    @EJB
+    private BancoDao bancoDao;
+    private Banco banco;
+    
 
     @PostConstruct
     public void init() {
@@ -50,6 +56,7 @@ public class CadClienteMB implements Serializable {
         gerarListaTipoPlanoContas();
         if (cliente == null) {
             cliente = new Cliente();
+            cliente.setVisualizacao("Operacional");
         } else {
             tipoplanocontas = cliente.getTipoplanocontas();
         }
@@ -143,8 +150,12 @@ public class CadClienteMB implements Serializable {
     }
 
     public void salvar() {
+        Cliente clienteBanco = cliente;
         cliente.setTipoplanocontas(tipoplanocontas);
         cliente = clienteDao.update(cliente);
+        if (clienteBanco.getIdcliente() == null) {
+            salvarBancoDefault(cliente);
+        }
         RequestContext.getCurrentInstance().closeDialog(cliente);
     }
     
@@ -156,6 +167,16 @@ public class CadClienteMB implements Serializable {
             maskTelefone = "(99)9999-9999";
         }
     }
-      
+    
+    
+    public void salvarBancoDefault(Cliente cliente){
+        banco = new Banco();
+        banco.setAgencia("0");
+        banco.setConta("0");
+        banco.setCliente(cliente);
+        banco.setNome("Nenhum");
+        banco.setNumeroBanco("0");
+        bancoDao.update(banco);
+    }
 
 }

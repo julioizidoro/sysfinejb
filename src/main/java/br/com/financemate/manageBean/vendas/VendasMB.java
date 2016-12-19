@@ -271,17 +271,20 @@ public class VendasMB implements Serializable {
     }
 
     public void gerarListaVendas() {
-        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
-            sql = " Select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada'  and v.cliente.idcliente="
+        if (usuarioLogadoMB.getUsuario().getCliente() != null){
+            if(usuarioLogadoMB.getUsuario().getCliente() > 0) {
+                sql = " Select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada'  and v.cliente.idcliente="
                     + usuarioLogadoMB.getUsuario().getCliente() + " order by v.dataVenda";
-        } else {
-            sql = " Select v from Vendas v where v.cliente.visualizacao='Operacional' and "
-                    + " v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada' order by v.dataVenda";
+            } else {
+                sql = " Select v from Vendas v where v.cliente.visualizacao='Operacional' and "
+                        + " v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada' order by v.dataVenda";
+            }
+        
+            listaVendas = vendasDao.list(sql);
         }
-        listaVendas = vendasDao.list(sql);
-        if (listaVendas == null) {
-            listaVendas = new ArrayList<Vendas>();
-        }
+            if (listaVendas == null) {
+                listaVendas = new ArrayList<Vendas>();
+            }
     }
 
     public void gerarDataInicial() {

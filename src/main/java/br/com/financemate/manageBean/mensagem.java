@@ -30,6 +30,12 @@ public class mensagem {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Autorizado com Sucesso", ""));
     }
+    
+    public void desautorizar() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Desautorizado com Sucesso", ""));
+    }
+ 
 
     public void liberar() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -164,6 +170,11 @@ public class mensagem {
     public void notificacao(String msg) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(msg, ""));
+    }
+    
+     public void cobranca(String msg) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(msg, "Consulta de cobrança feita com sucesso"));
     }
     
     public void resetaSenha() {

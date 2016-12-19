@@ -34,6 +34,7 @@ import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Planocontatipo;
+import br.com.financemate.model.Saldo;
 import br.com.financemate.model.Tipoplanocontas;
 import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
@@ -395,9 +396,13 @@ public class OutrosLancamentosMB implements Serializable {
 
     public void calcularTotal() {
         float entrada = 0.0f;
-        float saida = 0.0f;
+        float saida = 0.0f;  
         float saldo = 0.0f;
-        saldo = geralSqlSaldoInicial();
+        if (banco.getIdbanco() == null) {
+            saldo =  gerarSqlSaldoTodasContas();
+        }else{
+            saldo = geralSqlSaldoInicial();
+        }
         for (int i = 0; i < listaOutrosLancamentos.size(); i++) {
             if (listaOutrosLancamentos.get(i).getValorEntrada() > 0) {
                 entrada = entrada + listaOutrosLancamentos.get(i).getValorEntrada();
@@ -502,6 +507,45 @@ public class OutrosLancamentosMB implements Serializable {
 
     public String conciliacaoBancaria() {
         return "conciliacaoBancaria";
+    }
+    
+    
+    public Float gerarSqlSaldoTodasContas(){
+        float entrada = 0.0f;
+        float saida = 0.0f;
+        String sql;
+        Float saldoInicial = 0f;
+        if (cliente != null) {
+            gerarListaBanco();
+            for (int i = 0; i < listaBancos.size(); i++) {
+                sql = "Select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBancos.get(i).getIdbanco();
+                try {
+                    saldoInicial = saldoInicial + saldoDao.consultar(sql);
+                } catch (SQLException ex) {
+                    Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        String sql2 = "Select o from Outroslancamentos o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
+        if (banco.getIdbanco() != null) {
+            sql2 = sql2 + " and o.banco.idbanco=" + banco.getIdbanco();
+        }
+        listaOutrosLancamentosAnteriores = outrosLancamentosDao.list(sql2);
+        if (listaOutrosLancamentosAnteriores == null) {
+            listaOutrosLancamentosAnteriores = new ArrayList<Outroslancamentos>();
+        }
+        for (int i = 0; i < listaOutrosLancamentosAnteriores.size(); i++) {
+            if (listaOutrosLancamentosAnteriores.get(i).getValorEntrada() > 0) {
+                entrada = entrada + listaOutrosLancamentosAnteriores.get(i).getValorEntrada();
+                saldoInicial = saldoInicial + (listaOutrosLancamentosAnteriores.get(i).getValorEntrada() - listaOutrosLancamentosAnteriores.get(i).getValorSaida());
+
+            } else if (listaOutrosLancamentosAnteriores.get(i).getValorSaida() > 0) {
+                saida = saida + listaOutrosLancamentosAnteriores.get(i).getValorSaida();
+                saldoInicial = saldoInicial + (listaOutrosLancamentosAnteriores.get(i).getValorEntrada() - listaOutrosLancamentosAnteriores.get(i).getValorSaida());
+
+            }
+        }
+        return saldoInicial;
     }
 
 }

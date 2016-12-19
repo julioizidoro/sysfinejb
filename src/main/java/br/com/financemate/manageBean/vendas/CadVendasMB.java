@@ -5,6 +5,7 @@ import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.FormaPagamentoDao;
+import br.com.financemate.dao.PlanoContaTipoDao;
 import br.com.financemate.dao.PlanoContasDao;
 import br.com.financemate.dao.ProdutoDao;
 import br.com.financemate.dao.VendasDao;
@@ -37,6 +38,7 @@ import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Emissaonota;
 import br.com.financemate.model.Formapagamento;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Planocontatipo;
 import br.com.financemate.model.Produto;
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
@@ -96,6 +98,10 @@ public class CadVendasMB implements Serializable {
     @EJB
     private VendasDao vendasDao;
     private Cliente clienteImportacao;
+    private Planocontatipo planocontatipo;
+    @EJB
+    private PlanoContaTipoDao planoContaTipoDao;
+    private List<Planocontatipo> listaPlanoContaTipo;
 
     @PostConstruct
     public void init() {
@@ -147,7 +153,9 @@ public class CadVendasMB implements Serializable {
         if (importadoSystm == null) {
             importadoSystm = false;
         }
-        gerarListaPlanoContas();
+        if (cliente != null) {
+            gerarListaPlanoContas();
+        }
         desabilitarUnidade();
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
             cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
@@ -437,6 +445,22 @@ public class CadVendasMB implements Serializable {
     public void setClienteImportacao(Cliente clienteImportacao) {
         this.clienteImportacao = clienteImportacao;
     }
+
+    public Planocontatipo getPlanocontatipo() {
+        return planocontatipo;
+    }
+
+    public void setPlanocontatipo(Planocontatipo planocontatipo) {
+        this.planocontatipo = planocontatipo;
+    }
+
+    public List<Planocontatipo> getListaPlanoContaTipo() {
+        return listaPlanoContaTipo;
+    }
+
+    public void setListaPlanoContaTipo(List<Planocontatipo> listaPlanoContaTipo) {
+        this.listaPlanoContaTipo = listaPlanoContaTipo;
+    }
     
     
 
@@ -526,18 +550,6 @@ public class CadVendasMB implements Serializable {
         return "cadRecebimento";
     }
 
-    public void gerarListaPlanoContas() {
-        try {
-            listaPlanocontas = planoContasDao.list("Select p From Planocontas p");
-            if (listaPlanocontas == null) {
-                listaPlanocontas = new ArrayList<Planocontas>();
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-            mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
-        }
-
-    }
 
     public String nomeConta() {
         if (corPagarReceber.equalsIgnoreCase("color:red;")) {
@@ -627,6 +639,9 @@ public class CadVendasMB implements Serializable {
         if (vendas.getDespesasFinanceiras() == null) {
             vendas.setDespesasFinanceiras(0f);
         }
+        if (vendas.getValorDesconto() == null) {
+            vendas.setValorDesconto(0f);
+        }
 
         vendas.setLiquidoVendas(vendas.getComissaoLiquidaTotal() - (vendas.getValorDesconto() + vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros()));
         valorPagarReceber = vendas.getValorBruto() - (vendas.getComissaoLiquidaTotal() + vendas.getValorPagoFornecedor());
@@ -654,7 +669,7 @@ public class CadVendasMB implements Serializable {
     }
 
     public String salvarConta() {
-        if (valorPagarReceber > 0) {
+        if (corPagarReceber.equalsIgnoreCase("color:red;")) {
             Contaspagar contaspagar = new Contaspagar();
             contaspagar.setDataEnvio(vendas.getDataVenda());
             contaspagar.setValor(valorPagarReceber);
@@ -680,10 +695,10 @@ public class CadVendasMB implements Serializable {
                 contaspagar.setCliente(cliente);
             }
             contaspagar = contasPagarDao.update(contaspagar);
-        } else if (valorPagarReceber < 0) {
+        } else if (corPagarReceber.equalsIgnoreCase("color:blue;")) {
             Contasreceber contasreceber = new Contasreceber();
             contasreceber.setDataVencimento(vendas.getDataVenda());
-            contasreceber.setValorParcela(valorPagarReceber * (-1));
+            contasreceber.setValorParcela(valorPagarReceber);
             contasreceber.setPlanocontas(planocontas);
             contasreceber.setTipodocumento(TipoDocumento);
             contasreceber.setUsuario(usuarioLogadoMB.getUsuario());
@@ -1220,4 +1235,20 @@ public class CadVendasMB implements Serializable {
         return vendaImportada;
     }
 
+    
+    public void gerarListaPlanoContas() {
+        try {
+            listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
+            if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
+                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+            }
+            listaPlanocontas = new ArrayList<Planocontas>();
+            for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
+                listaPlanocontas.add(listaPlanoContaTipo.get(i).getPlanocontas());
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }

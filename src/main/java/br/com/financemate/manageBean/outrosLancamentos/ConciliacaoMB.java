@@ -188,13 +188,13 @@ public class ConciliacaoMB implements Serializable {
 
     public Banco consultarBanco(String agencia, String conta) {
         Banco banco = new Banco();
-        String sql = "Select b From Banco Where b.agencia='" + agencia + "' b.conta='" + conta + "'";
+        String sql = "Select b From Banco b Where b.agencia='" + agencia + "' and b.conta='" + conta + "'";
         List<Banco> listabanco = bancoDao.list(sql);
         for (int i = 0; i < listabanco.size(); i++) {
             banco = listabanco.get(i);
         }
         return banco;
-    }
+    }  
 
     public void carregarOutrosLancamentos() {
         String sql = "SELECT o FROM Outroslancamentos o where o.dataCompensacao>='"
@@ -343,6 +343,7 @@ public class ConciliacaoMB implements Serializable {
             session.setAttribute("banco", banco);
             session.setAttribute("transacaoBean", transacaoBean);
             session.setAttribute("outroslancamentos", outroslancamentos);
+            session.setAttribute("cliente", banco.getCliente());
             Map<String, Object> options = new HashMap<String, Object>();
             options.put("contentWidth", 500);
             RequestContext.getCurrentInstance().openDialog("cadConciliacao");

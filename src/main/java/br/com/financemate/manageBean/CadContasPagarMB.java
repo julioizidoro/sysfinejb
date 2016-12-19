@@ -133,10 +133,7 @@ public class CadContasPagarMB implements Serializable {
             gerarListaBanco();
             transferenciaBancaria();
             if (contaPagar.getFormaPagamento().equalsIgnoreCase("transferencia")) {
-                listaCptransferencia = cpTransferenciaDao.list("SELECT c FROM Cptransferencia c JOIN Contaspagar co on c.contaspagar.idcontasPagar=co.idcontasPagar WHERE c.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
-                for (int i = 0; i < listaCptransferencia.size(); i++) {
-                    cptransferencia = cpTransferenciaDao.find(listaCptransferencia.get(i).getIdcptransferencia());
-                }
+                    cptransferencia = cpTransferenciaDao.find("SELECT c FROM Cptransferencia c  WHERE c.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
                 if (cptransferencia == null) {
                     cptransferencia = new Cptransferencia();
                 }

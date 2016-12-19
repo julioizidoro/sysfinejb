@@ -155,18 +155,18 @@ public class HistoricoMB implements Serializable {
 
     //Chamada na tela dentro da pages
     public String salvarHitoricos() {
+       
         if (cobranca.getIdcobranca() == null) {
             cobranca = cobrancaDao.update(cobranca);
-
+ 
+        }
+         if (cobranca.getHistoricocobrancaList() == null) {
+            cobranca.setHistoricocobrancaList(new ArrayList<Historicocobranca>());
         }
         historicaCobranca.setData(new Date());
         historicaCobranca.setCobranca(cobranca);
         historicaCobranca.setUsuario(usuarioLogadoMB.getUsuario());
-        try {
-            historicaCobranca = cobrancaDao.salvar(historicaCobranca);
-        } catch (SQLException ex) {
-            Logger.getLogger(HistoricoMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        historicaCobranca = historicoCobrancaDao.update(historicaCobranca);
         cobranca.getHistoricocobrancaList().add(historicaCobranca);
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);

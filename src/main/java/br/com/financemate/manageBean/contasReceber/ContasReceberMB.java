@@ -597,19 +597,24 @@ public class ContasReceberMB implements Serializable {
     }
 
     public String verStatus(Contasreceber contasreceber) {
+        String corStatus = "../../resources/img/bolaVerde.png";
         Date data = new Date();
         String diaData = Formatacao.ConvercaoDataPadrao(data);
         data = Formatacao.ConvercaoStringDataBrasil(diaData);
-        if (contasreceber.getNumeroDocumento().equalsIgnoreCase("CANCELADA")) {
-            return "../../resources/img/bolinhaPretaS.ico";
-        } else if (contasreceber.getDataVencimento().after(data)) {
-            return "../../resources/img/bolaVerde.png";
+        if (contasreceber.getDataVencimento().after(data)) {
+            corStatus = "../../resources/img/bolaVerde.png";
         } else if (contasreceber.getDataVencimento().before(data)) {
-            return "../../resources/img/bolaVermelha.png";
+            corStatus =  "../../resources/img/bolaVermelha.png";
         } else if (contasreceber.equals(data)) {
-            return "../../resources/img/bolaAmarela.png";
+            corStatus = "../../resources/img/bolaAmarela.png";
         }
-        return "../../resources/img/bolaVerde.png";
+        
+        if (contasreceber.getNumeroDocumento().equalsIgnoreCase("CANCELADA")) {
+            corStatus = "../../resources/img/bolinhaPretaS.ico";
+        }else if (contasreceber.getDataPagamento() != null){
+            corStatus =  "../../resources/img/bolaVerde.png";
+        }
+        return corStatus;
     }
 
     public void gerarListaCliente() {
@@ -1008,7 +1013,7 @@ public class ContasReceberMB implements Serializable {
         }
         mensagem msg = new mensagem();
         msg.cancelado();
-        gerarListaContas();
+        listaContasReceber.remove(contasreceber);
     }
 
     public Integer numeroCob(int contasreceber) {
@@ -1043,14 +1048,10 @@ public class ContasReceberMB implements Serializable {
     }
 
     public void retornoDialogCobranca(SelectEvent event) {
-        String msg = (String) event.getObject();
-        if (msg.length() > 2) {
-            if (!listaContasReceber.isEmpty() || listaContasReceber != null) {
-                criarConsultaContaReceber();
-                mensagem mensagem = new mensagem();
-                mensagem.notificacao(msg);
-            }
-        }
+        String msg = "";
+        criarConsultaContaReceber();
+        mensagem mensagem = new mensagem();
+        mensagem.cobranca(msg);
     }
 
     public String informacoesVendas(Contasreceber contasreceber) {

@@ -45,11 +45,16 @@
                 </div>
                 <h2 style="margin-left:50%;">Consulta Contas a Receber</h2>
                 <hr style="margin-left:17%; width:80%;"/>  
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    	   	</p:confirmDialog>
                 <p:contextMenu for="idTabelaContaReceber" style="background:white;" >  
-                    <p:menuitem value="Cancelar"   icon="ui-icon-cancel"   actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber"/> 
+                    <p:menuitem value="Cancelar"   icon=" ui-icon-close"  actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber">
+                       <p:confirm  header="Confirmação" message="Tem certeza que deseja cancelar está conta ?" icon="ui-icon-alert" />
+                    </p:menuitem>  
                     <p:menuitem value="Desfazer recebimento"  icon=" ui-icon-cancel"  action="#{contasReceberMB.gerarListaContas()}" actionListener="#{contasReceberMB.desfazerRecebimento(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
                     <p:menuitem value="Editar"  icon="ui-icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
-                    <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasReceberMB.excluir()}" update="growl, idTabelaContaReceber"/>
                     <p:menuitem value="Receber"  icon="ui-icon-tag"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>
                 </p:contextMenu> 
                 <p:dataTable id="idTabelaContaReceber"  var="contasReceber"  value="#{contasReceberMB.listaContasReceber}" style="border:none;" class="tabelacontas" 
@@ -94,7 +99,7 @@
                     </p:column>
                     <p:column headerText="Cob" style="width:3%; background:white; color:black; font-size:12px; border:none; text-align:center;" styleClass="alinharCenter">
                         <p:commandLink value="#{contasReceberMB.numeroCob(contasReceber.idcontasReceber)}" action="#{contasReceberMB.cobrancas(contasReceber)}" style="color:black;">
-                            <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogCobranca}" update="idTabelaContaReceber, :frmConsultaReceber:contasVenc, :frmConsultaReceber:contasVencer, :frmConsultaReceber:contasReceber"/>
+                            <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogCobranca}" update=" :frmConsultaReceber:growl, idTabelaContaReceber, :frmConsultaReceber:contasVenc, :frmConsultaReceber:contasVencer, :frmConsultaReceber:contasReceber"/>
                         </p:commandLink> 
                     </p:column>  
                     <p:column style="width:28px; background:white; color:black; border:none;">

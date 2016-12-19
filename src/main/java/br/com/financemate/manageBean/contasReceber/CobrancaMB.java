@@ -423,8 +423,8 @@ public class CobrancaMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         cobranca = (Cobranca) session.getAttribute("cobranca");
         contasReceber = (Contasreceber) session.getAttribute("contasreceber");
-        String sql = "Select cp From Cobrancaparcelas cp Join Contasreceber c on  cp.contasreceber.idcontasReceber=c.idcontasReceber";
-        sql = sql + " Join Cobranca co on cp.cobranca.idcobranca=co.idcobranca Where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber();
+        String sql = "Select cp From Cobrancaparcelas cp ";
+        sql = sql + " Where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber();
         sql = sql + " and cp.cobranca.idcobranca=" + cobranca.getIdcobranca();
         listaCobrancaParcelas = cobrancaParcelaDao.list(sql);
         if (listaCobrancaParcelas.size() == 0) {

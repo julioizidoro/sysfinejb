@@ -394,13 +394,13 @@ public class ContasPagarMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("Select c From Cliente c order by c.nomeFantasia");
         if (listaCliente == null) {
             listaCliente = new ArrayList<Cliente>();
         }
-
+  
     }
-
+ 
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
@@ -471,18 +471,32 @@ public class ContasPagarMB implements Serializable {
     }
 
     public void autorizarPagamento(Contaspagar contaspagar) {
-        contaspagar.setAutorizarPagamento("S");
-        contaspagar = contasPagarDao.update(contaspagar);
-        if (contaspagar.getIdcontasPagar() != null) {
-            Operacaousuairo operacaousuairo = new Operacaousuairo();
-            operacaousuairo.setContaspagar(contaspagar);
-            operacaousuairo.setData(new Date());
-            operacaousuairo.setTipooperacao("Usuário Autorizou");
-            operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
-            operacaoUsuarioDao.update(operacaousuairo);
+        if (contaspagar.getAutorizarPagamento().equalsIgnoreCase("S")) {
+            contaspagar.setAutorizarPagamento("N");
+            if (contaspagar.getIdcontasPagar() != null) {
+                Operacaousuairo operacaousuairo = new Operacaousuairo();
+                operacaousuairo.setContaspagar(contaspagar);
+                operacaousuairo.setData(new Date());
+                operacaousuairo.setTipooperacao("Usuário Desautorizou");
+                operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
+                operacaoUsuarioDao.update(operacaousuairo);
+            }
+            mensagem mensagem = new mensagem();
+            mensagem.desautorizar();
+        }else{
+            contaspagar.setAutorizarPagamento("S");
+            contaspagar = contasPagarDao.update(contaspagar);
+            if (contaspagar.getIdcontasPagar() != null) {
+                Operacaousuairo operacaousuairo = new Operacaousuairo();
+                operacaousuairo.setContaspagar(contaspagar);
+                operacaousuairo.setData(new Date());
+                operacaousuairo.setTipooperacao("Usuário Autorizou");
+                operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
+                operacaoUsuarioDao.update(operacaousuairo);
+            }
+            mensagem mensagem = new mensagem();
+            mensagem.autorizar();
         }
-        mensagem mensagem = new mensagem();
-        mensagem.autorizar();
     }
 
     public void novoFiltro() {

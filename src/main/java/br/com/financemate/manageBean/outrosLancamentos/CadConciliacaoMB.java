@@ -1,6 +1,7 @@
 package br.com.financemate.manageBean.outrosLancamentos;
 
 import br.com.financemate.dao.OutrosLancamentosDao;
+import br.com.financemate.dao.PlanoContaTipoDao;
 import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,8 +18,10 @@ import org.primefaces.context.RequestContext;
 
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
+import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Planocontatipo;
 import javax.ejb.EJB;
 
 @Named
@@ -43,6 +46,11 @@ public class CadConciliacaoMB implements Serializable {
     private OutrosLancamentosDao outrosLancamentosDao;
     @EJB
     private PlanoContasDao planoContasDao;
+    private Cliente cliente;
+    private Planocontatipo plaoncontatipo;
+    @EJB
+    private PlanoContaTipoDao planoContaTipoDao;
+    private List<Planocontatipo> listaPlanoContaTipo;
 
     @PostConstruct
     public void init() {
@@ -52,9 +60,11 @@ public class CadConciliacaoMB implements Serializable {
         transacaoBean = (TransacaoBean) session.getAttribute("transacaoBean");
         outroslancamentos = (Outroslancamentos) session.getAttribute("outroslancamentos");
         banco = (Banco) session.getAttribute("banco");
+        cliente = (Cliente) session.getAttribute("cliente");
         session.removeAttribute("banco");
         session.removeAttribute("transacaoBean");
         session.removeAttribute("conciliacaoBean");
+        session.removeAttribute("cliente");
         carregarPlanoConta();
         if (outroslancamentos == null) {
             outroslancamentos = new Outroslancamentos();
@@ -133,15 +143,46 @@ public class CadConciliacaoMB implements Serializable {
         this.usuarioLogadoMB = usuarioLogadoMB;
     }
 
-    public void carregarPlanoConta() {
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Planocontatipo getPlaoncontatipo() {
+        return plaoncontatipo;
+    }
+
+    public void setPlaoncontatipo(Planocontatipo plaoncontatipo) {
+        this.plaoncontatipo = plaoncontatipo;
+    }
+
+    public List<Planocontatipo> getListaPlanoContaTipo() {
+        return listaPlanoContaTipo;
+    }
+
+    public void setListaPlanoContaTipo(List<Planocontatipo> listaPlanoContaTipo) {
+        this.listaPlanoContaTipo = listaPlanoContaTipo;
+    }
+    
+    
+    
+    
+     public void carregarPlanoConta() {
         try {
-            listaPlanoConta = planoContasDao.list("Select p From Planocontas p");
+            listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
+            if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
+                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+            }
+            listaPlanoConta = new ArrayList<Planocontas>();
+            for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
+                listaPlanoConta.add(listaPlanoContaTipo.get(i).getPlanocontas());
+            }
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-        if (listaPlanoConta == null) {
-            listaPlanoConta = new ArrayList<Planocontas>();
         }
     }
 
