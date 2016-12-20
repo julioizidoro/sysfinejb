@@ -295,6 +295,7 @@ public class RecebimentoContaMB implements Serializable {
                 conta.setDataVencimento(listaRecebimentoParial.get(i).getDataVencimento());
                 conta.setNomeCliente(listaRecebimentoParial.get(i).getNomeCliente());
                 conta.setTipodocumento(listaRecebimentoParial.get(i).getTipodocumento());
+                conta.setStatus("RECEBIMENTO-" + listaRecebimentoParial.get(i).getIdcontasReceber());
                 conta = contasReceberDao.update(conta);
             }
             mensagem mensagem = new mensagem();

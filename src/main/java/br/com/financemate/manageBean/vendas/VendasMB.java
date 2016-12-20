@@ -410,7 +410,8 @@ public class VendasMB implements Serializable {
     }
 
     public String importarVenda() {
-        List<ListaVendasSystmBean> listaImportada = getListaVendasSystm();
+        List<ListaVendasSystmBean> listaImportada = new ArrayList<>();
+                //getListaVendasSystm();
         Boolean importadoSystm = true;
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("closable", false);

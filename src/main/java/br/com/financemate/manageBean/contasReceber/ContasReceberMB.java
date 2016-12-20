@@ -539,10 +539,10 @@ public class ContasReceberMB implements Serializable {
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
             sql = " Select v from Contasreceber v where "
                     + " v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente()
-                    + " and v.dataPagamento is null and v.status<>'CANCELADA'" + " order by v.dataVencimento";
+                    + " and v.dataPagamento is null and v.status<>'CANCELADA' and v.status<>'RECEBIMENTO' " + " order by v.dataVencimento";
         } else {
             sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and v.cliente.idcliente=" + cliente.getIdcliente()
-                    + " and v.dataPagamento is null and v.status<>'CANCELADA'" + " order by v.dataVencimento";
+                    + " and v.dataPagamento is null and v.status<>'CANCELADA' and v.status<>'RECEBIMENTO' " + " order by v.dataVencimento";
         }
         gerarListaContas();
     }
@@ -921,6 +921,7 @@ public class ContasReceberMB implements Serializable {
         contasreceber.setJuros(0f);
         contasreceber.setValorParcela(contasreceber.getValorParcela() + valorPago);
         contasreceber.setValorPago(0f);
+        excluirRecebimentos(contasreceber);
         contasReceberDao.update(contasreceber);
     }
 
@@ -1069,6 +1070,14 @@ public class ContasReceberMB implements Serializable {
             mensagem mensagem = new mensagem();
             mensagem.naoContemVenda();
             return "";
+        }
+    }
+    
+     
+    public void excluirRecebimentos(Contasreceber contasreceber){
+        List<Contasreceber> listaContas = contasReceberDao.list("Select c From Contasreceber c Where c.status='RECEBIMENTO-" + contasreceber.getIdcontasReceber() + "'");
+        for (int i = 0; i < listaContas.size(); i++) {
+            contasReceberDao.remove(listaContas.get(i).getIdcontasReceber());
         }
     }
 }

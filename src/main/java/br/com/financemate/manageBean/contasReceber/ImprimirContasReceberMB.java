@@ -341,19 +341,20 @@ public class ImprimirContasReceberMB implements Serializable {
 
         String sql = "Select c from Contasreceber c where c.dataPagamento is NULL and c.valorPago=0 and c.dataVencimento<'"
                 + data + "' and c.status<>'CANCELADA' ";
-
-        if (!tipoDocumento.equalsIgnoreCase("Todos")) {
-            sql = sql + " and c.tipodocumento='" + tipoDocumento + "' ";
+        if (tipoDocumento != null) {
+            if (!tipoDocumento.equalsIgnoreCase("Todos")) {
+                sql = sql + " and c.tipodocumento='" + tipoDocumento + "' ";
+            }
         }
         if (cliente != null) {
             sql = sql + " and c.cliente.idcliente=" + cliente.getIdcliente();
         }
         sql = sql + " order by c.idcontasReceber, c.dataVencimento";
-        List<Contasreceber> listaContas = null;
-        listaContas = contasReceberDao.list(sql);
-        if (listaContas != null) {
-            carregarCobranca(listaContas);
+        List<Contasreceber> listaContas = contasReceberDao.list(sql);
+        if (listaContas == null || listaContas.isEmpty()) {
+            listaContas = new ArrayList<>();
         }
+        carregarCobranca(listaContas);
     }
 
     public void carregarCobranca(List<Contasreceber> listaContas) {

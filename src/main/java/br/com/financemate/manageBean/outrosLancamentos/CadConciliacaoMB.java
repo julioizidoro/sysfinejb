@@ -191,7 +191,7 @@ public class CadConciliacaoMB implements Serializable {
         outroslancamentos.setPlanocontas(planoconta);
         outroslancamentos.setDataCompensacao(transacaoBean.getData());
         outroslancamentos.setDescricao(transacaoBean.getDescricao());
-        outroslancamentos.setCliente(banco.getCliente());
+        outroslancamentos.setCliente(cliente);
         outroslancamentos.setConciliacao("0");
         outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
         if (transacaoBean.getValorEntrada() > 0) {

@@ -1,5 +1,6 @@
 package br.com.financemate.manageBean.contasReceber;
 
+import br.com.financemate.model.Contasreceber;
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,13 +25,14 @@ public class RelatorioCobrancaMB implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private List<RelatorioCobrancaBean> listaRelatorio;
+        private List<Contasreceber> listaContasReceber;
 
 	@PostConstruct
 	public void init() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		listaRelatorio = (List<RelatorioCobrancaBean>) session.getAttribute("listaRelatorio");
-		session.removeAttribute("listaVendas");
+		session.removeAttribute("listaRelatorio");
 	}
 
 	
