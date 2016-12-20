@@ -159,6 +159,13 @@ public class UsuarioLogadoMB implements Serializable {
             RequestContext.getCurrentInstance().openDialog("cadNovaSenha", options, null);
         }
     }
+    
+    public void validarTrocarSenhas() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 300);
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("cadNovaSenhas", options, null);
+    }
 
     public String confirmaNovaSenha() {
         String repetirSenhaAtual = "";
