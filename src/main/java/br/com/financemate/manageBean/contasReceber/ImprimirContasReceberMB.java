@@ -366,12 +366,12 @@ public class ImprimirContasReceberMB implements Serializable {
         listaCobrancaParcela = cobrancaParcelasDao.list("Select c from Cobrancaparcelas c");
         for (int i = 0; i < listaContas.size(); i++) {
             for (int j = 0; j < listaCobrancaParcela.size(); j++) {
-                if (listaCobrancaParcela.get(j).getContasreceber().getIdcontasReceber() == listaContas.get(i)
+                if (listaCobrancaParcela.get(j).getContasreceber().getIdcontasReceber() == listaContas.get(j)
                         .getIdcontasReceber()) {
-                    listaContasCobranca.add(listaContas.get(i));
-                    valorTotal = valorTotal + listaContas.get(i).getValorParcela();
+                    listaContasCobranca.add(listaContas.get(j));
+                    valorTotal = valorTotal + listaContas.get(j).getValorParcela();
                     cobranca = listaCobrancaParcela.get(j).getCobranca();
-                    contasreceber = listaContas.get(i);
+                    contasreceber = listaContas.get(j);
                 }
             }
 

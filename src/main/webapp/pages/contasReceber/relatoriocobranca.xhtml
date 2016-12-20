@@ -45,12 +45,12 @@
 				var="parcelas" >
 				<h:column>
 					<f:facet name="header">Nº Parcelas</f:facet>
-                                        <h:outputText value="#{parcelas.contasreceber.numeroParcela}" styleClass="alinhamento"
+                                        <h:outputText value="#{parcelas.numeroParcela}" styleClass="alinhamento"
 						style="float: left;" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Data Vencimento</f:facet>
-					<h:outputText value="#{parcelas.contasreceber.dataVencimento}"
+					<h:outputText value="#{parcelas.dataVencimento}"
 						styleClass="alinhamento"
 						style="text-align: left !important;margin-right:40%;">
 						<f:convertDateTime pattern="dd/MM/yyyy"
@@ -59,7 +59,7 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">Valor</f:facet>
-					<h:outputText value="#{parcelas.contasreceber.valorParcela}" styleClass="alinhamento"
+					<h:outputText value="#{parcelas.valorParcela}" styleClass="alinhamento"
 						style="float:rigth;" >
 						<f:convertNumber pattern="##,###,###,###.##"
 								minFractionDigits="2" />
@@ -67,12 +67,12 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">Nº Documento</f:facet>
-					<h:outputText value="#{parcelas.contasreceber.numeroDocumento}" styleClass="alinhamento"
+					<h:outputText value="#{parcelas.numeroDocumento}" styleClass="alinhamento"
 						style="float: left;" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Tipo Documento</f:facet>
-					<h:outputText value="#{parcelas.contasreceber.tipodocumento}" styleClass="alinhamento"
+					<h:outputText value="#{parcelas.tipodocumento}" styleClass="alinhamento"
 						style="float: left;" />
 				</h:column>
 			</h:dataTable>
