@@ -58,8 +58,10 @@ public abstract class AbstractDao<T> {
     public T find(String sql) {
        Query q = em.createQuery(sql);
          T t = null;
-        if (q.getResultList().size()>0){
-            t = (T) q.getSingleResult();
+         if (q != null) {
+            if (q.getResultList().size()>0){
+                t = (T) q.getSingleResult();
+            }
         }
         return (T) t;
     }

@@ -33,6 +33,7 @@
                         <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                         <f:selectItems value="#{contasPagarMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                         <f:attribute name="listaCliente" value="#{contasPagarMB.listaCliente}"/>
+                        <p:ajax event="change" listener="#{contasPagarMB.gerarListaPlanoContas()}" update="idPlanoConta"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Plano Contas" for="idPlanoConta" class="left3"/>
                     <p:selectOneMenu id="idPlanoConta" class="left3" style="width:315px;"  value="#{contasPagarMB.planocontas}" converter="PlanoContasConverter"
@@ -72,7 +73,7 @@
                 <p:commandLink title="Pesquisar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{contasPagarMB.filtrar()}" >
                     <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                 </p:commandLink>
-                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadContasPagarMB.cancelar()}" >
+                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{contasPagarMB.cancelarFiltro()}" >
                     <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>
             </h:form> 

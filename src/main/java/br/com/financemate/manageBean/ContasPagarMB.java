@@ -5,6 +5,7 @@ import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.CpTransferenciaDao;
 import br.com.financemate.dao.NomeArquivoDao;
 import br.com.financemate.dao.OperacaoUsuarioDao;
+import br.com.financemate.dao.PlanoContaTipoDao;
 import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -33,6 +34,7 @@ import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Planocontatipo;
 import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
 
@@ -87,13 +89,24 @@ public class ContasPagarMB implements Serializable {
     private OperacaoUsuarioDao operacaoUsuarioDao;
     @EJB
     private PlanoContasDao planoContasDao;
+    @EJB
+    private PlanoContaTipoDao planoContaTipoDao;
+    private Planocontatipo planocontatipo;
+    private List<Planocontatipo> listaPlanoContaTipo;
 
     @PostConstruct
     public void init() {
         gerarListaCliente();
+        desabilitarUnidade();
+        if (usuarioLogadoMB.getCliente() != null) {
+            habilitarUnidade = true;
+            cliente = usuarioLogadoMB.getCliente();
+            gerarListaPlanoContas();
+        }else{
+            habilitarUnidade = false;
+        }
         criarConsultaContasPagarInicial();
         gerarListaContas();
-        gerarListaPlanoContas();
     }
 
     public String getStatus() {
@@ -319,6 +332,24 @@ public class ContasPagarMB implements Serializable {
     public void setDataLiberacao(Date dataLiberacao) {
         this.dataLiberacao = dataLiberacao;
     }
+
+    public Planocontatipo getPlanocontatipo() {
+        return planocontatipo;
+    }
+
+    public void setPlanocontatipo(Planocontatipo planocontatipo) {
+        this.planocontatipo = planocontatipo;
+    }
+
+    public List<Planocontatipo> getListaPlanoContaTipo() {
+        return listaPlanoContaTipo;
+    }
+
+    public void setListaPlanoContaTipo(List<Planocontatipo> listaPlanoContaTipo) {
+        this.listaPlanoContaTipo = listaPlanoContaTipo;
+    }
+    
+    
 
     public String verStatus(Contaspagar contaspagar) {
         Date data = new Date();
@@ -626,22 +657,13 @@ public class ContasPagarMB implements Serializable {
         RequestContext.getCurrentInstance().closeDialog(sql);
     }
 
-    public void gerarListaPlanoContas() {
-        try {
-            listaPlanoContas = planoContasDao.list("Select p from Planocontas p  order by p.descricao");
-            if (listaPlanoContas == null) {
-                listaPlanoContas = new ArrayList<Planocontas>();
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-            mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
-        }
 
-    }
 
     public void retornoDialogFiltrar(SelectEvent event) {
         String sql = (String) event.getObject();
-        gerarListaContaas(sql);
+        if (sql.length() > 1) {
+            gerarListaContaas(sql);  
+        }
     }
 
     public void gerarListaContaas(String sql) {
@@ -784,5 +806,40 @@ public class ContasPagarMB implements Serializable {
         }
 
         return "";
+    }
+    
+    
+    public void desabilitarUnidade() {
+        if (usuarioLogadoMB.getCliente() != null) {
+            habilitarUnidade = true;
+        } else {
+            habilitarUnidade = false;
+        }
+
+    }
+
+    
+    
+    public void gerarListaPlanoContas() {
+        try {
+            listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
+            if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
+                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+            }
+            listaPlanoContas = new ArrayList<Planocontas>();
+            for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
+                listaPlanoContas.add(listaPlanoContaTipo.get(i).getPlanocontas());
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void cancelarFiltro() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        RequestContext.getCurrentInstance().closeDialog("");
     }
 }
