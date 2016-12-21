@@ -42,15 +42,17 @@
 	            <p:commandLink   action="#{cadTipoPlanoContaMB.adicionarPlanoConta()}" update="idPlanoContas, idPlanoConta" style="margin-left:25%;text-decoration:none;" title="Adicionar">
 					<img src="../../resources/img/iconeplus.png"/>
 				</p:commandLink>
-            </h:panelGrid>  
-            <p:contextMenu  style="background:white;">
-                <p:menuitem value="Excluir"  icon=" ui-icon-pencil"  action="#{cadTipoPlanoContaMB.excluirPlanoConta(cadTipoPlanoContaMB.planocontastipo)}" update="idPlanoContas, idPlanoConta" /> 
-            </p:contextMenu>   
+            </h:panelGrid>     
             <p:dataTable id="idPlanoContas" var="planoContasTipo"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadTipoPlanoContaMB.listaPlanoContaTipo}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80"   rowKey="#{planoContasTipo.idplanocontatipo}"  rows="10" style="margin-bottom:20px;"> 
                
                 <p:column headerText="Descrição" style=" background:white; color:black; border:none; text-align:left;">
                     <h:outputText value="#{planoContasTipo.planocontas.descricao}" /> 
+                </p:column>
+                <p:column headerText="" style=" background:white; color:black; border:none; text-align:right;">
+                    <p:commandLink update=":idFrmCadTipoConta:idPlanoContas" title="Confirmar" style="text-decoration: none;"  action="#{cadTipoPlanoContaMB.excluirPlanoConta(planoContasTipo)}" >
+                        <img src="../../resources/img/cancelarS.png" width="20" height="20"/>
+                    </p:commandLink>
                 </p:column>
             </p:dataTable>  
 			<hr />

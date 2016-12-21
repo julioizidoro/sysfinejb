@@ -1015,6 +1015,8 @@ public class ContasReceberMB implements Serializable {
         mensagem msg = new mensagem();
         msg.cancelado();
         listaContasReceber.remove(contasreceber);
+        calcularTotal();
+        gerarTotalContas();
     }
 
     public Integer numeroCob(int contasreceber) {

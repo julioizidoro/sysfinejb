@@ -25,7 +25,7 @@
                     </p:selectOneMenu>  
                     <p:commandLink   action="#{contasReceberMB.novaConta()}" style="text-decoration:none;margin-left:43%;" title="Novo Lançamento">
                         <img src="../../resources/img/iconeplus.png" style="margin-left:15%;border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
-                        <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update="growl, idTabelaContaReceber, contasVenc, contasVencer, contasReceber"/>
+                        <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update="growl, idTabelaContaReceber"/>
                     </p:commandLink>   
                     <p:commandLink id="idImagemFiltro"  action="#{contasReceberMB.coresFiltrar()}" update="idImagemFiltro, idTabelaContaReceber" style="margin-left:-0.5%; text-decoration:none;" title="Filtros">
                         <img  src="#{contasReceberMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/> 
@@ -46,11 +46,11 @@
                 <h2 style="margin-left:50%;">Consulta Contas a Receber</h2>
                 <hr style="margin-left:17%; width:80%;"/>  
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-        		<p:commandButton style="margin-left:35%;" value="Sim" action="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" type="button" styleClass="ui-confirmdialog-yes"  />
+                    <p:commandButton style="margin-left:35%;" value="Sim" action="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" type="button" styleClass="ui-confirmdialog-yes" update="idTabelaContaReceber, contasVenc, contasVencer, contasReceber" />
         		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
     	   	</p:confirmDialog>
                 <p:contextMenu for="idTabelaContaReceber" style="background:white;" >  
-                    <p:menuitem value="Cancelar"   icon=" ui-icon-close"  actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber">
+                    <p:menuitem value="Cancelar"   icon=" ui-icon-close"  actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber, contasVenc, contasVencer, contasReceber">
                        <p:confirm  header="Confirmação" message="Tem certeza que deseja cancelar está conta ?" icon="ui-icon-alert" />
                     </p:menuitem>  
                     <p:menuitem value="Desfazer recebimento"  icon=" ui-icon-cancel"  action="#{contasReceberMB.gerarListaContas()}" actionListener="#{contasReceberMB.desfazerRecebimento(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>

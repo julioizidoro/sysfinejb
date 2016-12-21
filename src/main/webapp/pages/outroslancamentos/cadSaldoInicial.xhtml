@@ -45,7 +45,7 @@
             	<p:outputLabel value="Data inclusão" for="dataInclusao" /> 
             </h:panelGrid>
             <h:panelGrid style="margin-left: 15%; margin-top:-4.6%;">
-            	<p:inputMask id="dataInclusao" value="#{cadSaldoInicialMB.saldo.datainclusao}" mask="99/99/9999" size="10" maxlength="15" >
+                <p:inputMask id="dataInclusao" readonly="true" value="#{cadSaldoInicialMB.saldo.datainclusao}" mask="99/99/9999" size="10" maxlength="15" >
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
             </h:panelGrid>

@@ -18,6 +18,7 @@ import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Saldo;
+import java.util.Date;
 import javax.ejb.EJB;
 
 @Named
@@ -46,6 +47,7 @@ public class CadSaldoInicialMB implements Serializable {
         cliente = (Cliente) session.getAttribute("cliente");
         if (saldo == null) {
             saldo = new Saldo();
+            saldo.setDatainclusao(new Date());
         }
         if (cliente != null) {
             gerarListaBanco();

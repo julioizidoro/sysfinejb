@@ -62,8 +62,9 @@ public class CadTipoPlanoContaMB implements Serializable {
             listaPlanoContaTipo = new ArrayList<Planocontatipo>();
         } else {
             try {
+                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
                 listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + tipoplanocontas.getIdtipoplanocontas());
-                if (listaPlanoContaTipo == null) {
+                if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
                     listaPlanoContaTipo = new ArrayList<Planocontatipo>();
                 }
                 verificarListaPlanoContas();
@@ -208,7 +209,7 @@ public class CadTipoPlanoContaMB implements Serializable {
         if (!listaPlanoContaTipo.isEmpty()) {
             for (int i = 0; i < listarPlanoContas.size(); i++) {
                 if (listaPlanoContaTipo.get(i).getPlanocontas().getIdplanoContas() == listarPlanoContas.get(i).getIdplanoContas()) {
-                    listarPlanoContas.remove(listaPlanoContaTipo.get(i).getPlanocontas());
+                    listarPlanoContas.remove(listarPlanoContas.get(i));
                 }
             }
         }
@@ -216,7 +217,12 @@ public class CadTipoPlanoContaMB implements Serializable {
     
     
     public void excluirPlanoConta(Planocontatipo planocontatipo){
+        if (listarPlanoContas == null || listarPlanoContas.isEmpty()) {
+            listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+        }
         listarPlanoContas.add(planocontatipo.getPlanocontas());
+        planoContaTipoDao.remove(planocontatipo.getIdplanocontatipo());
         listaPlanoContaTipo.remove(planocontatipo);
+        
     }
 }
