@@ -67,10 +67,11 @@
                         <span style="margin-left:4%;">
                                 <img src="resources/img/iconeUsuario.png" style="width: 15%;float: left;" >    
                                     Bem vindo, #{usuarioLogadoMB.usuario.nome}
+                                    <p:commandLink action="#{usuarioLogadoMB.validarTrocarSenha()}" title="Trocar Senha">
+                                        <img src="resources/img/settings.png" style="width: 9%;"/>
+                                    </p:commandLink>
                                 </img>
-                            <p:commandLink action="#{usuarioLogadoMB.validarTrocarSenha()}" title="Trocar Senha">
-                                    <img src="resources/img/settings.png" style="width: 9%; margin-left:-167%;"/>
-                                </p:commandLink>
+                            
                         </span>
                     </a>
                         <h:outputText style="font-size: 30px;color:white; margin-left:-59%; font-family:Trebuchet MS; " value="SYSFIN" />

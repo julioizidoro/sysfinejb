@@ -34,7 +34,7 @@ public class UsuarioMB implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
-
+    
     private Usuario usuario;
     private List<Usuario> listaUsuario;
     @Inject
@@ -73,8 +73,11 @@ public class UsuarioMB implements Serializable {
 
     public void gerarListaUsuario() {
         // TODO Auto-generated catch block
-
-        listaUsuario = usuarioDao.list("Select u From Usuario u");
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            listaUsuario = usuarioDao.list("Select u From Usuario u Where u.cliente=" + usuarioLogadoMB.getUsuario().getCliente());
+        }else{
+            listaUsuario = usuarioDao.list("Select u From Usuario u");
+        }
         if (listaUsuario == null || listaUsuario.isEmpty()) {
             listaUsuario = new ArrayList<Usuario>();
         }

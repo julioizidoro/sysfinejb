@@ -128,8 +128,7 @@ public class BancoMB implements Serializable {
             idcliente = usuarioLogadoMB.getUsuario().getCliente();
             sql = "Select distinct b from Banco b where b.cliente.idcliente=" + idcliente + " order by b.nome";
         } else {
-            idcliente = 8;
-            sql = "Select distinct b from Banco b  where b.cliente.idcliente=" + idcliente + " order by b.nome";
+            sql = "Select distinct b from Banco b  order by b.nome";
         }
         listaBanco = bancoDao.list(sql);
         if (listaBanco == null) {

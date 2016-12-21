@@ -216,7 +216,7 @@ public class CadTipoPlanoContaMB implements Serializable {
     
     
     public void excluirPlanoConta(Planocontatipo planocontatipo){
-        listaPlanoContaTipo.remove(planocontatipo);
         listarPlanoContas.add(planocontatipo.getPlanocontas());
+        listaPlanoContaTipo.remove(planocontatipo);
     }
 }

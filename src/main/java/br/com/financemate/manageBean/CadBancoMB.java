@@ -39,6 +39,7 @@ public class CadBancoMB implements Serializable {
     private BancoDao bancoDao;
     @EJB
     private ClienteDao clienteDao;
+    private boolean habilitarUnidade = false;
 
     @PostConstruct
     public void init() {
@@ -49,9 +50,13 @@ public class CadBancoMB implements Serializable {
         gerarListaCliente();
         if (banco == null) {
             banco = new Banco();
+            if (usuarioLogadoMB.getCliente() != null) {
+                cliente = usuarioLogadoMB.getCliente();
+            }
         } else {
             cliente = banco.getCliente();
         }
+        desabilitarUnidade();
     }
 
     public List<Cliente> getListaCliente() {
@@ -94,6 +99,16 @@ public class CadBancoMB implements Serializable {
         this.banco = banco;
     }
 
+    public boolean isHabilitarUnidade() {
+        return habilitarUnidade;
+    }
+
+    public void setHabilitarUnidade(boolean habilitarUnidade) {
+        this.habilitarUnidade = habilitarUnidade;
+    }
+    
+    
+
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
@@ -119,5 +134,16 @@ public class CadBancoMB implements Serializable {
             listaCliente = new ArrayList<Cliente>();
         }
     }
+    
+    
+      public void desabilitarUnidade() {
+        if (usuarioLogadoMB.getCliente() != null) {
+            habilitarUnidade = true;
+        } else {
+            habilitarUnidade = false;
+        }
+
+    }
+
 
 }

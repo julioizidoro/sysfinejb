@@ -26,9 +26,6 @@
                     	<p:column headerText="Descrição"  sortBy="#{tipoPlanoConta.descricao}" style="width:95%; font-size:12px; background:white; color:black; border:none; text-align:left;">
                             <h:outputText value="#{tipoPlanoConta.descricao}" style="color:black;"/> 
                         </p:column>
-                        <p:column  style=" background:white; color:black; border:none;">
-                            <p:selectBooleanCheckbox value="#{tipoPlanoConta.selecionado}"/>
-                        </p:column>
                     </p:dataTable>
       </h:form>
    </ui:define>

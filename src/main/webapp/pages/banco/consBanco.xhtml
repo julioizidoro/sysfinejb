@@ -37,6 +37,9 @@
               	<p:column headerText="Gerente e-mail" sortBy="#{banco.emailGerente}" style=" background:white; font-size:12px; color:black; border:none; text-align:left;">
                   	<h:outputText value="#{banco.emailGerente}"/>
               	</p:column>
+                 <p:column headerText="Cliente" sortBy="#{banco.cliente}" style=" background:white; font-size:12px; color:black; border:none; text-align:left;">
+                     <h:outputText value="#{banco.cliente.nomeFantasia}"/>
+              	</p:column>
              </p:dataTable>
 		</h:form>
 	</ui:define>

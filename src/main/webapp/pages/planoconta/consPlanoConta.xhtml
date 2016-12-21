@@ -30,10 +30,7 @@
                     </p:contextMenu>  
                     <p:dataTable id="idTabelaPlanoConta"  var="planoConta"  value="#{planoContaMB.listarPlanoContas}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{planoContaMB.planocontas}" selectionMode="single" rowKey="#{planoConta.idplanoContas}">
-                    		 
-                    	<p:column headerText="Número"  sortBy="#{planoConta.numeroConta}" style="width:8%; font-size:12px; background:white; color:black; border:none; text-align:center;">
-                            <h:outputText value="#{planoConta.numeroConta}" style="color:black;" /> 
-                        </p:column> 
+                    	
                         <p:column headerText="Descrição"  sortBy="#{planoConta.descricao}" style=" font-size:12px; background:white; color:black; border:none; text-align:left;">
                             <h:outputText value="#{planoConta.descricao}" style="color:black;"/> 
                         </p:column>

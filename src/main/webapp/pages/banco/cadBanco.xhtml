@@ -28,7 +28,7 @@
             
             <h:panelGrid columns="2"  style="margin-left: 1%;">
                 <p:outputLabel value="Unidade" for="cliente"  class="left3"/>
-                <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadBancoMB.cliente}" converter="ClienteConverter"
+                <p:selectOneMenu  disabled="#{cadBancoMB.habilitarUnidade}" id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadBancoMB.cliente}" converter="ClienteConverter"
                              filter="true" filterMatchMode="contains" panelStyle="width:180px">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems  value="#{cadBancoMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
