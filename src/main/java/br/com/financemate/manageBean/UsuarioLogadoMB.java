@@ -215,7 +215,6 @@ public class UsuarioLogadoMB implements Serializable {
     }
 
     public String cancelarTrocaSenha() {
-        usuario = new Usuario();
         novaSenha = "";
         confirmaNovaSenha = "";
         RequestContext.getCurrentInstance().closeDialog(null);
