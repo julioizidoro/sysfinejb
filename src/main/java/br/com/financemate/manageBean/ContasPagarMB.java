@@ -838,8 +838,14 @@ public class ContasPagarMB implements Serializable {
     
     
     public void cancelarFiltro() {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         RequestContext.getCurrentInstance().closeDialog("");
+    }
+    
+    public String condicaodeAutorizacao(Contaspagar contaspagar){
+        if (contaspagar.getAutorizarPagamento().equalsIgnoreCase("S")) {
+            return "Desautorizar";
+        }else{
+            return "Autorizar";
+        }
     }
 }

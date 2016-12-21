@@ -64,7 +64,7 @@
                             <h:outputText value="#{contasPagar.fornecedor}" style=" font-size:12px;"/>
                         </p:column>  
                         <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; font-size:12px; background:white; color:black; border:none; text-align:center;" styleClass="alinharCenter" >
-                            <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" style="width:18%; font-size:11px;"/>
+                            <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" title="#{contasPagarMB.condicaodeAutorizacao(contasPagar)}" style="width:18%; font-size:11px;"/>
                         </p:column>
                         <p:column headerText="Valor Conta" sortBy="#{contasPagar.valor}" style="width:8%; background:white; font-size:11px; color:black; border:none; text-align:right;" styleClass="alinharCenter">
                             <h:outputText value="#{contasPagar.valor}" style="font-size:12px; color:red;"> 
