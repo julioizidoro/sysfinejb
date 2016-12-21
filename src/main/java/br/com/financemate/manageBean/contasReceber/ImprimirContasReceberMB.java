@@ -224,7 +224,6 @@ public class ImprimirContasReceberMB implements Serializable {
             nomeRelatorio = "Contas a Receber";
         } else if (relatorio.equalsIgnoreCase("cobrancas")) {
             gerarRelatorioCobranca();
-            RequestContext.getCurrentInstance().closeDialog(null);
             return "relatoriocobranca";
         }
         parameters.put("sql", gerarSql());
@@ -319,12 +318,12 @@ public class ImprimirContasReceberMB implements Serializable {
 
     }
 
-    public String gerarRelatorioCobranca() {
+    public void gerarRelatorioCobranca() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         carregarListaContasReceber();
         session.setAttribute("listaRelatorio", listaRelatorio);
-        return "relatoriocobranca";
+       // return "relatoriocobranca";
     }
 
     public void carregarListaContasReceber() {
@@ -365,13 +364,13 @@ public class ImprimirContasReceberMB implements Serializable {
         List<Cobrancaparcelas> listaCobrancaParcela;
         listaCobrancaParcela = cobrancaParcelasDao.list("Select c from Cobrancaparcelas c");
         for (int i = 0; i < listaContas.size(); i++) {
+            int idContasReceber = listaContas.get(i).getIdcontasReceber();
             for (int j = 0; j < listaCobrancaParcela.size(); j++) {
-                if (listaCobrancaParcela.get(j).getContasreceber().getIdcontasReceber() == listaContas.get(j)
-                        .getIdcontasReceber()) {
-                    listaContasCobranca.add(listaContas.get(j));
-                    valorTotal = valorTotal + listaContas.get(j).getValorParcela();
+                if (listaCobrancaParcela.get(j).getContasreceber().getIdcontasReceber() == idContasReceber) {
+                    listaContasCobranca.add(listaContas.get(i));
+                    valorTotal = valorTotal + listaContas.get(i).getValorParcela();
                     cobranca = listaCobrancaParcela.get(j).getCobranca();
-                    contasreceber = listaContas.get(j);
+                    contasreceber = listaContas.get(i);
                 }
             }
 
