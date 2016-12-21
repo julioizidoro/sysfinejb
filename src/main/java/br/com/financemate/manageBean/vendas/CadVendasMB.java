@@ -544,6 +544,8 @@ public class CadVendasMB implements Serializable {
         if (listaFormaPagamento == null) {
             listaFormaPagamento = new ArrayList<Formapagamento>();
         }
+        session.setAttribute("produto", produto);
+        session.setAttribute("cliente", cliente);
         session.setAttribute("listaFormaPagamento", listaFormaPagamento);
         session.setAttribute("corPagarReceber", corPagarReceber);
         session.setAttribute("importadoSystm", importadoSystm);
