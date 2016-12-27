@@ -1,0 +1,23 @@
+.icoAdd {
+    float: right;
+    color: #367587;
+    font-size: 200% !important;
+    padding: 1%;
+}
+.icoAdd:hover, .icoAdd:focus {
+	color:#fff;
+}
+
+.titTela {
+	font-size: 150%;
+	color:#367587;
+	font-weight: bold;
+}
+
+/*LOGIN*/
+.usuario {
+	color:#367587;
+	font-weight: bold;
+	text-align: left;
+	padding:2%;
+}

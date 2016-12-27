@@ -31,9 +31,6 @@
 			<p:commandLink id="historicoCobranca" value="&nbsp;&nbsp;&nbsp;&nbsp;Histórico de Cobrança&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cobrancaMB.historicoCobrancas()}" style="background:#E8E8E8;font-size:16px;color:#696969;text-decoration:none;border: 2px solid; border-color:#696969;" title="Histórico de cobrança">
 			</p:commandLink>
 			<br /><br /><br />
-            <p:contextMenu  style="background:white;">
-                <p:menuitem value="Visualizar"  icon=" ui-icon-pencil"   action="#{cobrancaMB.editarHistoricos(cobrancaMB.historico)}"/>
-            </p:contextMenu>   
             <p:dataTable id="idHistoricoCobranca" var="historicoCobranca"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cobrancaMB.listaHistorico}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80" selection="#{cobrancaMB.historico}" selectionMode="single" rowKey="#{historicoCobranca.idhistoricocobranca}"  rows="10" style="margin-bottom:20px;"> 
                 <p:column headerText="Data" style="background:white; color:black; border:none; width:70px; text-align:center;">
@@ -50,6 +47,19 @@
                 <p:column headerText="Usuário"   style="background:white; text-align:left; color:black; width: 80px; border:none;">
                     <h:outputText value="#{historicoCobranca.usuario.nome}"/>
                 </p:column>
+                <p:column style="width:28px; background:white; color:black; border:none;">
+                          <p:commandLink id="btnMenu">
+                            <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                            <b class="caret"></b>
+                        </p:commandLink>   
+                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                            <p:commandLink action="#{cobrancaMB.editarHistoricos(historicoCobranca)}" style="text-align: left;">
+                                <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                    <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                                </i> 
+                            </p:commandLink> 
+                        </p:overlayPanel> 
+                    </p:column> 
                 
             </p:dataTable>
             <br />

@@ -266,7 +266,7 @@ public class VendasMB implements Serializable {
     }
 
     public String cancelar() {
-        RequestContext.getCurrentInstance().closeDialog(null);
+        RequestContext.getCurrentInstance().closeDialog("");
         return null;
     }
 
@@ -525,7 +525,9 @@ public class VendasMB implements Serializable {
 
     public void retornoDialogFiltrar(SelectEvent event) {
         String sql = (String) event.getObject();
-        gerarListaVendaas(sql);
+        if (sql.length() > 1) {
+            gerarListaVendaas(sql); 
+        }
     }
 
     public void gerarListaVendaas(String sql) {
@@ -543,6 +545,16 @@ public class VendasMB implements Serializable {
         }
         gerarListaVendas();
     }
+    
+     public void retornoDialogParcela(SelectEvent event) {
+        String mensag = (String) event.getObject();
+        if (mensag.length() > 0) {
+            gerarListaVendas();
+            mensagem msg = new mensagem();
+            msg.parcela();
+        }
+    }
+  
 
     public void cancelarVenda(Vendas vendas) {
         vendas.setSituacao("CANCELADA");

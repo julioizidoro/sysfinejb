@@ -1,101 +1,134 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<ui:composition template="/pages/templates/default.xhtml">
-	<ui:define name="corpo">
-	<h:form id="frmConsultaPagar"> 
-	<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
-		<br/><br/>  <br/>  
-			<h:panelGrid columns="5" width="99%" style="margin-left:84.8%;">
-				<p:commandLink   action="#{contasPagarMB.novaConta()}" style="text-decoration:none;" title="Novo Lançamento">
-					<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
-					<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
-	            </p:commandLink>  
-	            <p:commandLink id="idImagemFiltro"  action="#{contasPagarMB.coresFiltrar()}" update="idImagemFiltro, idTabelaContaPagar" style="margin-left:-89%; text-decoration:none;" title="Filtros">
-					<img  src="#{contasPagarMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
-	           		<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogFiltrar}" update="idTabelaContaPagar"/>
-	            </p:commandLink>
-	            <p:commandLink id="idImagemLiberar"  action="#{contasPagarMB.novaLiberacao()}" update="idImagemFiltro" style="margin-left:-178%; text-decoration:none;" title="Liberar">
-					<img  src="../../resources/img/iconeLibera.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
-					<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogLiberar}"  update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
-	           	</p:commandLink> 
-	            <p:commandLink   action="#" style="margin-left:-267%; text-decoration:none;" title="Importa para excel" ajax="false">
-					<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
-					<p:dataExporter type="xls" target="idTabelaContaPagar" fileName="contasPagar" />
-	            </p:commandLink>
-	            <p:commandLink   action="#{contasPagarMB.novaImpressao()}" style="margin-left:-356%; text-decoration:none;" title="Imprimir">
-					<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
-	            </p:commandLink>
-	        </h:panelGrid> 
-            <h2 style="margin-left:50%;">Consulta Contas a Pagar</h2>
-             <hr style="margin-left:17%; width:80%;"/>  
-                    <p:contextMenu for="idTabelaContaPagar" style="background:white;">
-                        <p:menuitem value="Autorizar"  icon=" ui-icon-check" style=" font-size:16px;" action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update=" :frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar"/>
-                        <p:menuitem value="Cancelar"   icon="ui-icon-cancel" style=" font-size:16px;"  actionListener="#{contasPagarMB.cancelar(contasPagarMB.contasPagar)}" update="growl, idTabelaContaPagar"/>
-                        <p:menuitem value="Editar"  icon=" ui-icon-pencil" style=" font-size:16px;" actionListener="#{contasPagarMB.editar(contasPagarMB.contasPagar)}"/>
-                        <p:menuitem value="Excluir"   icon=" ui-icon-trash" style=" font-size:16px;" action="#{contasPagarMB.excluir()}" update="growl, idTabelaContaPagar"/>
-                    	<p:menuitem value="Operações Usuário"  icon=" ui-icon-person" style=" font-size:16px;" action="#{contasPagarMB.operacoesUsuario(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" />
-                    	<p:menuitem value="Visualizar Arquivo"  icon="ui-icon-document" style=" font-size:16px;"  action="#{contasPagarMB.consultarArquivo(contasPagarMB.contasPagar)}" update="idTabelaContaPagar"/>
-                    </p:contextMenu> 
-                    <p:dataTable  id="idTabelaContaPagar" var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" rowStyleClass="#{contasPagar.selecionado eq true ? 'old' : null}"
-                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
-                       
-                        <p:column headerText="Status"  style="width:30px; font-size:12px; text-align:center; background:white; color:black; border:none;" styleClass="alinharCenter">
-                            <p:commandLink style="margin-left:-2%;">
-                                <img src="#{contasPagarMB.verStatus(contasPagar)}" style="font-size:12px;"/>
-                            </p:commandLink>
-                        </p:column>  
-                        <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; font-size:12px; background:white; color:black; border:none;text-align:center;">
-                            <h:outputText  value="#{contasPagar.dataVencimento}" style=" font-size:12px;" > 
-                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </h:outputText> 
-                        </p:column> 
-                        <p:column headerText="Unidade" styleClass="alinhar" sortBy="#{contasPagar.cliente.nomeFantasia}" style="width:15%; font-size:12px; background:white; color:black; border:#fff;text-align:center;">
-                            <h:outputText value="#{contasPagar.cliente.nomeFantasia}" style=" font-size:12px;"/>
-                        </p:column> 
-                        <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:55%;text-align:left; font-size:12px; background:white; color:black; border:none;" >
-                            <h:outputText value="#{contasPagar.descricao}" style="font-size:12px;"/>
-                        </p:column>
-                        <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; font-size:12px; background:white; color:black; border:none;text-align:center;" >
-                            <h:outputText value="#{contasPagar.fornecedor}" style=" font-size:12px;"/>
-                        </p:column>  
-                        <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; font-size:12px; background:white; color:black; border:none; text-align:center;" styleClass="alinharCenter" >
-                            <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" title="#{contasPagarMB.condicaodeAutorizacao(contasPagar)}" style="width:18%; font-size:11px;"/>
-                        </p:column>
-                        <p:column headerText="Valor Conta" sortBy="#{contasPagar.valor}" style="width:8%; background:white; font-size:11px; color:black; border:none; text-align:right;" styleClass="alinharCenter">
-                            <h:outputText value="#{contasPagar.valor}" style="font-size:12px; color:red;"> 
-                                <f:convertNumber currencySymbol="" type="currency"/>
-                            </h:outputText>                                    
-                        </p:column>
-                        <p:column  style="width:28px; background:white; color:black; border:none;">
-                            <p:selectBooleanCheckbox value="#{contasPagar.selecionado}" style="background:white !important; color:white !important;"/>
-                        </p:column>
-                    </p:dataTable> 
-                    <br /> 
-                    <h:panelGrid columns="3" width="100%" style=" margin-left: 28%;">
-	                    <h:panelGrid columns="1" style="width:60%; background-color:white; border-radius:5px; border:solid; border-left-color:red; text-align:right; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
-		                	<br />
-				            <tt style="margin-right:20%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
-				            <h:outputText id="contasVenc" class="totallancamentos" style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalVencidas}"  />
-		        		</h:panelGrid>
-		        		<h:panelGrid columns="1" style="width:70%; text-align:right;  margin-left:-40%; background-color:white; border-radius:5px; border:solid; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB; border-left-color:green;">
-		        			<br />
-				            <tt style="margin-right: 30%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total a Pagar Hoje</tt>
-				            <h:outputText id="contasVencendo"  class="totallancamentos" style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalVencendo}" />
-		        		</h:panelGrid>
-		        		<h:panelGrid  style="width:60%;  margin-left:-50%; background-color:white; border-radius:5px; border:solid; text-align:right; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB; border-left-color:blue;">
-		        			<br /> 
-				            <tt style="margin-right: 25%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Pagar</tt>
-				            <h:outputText id="contasPagar"  class="totallancamentos" style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.total}" />
-				             
-		        		</h:panelGrid>
-		        	</h:panelGrid>
-	        		<br />
-   </h:form>
-	</ui:define>
-</ui:composition>   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form id="frmConsultaPagar"> 
+                <p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
+                <br/><br/>  <br/>  
+                <h:panelGrid columns="5" width="99%" style="margin-left:84.8%;">
+                    <p:commandLink   action="#{contasPagarMB.novaConta()}" style="text-decoration:none;" title="Novo Lançamento">
+                        <img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
+                        <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
+                    </p:commandLink>  
+                    <p:commandLink id="idImagemFiltro"  action="#{contasPagarMB.coresFiltrar()}" update="idImagemFiltro, idTabelaContaPagar" style="margin-left:-89%; text-decoration:none;" title="Filtros">
+                        <img  src="#{contasPagarMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+                        <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogFiltrar}" update="idTabelaContaPagar"/>
+                    </p:commandLink>
+                    <p:commandLink id="idImagemLiberar"  action="#{contasPagarMB.novaLiberacao()}" update="idImagemFiltro" style="margin-left:-178%; text-decoration:none;" title="Liberar">
+                        <img  src="../../resources/img/iconeLibera.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+                        <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogLiberar}"  update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
+                    </p:commandLink> 
+                    <p:commandLink   action="#" style="margin-left:-267%; text-decoration:none;" title="Importa para excel" ajax="false">
+                        <img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+                        <p:dataExporter type="xls" target="idTabelaContaPagar" fileName="contasPagar" />
+                    </p:commandLink>
+                    <p:commandLink   action="#{contasPagarMB.novaImpressao()}" style="margin-left:-356%; text-decoration:none;" title="Imprimir">
+                        <img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
+                    </p:commandLink>
+                </h:panelGrid> 
+                <h2 style="margin-left:50%;">Consulta Contas a Pagar</h2>
+                <hr style="margin-left:17%; width:80%;"/>  
+                <p:dataTable  id="idTabelaContaPagar" var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" rowStyleClass="#{contasPagar.selecionado eq true ? 'old' : null}"
+                              scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
+                    <p:column headerText="Status"  style="width:30px; font-size:12px; text-align:center; background:white; color:black; border:none;" styleClass="alinharCenter">
+                        <p:commandLink style="margin-left:-2%;">
+                            <img src="#{contasPagarMB.verStatus(contasPagar)}" style="font-size:12px;"/>
+                        </p:commandLink>
+                    </p:column>  
+                    <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; font-size:12px; background:white; color:black; border:none;text-align:center;">
+                        <h:outputText  value="#{contasPagar.dataVencimento}" style=" font-size:12px;" > 
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </h:outputText> 
+                    </p:column> 
+                    <p:column headerText="Unidade" styleClass="alinhar" sortBy="#{contasPagar.cliente.nomeFantasia}" style="width:15%; font-size:12px; background:white; color:black; border:#fff;text-align:center;">
+                        <h:outputText value="#{contasPagar.cliente.nomeFantasia}" style=" font-size:12px;"/>
+                    </p:column> 
+                    <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:55%;text-align:left; font-size:12px; background:white; color:black; border:none;" >
+                        <h:outputText value="#{contasPagar.descricao}" style="font-size:12px;"/>
+                    </p:column>
+                    <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; font-size:12px; background:white; color:black; border:none;text-align:center;" >
+                        <h:outputText value="#{contasPagar.fornecedor}" style=" font-size:12px;"/>
+                    </p:column>  
+                    <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; font-size:12px; background:white; color:black; border:none; text-align:center;" styleClass="alinharCenter" >
+                        <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" title="#{contasPagarMB.condicaodeAutorizacao(contasPagar)}" style="width:18%; font-size:11px;"/>
+                    </p:column>
+                    <p:column headerText="Valor Conta" sortBy="#{contasPagar.valor}" style="width:8%; background:white; font-size:11px; color:black; border:none; text-align:right;" styleClass="alinharCenter">
+                        <h:outputText value="#{contasPagar.valor}" style="font-size:12px; color:red;"> 
+                            <f:convertNumber currencySymbol="" type="currency"/>
+                        </h:outputText>                                    
+                    </p:column>
+                    <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;text-decoration: none">
+                        <p:selectBooleanCheckbox value="#{contasPagar.selecionado}" style="background:white !important; color:white !important;"/>
+                        <p:commandLink id="btnMenu">
+                            <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                            <b class="caret"></b>
+                        </p:commandLink>   
+                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width: 200px;">
+                            <p:commandLink   action="#{contasPagarMB.autorizarPagamento(contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagar)}" update=" :frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
+                                <i class="fa fa-check-square-o" style="color: #3D7E46;font-size: 15px;">  
+                                    <p:outputLabel value="Autorizar" style="font-size: 15px;text-align: left;"/>
+                                </i> 
+                           </p:commandLink>   
+                            <br/><br/>
+                            <p:commandLink actionListener="#{contasPagarMB.editar(contasPagar)}" style="text-align: left;">
+                                <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
+                                    <p:outputLabel value="Editar" style="font-size: 15px;text-align: left;"/>
+                                </i>  
+                                <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update=":frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar, :frmConsultaPagar:contasVenc, :frmConsultaPagar:contasVencendo, :frmConsultaPagar:contasPagar"/>
+                           </p:commandLink> 
+                            <br/><br/>
+                            <p:commandLink   actionListener="#{contasPagarMB.cancelar(contasPagar)}" update=":frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
+                                <i class="fa fa-ban" style="color: #3D7E46;font-size: 15px;">  
+                                    <p:outputLabel value="Cancelar" style="font-size: 15px;text-align: left;"/>
+                                </i> 
+                           </p:commandLink> 
+                            <br/><br/>
+                            <p:commandLink   action="#{contasPagarMB.operacoesUsuario(contasPagar)}" update=":frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
+                                <i class="fa fa-trash-o" style="color: #3D7E46;font-size: 15px;">  
+                                    <p:outputLabel value="Excluir" style="font-size: 15px;text-align: left;"/>
+                                </i> 
+                           </p:commandLink> 
+                            <br/><br/>
+                            <p:commandLink   action="#{contasPagarMB.operacoesUsuario(contasPagar)}" update=":frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
+                                <i class="fa fa-user" style="color: #3D7E46;font-size: 15px;">  
+                                    <p:outputLabel value="Operações Usuário" style="font-size: 15px;text-align: left;"/>
+                                </i> 
+                           </p:commandLink> 
+                            <br/><br/>
+                            <p:commandLink  action="#{contasPagarMB.consultarArquivo(contasPagar)}" update=":frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
+                                <i class="fa fa-eye" style="color: #3D7E46;font-size: 15px;">  
+                                    <p:outputLabel value="Visualizar Arquivo" style="font-size: 15px;text-align: left;"/>
+                                </i> 
+                           </p:commandLink> 
+                        </p:overlayPanel> 
+                    </p:column>
+                </p:dataTable> 
+                <br /> 
+                <h:panelGrid columns="3" width="100%" style=" margin-left: 28%;">
+                    <h:panelGrid columns="1" style="width:60%; background-color:white; border-radius:5px; border:solid; border-left-color:red; text-align:right; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
+                        <br />
+                        <tt style="margin-right:20%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
+                        <h:outputText id="contasVenc" class="totallancamentos" style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalVencidas}"  />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" style="width:70%; text-align:right;  margin-left:-40%; background-color:white; border-radius:5px; border:solid; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB; border-left-color:green;">
+                        <br />
+                        <tt style="margin-right: 30%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total a Pagar Hoje</tt>
+                        <h:outputText id="contasVencendo"  class="totallancamentos" style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalVencendo}" />
+                    </h:panelGrid>
+                    <h:panelGrid  style="width:60%;  margin-left:-50%; background-color:white; border-radius:5px; border:solid; text-align:right; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB; border-left-color:blue;">
+                        <br /> 
+                        <tt style="margin-right: 25%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Pagar</tt>
+                        <h:outputText id="contasPagar"  class="totallancamentos" style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.total}" />
+
+                    </h:panelGrid>
+                </h:panelGrid>
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>   
 </html>

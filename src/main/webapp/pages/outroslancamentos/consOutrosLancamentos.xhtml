@@ -74,16 +74,6 @@
 			         </div>
 	            <h2 style="margin-left:40%;">Consulta Outros Lançamentos</h2>
              <hr style="margin-left:5%; width:92%;"/>  
-	            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-        				<p:commandButton style="margin-left:35%;" value="Sim" action="#{outrosLancamentosMB.excluir()}" type="button" styleClass="ui-confirmdialog-yes"  />
-        				<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
-    			</p:confirmDialog>
-	                <p:contextMenu for="idTabelaOutrosLancamentos" style="background:white;">
-                        <p:menuitem value="Excluir"   icon=" ui-icon-trash" action="#{outrosLancamentosMB.excluir()}"  update="growl, idTabelaOutrosLancamentos" >
-                        	<p:confirm header="Confirmação" message="Tem certeza que deseja excluir esse lançamento?" icon="ui-icon-alert" />
-                        </p:menuitem>
-                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  actionListener="#{outrosLancamentosMB.editar(outrosLancamentosMB.outrosLancamentos)}" /> 
-                   </p:contextMenu> 
                     <p:dataTable id="idTabelaOutrosLancamentos"  var="outrosLancamentos"  value="#{outrosLancamentosMB.listaOutrosLancamentos}" style="border:none;width:92%;margin-left:5%;" 
                                  scrollRows="10"  scrollable="true" scrollHeight="250" selection="#{outrosLancamentosMB.outrosLancamentos}" selectionMode="single" rowKey="#{outrosLancamentos.idoutroslancamentos}">
                         
@@ -113,7 +103,31 @@
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
                         </p:column>
-                        
+                        <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                            <p:commandLink id="btnMenu">
+                                <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                                <b class="caret"></b>
+                            </p:commandLink>   
+                            <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton style="margin-left:35%;" value="Sim" action="#{outrosLancamentosMB.excluir()}" type="button" styleClass="ui-confirmdialog-yes"  />
+                                    <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+                                </p:confirmDialog>
+                                <p:commandLink action="#{outrosLancamentosMB.excluir()}"  update=":frmidHistoricoCobranca:growl, :frmidHistoricoCobranca:idTabelaOutrosLancamentos"  style="text-align: left;">
+                                    <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                        <p:outputLabel value="Excluir" style="font-size: 15px;"/>
+                                    </i> 
+                                    <p:confirm header="Confirmação" message="Tem certeza que deseja excluir esse lançamento?" icon="ui-icon-alert" />
+                               </p:commandLink> 
+                                <br/><br/>
+                                <p:commandLink actionListener="#{outrosLancamentosMB.editar(outrosLancamentos)}"  style="text-align: left;">
+                                    <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                        <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                                    </i> 
+                                    <p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogNovo}" update=":frmidHistoricoCobranca:growl, :frmidHistoricoCobranca:idTabelaOutrosLancamentos, :frmidHistoricoCobranca:idsaida, :frmidHistoricoCobranca:identrada, :frmidHistoricoCobranca:idtotal"/>
+                               </p:commandLink> 
+                            </p:overlayPanel> 
+                        </p:column>
                     </p:dataTable> 
                     <br /><br />
                     <h:panelGrid columns="3" style="margin-left: 5%; width:100%; ">

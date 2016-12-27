@@ -822,6 +822,7 @@ public class CadVendasMB implements Serializable {
             }
             session.removeAttribute("importadoSystm");
             RequestContext.getCurrentInstance().closeDialog(vendas);
+            return "";
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(mensagem, ""));
@@ -865,7 +866,7 @@ public class CadVendasMB implements Serializable {
         return null;
     }
 
-    public String excluir() {
+    public String excluir(Formapagamento formapagamento) {
         formaPagamentoDao.remove(formapagamento.getIdformaPagamento());
         listaFormaPagamento.remove(formapagamento.getIdformaPagamento());
         mensagem msg = new mensagem();

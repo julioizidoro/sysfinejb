@@ -50,7 +50,19 @@
                 <p:column headerText="Usuário"   style="background:white; text-align:left; color:black; width: 80px; border:none;">
                     <h:outputText value="#{historicoCobranca.usuario.nome}"/>
                 </p:column>
-                
+                <p:column style="width:28px; background:white; color:black; border:none;">
+                    <p:commandLink id="btnMenu">
+                        <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                        <b class="caret"></b>
+                    </p:commandLink>   
+                    <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                        <p:commandLink action="#{cobrancaMB.editarHistorico(historicoCobranca)}" style="text-align: left;">
+                            <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                            </i> 
+                        </p:commandLink> 
+                    </p:overlayPanel> 
+                </p:column> 
             </p:dataTable>
             <br />
             <p:commandLink   action="#{cobrancaMB.novoHistorico()}" style="margin-left:40%;text-decoration:none;" title="Adicionar">

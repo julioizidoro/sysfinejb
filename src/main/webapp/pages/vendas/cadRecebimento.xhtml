@@ -51,11 +51,6 @@
            		</p:inputText>
              </h:panelGrid>
              <br />
-             
-              <p:contextMenu for="idHistoricoRecebimento" style="background:white;" ajax="onclick">  
-                   <p:menuitem value="Editar"   icon="ui-icon-trash" action="#{cadVendasMB.editarFormaPagamento(cadVendasMB.formapagamento)}"/>
-                   <p:menuitem value="Excluir"   icon=" ui-icon-trash"  update="idHistoricoRecebimento, saldorestante" action="#{cadVendasMB.excluir()}"/>   
-              </p:contextMenu> 
               <p:dataTable id="idHistoricoRecebimento" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadVendasMB.listaFormaPagamento}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{cadVendasMB.formapagamento}" rowKey="#{recebimento.idformaPagamento}"  rows="10" style="margin-bottom:20px;"> 
                 <p:column headerText="Data" style="background:white; color:black; border:none; width:70px; text-align:center;">
@@ -74,6 +69,25 @@
                     	<f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>
+                  <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                      <p:commandLink id="btnMenu">
+                          <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                          <b class="caret"></b>
+                      </p:commandLink>   
+                      <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                          <p:commandLink update="idHistoricoRecebimento, saldorestante" action="#{cadVendasMB.excluir(recebimento)}" style="text-align: left;">
+                              <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                  <p:outputLabel value="Excluir" style="font-size: 15px;"/>
+                              </i> 
+                          </p:commandLink> 
+                          <br/><br/>
+                          <p:commandLink action="#{cadVendasMB.editarFormaPagamento(cadVendasMB.formapagamento)}" style="text-align: left;">
+                              <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                  <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                              </i> 
+                          </p:commandLink> 
+                      </p:overlayPanel> 
+                  </p:column>
                 
             </p:dataTable>
             <br />

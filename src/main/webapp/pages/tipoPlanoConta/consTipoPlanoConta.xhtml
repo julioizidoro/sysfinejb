@@ -17,14 +17,25 @@
             <br /><br />
             <h2 style="margin-left:50%;">Consulta Tipo de plano de contas</h2>
              <hr style="margin-left:17%; width:80%;"/>  
-                    <p:contextMenu for="idTabelaTipoPlanoConta" style="background:white;">
-                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{tipoPlanoContaMB.editar(tipoPlanoContaMB.tipoplanocontas)}" update="idTabelaTipoPlanoConta" /> 
-                    </p:contextMenu> 
                     <p:dataTable id="idTabelaTipoPlanoConta"  var="tipoPlanoConta"  value="#{tipoPlanoContaMB.listarTipoPlanoContas}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{tipoPlanoContaMB.tipoplanocontas}" selectionMode="single" rowKey="#{tipoPlanoConta.idtipoplanocontas}">
                     		  
                     	<p:column headerText="Descrição"  sortBy="#{tipoPlanoConta.descricao}" style="width:95%; font-size:12px; background:white; color:black; border:none; text-align:left;">
                             <h:outputText value="#{tipoPlanoConta.descricao}" style="color:black;"/> 
+                        </p:column>
+                        <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                            <p:commandLink id="btnMenu">
+                                <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                                <b class="caret"></b>
+                            </p:commandLink>   
+                            <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                                <p:commandLink action="#{tipoPlanoContaMB.editar(tipoPlanoConta)}" style="text-align: left;">
+                                    <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                        <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                                    </i> 
+                                   <p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogNovo}" update=":frmConsultaTipoPlanoConta:growl, :frmConsultaTipoPlanoConta:idTabelaTipoPlanoConta"/>
+                               </p:commandLink> 
+                            </p:overlayPanel> 
                         </p:column>
                     </p:dataTable>
       </h:form>

@@ -233,7 +233,7 @@ public class GerarParcelaMB implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.removeAttribute("vendas");
-        RequestContext.getCurrentInstance().closeDialog(null);
+        RequestContext.getCurrentInstance().closeDialog("Atualizado com sucesso!!");
         return "";
     }
 

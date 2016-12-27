@@ -17,9 +17,6 @@
             <br /><br /> 
             <h2 style="margin-left:50%;">Consulta Cliente</h2>
              <hr style="margin-left:17%; width:80%;"/>  
-                    <p:contextMenu for="idTabelaCliente" style="background:white;">
-                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{clienteMB.editar(clienteMB.cliente)}" update="idTabelaCliente" /> 
-                    </p:contextMenu> 
                     <p:dataTable id="idTabelaCliente"  var="cliente"  value="#{clienteMB.listaClientes}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{clienteMB.cliente}" selectionMode="single" rowKey="#{cliente.idcliente}">
                        
@@ -31,6 +28,20 @@
                         </p:column> 
                         <p:column headerText="Email" sortBy="#{cliente.email}" style="widht:55%; text-align:left; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{cliente.email}"/>
+                        </p:column>
+                        <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                            <p:commandLink id="btnMenu">
+                                <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                                <b class="caret"></b>
+                            </p:commandLink>   
+                            <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                                <p:commandLink action="#{clienteMB.editar(cliente)}" style="text-align: left;">
+                                    <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                        <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                                    </i> 
+                                    <p:ajax event="dialogReturn" listener="#{clienteMB.retornoDialogNovo}" update=":frmConsultaCliente:idTabelaCliente, :frmConsultaCliente:growl"/>
+                               </p:commandLink> 
+                            </p:overlayPanel> 
                         </p:column>
                     </p:dataTable> 
 		</h:form>

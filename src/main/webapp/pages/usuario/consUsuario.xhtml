@@ -17,10 +17,6 @@
             <br /><br /> 
             <h2 style="margin-left:50%;">Consulta Usuário</h2>
              <hr style="margin-left:17%; width:80%;"/>  
-                    <p:contextMenu for="idTabelaUsuario" style="background:white;">
-                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{usuarioMB.editar(usuarioMB.usuario)}" update="idTabelaUsuario" /> 
-                        <p:menuitem value="Resetar Senha"  icon="ui-icon-arrowrefresh-1-w" update="frmConsultaUsuario, :frmConsultaUsuario:growl"  action="#{usuarioMB.resetarSenhaUsuario(usuarioMB.usuario)}" /> 
-                    </p:contextMenu> 
                     <p:dataTable id="idTabelaUsuario"  var="usuario"  value="#{usuarioMB.listaUsuario}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{usuarioMB.usuario}" selectionMode="single" rowKey="#{usuario.idusuario}">
                        
@@ -32,6 +28,26 @@
                         </p:column> 
                         <p:column headerText="Email" sortBy="#{usuario.email}" style="widht:50%; text-align:left; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{usuario.email}"/>
+                        </p:column>
+                        <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                            <p:commandLink id="btnMenu">
+                                <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                                <b class="caret"></b>
+                            </p:commandLink>   
+                            <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                                <p:commandLink action="#{usuarioMB.editar(usuario)}" style="text-align: left;">
+                                    <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                        <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                                    </i> 
+                                    <p:ajax event="dialogReturn" listener="#{usuarioMB.retornoDialogNovo}" update=":frmConsultaUsuario:growl, :frmConsultaUsuario:idTabelaUsuario"/>
+                               </p:commandLink> 
+                                <br/><br/>
+                                <p:commandLink update="frmConsultaUsuario, :frmConsultaUsuario:growl"  action="#{usuarioMB.resetarSenhaUsuario(usuarioMB.usuario)}" style="text-align: left;">
+                                    <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                        <p:outputLabel value="Resetar Senha" style="font-size: 15px;"/>
+                                    </i> 
+                               </p:commandLink> 
+                            </p:overlayPanel> 
                         </p:column>
                     </p:dataTable> 
 		</h:form>

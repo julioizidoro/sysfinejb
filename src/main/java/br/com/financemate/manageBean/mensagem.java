@@ -185,4 +185,10 @@ public class mensagem {
     public void warn() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aten��o!", "Campos em vermelho n�o preenchido."));
     }
+    
+    
+    public void parcela() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Atualizado com Sucesso", ""));
+    }
 }
