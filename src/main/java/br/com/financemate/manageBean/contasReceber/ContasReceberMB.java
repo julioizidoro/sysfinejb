@@ -4,6 +4,7 @@ import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.CobrancaParcelasDao;
 import br.com.financemate.dao.ContasReceberDao;
+import br.com.financemate.dao.HistoricoCobrancaDao;
 import br.com.financemate.dao.OutrosLancamentosDao;
 import br.com.financemate.dao.VendasDao;
 import java.io.Serializable;
@@ -31,6 +32,7 @@ import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobrancaparcelas;
 import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Historicocobranca;
 import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
@@ -98,6 +100,8 @@ public class ContasReceberMB implements Serializable {
     private VendasDao vendasDao;
     @EJB
     private OutrosLancamentosDao outrosLancamentosDao;
+    @EJB
+    private HistoricoCobrancaDao historicoCobrancaDao;
 
     @PostConstruct
     public void init() {
@@ -1026,10 +1030,17 @@ public class ContasReceberMB implements Serializable {
     }
 
     public Integer numeroCob(int contasreceber) {
+        List<Historicocobranca> listahistorico = new ArrayList<>();
         String sql = "Select cp From Cobrancaparcelas cp  Where cp.contasreceber.idcontasReceber=" + contasreceber;
-        listaCob = cobrancaParcelasDao.list(sql);
-        if (listaCob.size() > 0) {
-            cob = listaCob.size();
+        Cobrancaparcelas cobrancaparcela = cobrancaParcelasDao.find(sql);
+        if (cobrancaparcela != null) {
+            listahistorico = historicoCobrancaDao.list("Select c From Historicocobranca c WHere c.cobranca.idcobranca=" + cobrancaparcela.getCobranca().getIdcobranca());
+        }else{
+           cob = 0;
+           return cob;
+        }
+        if (listahistorico.size() > 0) {
+            cob = listahistorico.size();
         } else {
             cob = 0;
         }

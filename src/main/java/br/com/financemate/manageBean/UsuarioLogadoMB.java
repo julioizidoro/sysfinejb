@@ -234,4 +234,13 @@ public class UsuarioLogadoMB implements Serializable {
         sessionMap.clear();
         return "index";
     }
+    
+    
+    public boolean habilitarAcessoCliente(){
+        if (usuario.getCliente() > 0) {
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

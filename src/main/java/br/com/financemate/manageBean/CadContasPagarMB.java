@@ -400,6 +400,10 @@ public class CadContasPagarMB implements Serializable {
                 String arquivoFtp = nomeArquivoSemId();
                 if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
                     Nomearquivo nomearquivo = new Nomearquivo();
+                    nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
+                    if (nomearquivo.getIdnomearquivo() != null) {
+                        nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
+                    }
                     nomearquivo.setNomearquivo01(arquivoFtp);
                     nomearquivo.setContaspagar(contaPagar);
                     nomeArquivoDao.update(nomearquivo);
@@ -462,6 +466,10 @@ public class CadContasPagarMB implements Serializable {
                 String arquivoFtp = nomeArquivoSemId();
                 if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
                     Nomearquivo nomearquivo = new Nomearquivo();
+                    nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
+                    if (nomearquivo.getIdnomearquivo() != null) {
+                        nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
+                    }
                     nomearquivo.setNomearquivo01(arquivoFtp);
                     nomearquivo.setContaspagar(contaPagar);
                     nomeArquivoDao.update(nomearquivo);

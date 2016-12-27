@@ -296,7 +296,7 @@ public class cadOutrosLancamentosMB implements Serializable {
     //	}
     //}
     public void cancelar() {
-        RequestContext.getCurrentInstance().closeDialog(null);
+        RequestContext.getCurrentInstance().closeDialog(new Outroslancamentos());
     }
 
     public Outroslancamentos setaValoresOutrosLancamentos(Outroslancamentos outros) {

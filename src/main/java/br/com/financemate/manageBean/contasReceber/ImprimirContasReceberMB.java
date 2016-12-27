@@ -338,8 +338,8 @@ public class ImprimirContasReceberMB implements Serializable {
             data = Formatacao.SubtarirDatas(new Date(), 3, "yyyy-MM-dd");
         }
 
-        String sql = "Select c from Contasreceber c where c.dataPagamento is NULL and c.valorPago=0 and c.dataVencimento<'"
-                + data + "' and c.status<>'CANCELADA' ";
+        String sql = "Select c from Contasreceber c where c.dataPagamento is NULL and c.valorPago=0 " +
+                " and c.status<>'CANCELADA' ";
         if (tipoDocumento != null) {
             if (!tipoDocumento.equalsIgnoreCase("Todos")) {
                 sql = sql + " and c.tipodocumento='" + tipoDocumento + "' ";

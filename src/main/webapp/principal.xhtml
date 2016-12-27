@@ -116,7 +116,7 @@
                                 </a>
                                 <ul class="submenu" style="background:#302E2E;">
                                     <li><a href="pages/banco/consBanco.jsf"><span class="submenu-label">Banco</span></a></li>
-                                    <li><a href="pages/cliente/consCliente.jsf"><span class="submenu-label">Cliente</span></a></li>
+                                    <h:panelGroup rendered="#{usuarioLogadoMB.habilitarAcessoCliente()}"><li ><a href="pages/cliente/consCliente.jsf"><span class="submenu-label">Cliente</span></a></li></h:panelGroup>
                                     <li><a href="pages/planoconta/consPlanoConta.jsf"><span class="submenu-label">Plano de Conta</span></a></li>
                                     <li><a href="pages/produtos/consProduto.jsf"><span class="submenu-label">Produto</span></a></li>
                                     <li><a href="pages/tipoPlanoConta/consTipoPlanoConta.jsf"><span class="submenu-label">Tipo Plano Conta</span></a></li>

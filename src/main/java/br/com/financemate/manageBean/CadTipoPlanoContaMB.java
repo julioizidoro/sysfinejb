@@ -1,8 +1,10 @@
 package br.com.financemate.manageBean;
 
+import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.PlanoContaTipoDao;
 import br.com.financemate.dao.PlanoContasDao;
 import br.com.financemate.dao.TipoPlanoContasDao;
+import br.com.financemate.dao.UsuarioDao;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,6 +50,8 @@ public class CadTipoPlanoContaMB implements Serializable {
     private TipoPlanoContasDao tipoPlanoContasDao;
     @EJB
     private PlanoContaTipoDao planoContaTipoDao;
+    @EJB
+    private ClienteDao clienteDao;
 
     @PostConstruct
     public void init() {
@@ -134,6 +138,8 @@ public class CadTipoPlanoContaMB implements Serializable {
     public String salvar() {
         if (usuarioLogadoMB.getUsuario().getTipoacesso().getAcesso().getItipoplanocontas()) {
             tipoplanocontas = tipoPlanoContasDao.update(tipoplanocontas);
+            usuarioLogadoMB.getCliente().setTipoplanocontas(tipoplanocontas);
+            clienteDao.update(usuarioLogadoMB.getCliente());
             if (tipoplanocontas != null) {
                 for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
                     if (listaPlanoContaTipo.get(i).getTipoplanocontas() == null) {

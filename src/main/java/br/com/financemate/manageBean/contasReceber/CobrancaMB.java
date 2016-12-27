@@ -286,6 +286,9 @@ public class CobrancaMB implements Serializable {
 
     public String salvarDadosCobranca() {
         cobranca.setVencimentooriginal(contasReceber.getDataVencimento());
+        if (cobranca.getAlterarvencimento() != null) {
+            contasReceber.setDataVencimento(cobranca.getAlterarvencimento());
+        }
         cobranca = cobrancaDao.update(cobranca);
         contasReceberDao.update(contasReceber);
         FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Dados  salvo.");

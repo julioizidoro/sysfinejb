@@ -113,7 +113,7 @@
                                     <p:commandButton style="margin-left:35%;" value="Sim" action="#{outrosLancamentosMB.excluir()}" type="button" styleClass="ui-confirmdialog-yes"  />
                                     <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
                                 </p:confirmDialog>
-                                <p:commandLink action="#{outrosLancamentosMB.excluir()}"  update=":frmidHistoricoCobranca:growl, :frmidHistoricoCobranca:idTabelaOutrosLancamentos"  style="text-align: left;">
+                                <p:commandLink action="#{outrosLancamentosMB.excluir()}"  update=":frmConsultaOutrosLancamentos:growl, :frmConsultaOutrosLancamentos:idTabelaOutrosLancamentos"  style="text-align: left;">
                                     <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Excluir" style="font-size: 15px;"/>
                                     </i> 
@@ -124,7 +124,7 @@
                                     <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                     </i> 
-                                    <p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogNovo}" update=":frmidHistoricoCobranca:growl, :frmidHistoricoCobranca:idTabelaOutrosLancamentos, :frmidHistoricoCobranca:idsaida, :frmidHistoricoCobranca:identrada, :frmidHistoricoCobranca:idtotal"/>
+                                    <p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogNovo}" update=":frmConsultaOutrosLancamentos:growl, :frmConsultaOutrosLancamentos:idTabelaOutrosLancamentos, :frmConsultaOutrosLancamentos:idsaida, :frmConsultaOutrosLancamentos:identrada, :frmConsultaOutrosLancamentos:idtotal"/>
                                </p:commandLink> 
                             </p:overlayPanel> 
                         </p:column>
