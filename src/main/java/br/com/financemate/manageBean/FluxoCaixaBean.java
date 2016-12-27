@@ -13,7 +13,12 @@ import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Fluxocaixa;
 import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
+@Named 
 public class FluxoCaixaBean {
 
     private List<Fluxocaixa> listaFluxo;
@@ -95,6 +100,8 @@ public class FluxoCaixaBean {
     }
 
     public void salvarLista() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         if (listaFluxo != null) {
             for (int i = 0; i < listaFluxo.size(); i++) {
                 Fluxocaixa fluxo = listaFluxo.get(i);
@@ -103,5 +110,6 @@ public class FluxoCaixaBean {
                 //fluxoCaixaDao.update(fluxo);
             }
         }
+        session.setAttribute("listaFluxo", listaFluxo);
     }
 }

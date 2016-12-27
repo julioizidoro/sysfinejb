@@ -4,6 +4,7 @@ import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.ContasReceberDao;
+import br.com.financemate.dao.FluxoCaixaDao;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,9 +33,11 @@ import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Fluxocaixa;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
 
 @Named
@@ -68,6 +71,8 @@ public class ImprimirRelatorioMB implements Serializable {
     private ContasPagarDao contasPagarDao;
     @EJB
     private ContasReceberDao contasReceberDao;
+    @EJB
+    private FluxoCaixaDao fluxoCaixaDao;
 
     @PostConstruct
     public void init() {
@@ -400,6 +405,8 @@ public class ImprimirRelatorioMB implements Serializable {
     }
 
     private void validarRelatorioFluxoCaixa() {
+        List<Fluxocaixa> listaFluxo = new ArrayList<>();
+        float saldo = 0.0f;
         List<Contaspagar> listaContaspagar = contasPagarDao.list("Select v from Contaspagar v where v.cliente.idcliente=" + cliente.getIdcliente()
                 + " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
                 + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
@@ -409,6 +416,18 @@ public class ImprimirRelatorioMB implements Serializable {
                 + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
                 + "' order by v.dataVencimento"); 
         FluxoCaixaBean fluxoCaixaBean = new FluxoCaixaBean(dataInicial, dataFinal, cliente, "R", listaContaspagar, listaContasreceber);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        listaFluxo = (List<Fluxocaixa>) session.getAttribute("listaFluxo");
+        if (listaFluxo != null) {
+            for (int i = 0; i < listaFluxo.size(); i++) {
+                Fluxocaixa fluxo = new Fluxocaixa();
+                fluxo = listaFluxo.get(i);
+                saldo = saldo + (fluxo.getValorContasReceber() - fluxo.getValorContasPagar());
+                fluxo.setSaldo(saldo);
+                fluxoCaixaDao.update(fluxo);
+            }
+        }
     }
 
 }
