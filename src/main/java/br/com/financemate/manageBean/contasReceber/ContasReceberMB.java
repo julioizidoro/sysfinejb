@@ -644,6 +644,12 @@ public class ContasReceberMB implements Serializable {
         }
         calculosContasMB.calcularTotalContasPagar();
     }
+    
+    
+    public void retornoDialogRecebimento(SelectEvent event) {
+        criarConsultaContaReceber();
+        gerarListaContas();
+    }
 
     public String excluir() {
         List<Contasreceber> listaContasMultiplas = new ArrayList<Contasreceber>();
@@ -902,7 +908,7 @@ public class ContasReceberMB implements Serializable {
 
     public void desfazerRecebimento(Contasreceber contasreceber) {
         Outroslancamentos outroslancamentos = new Outroslancamentos();
-        outroslancamentos.setBanco(contasReceber.getBanco());
+        outroslancamentos.setBanco(contasreceber.getBanco());
         outroslancamentos.setCliente(contasreceber.getCliente());
         outroslancamentos.setValorSaida(contasreceber.getValorPago());
         outroslancamentos.setValorEntrada(0f);
