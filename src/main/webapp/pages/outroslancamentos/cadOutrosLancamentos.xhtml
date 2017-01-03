@@ -49,7 +49,7 @@
             <br />   
             <hr />    
             <br />
-            <h:panelGrid style="margin-left:1;">   
+            <h:panelGrid style="margin-left:2;">   
                 <p:outputLabel value="Tipo de Documento" for="tipoDoc" class="left2"/>
                 <p:selectOneMenu id="tipoDoc" class="left5" style="width:156px"  value="#{cadOutrosLancamentosMB.tipoDocumento}">
                     <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
@@ -75,7 +75,7 @@
                 </p:inputMask> 
              </h:panelGrid> 
             <br />
-            <h:panelGrid columns="1" style="margin-left:1%;"> 
+            <h:panelGrid columns="1" style="margin-left:2%;"> 
             	<p:outputLabel value="Valor Entrada"  for="valor" class="leftvalor" style="margin-left:12%;"/>
              	<p:inputText maxlength="10"  id="valor" size="14"  class="valorr"  value="#{cadOutrosLancamentosMB.outrosLancamentos.valorEntrada}" style="text-align: right;">
              		<f:convertNumber pattern="##,###,###,###.##"/>
@@ -92,12 +92,12 @@
              	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadOutrosLancamentosMB.outrosLancamentos.compentencia}" size="12" mask="99/9999"  class="left1"/>
              </h:panelGrid> 
              <br />
-             <h:panelGrid columns="2" style="margin-left: 1%;"> 
+             <h:panelGrid columns="2" style="margin-left: 2%;"> 
             	<p:outputLabel value="Descrição" for="descricao" class="left3"/> 
             <p:inputText  style="margin-left:1.2%;" size="82"  id="descricao"  class="left3"  value="#{cadOutrosLancamentosMB.outrosLancamentos.descricao}"/>
             </h:panelGrid>
              <br />
-             <h:panelGrid columns="1" style="margin-left:1%;">
+             <h:panelGrid columns="1" style="margin-left:2%;">
              	<p:outputLabel value="Conta" for="idconta" class="left3" style="margin-left:30%;"/>    
             	<p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{cadOutrosLancamentosMB.banco}"  converter="BancoConverter"
 	                                 filter="true" filterMatchMode="contains" panelStyle="width:150px">
