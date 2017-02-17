@@ -23,7 +23,7 @@
                     	<p:column headerText="Descrição"  sortBy="#{tipoPlanoConta.descricao}" style="width:95%; font-size:12px; background:white; color:black; border:none; text-align:left;">
                             <h:outputText value="#{tipoPlanoConta.descricao}" style="color:black;"/> 
                         </p:column>
-                        <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                        <p:column headerText="" rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.atipoplanocontas}" style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
                             <p:commandLink id="btnMenu">
                                 <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                                 <b class="caret"></b>
@@ -33,7 +33,7 @@
                                     <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                     </i> 
-                                   <p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogNovo}" update=":frmConsultaTipoPlanoConta:growl, :frmConsultaTipoPlanoConta:idTabelaTipoPlanoConta"/>
+                                   <p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogEdicao}" update=":frmConsultaTipoPlanoConta:growl, :frmConsultaTipoPlanoConta:idTabelaTipoPlanoConta"/>
                                </p:commandLink> 
                             </p:overlayPanel> 
                         </p:column>

@@ -80,10 +80,20 @@ public class TipoPlanoContaMB implements Serializable {
     public void retornoDialogNovo(SelectEvent event) {
         Tipoplanocontas tipoplanocontas = (Tipoplanocontas) event.getObject();
         if (tipoplanocontas.getIdtipoplanocontas() != null) {
+            listarTipoPlanoContas.add(tipoplanocontas);
             mensagem mensagem = new mensagem();
             mensagem.saveMessagem();
         }
-        gerarListaTipoPlanoConta();
+    }
+    
+    
+    public void retornoDialogEdicao(SelectEvent event) {
+        Tipoplanocontas tipoplanocontas = (Tipoplanocontas) event.getObject();
+        if (tipoplanocontas.getIdtipoplanocontas() != null) {
+            gerarListaTipoPlanoConta();
+            mensagem mensagem = new mensagem();
+            mensagem.saveMessagem();
+        }
     }
 
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
