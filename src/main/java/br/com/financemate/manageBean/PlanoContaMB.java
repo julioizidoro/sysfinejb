@@ -141,8 +141,17 @@ public class PlanoContaMB implements Serializable {
         if (planocontas.getIdplanoContas() != null) {
             mensagem mensagem = new mensagem();
             mensagem.saveMessagem();
+            listarPlanoContas.add(planocontas);
         }
-        gerarListaPlanoConta();
+    }
+    
+    public void retornoDialogEdicao(SelectEvent event) {
+        Planocontas planocontas = (Planocontas) event.getObject();
+        if (planocontas.getIdplanoContas() != null) {
+            gerarListaPlanoConta();
+            mensagem mensagem = new mensagem();
+            mensagem.saveMessagem();
+        }
     }
 
     public String pesquisar() {

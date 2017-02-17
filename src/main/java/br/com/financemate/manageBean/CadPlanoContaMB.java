@@ -106,7 +106,7 @@ public class CadPlanoContaMB implements Serializable {
     }
 
     public String cancelar() {
-        RequestContext.getCurrentInstance().closeDialog(null);
+        RequestContext.getCurrentInstance().closeDialog(new Planocontas());
         return "";
     }
 
