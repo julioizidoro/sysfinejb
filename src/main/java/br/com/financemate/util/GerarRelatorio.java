@@ -26,6 +26,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperRunManager;
+import org.eclipse.persistence.internal.descriptors.PersistenceEntity;
 
 /**
  *
@@ -77,7 +78,7 @@ public class GerarRelatorio {
     public static Connection getConexao(){
     	Connection conexao = null;
 		try {
-			conexao = DriverManager.getConnection("jdbc:mysql://191.191.78.111:8082/sysfin", "root", "jfhmaster123");
+                    conexao = DriverManager.getConnection("jdbc:mysql://systm.com.br:8082/sysfin", "root", "jfhmaster123");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
