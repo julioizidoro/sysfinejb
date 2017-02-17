@@ -122,7 +122,7 @@ public class CadBancoMB implements Serializable {
     }
 
     public String cancelar() {
-        RequestContext.getCurrentInstance().closeDialog(null);
+        RequestContext.getCurrentInstance().closeDialog(new Banco());
         return "";
     }
 
