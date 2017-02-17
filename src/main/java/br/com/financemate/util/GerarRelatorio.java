@@ -10,13 +10,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import org.primefaces.context.RequestContext;
 
@@ -26,13 +31,15 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperRunManager;
-import org.eclipse.persistence.internal.descriptors.PersistenceEntity;
 
 /**
  *
  * @author Wolverine
  */
 public class GerarRelatorio {
+    
+    @Resource(lookup = "java:/sysfinDS")
+    private DataSource dataSource;
 
     public void gerarRelatorioDSPDF(String caminhoRelatorio, Map parameters, JRDataSource jrds, String nomeArquivo) throws JRException, IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -64,7 +71,12 @@ public class GerarRelatorio {
         facesContext.responseComplete();   
         ServletOutputStream servletOutputStream = response.getOutputStream();
         RequestContext.getCurrentInstance().closeDialog(null);
-        Connection conn = getConexao();
+        Connection conn = null;
+        try {
+            conn = getConexao();
+        } catch (NamingException ex) {
+            Logger.getLogger(GerarRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
         JasperRunManager.runReportToPdfStream(reportStream,
                 servletOutputStream, parameters, conn);
 
@@ -75,15 +87,20 @@ public class GerarRelatorio {
     }
     
     
-    public static Connection getConexao(){
-    	Connection conexao = null;
-		try {
-                    conexao = DriverManager.getConnection("jdbc:mysql://systm.com.br:8082/sysfin", "root", "jfhmaster123");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return conexao;
+    public static Connection getConexao() throws NamingException{
+        InitialContext context = null;
+        try {
+            context = new InitialContext();
+        } catch (NamingException ex) {
+            Logger.getLogger(GerarRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        DataSource ds = (DataSource) context.lookup("java:/sysfinDS");
+        try {
+            return ds.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(GerarRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }
