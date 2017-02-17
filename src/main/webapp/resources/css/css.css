@@ -10,6 +10,14 @@ body {
     margin-left: 25%;
 }
 
+.coluna30{
+    width: 30%;
+}
+
+.coluna70{
+    width: 70%;
+}
+
 .ui-growl{
     top:12%;
 }

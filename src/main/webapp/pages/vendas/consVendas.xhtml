@@ -16,25 +16,27 @@
                     <img src="../../resources/img/ajax-carregando.gif" />
                 </p:dialog>
 
-                <br/>   
-                <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.ivendas}"  action="#{vendasMB.novaVenda()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
-                    <img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
-                    <p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogNovo}" update="growl, idTabelaVendas"/>
-                </p:commandLink>  
-                <p:commandLink id="idImagemFiltro"  action="#{vendasMB.coresFiltrar()}" update="idImagemFiltro, idTabelaVendas" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
-                    <img  src="#{vendasMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
-                    <p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogFiltrar}" update="idTabelaVendas"/>
-                </p:commandLink>
-                <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
-                    <img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
-                    <p:dataExporter type="xls" target="idTabelaVendas" fileName="vendas" />
-                </p:commandLink>
-                <p:commandLink action="#{vendasMB.importarVenda()}" title="Importar Venda do Systm" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;">
-                    <img src="../../resources/img/iconeImportar.png" width="32" height="32" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
-                </p:commandLink>
-                <p:commandLink   action="#{vendasMB.novaImpressao()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
-                    <img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
-                </p:commandLink>    
+                <br/>
+                <h:panelGrid columns="5" style="width: 11%;margin-right: 3%;float: right;">
+                        <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.ivendas}"  action="#{vendasMB.novaVenda()}" style="text-decoration:none;" title="Novo Lançamento">
+                            <img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
+                            <p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogNovo}" update="growl, idTabelaVendas"/>
+                        </p:commandLink>  
+                        <p:commandLink id="idImagemFiltro"  action="#{vendasMB.coresFiltrar()}" update="idImagemFiltro, idTabelaVendas" style="text-decoration:none;" title="Filtros">
+                            <img  src="#{vendasMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+                            <p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogFiltrar}" update="idTabelaVendas"/>
+                        </p:commandLink>
+                        <p:commandLink   action="#" style="text-decoration:none;" title="Importa para excel" ajax="false">
+                            <img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+                            <p:dataExporter type="xls" target="idTabelaVendas" fileName="vendas" />
+                        </p:commandLink>
+                        <p:commandLink action="#{vendasMB.importarVenda()}" title="Importar Venda do Systm" style="text-decoration:none;">
+                            <img src="../../resources/img/iconeImportar.png" width="32"  style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+                        </p:commandLink>
+                        <p:commandLink   action="#{vendasMB.novaImpressao()}" style="text-decoration:none;" title="Imprimir">
+                            <img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
+                        </p:commandLink>
+                </h:panelGrid>
                 <br /><br /> 
                 <h2 style="margin-left:50%;">Consulta Vendas</h2>
                 <hr style="margin-left:17%; width:80%;"/>  

@@ -68,6 +68,7 @@ public class grafico implements Serializable {
     @EJB
     private VendasDao vendasDao;
     private String ano = "" + new Year();
+    private int nVendasGrafico =0;
 
     @PostConstruct
     public void init() {
@@ -258,6 +259,15 @@ public class grafico implements Serializable {
     public void setAno(String ano) {
         this.ano = ano;
     }
+
+    public int getnVendasGrafico() {
+        return nVendasGrafico;
+    }
+
+    public void setnVendasGrafico(int nVendasGrafico) {
+        this.nVendasGrafico = nVendasGrafico;
+    }
+    
     
     
 
@@ -280,7 +290,7 @@ public class grafico implements Serializable {
         animatedModel2.setAnimate(true);
         yAxis = animatedModel2.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(600);
+        yAxis.setMax(nVendasGrafico + 200);
 
     }
 
@@ -408,6 +418,9 @@ public class grafico implements Serializable {
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
         }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
+        }
         return listaQuantidadeVendas.size();
     }
 
@@ -420,6 +433,9 @@ public class grafico implements Serializable {
         List<Vendas> listaQuantidadeVendas = vendasDao.list(sql);
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+        }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
         }
         return listaQuantidadeVendas.size();
     }
@@ -434,6 +450,9 @@ public class grafico implements Serializable {
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
         }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
+        }
         return listaQuantidadeVendas.size();
     }
 
@@ -446,6 +465,9 @@ public class grafico implements Serializable {
         List<Vendas> listaQuantidadeVendas = vendasDao.list(sql);
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+        }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
         }
         return listaQuantidadeVendas.size();
     }
@@ -460,6 +482,9 @@ public class grafico implements Serializable {
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
         }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
+        }
         return listaQuantidadeVendas.size();
     }
 
@@ -472,6 +497,9 @@ public class grafico implements Serializable {
         List<Vendas> listaQuantidadeVendas = vendasDao.list(sql);
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+        }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
         }
         return listaQuantidadeVendas.size();
     }
@@ -486,6 +514,9 @@ public class grafico implements Serializable {
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
         }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
+        }
         return listaQuantidadeVendas.size();
     }
 
@@ -498,6 +529,9 @@ public class grafico implements Serializable {
         List<Vendas> listaQuantidadeVendas = vendasDao.list(sql);
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+        }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
         }
         return listaQuantidadeVendas.size();
     }
@@ -512,6 +546,9 @@ public class grafico implements Serializable {
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
         }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
+        }
         return listaQuantidadeVendas.size();
     }
 
@@ -524,6 +561,9 @@ public class grafico implements Serializable {
         List<Vendas> listaQuantidadeVendas = vendasDao.list(sql);
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+        }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
         }
         return listaQuantidadeVendas.size();
     }
@@ -538,6 +578,9 @@ public class grafico implements Serializable {
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
         }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
+        }
         return listaQuantidadeVendas.size();
     }
 
@@ -550,6 +593,9 @@ public class grafico implements Serializable {
         List<Vendas> listaQuantidadeVendas = vendasDao.list(sql);
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+        }
+        if (nVendasGrafico < listaQuantidadeVendas.size()) {
+            nVendasGrafico = listaQuantidadeVendas.size();
         }
         return listaQuantidadeVendas.size();
     }

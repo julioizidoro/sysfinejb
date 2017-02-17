@@ -10,28 +10,28 @@
             <h:form id="frmConsultaPagar"> 
                 <p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
                 <br/><br/>  <br/>  
-                <h:panelGrid columns="5" width="99%" style="margin-left:84.8%;">
-                    <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.icontaspagar}"  action="#{contasPagarMB.novaConta()}" style="text-decoration:none;" title="Novo Lançamento">
-                        <img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
-                        <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
-                    </p:commandLink>  
-                    <p:commandLink id="idImagemFiltro"  action="#{contasPagarMB.coresFiltrar()}" update="idImagemFiltro, idTabelaContaPagar" style="margin-left:-89%; text-decoration:none;" title="Filtros">
-                        <img  src="#{contasPagarMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+                <h:panelGrid columns="5" width="11%" style="margin-right: 3%;float: right;">
+                    <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.icontaspagar}"  action="#{contasPagarMB.novaConta()}" style="text-decoration:none;width: 100%;" title="Novo Lançamento">
+                            <img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;width: 70px;"/>
+                            <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
+                    </p:commandLink>
+                    <p:commandLink  id="idImagemFiltro"  action="#{contasPagarMB.coresFiltrar()}" update="idImagemFiltro, idTabelaContaPagar" style="text-decoration:none;width: 100%;" title="Filtros">
+                        <img  src="#{contasPagarMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;width: 70px;"/>
                         <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogFiltrar}" update="idTabelaContaPagar"/>
                     </p:commandLink>
-                    <p:commandLink id="idImagemLiberar"  action="#{contasPagarMB.novaLiberacao()}" update="idImagemFiltro" style="margin-left:-178%; text-decoration:none;" title="Liberar">
-                        <img  src="../../resources/img/iconeLibera.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+                    <p:commandLink id="idImagemLiberar"  action="#{contasPagarMB.novaLiberacao()}" update="idImagemFiltro" style="text-decoration:none;" title="Liberar">
+                        <img  src="../../resources/img/iconeLibera.png" style="border:solid; border-width: 1px; border-color: #3D9446;width: 70px;"/>
                         <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogLiberar}"  update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
                     </p:commandLink> 
-                    <p:commandLink   action="#" style="margin-left:-267%; text-decoration:none;" title="Importa para excel" ajax="false">
-                        <img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+                    <p:commandLink   action="#" style="text-decoration:none;" title="Importa para excel" ajax="false">
+                        <img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;width: 70px;"/>
                         <p:dataExporter type="xls" target="idTabelaContaPagar" fileName="contasPagar" />
                     </p:commandLink>
-                    <p:commandLink   action="#{contasPagarMB.novaImpressao()}" style="margin-left:-356%; text-decoration:none;" title="Imprimir">
-                        <img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
+                    <p:commandLink   action="#{contasPagarMB.novaImpressao()}" style="text-decoration:none;" title="Imprimir" >
+                        <img src="../../resources/img/iconeImprimirS.png" style="width: 70px;border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
                     </p:commandLink>
                 </h:panelGrid> 
-                <h2 style="margin-left:50%;">Consulta Contas a Pagar</h2>
+                <h2 style="margin-left:45%;">Consulta Contas a Pagar</h2>
                 <hr style="margin-left:17%; width:80%;"/>  
                 <p:dataTable  id="idTabelaContaPagar" var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" rowStyleClass="#{contasPagar.selecionado eq true ? 'old' : null}"
                               scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
