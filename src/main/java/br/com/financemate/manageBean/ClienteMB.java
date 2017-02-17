@@ -175,8 +175,17 @@ public class ClienteMB implements Serializable {
         if (cliente.getIdcliente() != null) {
             mensagem mensagem = new mensagem();
             mensagem.saveMessagem();
+            listaClientes.add(cliente);
         }
-        gerarListaClientes();
+    }
+    
+    public void retornoDialogEdicao(SelectEvent event) {
+        Cliente cliente = (Cliente) event.getObject();
+        if (cliente.getIdcliente() != null) {
+            mensagem mensagem = new mensagem();
+            mensagem.saveMessagem();
+            gerarListaClientes();
+        }
     }
 
     public String consultarTipoPlanoContas() throws SQLException {
