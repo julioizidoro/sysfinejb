@@ -102,27 +102,27 @@
                         </p:commandLink>   
                         <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width: 200px;">
                             <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.econtasreceber}" style="text-align: left;" actionListener="#{contasReceberMB.cancelar(contasReceber)}" update=":frmConsultaReceber:growl, :frmConsultaReceber:idTabelaContaReceber, :frmConsultaReceber:contasVenc, :frmConsultaReceber:contasVencer, :frmConsultaReceber:contasReceber">
-                                <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                <i class="fa fa-ban" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Cancelar" style="font-size: 15px;"/>
                                 </i>
                                 <p:confirm  header="Confirmação" message="Tem certeza que deseja cancelar está conta ?" icon="ui-icon-alert" />
                             </p:commandLink> 
                             <br/><br/>
                             <p:commandLink  style="text-align: left;" action="#{contasReceberMB.gerarListaContas()}" actionListener="#{contasReceberMB.desfazerRecebimento(contasReceber)}" update=":frmConsultaReceber:idTabelaContaReceber">
-                                <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                <i class="fa fa-undo" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Desfazer Recebimento" style="font-size: 15px;"/>
                                 </i> 
                            </p:commandLink> 
                             <br/><br/>
                             <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.acontasreceber}" action="#{contasReceberMB.editar(contasReceber)}" style="text-align: left;">
-                                <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                 </i> 
                                 <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update=":frmConsultaReceber:idTabelaContaReceber, :frmConsultaReceber:growl"/>
                            </p:commandLink> 
                             <br/><br/>
                             <p:commandLink  action="#{contasReceberMB.recebimentoConta(contasReceber)}" style="text-align: left;">
-                                <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                <i class="fa fa-money" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Receber" style="font-size: 15px;"/>
                                 </i> 
                                 <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogRecebimento}" update=":frmConsultaReceber:idTabelaContaReceber, :frmConsultaReceber:growl, :frmConsultaReceber:contasVenc, :frmConsultaReceber:contasVencer, :frmConsultaReceber:contasReceber"/>

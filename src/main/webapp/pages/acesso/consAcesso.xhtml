@@ -30,7 +30,7 @@
                         </p:commandLink>   
                         <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
                             <p:commandLink action="#{acessoMB.editarAcesso(acesso)}" style="text-align: left;">
-                                <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                 </i> 
                                 <p:ajax event="dialogReturn" listener="#{acessoMB.retornoDialogEdicao}" update=":frmConsultaAcesso:idTabelaAcesso, :frmConsultaAcesso:growl"/>

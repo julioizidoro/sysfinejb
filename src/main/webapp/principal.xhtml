@@ -62,32 +62,36 @@
             <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
 
             <div id="top-nav" class="fixed skin-6" style="position:fixed;background:#302E2E;">
-                <h:panelGrid columns="6" width="100%">
-                    <a href="#" class="brand" style="background:#302E2E;">
-                        <span style="margin-left:4%;">
-                                <img src="resources/img/iconeUsuario.png" style="width: 15%;float: left;" >    
-                                    Bem vindo, #{usuarioLogadoMB.usuario.nome}
-                                    
-                                </img>
-                            
-                        </span>
-                    </a>
-                        <h:outputText style="font-size: 30px;color:white; margin-left:-59%; font-family:Trebuchet MS; " value="SYSFIN" />
-                        <h:panelGrid columns="2">
+                <h:panelGrid columns="3" width="100%">
+                    <h:panelGroup>
+                        <a href="#" class="brand" style="background:#302E2E;">
+                            <span style="margin-left:4%;">
+                                    <img src="resources/img/iconeUsuario.png" style="width: 15%;float: left;" >    
+                                        Bem vindo, #{usuarioLogadoMB.usuario.nome}
+
+                                    </img>
+
+                            </span>
+                        </a>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputText style="font-size: 30px;color:white; font-family:Trebuchet MS; " value="SYSFIN" />
+                    </h:panelGroup>
+                    <h:panelGroup style="float: right;">
                             <p:commandLink action="#{usuarioLogadoMB.validarTrocarSenha()}" title="Trocar Senha">
-                                            <img src="resources/img/settings.png" style="width: 31%;"/>
+                                            <img src="resources/img/settings.png" style="width: 25px;"/>
                                         </p:commandLink>
                             <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style=" text-decoration:none;" title="Sair">
-                                <img src="resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-top:0%;float:right;width: 100%;"/>
+                                <img src="resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-top:0%;width: 40px;"/>
                                     </p:commandLink> 
-                        </h:panelGrid>
+                    </h:panelGroup>
                 </h:panelGrid>  
                 <br/>
             </div><!-- /top-nav-->
 
             <aside class="fixed skin-6" style="background:#302E2E;display:block;width:15%;">
                 <div class="sidebar-inner scrollable-sidebar" style="background:#302E2E;">
-                    <br/><br/>
+                    
                     <div class="main-menu">
                         <ul>
                             <li  style="background:#302E2E;" >

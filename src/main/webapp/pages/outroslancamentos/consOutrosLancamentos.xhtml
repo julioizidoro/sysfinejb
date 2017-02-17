@@ -114,14 +114,14 @@
                                     <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
                                 </p:confirmDialog>
                                 <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.eoutroslancamentos}" action="#{outrosLancamentosMB.excluir()}"  update=":frmConsultaOutrosLancamentos:growl, :frmConsultaOutrosLancamentos:idTabelaOutrosLancamentos"  style="text-align: left;">
-                                    <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                    <i class="fa fa-trash" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Excluir" style="font-size: 15px;"/>
                                     </i> 
                                     <p:confirm header="Confirmação" message="Tem certeza que deseja excluir esse lançamento?" icon="ui-icon-alert" />
                                </p:commandLink> 
                                 <br/><br/>
                                 <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.aoutroslancamentos}" actionListener="#{outrosLancamentosMB.editar(outrosLancamentos)}"  style="text-align: left;">
-                                    <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                    <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                     </i> 
                                     <p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogNovo}" update=":frmConsultaOutrosLancamentos:growl, :frmConsultaOutrosLancamentos:idTabelaOutrosLancamentos, :frmConsultaOutrosLancamentos:idsaida, :frmConsultaOutrosLancamentos:identrada, :frmConsultaOutrosLancamentos:idtotal"/>

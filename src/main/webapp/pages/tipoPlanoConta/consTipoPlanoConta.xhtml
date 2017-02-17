@@ -30,7 +30,7 @@
                             </p:commandLink>   
                             <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
                                 <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.atipoplanocontas}" action="#{tipoPlanoContaMB.editar(tipoPlanoConta)}" style="text-align: left;">
-                                    <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                    <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                     </i> 
                                    <p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogEdicao}" update=":frmConsultaTipoPlanoConta:growl, :frmConsultaTipoPlanoConta:idTabelaTipoPlanoConta"/>

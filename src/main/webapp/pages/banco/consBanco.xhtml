@@ -1,58 +1,58 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<ui:composition template="/pages/templates/default.xhtml">
-	<ui:define name="corpo">
-		<h:form id="frmConsultaBanco">
-			<br/> <br/> <br/> 
-			<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
-                        <p:commandLink  rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.ibanco}" action="#{bancoMB.novoBanco()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
-				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
-				<p:ajax event="dialogReturn" listener="#{bancoMB.retornoDialog}" update="growl, idTabelaBanco"/>
-            </p:commandLink>
-             <br /><br />
-             <h2 style="margin-left:50%;">Consulta Banco</h2>
-             <hr style="margin-left:17%; width:80%;"/>     
-             <p:dataTable id="idTabelaBanco"  var="banco"  value="#{bancoMB.listaBanco}" style="border:none;" class="tabelacontas" 
-                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{bancoMB.banco}" selectionMode="single" rowKey="#{banco.idbanco}">
-             	<p:column headerText="Nome" sortBy="#{banco.nome}" style=" background:white; font-size:12px; color:black; border:none; text-align:left;">
-                   <h:outputText value="#{banco.nome}" />
-              	</p:column> 
-              	<p:column headerText="Agencia" sortBy="#{banco.agencia}" style=" width:70px; background:white; font-size:12px; color:black; border:none;text-align:right;">
-                   <h:outputText   value="#{banco.agencia}"/> 
-              	</p:column>
-              	<p:column headerText="Conta"  sortBy="#{banco.conta}" style="width:80px; background:white; font-size:12px; color:black; border:none;text-align:right;">
-                  	<h:outputText value="#{banco.conta}"/>
-              	</p:column>
-              	<p:column headerText="Gerente" sortBy="#{banco.gerente}" style=" background:white; font-size:12px; color:black; border:none; text-align:left;">
-                  	<h:outputText value="#{banco.gerente}"/>
-              	</p:column> 
-              	<p:column headerText="Gerente e-mail" sortBy="#{banco.emailGerente}" style=" background:white; font-size:12px; color:black; border:none; text-align:left;">
-                  	<h:outputText value="#{banco.emailGerente}"/>
-              	</p:column>
-                 <p:column headerText="Cliente" sortBy="#{banco.cliente}" style=" background:white; font-size:12px; color:black; border:none; text-align:left;">
-                     <h:outputText value="#{banco.cliente.nomeFantasia}"/>
-              	</p:column>
-                 <p:column headerText="" rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.abanco}" style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form id="frmConsultaBanco">
+                <br/> <br/> <br/> 
+                <p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
+                <p:commandLink  rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.ibanco}" action="#{bancoMB.novoBanco()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
+                    <img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
+                    <p:ajax event="dialogReturn" listener="#{bancoMB.retornoDialog}" update="growl, idTabelaBanco"/>
+                </p:commandLink>
+                <br /><br />
+                <h2 style="margin-left:50%;">Consulta Banco</h2>
+                <hr style="margin-left:17%; width:80%;"/>     
+                <p:dataTable id="idTabelaBanco"  var="banco"  value="#{bancoMB.listaBanco}" style="border:none;" class="tabelacontas" 
+                             scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{bancoMB.banco}" selectionMode="single" rowKey="#{banco.idbanco}">
+                    <p:column headerText="Nome" sortBy="#{banco.nome}" style=" background:white; font-size:12px; color:black; border:none; text-align:left;">
+                        <h:outputText value="#{banco.nome}" />
+                    </p:column> 
+                    <p:column headerText="Agencia" sortBy="#{banco.agencia}" style=" width:70px; background:white; font-size:12px; color:black; border:none;text-align:right;">
+                        <h:outputText   value="#{banco.agencia}"/> 
+                    </p:column>
+                    <p:column headerText="Conta"  sortBy="#{banco.conta}" style="width:80px; background:white; font-size:12px; color:black; border:none;text-align:right;">
+                        <h:outputText value="#{banco.conta}"/>
+                    </p:column>
+                    <p:column headerText="Gerente" sortBy="#{banco.gerente}" style=" background:white; font-size:12px; color:black; border:none; text-align:left;">
+                        <h:outputText value="#{banco.gerente}"/>
+                    </p:column> 
+                    <p:column headerText="Gerente e-mail" sortBy="#{banco.emailGerente}" style=" background:white; font-size:12px; color:black; border:none; text-align:left;">
+                        <h:outputText value="#{banco.emailGerente}"/>
+                    </p:column>
+                    <p:column headerText="Cliente" sortBy="#{banco.cliente}" style=" background:white; font-size:12px; color:black; border:none; text-align:left;">
+                        <h:outputText value="#{banco.cliente.nomeFantasia}"/>
+                    </p:column>
+                    <p:column headerText="" rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.abanco}" style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
                         <p:commandLink id="btnMenu">
                             <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                             <b class="caret"></b>
                         </p:commandLink>   
                         <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
                             <p:commandLink  action="#{bancoMB.editar(banco)}" style="text-align: left;">
-                                <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                 </i> 
                                 <p:ajax event="dialogReturn" listener="#{bancoMB.retornoDialogEdicao}" update=":frmConsultaBanco:idTabelaBanco, :frmConsultaBanco:growl"/>
-                           </p:commandLink> 
+                            </p:commandLink> 
                         </p:overlayPanel> 
                     </p:column>
-             </p:dataTable>
-		</h:form>
-	</ui:define>
-</ui:composition>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
