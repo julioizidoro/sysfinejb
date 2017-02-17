@@ -77,6 +77,18 @@ public class AcessoMB implements Serializable{
             }
         }
     }
+    
+    
+     public void retornoDialogEdicao(SelectEvent event){
+        Tipoacesso tipoacesso = (Tipoacesso) event.getObject();
+        if (tipoacesso.getIdtipoacesso() != null) {
+            if (listaTipoAcesso != null) {
+                listarTipoAcesso();
+                mensagem msg = new mensagem();
+                msg.saveMessagem();
+            }
+        }
+    }
    
     
     public String novoAcesso() {
