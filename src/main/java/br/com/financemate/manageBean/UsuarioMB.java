@@ -88,6 +88,15 @@ public class UsuarioMB implements Serializable {
         if (usuario.getIdusuario() != null) {
             mensagem mensagem = new mensagem();
             mensagem.saveMessagem();
+            listaUsuario.add(usuario);
+        }
+    }
+    
+    public void retornoDialogEdicao(SelectEvent event) {
+        Usuario usuario = (Usuario) event.getObject();
+        if (usuario.getIdusuario() != null) {
+            mensagem mensagem = new mensagem();
+            mensagem.saveMessagem();
             gerarListaUsuario();
         }
     }

@@ -29,17 +29,17 @@
                         <p:column headerText="Email" sortBy="#{usuario.email}" style="widht:50%; text-align:left; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{usuario.email}"/>
                         </p:column>
-                        <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                        <p:column headerText="" rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.ausuario}" style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
                             <p:commandLink id="btnMenu">
                                 <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                                 <b class="caret"></b>
                             </p:commandLink>   
                             <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
-                                <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.ausuario}" action="#{usuarioMB.editar(usuario)}" style="text-align: left;">
+                                <p:commandLink  action="#{usuarioMB.editar(usuario)}" style="text-align: left;">
                                     <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                     </i> 
-                                    <p:ajax event="dialogReturn" listener="#{usuarioMB.retornoDialogNovo}" update=":frmConsultaUsuario:growl, :frmConsultaUsuario:idTabelaUsuario"/>
+                                    <p:ajax event="dialogReturn" listener="#{usuarioMB.retornoDialogEdicao}" update=":frmConsultaUsuario:growl, :frmConsultaUsuario:idTabelaUsuario"/>
                                </p:commandLink> 
                                 <br/><br/>
                                 <p:commandLink update="frmConsultaUsuario, :frmConsultaUsuario:growl"  action="#{usuarioMB.resetarSenhaUsuario(usuarioMB.usuario)}" style="text-align: left;">
