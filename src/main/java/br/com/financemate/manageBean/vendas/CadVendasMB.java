@@ -857,7 +857,7 @@ public class CadVendasMB implements Serializable {
         session.removeAttribute("cliente");
         session.removeAttribute("valorPagarReceber");
         session.removeAttribute("importadoSystm");
-        RequestContext.getCurrentInstance().closeDialog(null);
+        RequestContext.getCurrentInstance().closeDialog(new Vendas());
         return null;
     }
 

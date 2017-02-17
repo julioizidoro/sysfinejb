@@ -40,7 +40,7 @@
                             <img src="#{contasPagarMB.verStatus(contasPagar)}" style="font-size:12px;"/>
                         </p:commandLink>
                     </p:column>  
-                    <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; font-size:12px; background:white; color:black; border:none;text-align:center;">
+                    <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:9%; font-size:12px; background:white; color:black; border:none;text-align:center;">
                         <h:outputText  value="#{contasPagar.dataVencimento}" style=" font-size:12px;" > 
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                         </h:outputText> 
@@ -48,7 +48,7 @@
                     <p:column headerText="Unidade" styleClass="alinhar" sortBy="#{contasPagar.cliente.nomeFantasia}" style="width:15%; font-size:12px; background:white; color:black; border:#fff;text-align:center;">
                         <h:outputText value="#{contasPagar.cliente.nomeFantasia}" style=" font-size:12px;"/>
                     </p:column> 
-                    <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:55%;text-align:left; font-size:12px; background:white; color:black; border:none;" >
+                    <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:60%;text-align:left; font-size:12px; background:white; color:black; border:none;" >
                         <h:outputText value="#{contasPagar.descricao}" style="font-size:12px;"/>
                     </p:column>
                     <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; font-size:12px; background:white; color:black; border:none;text-align:center;" >
@@ -62,7 +62,7 @@
                             <f:convertNumber currencySymbol="" type="currency"/>
                         </h:outputText>                                    
                     </p:column>
-                    <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;text-decoration: none">
+                    <p:column headerText=""  style="width: 5%;text-align:right; font-size:11.5px; background:white; color:black; border:none;text-decoration: none">
                         <p:selectBooleanCheckbox value="#{contasPagar.selecionado}" style="background:white !important; color:white !important;"/>
                         <p:commandLink id="btnMenu">
                             <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
