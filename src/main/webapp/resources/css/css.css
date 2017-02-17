@@ -5,6 +5,10 @@ body {
     color: #333;
 }
 
+.tabela{
+    width: 80%;
+    margin-left: 25%;
+}
 
 .ui-growl{
     top:12%;

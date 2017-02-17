@@ -10,7 +10,7 @@
 		<h:form id="frmConsultaTipoPlanoConta">
 		<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
 		<br/> <br/> <br/> 
-			<p:commandLink   action="#{tipoPlanoContaMB.novo()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
+                <p:commandLink  rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.itipoplanocontas}" action="#{tipoPlanoContaMB.novo()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogNovo}" update="growl, idTabelaTipoPlanoConta"/>
             </p:commandLink>
@@ -29,7 +29,7 @@
                                 <b class="caret"></b>
                             </p:commandLink>   
                             <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
-                                <p:commandLink action="#{tipoPlanoContaMB.editar(tipoPlanoConta)}" style="text-align: left;">
+                                <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.atipoplanocontas}" action="#{tipoPlanoContaMB.editar(tipoPlanoConta)}" style="text-align: left;">
                                     <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                     </i> 

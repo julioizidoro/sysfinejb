@@ -11,7 +11,7 @@
                 <p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
                 <br/><br/>  <br/>  
                 <h:panelGrid columns="5" width="99%" style="margin-left:84.8%;">
-                    <p:commandLink   action="#{contasPagarMB.novaConta()}" style="text-decoration:none;" title="Novo Lançamento">
+                    <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.icontaspagar}"  action="#{contasPagarMB.novaConta()}" style="text-decoration:none;" title="Novo Lançamento">
                         <img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
                         <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
                     </p:commandLink>  
@@ -75,22 +75,16 @@
                                 </i> 
                            </p:commandLink>   
                             <br/><br/>
-                            <p:commandLink actionListener="#{contasPagarMB.editar(contasPagar)}" style="text-align: left;">
+                            <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.acontaspargar}" actionListener="#{contasPagarMB.editar(contasPagar)}" style="text-align: left;">
                                 <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Editar" style="font-size: 15px;text-align: left;"/>
                                 </i>  
                                 <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update=":frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar, :frmConsultaPagar:contasVenc, :frmConsultaPagar:contasVencendo, :frmConsultaPagar:contasPagar"/>
                            </p:commandLink> 
                             <br/><br/>
-                            <p:commandLink   actionListener="#{contasPagarMB.cancelar(contasPagar)}" update=":frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
+                            <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.econtaspargar}"  actionListener="#{contasPagarMB.cancelar(contasPagar)}" update=":frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar, :frmConsultaPagar:contasPagar, :frmConsultaPagar:contasVencendo, :frmConsultaPagar:contasVenc" style="text-align: left;">
                                 <i class="fa fa-ban" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Cancelar" style="font-size: 15px;text-align: left;"/>
-                                </i> 
-                           </p:commandLink> 
-                            <br/><br/>
-                            <p:commandLink   action="#{contasPagarMB.operacoesUsuario(contasPagar)}" update=":frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
-                                <i class="fa fa-trash-o" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Excluir" style="font-size: 15px;text-align: left;"/>
                                 </i> 
                            </p:commandLink> 
                             <br/><br/>

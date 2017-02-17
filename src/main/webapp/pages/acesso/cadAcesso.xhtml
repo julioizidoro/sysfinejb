@@ -1,0 +1,294 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+ <h:body > 
+        <h:form id="idFrmCaAcesso" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+
+            <title  >Novo Acesso</title>
+            
+            <h:panelGrid columns="2" style="margin-left:2%;">
+                <p:outputLabel value="Descrição" for="descricao"  class="left" />
+                <p:inputText id="descricao"  size="45" maxlength="100" class="left"  value="#{cadAcessoMB.tipoacesso.descricao}" /> 
+            </h:panelGrid>
+            <br/>
+            <p:tabView>
+                <p:tab title="Cadastro">
+                    <br></br>
+                    <h:panelGrid columns="5"
+                                 columnClasses="tamanho10, tamanho10, tamanho10, tamanho10,tamanho10"
+                                 style="width:95%;">
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.cadastro}" />
+                            <h:outputText value="Menu de cadastro" style="margin-left:2%;" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <br/>
+                    <h:panelGrid columns="3"
+                                 columnClasses="tamanho10, tamanho10, tamanho10"
+                                 style="width:95%;">
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.banco}" />
+                            <h:outputText value="Menu Banco" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.ibanco}" />
+                            <h:outputText value="Cadastro de Banco" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.abanco}" />
+                            <h:outputText value="Editar Banco" style="margin-left:2%;" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3"
+                                 columnClasses="tamanho10, tamanho10, tamanho10"
+                                 style="width:95%;">
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.usuario}" />
+                            <h:outputText value="Menu Usuário" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.iusuario}" />
+                            <h:outputText value="Cadastro de Usuário" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.ausuario}" />
+                            <h:outputText value="Editar Usuário" style="margin-left:2%;" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <br/>
+                    <h:panelGrid columns="3"
+                                 columnClasses="tamanho10, tamanho10, tamanho10"
+                                 style="width:100%;">
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.planocontas}" />
+                            <h:outputText value="Menu Plano de Contas" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.iplanocontas}" />
+                            <h:outputText value="Cadastro Plano de Contas" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.aplanocontas}" />
+                            <h:outputText value=" Editar Plano de Contas" style="margin-left:2%;" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <br/>
+                    <h:panelGrid columns="3"
+                                 columnClasses="tamanho10, tamanho10, tamanho10"
+                                 style="width:95%;">
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.produto}" />
+                            <h:outputText value="Menu Produto" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.iproduto}" />
+                            <h:outputText value="Cadastro de Produto" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.aproduto}" />
+                            <h:outputText value="Editar Produto" style="margin-left:2%;" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <br></br>
+                    <h:panelGrid columns="3"
+                                 columnClasses="tamanho10, tamanho10, tamanho10"
+                                 style="width:100%;">
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.tipoplanocontas}" />
+                            <h:outputText value=" Menu Tipo Plano de Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.itipoplanocontas}" />
+                            <h:outputText value="Cadastro Tipo Plano de Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.atipoplanocontas}" />
+                            <h:outputText value="Editar Tipo Plano de Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <br/>
+                     <h:panelGrid columns="3"
+                                 columnClasses="tamanho10, tamanho10, tamanho10"
+                                 style="width:95%;">
+                        <h:panelGroup>
+                                <p:selectBooleanCheckbox
+                                    value="#{cadAcessoMB.acesso.cliente}" />
+                                <h:outputText value="Menu Cliente" style="margin-left:2%;" />
+                        </h:panelGroup>
+                         <h:panelGroup>
+                                <p:selectBooleanCheckbox
+                                    value="#{cadAcessoMB.acesso.icliente}" />
+                                <h:outputText value="Cadastro de Cliente" style="margin-left:2%;" />
+                        </h:panelGroup>
+                         <h:panelGroup>
+                                <p:selectBooleanCheckbox
+                                    value="#{cadAcessoMB.acesso.acliente}" />
+                                <h:outputText value="Editar Cliente" style="margin-left:2%;" />
+                        </h:panelGroup>
+                     </h:panelGrid>
+                    <br></br>
+                </p:tab>
+                <p:tab title="Contas a Pagar">
+                    <br></br>
+                    <h:panelGrid columns="4"
+                                 columnClasses="tamanho10, tamanho10, tamanho10, tamanho10"
+                                 style="width:95%;">
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.contaspagar}" />
+                            <h:outputText value="Menu Contas a Pagar" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.icontaspagar}" />
+                            <h:outputText value="Cadastro de Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.acontaspargar}" />
+                            <h:outputText value="Editar Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.econtaspargar}" />
+                            <h:outputText value="Cancelar Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                  
+                    <br></br>
+                </p:tab>
+                <p:tab title="Contas a Receber">
+                    <br></br>
+                    <h:panelGrid columns="4"
+                                 columnClasses="tamanho10, tamanho10, tamanho10, tamanho10"
+                                 style="width:95%;">
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.contasreceber}" />
+                            <h:outputText value="Menu Contas a Receber" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.icontasreceber}" />
+                            <h:outputText value="Cadastro de Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.acontasreceber}" />
+                            <h:outputText value="Editar Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.econtasreceber}" />
+                            <h:outputText value="Cancelar Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                  
+                    <br></br>
+                </p:tab>
+                <p:tab title="Outros Lançamentos">
+                    <br></br>
+                    <h:panelGrid columns="4"
+                                 columnClasses="tamanho10, tamanho10, tamanho10, tamanho10"
+                                 style="width:95%;">
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.outroslancamentos}" />
+                            <h:outputText value="Menu Outros Lançamentos" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.ioutroslancamentos}" />
+                            <h:outputText value="Cadastro de Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.aoutroslancamentos}" />
+                            <h:outputText value="Editar Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.eoutroslancamentos}" />
+                            <h:outputText value="Excluir Conta" style="margin-left:2%;" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                  
+                    <br></br>
+                </p:tab>
+                <p:tab title="Vendas">
+                    <br></br>
+                    <h:panelGrid columns="5"
+                                 columnClasses="tamanho10, tamanho10, tamanho10, tamanho10,tamanho10"
+                                 style="width:95%;">
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.vendas}" />
+                            <h:outputText value="Menu Vendas" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.ivendas}" />
+                            <h:outputText value="Cadastro de Venda" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.avendas}" />
+                            <h:outputText value="Editar Venda" style="margin-left:2%;" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox
+                                value="#{cadAcessoMB.acesso.evendas}" />
+                            <h:outputText value="Excluir Venda" style="margin-left:2%;" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                  
+                    <br></br>
+                </p:tab>
+                
+            </p:tabView>
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{cadAcessoMB.salvarAcesso()}" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" ajax="false" action="#{cadAcessoMB.cancelar()}" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <br></br>
+            <br></br>
+            
+        </h:form>
+</h:body>
+</html>

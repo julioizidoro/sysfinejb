@@ -279,6 +279,16 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+        
+        
+        <navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consAcesso</from-outcome>
+			<to-view-id>/pages/acesso/consAcesso.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 	
 	<application>
         <action-listener>

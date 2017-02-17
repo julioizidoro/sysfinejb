@@ -34,7 +34,7 @@
 				                    <f:selectItems value="#{outrosLancamentosMB.listaBancos}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
 				                    <f:attribute name="listaBanco" value="#{outrosLancamentosMB.listaBancos}" />
 				            </p:selectOneMenu>  
-				            <p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:32.2%;text-decoration:none;" title="Novo Lançamento">
+                                          <p:commandLink  rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.ioutroslancamentos}" action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:32.2%;text-decoration:none;" title="Novo Lançamento">
 								<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
 								<p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogNovo}" update="growl, idTabelaOutrosLancamentos, idsaida, identrada, idtotal"/>
 			            	</p:commandLink>
@@ -113,14 +113,14 @@
                                     <p:commandButton style="margin-left:35%;" value="Sim" action="#{outrosLancamentosMB.excluir()}" type="button" styleClass="ui-confirmdialog-yes"  />
                                     <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
                                 </p:confirmDialog>
-                                <p:commandLink action="#{outrosLancamentosMB.excluir()}"  update=":frmConsultaOutrosLancamentos:growl, :frmConsultaOutrosLancamentos:idTabelaOutrosLancamentos"  style="text-align: left;">
+                                <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.eoutroslancamentos}" action="#{outrosLancamentosMB.excluir()}"  update=":frmConsultaOutrosLancamentos:growl, :frmConsultaOutrosLancamentos:idTabelaOutrosLancamentos"  style="text-align: left;">
                                     <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Excluir" style="font-size: 15px;"/>
                                     </i> 
                                     <p:confirm header="Confirmação" message="Tem certeza que deseja excluir esse lançamento?" icon="ui-icon-alert" />
                                </p:commandLink> 
                                 <br/><br/>
-                                <p:commandLink actionListener="#{outrosLancamentosMB.editar(outrosLancamentos)}"  style="text-align: left;">
+                                <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.aoutroslancamentos}" actionListener="#{outrosLancamentosMB.editar(outrosLancamentos)}"  style="text-align: left;">
                                     <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                     </i> 

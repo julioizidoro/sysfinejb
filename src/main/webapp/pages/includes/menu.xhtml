@@ -54,6 +54,7 @@
 								<span class="menu-hover"></span>
 							</a>
 						</li>
+                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.cadastro}">
 						<li class="openable open" style="background:#302E2E;">
 							<a href="#" style="text-decoration:none;">
 								<span class="menu-icon">
@@ -66,14 +67,17 @@
 								<span class="menu-hover"></span>
 							</a>
 							<ul class="submenu" style="background:#302E2E;">
-								<li><a href="../../pages/banco/consBanco.jsf"><span class="submenu-label">Banco</span></a></li>
-                                                                <h:panelGroup rendered="#{usuarioLogadoMB.habilitarAcessoCliente()}"><li><a href="../../pages/cliente/consCliente.jsf"><span class="submenu-label">Cliente</span></a></li></h:panelGroup>
-								<li><a href="../../pages/planoconta/consPlanoConta.jsf"><span class="submenu-label">Plano de Conta</span></a></li>
-								<li><a href="../../pages/produtos/consProduto.jsf"><span class="submenu-label">Produto</span></a></li>
-								<li><a href="../../pages/tipoPlanoConta/consTipoPlanoConta.jsf"><span class="submenu-label">Tipo Plano Conta</span></a></li>
-								<li><a href="../../pages/usuario/consUsuario.jsf"><span class="submenu-label">Usuário</span></a></li>
+                                                                <li><a href="../../pages/acesso/consAcesso.jsf"><span class="submenu-label">Acesso</span></a></li>
+                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.banco}"><li><a href="../../pages/banco/consBanco.jsf"><span class="submenu-label">Banco</span></a></li></h:panelGroup>
+                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.cliente}"><li><a href="../../pages/cliente/consCliente.jsf"><span class="submenu-label">Cliente</span></a></li></h:panelGroup>
+                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.planocontas}"><li><a href="../../pages/planoconta/consPlanoConta.jsf"><span class="submenu-label">Plano de Conta</span></a></li></h:panelGroup>
+                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.produto}"><li><a href="../../pages/produtos/consProduto.jsf"><span class="submenu-label">Produto</span></a></li></h:panelGroup>
+                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.tipoplanocontas}"><li><a href="../../pages/tipoPlanoConta/consTipoPlanoConta.jsf"><span class="submenu-label">Tipo Plano Conta</span></a></li></h:panelGroup>
+                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.usuario}"><li><a href="../../pages/usuario/consUsuario.jsf"><span class="submenu-label">Usuário</span></a></li></h:panelGroup>
 							</ul>
 						</li> 
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.contaspagar}">
 						<li class="openable" style="background:#302E2E;">
 							<a href="#" style="text-decoration:none;">
 								<span class="menu-icon">
@@ -91,7 +95,8 @@
 								<li><p:commandLink action="#{contasPagarMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
 							</ul>
 						</li>
-						
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.contasreceber}">
 						<li class="openable" style="background:#302E2E;">
 							<a href="#" style="text-decoration:none;">
 								<span class="menu-icon">
@@ -109,7 +114,8 @@
 								<li><p:commandLink action="#{contasReceberMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
 							</ul>
 						</li>
-						
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.vendas}">
 						<li class="openable" style="background:#302E2E;">
 							<a href="#" style="text-decoration:none;">
 								<span class="menu-icon">
@@ -127,6 +133,8 @@
 								<li><p:commandLink action="#{vendasMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
 							</ul>
 						</li>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.outroslancamentos}">
 						<li class="openable" style="background:#302E2E;">
 							<a href="#" style="text-decoration:none;">
 								<span class="menu-icon">
@@ -144,6 +152,7 @@
 								<li><p:commandLink action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
 							</ul>
 						</li>
+                                            </h:panelGroup>
 						<li class="openable" style="background:#302E2E;">
 							<a href="#" style="text-decoration:none;">
 								<span class="menu-icon">

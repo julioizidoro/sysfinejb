@@ -67,6 +67,7 @@ public class grafico implements Serializable {
     private ContasReceberDao contasReceberDao;
     @EJB
     private VendasDao vendasDao;
+    private String ano = "" + new Year();
 
     @PostConstruct
     public void init() {
@@ -250,6 +251,16 @@ public class grafico implements Serializable {
         return animatedModel2;
     }
 
+    public String getAno() {
+        return ano;
+    }
+
+    public void setAno(String ano) {
+        this.ano = ano;
+    }
+    
+    
+
     private void createAnimatedModels() {
         gerarDiasFluxoCaixa();
         animatedModel1 = initLinearModel();
@@ -269,7 +280,7 @@ public class grafico implements Serializable {
         animatedModel2.setAnimate(true);
         yAxis = animatedModel2.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(200);
+        yAxis.setMax(600);
 
     }
 

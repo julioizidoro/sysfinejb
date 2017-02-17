@@ -17,7 +17,7 @@
                 </p:dialog>
 
                 <br/>   
-                <p:commandLink   action="#{vendasMB.novaVenda()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
+                <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.ivendas}"  action="#{vendasMB.novaVenda()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
                     <img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
                     <p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogNovo}" update="growl, idTabelaVendas"/>
                 </p:commandLink>  
@@ -75,7 +75,7 @@
                             <b class="caret"></b>
                         </p:commandLink>   
                         <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
-                            <p:commandLink action="#{vendasMB.editar(vendas)}" style="text-align: left;">
+                            <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.avendas}" action="#{vendasMB.editar(vendas)}" style="text-align: left;">
                                 <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                 </i> 
@@ -93,7 +93,7 @@
                                 <p:commandButton style="margin-left:35%;" value="Sim" action="#{vendasMB.cancelarVenda(vendasMB.venda)}" type="button" styleClass="ui-confirmdialog-yes"  />
                                 <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
                             </p:confirmDialog>
-                           <p:commandLink action="#{mensagem.cancelado()}"  actionListener="#{vendasMB.cancelarVenda(vendas)}" update=":frmConsultaReceber:growl, :frmConsultaReceber:idTabelaVendas" style="text-align: left;">
+                           <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.evendas}" action="#{mensagem.cancelado()}"  actionListener="#{vendasMB.cancelarVenda(vendas)}" update=":frmConsultaReceber:growl, :frmConsultaReceber:idTabelaVendas" style="text-align: left;">
                                 <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Cancelar" style="font-size: 15px;"/>
                                 </i> 
