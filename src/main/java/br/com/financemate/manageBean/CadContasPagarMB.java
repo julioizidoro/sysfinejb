@@ -401,8 +401,10 @@ public class CadContasPagarMB implements Serializable {
                 if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
                     Nomearquivo nomearquivo = new Nomearquivo();
                     nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
-                    if (nomearquivo.getIdnomearquivo() != null) {
+                    if (nomearquivo != null) {
                         nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
+                    }else{
+                        nomearquivo = new Nomearquivo();
                     }
                     nomearquivo.setNomearquivo01(arquivoFtp);
                     nomearquivo.setContaspagar(contaPagar);
