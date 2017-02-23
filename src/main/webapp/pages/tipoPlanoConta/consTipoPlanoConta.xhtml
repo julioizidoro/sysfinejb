@@ -9,13 +9,21 @@
 	<ui:define name="corpo">
 		<h:form id="frmConsultaTipoPlanoConta">
 		<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
-		<br/> <br/> <br/> 
-                <p:commandLink  rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.itipoplanocontas}" action="#{tipoPlanoContaMB.novo()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
-				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
-				<p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogNovo}" update="growl, idTabelaTipoPlanoConta"/>
-            </p:commandLink>
-            <br /><br />
-            <h2 style="margin-left:50%;">Consulta Tipo de plano de contas</h2>
+		<br/>
+                 <div style="margin-left: 20%; float: right;margin-right: 3%;" class="pagination">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                          <li>
+                              <p:commandLink  rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.itipoplanocontas}" action="#{tipoPlanoContaMB.novo()}" title="Novo Lançamento">
+                                  <i class="fa fa-plus" style="color: #3D7E46;font-size: 15px;"/> 
+                                  <p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogNovo}" update="growl, idTabelaTipoPlanoConta"/>
+                              </p:commandLink>
+                          </li>
+                        </ul>
+                      </nav>
+                 </div>
+            <br /><br /> <br /><br />
+            <h4 style="margin-left:50%;">Consulta Tipo de plano de contas</h4>
              <hr style="margin-left:17%; width:80%;"/>  
                     <p:dataTable id="idTabelaTipoPlanoConta"  var="tipoPlanoConta"  value="#{tipoPlanoContaMB.listarTipoPlanoContas}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{tipoPlanoContaMB.tipoplanocontas}" selectionMode="single" rowKey="#{tipoPlanoConta.idtipoplanocontas}">

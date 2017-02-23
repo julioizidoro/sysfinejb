@@ -70,7 +70,7 @@ public class ContasPagarMB implements Serializable {
     private Planocontas planocontas;
     private String descricao;
     private List<Planocontas> listaPlanoContas;
-    private String imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+    private String imagemFiltro = "#3D7E46;";
     private List<Cptransferencia> listaTransferencia;
     @Inject
     private CalculosContasMB calculosContasMB;
@@ -674,14 +674,14 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String coresFiltrar() {
-        if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVerde.ico")) {
+        if (imagemFiltro.equalsIgnoreCase("#3D7E46;")) {
             novoFiltro();
-            imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
-        } else if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")) {
+            imagemFiltro = "#FF0000;";
+        } else if (imagemFiltro.equalsIgnoreCase("#FF0000;")) {
             limparConsulta();
             criarConsultaContasPagarInicial();
             gerarListaContas();
-            imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+            imagemFiltro = "#3D7E46;";
         }
         return "";
     }

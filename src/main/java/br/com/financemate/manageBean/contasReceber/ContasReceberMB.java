@@ -67,7 +67,7 @@ public class ContasReceberMB implements Serializable {
     private String total;
     private Banco banco;
     private List<Banco> listaBanco;
-    private String imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+    private String imagemFiltro = "#3D7E46;";
     private List<Contasreceber> listaSelecionadas;
     private Vendas vendas;
     @Inject
@@ -859,16 +859,16 @@ public class ContasReceberMB implements Serializable {
     }
 
     public String coresFiltrar() {
-        if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVerde.ico")) {
+        if (imagemFiltro.equalsIgnoreCase("#3D7E46;")) {
             novoFiltro();
-            imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
-        } else if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")) {
+            imagemFiltro = "#FF0000;";
+        } else if (imagemFiltro.equalsIgnoreCase("#FF0000;")) {
             listaContasReceber = null;
             if (cliente == null) {
             } else {
                 criarConsultaContaReceber();
             }
-            imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+            imagemFiltro = "#3D7E46;";
         }
         return "";
     }

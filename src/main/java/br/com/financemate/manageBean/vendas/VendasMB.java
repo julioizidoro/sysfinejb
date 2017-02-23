@@ -58,7 +58,7 @@ public class VendasMB implements Serializable {
     private Date dataFinal;
     private String numeroVenda;
     private String situacao;
-    private String imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+    private String imagemFiltro = "#3D7E46;";
     private Cliente cliente;
     private List<Cliente> listaCliente;
     private Boolean habilitarUnidade;
@@ -391,13 +391,13 @@ public class VendasMB implements Serializable {
     }
 
     public String coresFiltrar() {
-        if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVerde.ico")) {
+        if (imagemFiltro.equalsIgnoreCase("#3D7E46;")) {
             filtro();
-            imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
-        } else if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")) {
+            imagemFiltro = "#FF0000;";
+        } else if (imagemFiltro.equalsIgnoreCase("#FF0000;")) {
             gerarDataInicial();
             gerarListaVendas();
-            imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+            imagemFiltro = "#3D7E46;";
         }
         return "";
     }
