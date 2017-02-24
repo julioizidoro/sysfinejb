@@ -104,7 +104,7 @@ public class ProdutoMB implements Serializable {
 
     public String novoProduto() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 700);
+        options.put("contentWidth", 600);
         options.put("closable", false);
         RequestContext.getCurrentInstance().openDialog("cadProduto", options, null);
         return "";
@@ -116,7 +116,7 @@ public class ProdutoMB implements Serializable {
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("produto", produto);
             Map<String, Object> options = new HashMap<String, Object>();
-            options.put("contentWidth", 700);
+            options.put("contentWidth", 600);
             options.put("closable", false);
             RequestContext.getCurrentInstance().openDialog("cadProduto", options, null);
 

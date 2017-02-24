@@ -50,7 +50,7 @@
                                     <p:ajax event="dialogReturn" listener="#{usuarioMB.retornoDialogEdicao}" update=":frmConsultaUsuario:growl, :frmConsultaUsuario:idTabelaUsuario"/>
                                </p:commandLink> 
                                 <br/><br/>
-                                <p:commandLink update="frmConsultaUsuario, :frmConsultaUsuario:growl"  action="#{usuarioMB.resetarSenhaUsuario(usuarioMB.usuario)}" style="text-align: left;">
+                                <p:commandLink update="frmConsultaUsuario, :frmConsultaUsuario:growl"  action="#{usuarioMB.resetarSenhaUsuario(usuario)}" style="text-align: left;">
                                     <i class="fa fa-lock" style="color: #3D7E46;font-size: 15px;">  
                                         <p:outputLabel value="Resetar Senha" style="font-size: 15px;"/>
                                     </i> 

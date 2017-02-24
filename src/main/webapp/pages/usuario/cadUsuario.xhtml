@@ -10,6 +10,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
 
  <h:body > 
@@ -24,34 +29,39 @@
 
             <title  >Novo Usuario</title> 
                 <br/>
+                <div class="form-group">
+                    <h:outputLabel for="nome" style="margin-left: 2%">Nome</h:outputLabel>
+                    <h:inputText  class="form-control" id="nome" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.nome}"/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="email" style="margin-left: 2%">Email</h:outputLabel>
+                    <h:inputText  class="form-control" id="email" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.email}"/>
+                </div>
                 <h:panelGrid columns="2" style="margin-left:2%;">
-                	<p:outputLabel value="Nome" for="nome"  class="left" />
-                	<p:inputText id="nome"  size="54" maxlength="100" class="left"  value="#{cadUsuarioMB.usuario.nome}" /> 
+                    <h:panelGroup>
+                        <div class="form-group">
+                           <h:outputLabel for="login" style="margin-left: 2%">Login</h:outputLabel>
+                           <h:inputText  class="form-control" id="login" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.login}"/>
+                       </div>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{cadUsuarioMB.habilitarSenha}">
+                        <div class="form-group" style="margin-left: 33%;">
+                           <h:outputLabel for="senha" style="margin-left: 2%">Senha</h:outputLabel>
+                           <h:inputText  class="form-control"  id="senha" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.senha}"/>
+                       </div>
+                    </h:panelGroup>
                 </h:panelGrid>
-                <br/>
-                <h:panelGrid columns="2" style="margin-left:2%;"> 
-                     <p:outputLabel value="Email" for="email"  class="cliente"/>
-                    <p:inputText id="email" size="55" maxlength="100"  class="left" value="#{cadUsuarioMB.usuario.email}"/>
-                </h:panelGrid>
-                <br/>
-                <h:panelGrid columns="2" style="margin-left:2%;">
-                     <p:outputLabel value="Login" for="login"  class="cliente2"/> 
-                    <p:inputText id="login" size="22" maxlength="100" class="left"  value="#{cadUsuarioMB.usuario.login}"/>
-                </h:panelGrid>
-                <h:panelGrid rendered="#{cadUsuarioMB.habilitarSenha}" columns="2" style="margin-left:50%; margin-top:-8%;">
-                    <p:outputLabel value="Senha" for="senha"  class="left" />
-                    <p:inputText id="senha"    size="20" maxlength="100" class="left"  value="#{cadUsuarioMB.usuario.senha}"/> 
-                </h:panelGrid> 
                 <br/>  
                <h:panelGrid columns="2" style="margin-left:2%;">
-               		<p:outputLabel value="Tipo de Acesso" for="tipoacesso"  class="left"/>
-                	<p:selectOneMenu id="tipoacesso" class="left" style="width:300px"  value="#{cadUsuarioMB.tipoacesso}" 
+               		<h:outputLabel value="Tipo de Acesso" for="tipoacesso"  class="left"/>
+                	<p:selectOneMenu id="tipoacesso" class="left" style="width:300px;margin-left: 3%;"  value="#{cadUsuarioMB.tipoacesso}" 
                 	 		filter="true" filterMatchMode="contains" panelStyle="width:180px" converter="TipoAcessoConverter">
                     	<f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     	<f:selectItems value="#{cadUsuarioMB.listaTipoAcesso}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado}"/>
                     	<f:attribute name="listaTipoAcesso" value="#{cadUsuarioMB.listaTipoAcesso}"/>
                     </p:selectOneMenu> 
                </h:panelGrid>
+                <br/>
                <h:panelGrid columns="2" style="margin-left:2%;">
 		           <h:panelGrid >
 		               	<p:selectBooleanCheckbox value="#{cadUsuarioMB.eCliente}">
@@ -71,7 +81,6 @@
 		               </h:panelGrid>
 	               </h:panelGroup>
                </h:panelGrid>
-                <br /><br /><br /><br />
                 <hr />
                 <br />
                     <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{cadUsuarioMB.salvar()}"> 

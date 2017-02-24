@@ -132,6 +132,8 @@ public class CadUsuarioMB implements Serializable {
     public void seteCliente(boolean eCliente) {
         this.eCliente = eCliente;
     }
+    
+    
 
     public void gerarListaTipoAcesso() {
         listaTipoAcesso = tipoAcessoDao.list("select t from Tipoacesso t order by t.descricao");

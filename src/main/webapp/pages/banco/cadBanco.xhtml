@@ -10,79 +10,103 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
 
- <h:body > 
+    <h:body > 
         <h:form id="idFrmCadBanco" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Novo Banco</title>
-            
-            <br></br>
-            
-            <h:panelGrid columns="2"  style="margin-left: 1%;">
-                <p:outputLabel value="Unidade" for="cliente"  class="left3"/>
+
+            <br></br>  
+
+            <h:panelGrid columns="2"  style="margin-left: 2%;">
+                <h:outputLabel value="Unidade" for="cliente"  class="left3"/>
                 <p:selectOneMenu  disabled="#{cadBancoMB.habilitarUnidade}" id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadBancoMB.cliente}" converter="ClienteConverter"
-                             filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                                  filter="true" filterMatchMode="contains" panelStyle="width:180px">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems  value="#{cadBancoMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{cadBancoMB.listaCliente}"/>
                 </p:selectOneMenu> 
             </h:panelGrid> 
-            <br/>
-            <h:panelGrid columns="2" style="margin-left:1%;">
-	            <p:outputLabel value="Nome" for="nome" />
-	            <p:inputText id="nome" size="45" value="#{cadBancoMB.banco.nome}"/>
-	        </h:panelGrid>
-            <h:panelGrid columns="2" style="margin-left:66.5%; margin-top:-5.5%;">
-            	<p:outputLabel value="Número" for="numero"  />
-                <p:inputText id="numero"  style="text-align: right;" value="#{cadBancoMB.banco.numeroBanco}"/>
+            <h:panelGrid columns="2"  style="margin-left: 1%;width: 100%;">
+
+                <h:panelGroup >
+                    <div class="form-group">
+                        <h:outputLabel for="nome" style="margin-left:2% ">Nome</h:outputLabel>
+                        <h:inputText  class="form-control" id="nome" style="width: 110%;margin-left: 2%;" value="#{cadBancoMB.banco.nome}"/>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup style="margin-left: 2%;">
+                    <div class="form-group" style="margin-left: 35%;">
+                        <h:outputLabel for="numero" style="margin-left:2% ">Número</h:outputLabel>
+                        <h:inputText  class="form-control" id="numero" style="width: 80%;margin-left: 2%;" value="#{cadBancoMB.banco.numeroBanco}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-			<br />
-        	<h:panelGrid columns="2" style="margin-left:1%;">
-                <p:outputLabel value="Nº Agencia" for="nAgencia"/>
-                <p:inputText id="nAgencia" size="7" style="text-align: right;" value="#{cadBancoMB.banco.agencia}"/>
-            </h:panelGrid> 
-            <h:panelGrid columns="2" style="margin-left:27%; margin-top:-5.3%;">  
-                <p:outputLabel value="Nº Conta" for="nConta"/>
-                <p:inputText id="nConta" size="10" style="text-align: right;" value="#{cadBancoMB.banco.conta}"/>
-            </h:panelGrid> 
-            <h:panelGrid columns="2" style="margin-left:53%; margin-top:-5.3%;">
-                <p:outputLabel value="Chave" for="chave"/>
-                <p:inputText id="chave"  size="10" value="#{cadBancoMB.banco.cahve}"/>
+
+            <h:panelGrid columns="4"  style="margin-left: 2%;width: 100%;">
+
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 1%;">
+                        <h:outputLabel for="agencia" style="margin-left:2% ">Agência</h:outputLabel>
+                        <h:inputText  class="form-control" id="agencia" style="text-align: right;width: 60%;" value="#{cadBancoMB.banco.agencia}"/>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup >
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel for="conta" style="margin-left:2% ">Conta</h:outputLabel>
+                        <h:inputText  class="form-control" id="conta" style="text-align: right;width: 60%;" value="#{cadBancoMB.banco.conta}"/>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup >
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel for="chave" style="margin-left:2% ">Chave</h:outputLabel>
+                        <h:inputText  class="form-control" id="chave" style="width: 60%;" value="#{cadBancoMB.banco.cahve}"/>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup >
+                    <div class="form-group" style="margin-left: 1%;">
+                        <h:outputLabel for="senha" style="margin-left:2% ">Senha</h:outputLabel>
+                        <h:inputText  class="form-control" id="senha" style="width: 69%;" value="#{cadBancoMB.banco.senha}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid columns="2" style="margin-left:77%; margin-top:-5%;"> 
-                 <p:outputLabel value="Senha" for="senha"/>
-                 <p:inputText id="senha" size="10"  value="#{cadBancoMB.banco.senha}"/>
+
+            <h:panelGrid columns="2"  style="margin-left: 1%;width: 100%;">
+
+                <h:panelGroup >
+                    <div class="form-group">
+                        <h:outputLabel for="nomegerente" style="margin-left:2% ">Nome do Gerente</h:outputLabel>
+                        <h:inputText  class="form-control" id="nomegerente" style="width: 90%;margin-left: 2%;" value="#{cadBancoMB.banco.gerente}"/>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup >
+                    <div class="form-group" style="margin-left: 1%;">
+                        <h:outputLabel for="emailgerente" style="margin-left:2% ">Email do Gerente</h:outputLabel>
+                        <h:inputText  class="form-control" id="emailgerente" style="width: 84%;margin-left: 2%;" value="#{cadBancoMB.banco.emailGerente}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <br />
-            <h:panelGrid columns="2" style="margin-left:1%;">
-            	<p:outputLabel value="Nome do Gerente" for="nomegerente"/>
-           		<p:inputText id="nomegerente" size="85"   value="#{cadBancoMB.banco.gerente}"/>
-            </h:panelGrid>
-            <br />
-            <h:panelGrid columns="3" style="margin-left:1%;">
-            	<p:outputLabel value="E-mail do Gerente" for="emailgerente" />
-                <p:inputText id="emailgerente" size="85" value="#{cadBancoMB.banco.emailGerente}"/>
-            </h:panelGrid>
-			<br/>
-			<hr />
-			<br />
+            <hr />
             <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{cadBancoMB.salvar()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
-                <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" ajax="false" action="#{cadBancoMB.cancelar()}" >
+            <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" ajax="false" action="#{cadBancoMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
-            <br></br>
-            <br></br>
-            
+
         </h:form>
-</h:body>
+    </h:body>
 </html>
