@@ -10,6 +10,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head> 
 
     <h:body >
@@ -19,79 +24,79 @@
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog> 
-            
-            <h2  >Novo Histórico</h2>
-            <br />
-            <h:panelGrid style="margin-left: 1%">
-            	<p:outputLabel value="Unidade" />
+
+            <h4  >Novo Histórico</h4>
+
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="unidade" class="left3" >Unidade</h:outputLabel> 
+                        <h:inputText class="form-control"  id="unidade"  style="width: 87%;" readonly="true" value="#{historicoMB.contasReceber.cliente.nomeFantasia}"/>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="nomeCliente" class="left3" >Cliente</h:outputLabel> 
+                        <h:inputText class="form-control"  id="nomeCliente"  style="width: 87%;" readonly="true" value="#{historicoMB.contasReceber.nomeCliente}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left: 10%; margin-top:-4.5%;">
-                <p:inputText id="unidade" style="width: 135px" value="#{historicoMB.contasReceber.cliente.nomeFantasia}" readonly="true" disabled="true"/>
+            <h:panelGrid columns="3"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="valor" class="left3" >Valor</h:outputLabel> 
+                        <h:inputText class="form-control"  id="valor"  style="width: 87%;text-align: right;" readonly="true" value="#{historicoMB.contasReceber.valorParcela}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="dataVenc" class="left3" >Vencimento</h:outputLabel> 
+                        <p:inputMask class="form-control" id="dataVenc" style="width: 50%;" value="#{historicoMB.contasReceber.dataVencimento}" mask="99/99/9999" maxlength="15" >
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="numeroparcela" class="left3" >Parcela</h:outputLabel> 
+                        <h:inputText class="form-control"  id="numeroparcela"  style="width: 81%;" readonly="true" value="#{historicoMB.contasReceber.numeroParcela}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left: 37%; margin-top:-5.1%;">
-            	<p:outputLabel value="Cliente" for="nomeCliente"  />
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 45%; margin-top:-4.5%;">
-                <p:inputText id="nomeCliente" size="48" value="#{historicoMB.contasReceber.nomeCliente}" readonly="true" disabled="true"/>
-            </h:panelGrid>
-            <br />
-            <h:panelGrid style="margin-left:1%;"> 
-            	<p:outputLabel value="Valor"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:7%; margin-top:-4.5%;">
-            	<p:inputText id="valor" size="17" style="text-align: right;" value="#{historicoMB.contasReceber.valorParcela}" readonly="true" disabled="true"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 33%; margin-top:-5%;">
-            	<p:outputLabel value="Vencimento" for="dataVenc" /> 
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 46%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVenc" value="#{historicoMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15" >
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:68%; margin-top:-5%;">
-            	<p:outputLabel value="Parcela"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:78%; margin-top:-5%;">
-            	<p:inputText style="width:103px;text-align: right;" value="#{historicoMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
-            </h:panelGrid>
-            <br />
             <hr />
-            <br />
-            <h:panelGrid style="margin-left: 1%;">
-            	<p:outputLabel value="Data" for="dataVencOri" /> 
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="data" class="left3" >Data</h:outputLabel> 
+                        <p:inputMask class="form-control" id="data" style="width: 50%;" value="#{historicoMB.historicaCobranca.data}" mask="99/99/9999" maxlength="15" >
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="contato" class="left3" >Contato</h:outputLabel> 
+                        <h:inputText class="form-control"  id="contato"  style="width: 87%;" value="#{historicoMB.historicaCobranca.contato}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left: 7%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVencOri" value="#{historicoMB.historicaCobranca.data}" mask="99/99/9999" size="10" maxlength="15" >
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
-            </h:panelGrid> 
-            <h:panelGrid style="margin-left:63%; margin-top:-4.5%;">
-            	<p:outputLabel value="Contato"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:72%; margin-top:-4.5%;">
-            	<p:inputText value="#{historicoMB.historicaCobranca.contato}" style="text-align: right;"/>
-            </h:panelGrid>
-            <br />
-            <h:panelGrid style="margin-left:1%;">
-            	<p:outputLabel value="Descrição" for="descricao"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:1%;">
-            	<p:inputTextarea id="descricao"  style="width:585px;" class="left3" value="#{historicoMB.historicaCobranca.descricao}"/>
-            </h:panelGrid>
-            <br />
+            <div class="form-group" style="margin-left: 2%;">
+                <h:outputLabel  for="descricao" class="left3" >Descrição</h:outputLabel> 
+                <h:inputTextarea class="form-control"  id="descricao"  style="width: 95%;" value="#{historicoMB.historicaCobranca.descricao}"/>
+            </div>
             <hr /> 
-            <br />
             <p:commandLink title="Confirmar"    style="margin-left: 40%;text-decoration: none"   action="#{historicoMB.salvarHitoricos()}" ajax="false">
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{historicoMB.cancelar()}" >
-            	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>     
-             <br />  
-       </h:form>
+            <br />  
+        </h:form>
     </h:body>
 </html>

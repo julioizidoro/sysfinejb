@@ -10,6 +10,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+         <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
 
  <h:body > 
@@ -53,19 +58,23 @@
             </p:dataTable>
             <hr />
             <br />
-            <h:panelGrid columns="2" style="margin-left:20%;">
-                <p:outputLabel value="Data da liberação"  class="left8"/>
-                <p:inputMask id="dataLiberação"   mask="99/99/9999" size="13" maxlength="15" class="left5" value="#{liberarContasPagarMB.dataLibercao()}" readonly="true" style="margin-left: 1%;">
-                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-            	</p:inputMask> 
+             <h:panelGrid columns="2"  style="margin-left: 20%;">
+                <h:panelGroup>
+                    <div class="form-group" >
+                        <h:outputLabel for="dataliberacao" style="margin-left:2% ">Data da liberação</h:outputLabel>
+                        <p:inputMask id="dataliberacao"   mask="99/99/9999" style="width: 60%;" maxlength="15" class="form-control" value="#{liberarContasPagarMB.dataLibercao()}" readonly="true">
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup >
+                    <div class="form-group" style="margin-left: 35%;">
+                        <h:outputLabel for="valorTotal" style="margin-left:2% ">Valor total a liberar</h:outputLabel>
+                        <h:inputText readonly="true" class="form-control" id="valorTotal" style="width: 80%;margin-left: 2%;text-align: right;" value="#{liberarContasPagarMB.totalLiberadas}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid columns="2" style="margin-left:58%; margin-top:-5.9%;">
-            	<p:outputLabel value="Valor total a liberar" for="valorTotal" class="left" />
-            	<p:inputText id="valorTotal" size="16" maxlength="100" class="valorliberar" value="#{liberarContasPagarMB.totalLiberadas}"  readonly="true" style="margin-left: 1%;text-align: right;"/>
-            </h:panelGrid>
-            <br />
             <hr />
-            <br />
             <p:commandLink title="Salvar" style="margin-left: 40%;text-decoration: none"   action="#{liberarContasPagarMB.salvarContasLiberadas(contasPagar)}" >
                  <img src="../../resources/img/confirmarS.png" width="50" height="50"/> 
             </p:commandLink>

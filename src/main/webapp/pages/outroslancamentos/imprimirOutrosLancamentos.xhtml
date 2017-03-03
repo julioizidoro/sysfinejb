@@ -10,6 +10,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
 
     <h:body > 
@@ -50,27 +55,32 @@
                 </p:selectOneMenu>  
             </h:panelGrid> 
             <br />
-            <h:panelGrid style="margin-left:1%;" columns="2">
-                <p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
-                <p:selectOneMenu id="idPlanoConta" class="left3" style="width:492px;"  value="#{imprimirOutrosLancamentosMB.planocontas}" converter="PlanoContasConverter"
-                                 filter="true" filterMatchMode="contains" panelStyle="width:200px">
-                    <f:selectItem itemLabel="#{imprimirOutrosLancamentosMB.nomeComboPlano}" itemValue="0" noSelectionOption="true"/> 
-                    <f:selectItems value="#{imprimirOutrosLancamentosMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
-                    <f:attribute name="listaPlanoConta" value="#{imprimirOutrosLancamentosMB.listaPlanoContas}"/>
+            <h:panelGrid style="margin-left: 2%;width: 100%;" columns="2">
+                <h:panelGroup>
+                    <p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
+                    <br/>
+                    <p:selectOneMenu id="idPlanoConta" class="left3" style="width:280px;"  value="#{imprimirOutrosLancamentosMB.planocontas}" converter="PlanoContasConverter"
+                                     filter="true" filterMatchMode="contains" panelStyle="width:200px">
+                        <f:selectItem itemLabel="#{imprimirOutrosLancamentosMB.nomeComboPlano}" itemValue="0" noSelectionOption="true"/> 
+                        <f:selectItems value="#{imprimirOutrosLancamentosMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
+                        <f:attribute name="listaPlanoConta" value="#{imprimirOutrosLancamentosMB.listaPlanoContas}"/>
 
-                </p:selectOneMenu> 
+                    </p:selectOneMenu>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel value="Periodo" class="left3" />
+                        <h:panelGrid columns="2">
+                            <p:inputMask id="dataIni" mask="99/99/9999" style="width: 70%;"  maxlength="15" value="#{imprimirOutrosLancamentosMB.dataIncial}" class="form-control"  placeholder="Data Inicial" >
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </p:inputMask>
+                            <p:inputMask id="dataFinal"  mask="99/99/9999" style="width: 70%;" maxlength="15" class="form-control" value="#{imprimirOutrosLancamentosMB.dataFinal}"  placeholder="Data Final">
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </p:inputMask>
+                        </h:panelGrid>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <br />
-            <h:panelGrid columns="3"  style="margin-left: 1%;">   
-                <p:outputLabel value="Periodo" class="left3"/>
-                <p:inputMask mask="99/99/9999" id="dataIni" style="margin-left:1%;"  size="15" maxlength="15" value="#{imprimirOutrosLancamentosMB.dataIncial}"  class="tabelaRecebimento"  placeholder="Data Inicial" >
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
-                <p:inputMask id="dataFinal"  mask="99/99/9999"  size="15" maxlength="15" class="left6" value="#{imprimirOutrosLancamentosMB.dataFinal}"  placeholder="Data Final">
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>  
-            </h:panelGrid>
-            <br /><br /><br /><br />
             <hr />
             <br />
             <p:commandLink title="Confirmar" ajax="false"  target="_blank" style="text-decoration: none; margin-left:40%;"   action="#{imprimirOutrosLancamentosMB.gerarRelatorio()}" >

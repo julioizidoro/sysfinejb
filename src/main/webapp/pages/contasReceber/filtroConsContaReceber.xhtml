@@ -10,106 +10,123 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
 
- <h:body > 
- 		
+    <h:body > 
+
         <h:form id="idFrmPesquisaConsContaPagar" class="body2" style="font-size: 12px; background-color: white;">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Novo Filtro</title>
-            			<br />
-            
-            <h:panelGrid style="margin-left:1%;">
-            	<p:outputLabel value="Unidade" class="left3"/>
+            <br />
+
+
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <h:outputLabel  for="cliente" class="left3" >Unidade</h:outputLabel> 
+                    <br/>
+                    <p:selectOneMenu  id="cliente"  style="width: 200px;"  value="#{contasReceberMB.cliente}" converter="ClienteConverter"
+                                      filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{contasReceberMB.habilitarUnidade}">
+                        <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                        <f:selectItems value="#{contasReceberMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                        <f:attribute name="listaCliente" value="#{contasReceberMB.listaCliente}"/>
+                        <p:ajax event="change" listener="#{contasReceberMB.gerarListaBanco()}" update="idconta"/>
+                    </p:selectOneMenu>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" style="float: right;">
+                        <h:outputLabel value="Vencimento" class="left3" />
+                        <h:panelGrid columns="2">
+                            <p:inputMask id="dataIni" mask="99/99/9999" style="width: 70%;"  maxlength="15" value="#{contasReceberMB.dataInicial}" class="form-control"  placeholder="Data Inicial" >
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </p:inputMask>
+                            <p:inputMask id="dataFinal"  mask="99/99/9999" style="width: 70%;" maxlength="15" class="form-control" value="#{contasReceberMB.dataFinal}"  placeholder="Data Final">
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </p:inputMask>
+                        </h:panelGrid>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-           <h:panelGrid style="margin-left:10%;margin-top:-4.5%;"> 
-           		<p:selectOneMenu  id="cliente"  style="width: 200px;"  value="#{contasReceberMB.cliente}" converter="ClienteConverter"
-                                          filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{contasReceberMB.habilitarUnidade}">
-                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    <f:selectItems value="#{contasReceberMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
-                    <f:attribute name="listaCliente" value="#{contasReceberMB.listaCliente}"/>
-                    <p:ajax event="change" listener="#{contasReceberMB.gerarListaBanco()}" update="idconta"/>
-                </p:selectOneMenu>
-           </h:panelGrid>
-           <h:panelGrid columns="5"  style="margin-left: 48%; margin-top:-6%;"> 
-           		<p:outputLabel value="Vencimento" class="left3" style="margin-left:1%;"/>	
-           		<p:inputMask id="dataIni" mask="99/99/9999"  size="15" maxlength="15" value="#{contasReceberMB.dataInicial}" class="tabelaRecebimento"  placeholder="Data Inicial" >
-                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
-                <p:inputMask id="dataFinal"  mask="99/99/9999" size="15" maxlength="15" class="left6" value="#{contasReceberMB.dataFinal}"  placeholder="Data Final">
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask> 
-           </h:panelGrid>
-           <br /> 
-           <h:panelGrid style="margin-left:1%;">
-           		<p:outputLabel value="N° Venda"/>
-           </h:panelGrid>
-           <h:panelGrid style="margin-left:11%; margin-top:-4.5%;"> 
-           		 <p:inputText size="10"  value="#{contasReceberMB.nVenda}"/> 
-           </h:panelGrid>
-           <h:panelGrid style="margin-left:30%; margin-top:-4.5%;">
-           		<p:outputLabel value="Cliente" />
-           </h:panelGrid>
-           <h:panelGrid style="margin-left:38%; margin-top:-4.5%;">
-           		<p:inputText value="#{contasReceberMB.nomeCliente}" size="56" />
-           </h:panelGrid>
-           <br />
-            <h:panelGrid style="margin-left:1%;">
-            	<p:outputLabel value="Banco" for="idconta"/>
+
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 67%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="nVenda" class="left3" >N° Venda</h:outputLabel> 
+                        <h:inputText class="form-control"  id="nVenda"  style="width: 68%;" value="#{contasReceberMB.nVenda}"/>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="nomeCliente" class="left3" >Cliente</h:outputLabel> 
+                        <h:inputText class="form-control"  id="nomeCliente"  style="width: 174%;" value="#{contasReceberMB.nomeCliente}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left:8%; margin-top:-4.5%;">
-            	<p:selectOneMenu id="idconta"  style="width:150px;"  value="#{contasReceberMB.banco}"
-                    converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
-                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    <f:selectItems value="#{contasReceberMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
-                    <f:attribute name="listaBanco" value="#{contasReceberMB.listaBanco}"/>
-                </p:selectOneMenu>  
+
+            <h:panelGrid columns="3"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group" >
+                        <h:outputLabel  for="idconta" class="left3" >Banco</h:outputLabel> 
+                        <br/>
+                        <p:selectOneMenu id="idconta"  style="width:150px;"  value="#{contasReceberMB.banco}"
+                                         converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
+                            <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                            <f:selectItems value="#{contasReceberMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+                            <f:attribute name="listaBanco" value="#{contasReceberMB.listaBanco}"/>
+                        </p:selectOneMenu> 
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" >
+                        <h:outputLabel  for="status" class="left3" >Status</h:outputLabel> 
+                        <br/>
+                        <p:selectOneMenu id="status" style="width:130px;" value="#{contasReceberMB.status}">
+                            <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                            <f:selectItem itemLabel="Vencidas" itemValue="Vencidas" />  
+                            <f:selectItem itemLabel="A vencer" itemValue="A vencer" /> 
+                            <f:selectItem itemLabel="Recebidas" itemValue="Recebidas" />  
+                            <f:selectItem itemLabel="Canceladas" itemValue="Canceladas" />
+                        </p:selectOneMenu>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group" style="float: right;">
+                        <h:outputLabel  for="status" class="left3" >Valor</h:outputLabel> 
+                        <h:inputText  class="form-control" id="valor" style="width: 68%;text-align: right;" value="#{contasReceberMB.valorParcela}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-           <h:panelGrid style="margin-left: 38%; margin-top:-5.5%;">
-	            <p:outputLabel value="Status" for="status"  />
-	       </h:panelGrid>
-	      <h:panelGrid style="margin-left: 45%; margin-top:-4.5%;"> 
-	            	<p:selectOneMenu id="status" style="width:130px;" value="#{contasReceberMB.status}">
-	                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-	                    <f:selectItem itemLabel="Vencidas" itemValue="Vencidas" />  
-	                    <f:selectItem itemLabel="A vencer" itemValue="A vencer" /> 
-	                    <f:selectItem itemLabel="Recebidas" itemValue="Recebidas" />  
-	                    <f:selectItem itemLabel="Canceladas" itemValue="Canceladas" />
-	                </p:selectOneMenu>
-	       </h:panelGrid>  
-	       <h:panelGrid style="margin-left:70%; margin-top:-5.5%;">
-	       		<p:outputLabel value="Valor"/>
-	       </h:panelGrid>
-	       <h:panelGrid style="margin-left:76%; margin-top:-4.5%;">
-	       		<p:inputText size="16" value="#{contasReceberMB.valorParcela}" style="text-align: right;"/>
-	       </h:panelGrid>
-	       <br />
-            <h:panelGrid columns="5"  style="margin-left: 1%;"> 
-           		<p:outputLabel value="Data de Recebimento" class="left3" />	
-           		<p:inputMask id="dataIniRec" mask="99/99/9999"  size="15" maxlength="15" value="#{contasReceberMB.dataRecebimentoInicial}" class="tabelaRecebimento"  placeholder="Data Inicial" >
-                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
-                <p:inputMask id="dataFinalRec"  mask="99/99/9999" size="15" maxlength="15" class="left6" value="#{contasReceberMB.dataRecebimentoFinal}"  placeholder="Data Final">
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask> 
-           </h:panelGrid>
-           <br />
-           <br /><br /><br /><br /><br /><br /><br /><br /><br />          
-                    
-                    <hr />
-                    <p:commandLink title="Pesquisar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{contasReceberMB.filtrar()}" >
-                    	<img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-                	</p:commandLink>
-                    <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadContasPagarMB.cancelar()}" >
-                    	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-                	</p:commandLink>
-		</h:form> 
-</h:body>
+            <div class="form-group" style="margin-left: 2%;">
+                <h:outputLabel value="Data de Recebimento" class="left3" />
+                <h:panelGrid columns="2">
+                    <p:inputMask id="dataIniRec" mask="99/99/9999" style="width: 70%;"  maxlength="15" value="#{contasReceberMB.dataRecebimentoInicial}" class="form-control"  placeholder="Data Inicial" >
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:inputMask>
+                    <p:inputMask id="dataFinalRec"  mask="99/99/9999" style="width: 70%;" maxlength="15" class="form-control" value="#{contasReceberMB.dataRecebimentoFinal}"  placeholder="Data Final">
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:inputMask>
+                </h:panelGrid>
+            </div>      
+            <hr />
+            <p:commandLink title="Pesquisar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{contasReceberMB.filtrar()}" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadContasPagarMB.cancelar()}" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>
+        </h:form> 
+    </h:body>
 </html>

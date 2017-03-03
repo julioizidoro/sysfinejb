@@ -10,162 +10,167 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head> 
 
     <h:body >
 
         <h:form id="frmidRecebimentoConta" class="body2" style="font-size: 12px;background: white">
-        <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
+            <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
-            
+
             <title  >Recebimento</title>
-            <br />
-            <h:panelGrid style="margin-left: 1%">
-            	<p:outputLabel value="Unidade" />
+
+
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="unidade" class="left3" >Unidade</h:outputLabel> 
+                        <h:inputText class="form-control"  id="unidade"  style="width: 87%;" readonly="true" value="#{recebimentoContaMB.contasReceber.cliente.nomeFantasia}"/>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="nomeCliente" class="left3" >Cliente</h:outputLabel> 
+                        <h:inputText class="form-control"  id="nomeCliente"  style="width: 87%;" readonly="true" value="#{recebimentoContaMB.contasReceber.nomeCliente}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left: 10%; margin-top:-4.5%;">
-                <p:inputText id="unidade" style="width: 135px" value="#{recebimentoContaMB.contasReceber.cliente.nomeFantasia}" readonly="true" disabled="true"/>
-           		
-           	</h:panelGrid> 
-            <h:panelGrid style="margin-left: 37%; margin-top:-5.1%;">
-            	<p:outputLabel value="Cliente" for="nomeCliente"  />
+            <h:panelGrid columns="3"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="valor" class="left3" >Valor</h:outputLabel> 
+                        <h:inputText class="form-control"  id="valor"  style="width: 87%;text-align: right;" readonly="true" value="#{recebimentoContaMB.contasReceber.valorParcela}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="dataVenc" class="left3" >Vencimento</h:outputLabel> 
+                        <p:inputMask class="form-control" id="dataVenc" style="width: 50%;" value="#{recebimentoContaMB.contasReceber.dataVencimento}" mask="99/99/9999" maxlength="15" >
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="numeroparcela" class="left3" >Parcela</h:outputLabel> 
+                        <h:inputText class="form-control"  id="numeroparcela"  style="width: 81%;" readonly="true" value="#{recebimentoContaMB.contasReceber.numeroParcela}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left: 45%; margin-top:-4.5%;">
-                <p:inputText id="nomeCliente" size="48" value="#{recebimentoContaMB.contasReceber.nomeCliente}" readonly="true" disabled="true"/>
-            </h:panelGrid>
-            <br />
-            <h:panelGrid style="margin-left:1%;"> 
-            	<p:outputLabel value="Valor"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:7%; margin-top:-4.5%;">
-            	<p:inputText id="valor" size="17" style="text-align: right;" value="#{recebimentoContaMB.contasReceber.valorParcela}" readonly="true" disabled="true">
-            		<f:convertNumber pattern="##,###,###,###.##"/>
-            	</p:inputText>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 33%; margin-top:-5%;">
-            	<p:outputLabel value="Vencimento" for="dataVenc" /> 
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 46%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVenc" value="#{recebimentoContaMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15" >
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:68%; margin-top:-5%;">
-            	<p:outputLabel value="Parcela"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:78%; margin-top:-5%;">
-            	<p:inputText style="width:103px;text-align: right;" value="#{recebimentoContaMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
-            </h:panelGrid>
-            <br />
             <hr />
-            <br />
-            <h:panelGrid style="margin-left: 1%;">
-            	<p:outputLabel value="Recebimento" for="dataRec" /> 
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="dataRec" class="left3" >Recebimento</h:outputLabel> 
+                        <p:inputMask class="form-control" id="dataRec" style="width: 50%;" value="#{recebimentoContaMB.contasReceber.dataPagamento}" mask="99/99/9999" maxlength="15" >
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 49%;">
+                        <h:outputLabel  for="idconta" class="left3" >Conta</h:outputLabel> 
+                        <br/>
+                        <p:selectOneMenu id="idconta"  style="width:180px;"  value="#{recebimentoContaMB.banco}"
+                                         converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
+                            <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                            <f:selectItems value="#{recebimentoContaMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+                            <f:attribute name="listaBanco" value="#{recebimentoContaMB.listaBanco}"/>
+                        </p:selectOneMenu> 
+                    </div>
+                </h:panelGroup> 
             </h:panelGrid>
-            <h:panelGrid style="margin-left: 14%; margin-top:-4.5%;">
-            	<p:inputMask id="dataRec" value="#{recebimentoContaMB.contasReceber.dataPagamento}" mask="99/99/9999" size="10" maxlength="15" >
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
+            <h:panelGrid columns="3"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="desagio" class="left3" >Deságio</h:outputLabel> 
+                        <h:inputText class="form-control"  id="desagio"  style="width: 72%;text-align: right;"  value="#{recebimentoContaMB.contasReceber.desagio}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                            <p:ajax event="change" listener="#{recebimentoContaMB.DebitarDesagio()}" update="idValorPagoRecebido"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="juros" class="left3" >Juros</h:outputLabel> 
+                        <h:inputText class="form-control"  id="juros"  style="width: 72%;text-align: right;"  value="#{recebimentoContaMB.contasReceber.juros}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                            <p:ajax event="change" listener="#{recebimentoContaMB.SomarJuros()}" update="idValorPagoRecebido"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="idValorPagoRecebido" class="left3" >Valor Recebido</h:outputLabel> 
+                        <h:inputText class="form-control"  id="idValorPagoRecebido"  style="width: 81%;text-align: right;" readonly="true" value="#{recebimentoContaMB.valorTotal}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left:60%; margin-top:-4.5%;">
-            	<p:outputLabel value="Conta" for="idconta"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:67%; margin-top:-5%;">
-            	<p:selectOneMenu id="idconta"  style="width:180px;"  value="#{recebimentoContaMB.banco}"
-                    converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
-                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    <f:selectItems value="#{recebimentoContaMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
-                    <f:attribute name="listaBanco" value="#{recebimentoContaMB.listaBanco}"/>
-                </p:selectOneMenu> 
-            </h:panelGrid>
-            <br />
-            <h:panelGrid style="margin-left:1%;">
-            	<p:outputLabel value="Deságio"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
-            	<p:inputText value="#{recebimentoContaMB.contasReceber.desagio}" size="14" style="text-align: right;">
-            		 <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
-            		 <p:ajax event="change" listener="#{recebimentoContaMB.DebitarDesagio()}" update="idValorPagoRecebido"/>
-            	</p:inputText>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:33%; margin-top:-5%;">
-            	<p:outputLabel value="Juros"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:40%; margin-top:-4.7%;">
-            	<p:inputText value="#{recebimentoContaMB.contasReceber.juros}" size="14" style="text-align: right;">
-            		 <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
-            		 <p:ajax event="change" listener="#{recebimentoContaMB.SomarJuros()}" update="idValorPagoRecebido"/>
-            	</p:inputText>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:61%; margin-top:-5%;">
-            	<p:outputLabel value="Valor recebido"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:76.5%; margin-top:-5%;">
-            	<p:inputText id="idValorPagoRecebido" style="text-align: right;" value="#{recebimentoContaMB.valorTotal}" size="15" readonly="true" disabled="true">
-            		<f:convertNumber pattern="##,###,###,###.##"/>
-            	</p:inputText> 
-            </h:panelGrid>
-            <br />
             <hr />
-            <br />
-            <h:panelGrid columns="2" style="margin-left:1%;">
-            	<p:selectBooleanCheckbox value="#{recebimentoContaMB.checkRecebimento}"/>
-            	<p:outputLabel value="Recebimento parcial"  />
-            	<p:ajax event="click" listener="#{recebimentoContaMB.habilitarCampoCheckRecebimento()}" update="habilitar"/>
+            <h:panelGrid columns="2" style="margin-left:2%;">
+                <p:selectBooleanCheckbox value="#{recebimentoContaMB.checkRecebimento}"/>
+                <p:outputLabel value="Recebimento parcial"  />
+                <p:ajax event="click" listener="#{recebimentoContaMB.habilitarCampoCheckRecebimento()}" update="habilitar"/>
             </h:panelGrid>
-            <br />
-            <h:panelGrid id="habilitar" columns="6">
-	            <h:panelGrid style="margin-left: 1%;">
-	            	<p:outputLabel value="Recebimento" for="dataRec1" /> 
-	            </h:panelGrid>
-	            <h:panelGrid style="margin-left: 2%;">
-	            	<p:inputMask id="dataRec1" disabled="#{recebimentoContaMB.disabilitar}" value="#{recebimentoContaMB.dataRecebimentoParcial}" mask="99/99/9999" size="10" maxlength="15" >
-	                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-	                </p:inputMask>
-	            </h:panelGrid>
-	            <h:panelGrid style="margin-left:12%;">  
-	            	<p:outputLabel value="Valor"/>
-	            </h:panelGrid>
-	            <h:panelGrid style="margin-left:2%;">
-	            	<p:inputText id="valor1" size="16" style="text-align: right;" disabled="#{recebimentoContaMB.disabilitar}" value="#{recebimentoContaMB.valorParcial}">
-	            		<f:convertNumber pattern="##,###,###,###.##"/>
-	            	</p:inputText>
-	            </h:panelGrid>
-	            <h:panelGrid style="margin-left:12%;">
-	            	<p:outputLabel value="Conta" for="idconta1"/>
-	            </h:panelGrid>
-	            <h:panelGrid style="margin-left:2%;">
-	            	<p:selectOneMenu id="idconta1"  style="width:164px;" disabled="#{recebimentoContaMB.disabilitar}"  value="#{recebimentoContaMB.banco}"
-	                    converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
-	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-	                    <f:selectItems value="#{recebimentoContaMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
-	                    <f:attribute name="listaBanco" value="#{recebimentoContaMB.listaBanco}"/>
-	                </p:selectOneMenu> 
-	            </h:panelGrid> 
-	        </h:panelGrid>
-	        <br />
-	        <p:commandLink   action="#{recebimentoContaMB.salvarRecebimentoParcial()}" update="growl, frmidRecebimentoConta" style="margin-left:40%;text-decoration:none;" title="Adicionar">
-				<img src="../../resources/img/iconeplus.png"/>
-			</p:commandLink> 
-			<p:commandLink title="Visualizar Parciais" style="text-decoration: none; margin-left:6%;"   action="#{recebimentoContaMB.recebimentoContaParcial(recebimentoContaMB.contasReceber)}" >
+            <h:panelGrid columns="3" id="habilitar"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="dataRec1" class="left3" >Recebimento</h:outputLabel> 
+                        <p:inputMask class="form-control" id="dataRec1" style="width: 50%;" value="#{recebimentoContaMB.dataRecebimentoParcial}" disabled="#{recebimentoContaMB.disabilitar}" mask="99/99/9999" maxlength="15" >
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="valor1" class="left3" >Valor</h:outputLabel> 
+                        <h:inputText class="form-control"  id="valor1"  style="width: 81%;text-align: right;" disabled="#{recebimentoContaMB.disabilitar}" value="#{recebimentoContaMB.valorParcial}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="idconta1" class="left3" >Conta</h:outputLabel> 
+                        <br/>
+                        <p:selectOneMenu id="idconta1"  style="width:180px;" disabled="#{recebimentoContaMB.disabilitar}"   value="#{recebimentoContaMB.banco}"
+                                         converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
+                            <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                            <f:selectItems value="#{recebimentoContaMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+                            <f:attribute name="listaBanco" value="#{recebimentoContaMB.listaBanco}"/>
+                        </p:selectOneMenu> 
+                    </div>
+                </h:panelGroup> 
+            </h:panelGrid>
+
+            <p:commandLink   action="#{recebimentoContaMB.salvarRecebimentoParcial()}" update="growl, frmidRecebimentoConta" style="margin-left:40%;text-decoration:none;" title="Adicionar">
+                <img src="../../resources/img/iconeplus.png"/>
+            </p:commandLink> 
+            <p:commandLink title="Visualizar Parciais" style="text-decoration: none; margin-left:6%;"   action="#{recebimentoContaMB.recebimentoContaParcial(recebimentoContaMB.contasReceber)}" >
                	<img src="../../resources/img/iconelupaSS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
             </p:commandLink>
-            <br />
             <hr />
-            <br />
             <p:commandLink title="Confirmar" style="margin-left: 37%;text-decoration: none"  ajax="false" action="#{recebimentoContaMB.salvar()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 9%;text-decoration: none" action="#{recebimentoContaMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
-            <br></br>
         </h:form>
-   </h:body>
+    </h:body>
 </html>

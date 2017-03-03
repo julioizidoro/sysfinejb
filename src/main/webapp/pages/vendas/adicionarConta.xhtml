@@ -10,6 +10,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head> 
 
     <h:body >
@@ -25,22 +30,26 @@
             
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
             
-            <br />
-            <h:panelGrid columns="1" style="margin-left:1%;"> 
-	            <p:outputLabel value="Data" for="dataPgRb" class="left3" style="margin-left:35%;" />  
-	            
-	            <p:inputMask id="dataPgRb" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.vendas.dataVenda}" >
-	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-	            </p:inputMask>
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="dataPgRb" class="left3" >Data</h:outputLabel> 
+                        <p:inputMask id="dataPgRb" mask="99/99/9999" size="13" style="width: 56%;" class="form-control" value="#{cadVendasMB.vendas.dataVenda}"  >
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group" style="float: right;">
+                        <h:outputLabel  for="valor" class="left3" >Valor</h:outputLabel> 
+                        <h:inputText class="form-control"   id="valor"  style="width: 80%;text-align: right;" value="#{cadVendasMB.valorPagarReceber}" readonly="true">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
             </h:panelGrid>
-            <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;"> 
-           		<p:outputLabel value="Valor" />
-           		<p:inputText value="#{cadVendasMB.valorPagarReceber}" size="12" disabled="true" style="text-align: right;">
-           			<f:convertNumber pattern="##,###,###,###.##"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <br />    
-           <h:panelGrid style="margin-left:1%;" columns="1">
+           
+           <h:panelGrid style="margin-left:2%;" columns="1">
              	<p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
 	              <p:selectOneMenu id="idPlanoConta" class="left3" style="width:320px;"  value="#{cadVendasMB.planocontas}" converter="PlanoContasConverter"
 	              					 filter="true" filterMatchMode="contains" panelStyle="width:200px">
@@ -50,26 +59,32 @@
 	                    
 	              </p:selectOneMenu> 
              </h:panelGrid>
-             <br />
-             <h:panelGrid style="margin-left:1;">   
-                <p:outputLabel value="Tipo de Documento" for="tipoDoc" class="left2"/>
-                <p:selectOneMenu id="tipoDoc" class="left5" style="width:156px"  value="#{cadVendasMB.tipoDocumento}">
-                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-                    <f:selectItem itemLabel="Cartão" itemValue="Cartao" />  
-                    <f:selectItem itemLabel="Débito em Conta" itemValue="debito em conta" /> 
-                    <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
-                    <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
-                    <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
-                    <f:selectItem itemLabel="Depósito" itemValue="Deposito" />
-                </p:selectOneMenu>
-             </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9%;">
-             	<p:outputLabel value="Competência" for="competencia" class="left5"/> 
-             	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadVendasMB.competencia}" size="12" mask="99/9999"  class="left1"/>
-             </h:panelGrid>
-              <br />
+            <br/>
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 94%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="tipoDoc" class="left3" >Tipo Documento</h:outputLabel>
+                        <br/>
+                        <p:selectOneMenu id="tipoDoc" class="left5" style="width:156px"  value="#{cadVendasMB.tipoDocumento}">
+                            <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                            <f:selectItem itemLabel="Cartão" itemValue="Cartao" />  
+                            <f:selectItem itemLabel="Débito em Conta" itemValue="debito em conta" /> 
+                            <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
+                            <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
+                            <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
+                            <f:selectItem itemLabel="Depósito" itemValue="Deposito" />
+                        </p:selectOneMenu>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group" style="float: right;">
+                        <h:outputLabel  for="competencia" class="left3" >Competência</h:outputLabel> 
+                        <p:inputMask style="margin-left:2%;" class="form-control" id="competencia"  value="#{cadVendasMB.competencia}" size="12" mask="99/9999" />
+                    </div>
+                </h:panelGroup> 
+            </h:panelGrid>
+             
               <hr />
-              <br />
              <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none"   action="#{cadVendasMB.salvarConta()}" >
                   <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
              </p:commandLink>

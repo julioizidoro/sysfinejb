@@ -10,125 +10,139 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
-    </h:head>
-    
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
 
- <h:body style="background:white;" > 
- <br />
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
+    </h:head>
+
+
+    <h:body style="background:white;" > 
+        <br />
         <h:form id="idFrmCadVendas" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog  widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Nova Venda</title>
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-			  <br />
-			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="background:#E8E8E8;font-size:16px;color:#696969;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
-			</p:commandLink>  
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <br />
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="background:#E8E8E8;font-size:16px;color:#696969;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
+            </p:commandLink>  
             <p:commandLink id="backoffice" value="&nbsp;&nbsp;&nbsp;&nbsp;Back Office&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.backOffice()}" update="@all" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Back Office">
-			</p:commandLink>
+            </p:commandLink>
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Recebimento&nbsp;&nbsp;&nbsp;&nbsp;"   action="#{cadVendasMB.recebimento()}" style=" font-size:16px;color:gray;border: 2px solid; text-decoration:none; border-color:#696969;" title="Recebimento" ajax="false">
-			</p:commandLink>
+            </p:commandLink>
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.notaFiscal()}" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
-			</p:commandLink>
-            <br /><br /><br />
+            </p:commandLink>
+            <br /><br />
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-        		<p:commandButton style="margin-left:35%;" value="Sim" action="#" type="button" styleClass="ui-confirmdialog-yes"  />
-        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
-    		</p:confirmDialog>
-            <h:panelGrid>
-                <p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 10%"/>
+                <p:commandButton style="margin-left:35%;" value="Sim" action="#" type="button" styleClass="ui-confirmdialog-yes"  />
+                <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+            </p:confirmDialog>
+
+
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <h:outputLabel  for="cliente" class="left3" >Unidade</h:outputLabel> 
+                    <br/>
+                    <p:selectOneMenu  id="cliente"  style="width: 200px;"  value="#{cadVendasMB.cliente}" converter="ClienteConverter"
+                                      filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadVendasMB.habilitarUnidade}">
+                        <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                        <f:selectItems  value="#{cadVendasMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                        <f:attribute name="listaCliente" value="#{cadVendasMB.listaCliente}"/>
+                        <p:ajax event="change" listener="#{cadVendasMB.gerarListaProduto()}" update="idproduto"/>
+                    </p:selectOneMenu>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" style="float: right;">
+                        <h:outputLabel value="Data Venda" class="left3" />
+                        <h:panelGrid columns="2">
+                            <p:inputMask id="dataIni" mask="99/99/9999" style="width: 85%;"  maxlength="15" value="#{cadVendasMB.vendas.dataVenda}" class="form-control">
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </p:inputMask>
+                        </h:panelGrid>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
-	            <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadVendasMB.cliente}" converter="ClienteConverter"
-	                          filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadVendasMB.habilitarUnidade}">
-	                <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-	                <f:selectItems  value="#{cadVendasMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
-	                <f:attribute name="listaCliente" value="#{cadVendasMB.listaCliente}"/>
-	            	 <p:ajax event="change" listener="#{cadVendasMB.gerarListaProduto()}" update="idproduto"/>
-                </p:selectOneMenu>
-            </h:panelGrid> 
-             <h:panelGrid columns="2" style="margin-left:67.6%; margin-top:-6.2%;"> 
-	            <p:outputLabel value="Data Venda" for="dataVen" class="left3" /> 
-	            
-	            <p:inputMask id="dataVen" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.vendas.dataVenda}"   style="margin-left: 2%;">
-	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-	            </p:inputMask>
-            </h:panelGrid>
-            <br />
             <hr />
+            <div class="form-group" style="margin-left: 2%;">
+                <h:outputLabel  for="nomeCliente" class="left3" >Cliente</h:outputLabel> 
+                <h:inputText class="form-control"  id="nomeCliente"  style="width: 98%;" value="#{cadVendasMB.vendas.nomeCliente}"/>
+            </div>
             <br />
-            <h:panelGrid style="margin-left:1%;">
-           		<p:outputLabel value="Cliente" />
-           </h:panelGrid>
-           <h:panelGrid style="margin-left:9%; margin-top:-4.5%;">
-           		<p:inputText value="#{cadVendasMB.vendas.nomeCliente}" size="86" />
-           </h:panelGrid> 
-           <br />
-           <h:panelGrid>
-               <p:outputLabel value="Produto" for="cliente"  class="left3" style="margin-left: 10%"/>
-           </h:panelGrid>
-           <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
-	           <p:selectOneMenu  id="idproduto"  style="width: 200px;margin-left: 1%"  value="#{cadVendasMB.produto}" converter="ProdutoConverter"
-	                         filter="true" filterMatchMode="contains" panelStyle="width:180px">
-	               <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-	               <f:selectItems  value="#{cadVendasMB.listaProduto}" var="produtoselecionado" itemLabel="#{produtoselecionado.descricao}" itemValue="#{produtoselecionado}"/>
-	               <f:attribute name="listaProduto" value="#{cadVendasMB.listaProduto}"/>
-	           </p:selectOneMenu> 
-           </h:panelGrid>
-           <h:panelGrid style="margin-left:45%; margin-top:-5%;">
-           		<p:outputLabel value="Vendedor" />
-           </h:panelGrid>
-           <h:panelGrid style="margin-left:55%; margin-top:-5%;">
-           		<p:inputText value="#{cadVendasMB.vendas.consultor}" size="38" />
-           </h:panelGrid>
-           <br />
-           <h:panelGrid columns="1" style="margin-left:1%;">
-           		<p:outputLabel value="Valor Bruto" style="margin-left:17%;"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorBruto}" size="12" style="text-align: right;">
-           			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
-           			<f:convertNumber pattern="##,###,###,###.##"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
-           		<p:outputLabel value="Desconto" style="margin-left:18%;"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorDesconto}"  size="12" style="text-align: right;">
-           			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
-           			<f:convertNumber pattern="##,###,###,###.##"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <h:panelGrid columns="1" style="margin-left:54%; margin-top:-9.3%;">
-           		<p:outputLabel value="Juros" style="margin-left:28%;"/> 
-           		<p:inputText value="#{cadVendasMB.vendas.valorJuros}" size="12" style="text-align: right;">
-           			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
-           			<f:convertNumber pattern="##,###,###,###.##"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <h:panelGrid columns="1" style="margin-left:80%; margin-top:-9.3%;"> 
-           		<p:outputLabel value="Total" style="margin-left:28%;"/>
-           		<p:inputText id="total" value="#{cadVendasMB.vendas.valorLiquido}" size="12" disabled="true" style="text-align: right;">
-           			<f:convertNumber currencySymbol="" type="currency"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <br />
-           <hr />
-           <br />
-           <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-        		<p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />
-        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
-    	   </p:confirmDialog>
-           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
+             <h:panelGrid columns="2"  style="margin-left: 2%;width: 96%;">
+                <h:panelGroup>
+                    <h:outputLabel  for="idproduto" class="left3" >Produto</h:outputLabel> 
+                    <br/>
+                    <p:selectOneMenu  id="idproduto"  style="width: 200px;margin-left: 1%"  value="#{cadVendasMB.produto}" converter="ProdutoConverter"
+                                  filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                        <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                        <f:selectItems  value="#{cadVendasMB.listaProduto}" var="produtoselecionado" itemLabel="#{produtoselecionado.descricao}" itemValue="#{produtoselecionado}"/>
+                        <f:attribute name="listaProduto" value="#{cadVendasMB.listaProduto}"/>
+                    </p:selectOneMenu> 
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="vendedor" class="left3" >Vendedor</h:outputLabel> 
+                        <h:inputText class="form-control"  id="vendedor"  style="width: 100%;" value="#{cadVendasMB.vendas.consultor}"/>
+                    </div>
+                </h:panelGroup> 
+            </h:panelGrid>
+            <h:panelGrid columns="4"  style="margin-left: 2%;width: 98%;">
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="valorbruto" class="left3" >Valor Bruto</h:outputLabel> 
+                        <h:inputText class="form-control"  id="valorbruto"  style="width: 90%;text-align: right;" value="#{cadVendasMB.vendas.valorBruto}">
+                            <p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="desconto" class="left3" >Desconto</h:outputLabel> 
+                        <h:inputText class="form-control"  id="desconto"  style="width: 90%;text-align: right;" value="#{cadVendasMB.vendas.valorDesconto}">
+                            <p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="juros" class="left3" >Juros</h:outputLabel> 
+                        <h:inputText class="form-control"  id="juros"  style="width: 90%;text-align: right;" value="#{cadVendasMB.vendas.valorJuros}">
+                            <p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="total" class="left3" >Total</h:outputLabel> 
+                        <h:inputText class="form-control"  id="total"  style="width: 90%;text-align: right;" value="#{cadVendasMB.vendas.valorLiquido}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+            </h:panelGrid>
+            <hr />
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />
+                <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+            </p:confirmDialog>
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                 <p:confirm  header="Confirmação" message="#{cadVendasMB.salvarVendaSemFormaRecebimento()}" icon="ui-icon-alert" />
-           </p:commandLink> 
-           <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
+            </p:commandLink> 
+            <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-           </p:commandLink>
-            <br></br>     
+            </p:commandLink>
         </h:form>
-</h:body>
+    </h:body>
 </html>

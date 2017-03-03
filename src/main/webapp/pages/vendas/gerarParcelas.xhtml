@@ -10,108 +10,128 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
-    </h:head>
-    
+         <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
 
- <h:body style="background:white;" > 
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
+    </h:head>
+
+
+    <h:body style="background:white;" > 
         <h:form id="idFrmCadVendas" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Gerar Parcela</title>
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-			<h:panelGrid columns="1" style="margin-left:1%;">
-                 <p:outputLabel value="Cliente" for="cliente" class="left"/>
-                 <p:inputText id="cliente"  value="#{cadVendasMB.vendas.nomeCliente}"  size="50" class="left" disabled="true"/>
-             </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left:60%; margin-top:-9.3%;"> 
-                 <p:outputLabel value="Valor Total" for="valortotal" class="left"/>
-                 <p:inputText id="valortotal"  value="#{cadVendasMB.vendas.valorLiquido}"  size="12" class="left" disabled="true" style="text-align: right;">
-                 	<f:convertNumber currencySymbol="" type="currency"/>
-                 </p:inputText>
-             </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left:82%; margin-top:-9.3%;"> 
-                 <p:outputLabel value="Saldo" for="saldo" class="left"/>
-                 <p:inputText id="saldo"  value="#{gerarParcelaMB.saldoTotal()}" style="text-align: right;"  size="12" class="left" disabled="true">
-                 	<f:convertNumber currencySymbol="" type="currency"/>
-                 </p:inputText>
-             </h:panelGrid>
-             <br />
-             <h:panelGrid columns="1" style="margin-left:1%;"> 
-                 <p:outputLabel value="Valor" for="valorparcela" class="left"/>
-                 <p:inputText id="valorparcela"  value="#{gerarParcelaMB.valorParcela}" style="text-align: right;"  size="12" class="left">
-                 	<f:convertNumber pattern="##,###,###,###.##"/>
-                 </p:inputText>
-             </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left: 25%;margin-top:-9.5%;">
-	            	 <p:outputLabel value="Parcelas" for="parcelas"  /> 
-	            	<p:selectOneMenu id="parcelas" style="width:100px;" value="#{gerarParcelaMB.vezes}">
-	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
-	                    <f:selectItem itemLabel="1" itemValue="1" />  
-	                    <f:selectItem itemLabel="2" itemValue="2" /> 
-	                    <f:selectItem itemLabel="3" itemValue="3" />  
-	                    <f:selectItem itemLabel="4" itemValue="4" />
-	                    <f:selectItem itemLabel="5" itemValue="5" />
-	                    <f:selectItem itemLabel="6" itemValue="6" />
-	                    <f:selectItem itemLabel="7" itemValue="7" />
-	                    <f:selectItem itemLabel="8" itemValue="8" />
-	                    <f:selectItem itemLabel="9" itemValue="9" />
-	                    <f:selectItem itemLabel="10" itemValue="10" />
-	                    <f:selectItem itemLabel="11" itemValue="11" />
-	                    <f:selectItem itemLabel="12" itemValue="12" />
-	                    <f:selectItem itemLabel="13" itemValue="13" />
-	                    <f:selectItem itemLabel="14" itemValue="14" />
-	                    <f:selectItem itemLabel="15" itemValue="15" />
-	                    <f:selectItem itemLabel="16" itemValue="16" />
-	                    <f:selectItem itemLabel="17" itemValue="17" />
-	                    <f:selectItem itemLabel="18" itemValue="18" />
-	                    <f:selectItem itemLabel="19" itemValue="19" />
-	                    <f:selectItem itemLabel="20" itemValue="20" /> 
-	                </p:selectOneMenu>
-	            </h:panelGrid>
-	            <h:panelGrid style="margin-left:48%; margin-top:-9.5%;">   
-	                <p:outputLabel value="Tipo de Doc." for="tipoDoc" class="left2"/>
-	                <p:selectOneMenu id="tipoDoc" class="left5" style="width:156px"  value="#{gerarParcelaMB.tipoDocumento}">
-	                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-	                    <f:selectItem itemLabel="Cartão" itemValue="cartao" />  
-	                    <f:selectItem itemLabel="Débito em Conta" itemValue="debito em conta" /> 
-	                    <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
-	                    <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" /> 
-	                    <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
-	                    <f:selectItem itemLabel="Depósito" itemValue="Deposito" />
-	                </p:selectOneMenu>
-             </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.5%;"> 
-	            <p:outputLabel value="1° Vencimento" for="venc" class="left3" />  
-	            
-	            <p:inputMask id="venc" mask="99/99/9999" size="13"  class="left3" value="#{gerarParcelaMB.dataVencimento}">
-	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-	                 <p:ajax event="blur"/> 
-	            </p:inputMask> 
-            </h:panelGrid> 
-             <br />
-             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Selecionar Forma&nbsp;&nbsp;&nbsp;&nbsp;" action="#{gerarParcelaMB.recebimento()}" style="background:#3D9446; font-size:16px;color:white;margin-left:12%; text-decoration:none; border-radius:5px;" title="Selecione Forma">
-			</p:commandLink>  
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            
+              <h:panelGrid columns="3"  style="margin-left: 2%;width: 106%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="nomeCliente" class="left3" >Cliente</h:outputLabel> 
+                        <h:inputText class="form-control"  id="nomeCliente"  style="width: 136%;" readonly="true" value="#{cadVendasMB.vendas.nomeCliente}"/>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 33%;">
+                        <h:outputLabel  for="valor" class="left3" >Valor Total</h:outputLabel> 
+                        <h:inputText class="form-control"  id="valor"  style="width: 68%;text-align: right;" readonly="true" value="#{cadVendasMB.vendas.valorLiquido}">
+                            <f:convertNumber currencySymbol="" type="currency"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="saldo" class="left3" >Saldo</h:outputLabel> 
+                        <h:inputText class="form-control"  id="saldo"  style="width: 68%;text-align: right;" readonly="true" value="#{gerarParcelaMB.saldoTotal()}">
+                            <f:convertNumber currencySymbol="" type="currency"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+            </h:panelGrid>
+            <h:panelGrid columns="4"  style="margin-left: 2%;width: 105%;">
+                 <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="valorParcela" class="left3" >Valor</h:outputLabel> 
+                        <h:inputText class="form-control"  id="valorParcela"  style="width: 68%;text-align: right;" value="#{gerarParcelaMB.valorParcela}" >
+                            <f:convertNumber currencySymbol="" type="currency"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <h:outputLabel  for="parcelas" class="left3" >Parcelas</h:outputLabel> 
+                    <br/>
+                    <p:selectOneMenu id="parcelas" style="width:100px;" value="#{gerarParcelaMB.vezes}">
+                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
+                        <f:selectItem itemLabel="1" itemValue="1" />  
+                        <f:selectItem itemLabel="2" itemValue="2" /> 
+                        <f:selectItem itemLabel="3" itemValue="3" />  
+                        <f:selectItem itemLabel="4" itemValue="4" />
+                        <f:selectItem itemLabel="5" itemValue="5" />
+                        <f:selectItem itemLabel="6" itemValue="6" />
+                        <f:selectItem itemLabel="7" itemValue="7" />
+                        <f:selectItem itemLabel="8" itemValue="8" />
+                        <f:selectItem itemLabel="9" itemValue="9" />
+                        <f:selectItem itemLabel="10" itemValue="10" />
+                        <f:selectItem itemLabel="11" itemValue="11" />
+                        <f:selectItem itemLabel="12" itemValue="12" />
+                        <f:selectItem itemLabel="13" itemValue="13" />
+                        <f:selectItem itemLabel="14" itemValue="14" />
+                        <f:selectItem itemLabel="15" itemValue="15" />
+                        <f:selectItem itemLabel="16" itemValue="16" />
+                        <f:selectItem itemLabel="17" itemValue="17" />
+                        <f:selectItem itemLabel="18" itemValue="18" />
+                        <f:selectItem itemLabel="19" itemValue="19" />
+                        <f:selectItem itemLabel="20" itemValue="20" /> 
+                    </p:selectOneMenu> 
+                </h:panelGroup> 
+                 <h:panelGroup>
+                    <h:outputLabel  for="tipoDoc" class="left3" >Tipo de Doc.</h:outputLabel> 
+                    <br/>
+                    <p:selectOneMenu id="tipoDoc" class="left5" style="width:156px"  value="#{gerarParcelaMB.tipoDocumento}">
+                        <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                        <f:selectItem itemLabel="Cartão" itemValue="cartao" />  
+                        <f:selectItem itemLabel="Débito em Conta" itemValue="debito em conta" /> 
+                        <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
+                        <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" /> 
+                        <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
+                        <f:selectItem itemLabel="Depósito" itemValue="Deposito" />
+                    </p:selectOneMenu> 
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel value="1° Vencimento" class="left3" />
+                            <p:inputMask id="dataIni" mask="99/99/9999" style="width: 70%;"  maxlength="15" value="#{gerarParcelaMB.dataVencimento}" class="form-control"  >
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </p:inputMask>
+                    </div>
+                </h:panelGroup>
+            </h:panelGrid>
+           
+            <br />
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Selecionar Forma&nbsp;&nbsp;&nbsp;&nbsp;" action="#{gerarParcelaMB.recebimento()}" style="background:#3D9446; font-size:16px;color:white;margin-left:12%; text-decoration:none; border-radius:5px;" title="Selecione Forma">
+            </p:commandLink>  
             <p:commandLink id="gerarParcela" value="&nbsp;&nbsp;&nbsp;&nbsp;Gerar Parcela&nbsp;&nbsp;&nbsp;&nbsp;" ajax="false" action="#{gerarParcelaMB.SalvarParcela()}" update="growl, idFrmCadVendas" style="background:#3D9446; margin-left:5%;font-size:16px;color:white;text-decoration:none; border-radius:5px;" title="Gerar Parcela">
-			</p:commandLink>
+            </p:commandLink>
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Sem Parcela&nbsp;&nbsp;&nbsp;&nbsp;"   action="#{gerarParcelaMB.SemParcela()}" style="background:#3D9446; font-size:16px;color:white; margin-left:5%; text-decoration:none; border-radius:5px;" title="Sem Parcela" ajax="false">
-			</p:commandLink>
-            <br /><br /><br />
+            </p:commandLink>
+            <br />
             <hr />
-             <p:contextMenu for="idparcelas" style="background:white;">  
-                  <p:menuitem value="Editar"   icon=" ui-icon-pencil"   action="#{gerarParcelaMB.editarParcela(gerarParcelaMB.contasReceber)}"/> 
-             </p:contextMenu>  
-             <p:dataTable id="idparcelas" var="parcelas"  rowStyleClass="tabela" class="tabelaselecionar" value="#{gerarParcelaMB.listarContasreceber}" 
-                          scrollRows="10" selectionMode="single" scrollable="true" selection="#{gerarParcelaMB.contasReceber}" rowKey="#{parcelas.idcontasReceber}" scrollHeight="120"   rows="10" style="margin-bottom:20px"> 
+            <p:contextMenu for="idparcelas" style="background:white;">  
+                <p:menuitem value="Editar"   icon=" ui-icon-pencil"   action="#{gerarParcelaMB.editarParcela(gerarParcelaMB.contasReceber)}"/> 
+            </p:contextMenu>  
+            <p:dataTable id="idparcelas" var="parcelas"  rowStyleClass="tabela" class="tabelaselecionar" value="#{gerarParcelaMB.listarContasreceber}" 
+                         scrollRows="10" selectionMode="single" scrollable="true" selection="#{gerarParcelaMB.contasReceber}" rowKey="#{parcelas.idcontasReceber}" scrollHeight="120"   rows="10" style="margin-bottom:20px"> 
                 <p:column headerText="Parcela" style=" background:white; color:black; border:none; text-align: center;">
                     <h:outputText value="#{parcelas.numeroParcela}"/> 
                 </p:column>
-                 <p:column headerText="Tipo" style=" background:white; color:black; border:none; text-align:center;">
+                <p:column headerText="Tipo" style=" background:white; color:black; border:none; text-align:center;">
                     <h:outputText value="#{parcelas.tipodocumento}"/> 
                 </p:column>
                 <p:column headerText="Valor Parcela"   style="background:white;text-align: right; color:black; border:none;">
@@ -124,31 +144,31 @@
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
-                 <p:column headerText="N°Doc" style=" background:white;text-align: center; color:black; border:none;">
+                <p:column headerText="N°Doc" style=" background:white;text-align: center; color:black; border:none;">
                     <h:outputText value="#{parcelas.numeroDocumento}"/> 
                 </p:column>
-                 <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
-                     <p:commandLink id="btnMenu">
-                         <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
-                         <b class="caret"></b>
-                     </p:commandLink>   
-                     <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
-                         <p:commandLink action="#{gerarParcelaMB.editarParcela(gerarParcelaMB.contasReceber)}" style="text-align: left;">
-                             <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
-                                 <p:outputLabel value="Editar" style="font-size: 15px;"/>
-                             </i> 
-                         </p:commandLink> 
-                     </p:overlayPanel> 
-                 </p:column>
+                <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                    <p:commandLink id="btnMenu">
+                        <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                        <b class="caret"></b>
+                    </p:commandLink>   
+                    <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                        <p:commandLink action="#{gerarParcelaMB.editarParcela(gerarParcelaMB.contasReceber)}" style="text-align: left;">
+                            <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
+                                <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                            </i> 
+                        </p:commandLink> 
+                    </p:overlayPanel> 
+                </p:column>
 
             </p:dataTable> 
             <br />
-           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"  action="#{gerarParcelaMB.Fechar()}" >
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"  action="#{gerarParcelaMB.Fechar()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{gerarParcelaMB.Fechar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
-		</h:form>
- </h:body>			  
+        </h:form>
+    </h:body>			  
 </html>

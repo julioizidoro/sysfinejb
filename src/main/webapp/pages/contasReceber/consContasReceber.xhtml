@@ -39,11 +39,11 @@
                                     <li>
                                         <p:commandLink id="idImagemFiltro"  action="#{contasReceberMB.coresFiltrar()}" update="idImagemFiltro, idTabelaContaReceber" title="Filtros">
                                             <i class="fa fa-filter" style="font-size: 15px;color: #{contasReceberMB.imagemFiltro}}"/> 
-                                             <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogFiltrar}" update="idTabelaContaReceber, contasVenc, contasVencer, contasReceber"/>
+                                            <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogFiltrar}" update="idTabelaContaReceber, contasVenc, contasVencer, contasReceber"/>
                                         </p:commandLink>
                                     </li>
                                     <li>
-                                        <p:commandLink id="idImagemLiberar"  action="#{contasPagarMB.novaLiberacao()}" update="idImagemFiltro" title="Liberar">
+                                        <p:commandLink id="idImagemLiberar"  action="#{contasReceberMB.novoRecebimentoLote()}"  title="/recebimento em Lote">
                                             <i class="fa fa-check" style="color: #3D7E46;font-size: 15px;"/> 
                                         </p:commandLink>
                                     </li>
@@ -54,7 +54,7 @@
                                         </p:commandLink>
                                     </li>
                                     <li>
-                                        <p:commandLink action="#{contasPagarMB.novaImpressao()}" title="Imprimir" >
+                                        <p:commandLink action="#{contasReceberMB.novaImpressao()}" title="Imprimir" >
                                             <i class="fa fa-bars" style="color: #3D7E46;font-size: 15px;"/> 
                                         </p:commandLink>
                                     </li>
@@ -113,11 +113,11 @@
                     </p:column>  
                     <p:column style="width:6%; background:white; color:black; border:none;">
                         <p:selectBooleanCheckbox value="#{contasReceber.selecionado}" style="background:white"/>
-                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                             <p:commandButton style="margin-left:35%;" value="Sim" action="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" type="button" styleClass="ui-confirmdialog-yes" update="idTabelaContaReceber, contasVenc, contasVencer, contasReceber" />
                             <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
                         </p:confirmDialog>
-                          <p:commandLink id="btnMenu">
+                        <p:commandLink id="btnMenu">
                             <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                             <b class="caret"></b>
                         </p:commandLink>   
@@ -133,21 +133,21 @@
                                 <i class="fa fa-undo" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Desfazer Recebimento" style="font-size: 15px;"/>
                                 </i> 
-                           </p:commandLink> 
+                            </p:commandLink> 
                             <br/><br/>
                             <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.acontasreceber}" action="#{contasReceberMB.editar(contasReceber)}" style="text-align: left;">
                                 <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                 </i> 
                                 <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update=":frmConsultaReceber:idTabelaContaReceber, :frmConsultaReceber:growl"/>
-                           </p:commandLink> 
+                            </p:commandLink> 
                             <br/><br/>
                             <p:commandLink  action="#{contasReceberMB.recebimentoConta(contasReceber)}" style="text-align: left;">
                                 <i class="fa fa-money" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Receber" style="font-size: 15px;"/>
                                 </i> 
                                 <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogRecebimento}" update=":frmConsultaReceber:idTabelaContaReceber, :frmConsultaReceber:growl, :frmConsultaReceber:contasVenc, :frmConsultaReceber:contasVencer, :frmConsultaReceber:contasReceber"/>
-                           </p:commandLink> 
+                            </p:commandLink> 
                         </p:overlayPanel> 
                     </p:column> 
                 </p:dataTable>

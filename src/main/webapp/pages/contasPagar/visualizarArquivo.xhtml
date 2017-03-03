@@ -10,9 +10,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
 
- <h:body > 
+    <h:body > 
         <h:form id="idFrmConsultaArquivo" class="body2" style="font-size: 12px; background-color: white;">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
@@ -21,26 +26,33 @@
             </p:dialog>
             <title  >Visualizar Arquivo</title>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-            <br />
-             <h:panelGrid style="margin-left: 1%" columns="3">
-            	<p:outputLabel value="Nome do Arquivo" />
-                <p:inputText style="margin-left: 2%;" id="nomeArquivo" size="40" value="#{consultaArquivoMB.nomeArquivo.nomearquivo01}" readonly="true"/>
-	            <h:panelGroup   rendered="#{consultaArquivoMB.desabilitarDownload()}"> 
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup style="margin-left: 2%;">
+                    <div class="form-group">
+                        <h:outputLabel for="nomearquivo" style="margin-left:2% ">Nome Arquivo</h:outputLabel>
+                        <h:inputText  class="form-control" id="nomearquivo" style="width: 80%;margin-left: 2%;" value="#{consultaArquivoMB.nomeArquivo.nomearquivo01}" readonly="true"/>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup   rendered="#{consultaArquivoMB.desabilitarDownload()}"> 
+                    <h:outputLabel/>
+                    <a  title="Download" name="download" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank" style="text-decoration:none;font-size:18px;">
                         
-                        <a  title="Download" name="download" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank" style="text-decoration:none;font-size:18px;" type="button">
-                              
-                                <img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
-                          
-                            </a>
-	            </h:panelGroup>
-             </h:panelGrid>
-              
-            <br />
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+
+                                <li>
+                                        <i class="fa fa-download" style="font-size: 22px;"/> 
+                                </li>
+                            </ul>
+                        </nav>
+                    </a>
+                </h:panelGroup>
+
+            </h:panelGrid>
             <hr />
-            <br />
             <p:commandLink title="Fechar" style="margin-left: 45%;text-decoration: none" action="#{consultaArquivoMB.voltar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
         </h:form>
- </h:body>
+    </h:body>
 </html>

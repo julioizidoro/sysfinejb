@@ -980,7 +980,9 @@ public class CadVendasMB implements Serializable {
         } else {
             nVenda = vendas;
         }
-        listaFormaPagamento = formaPagamentoDao.list("select f from Formapagamento f where f.vendas.idvendas=" + nVenda.getIdvendas());
+        if (nVenda != null) {
+            listaFormaPagamento = formaPagamentoDao.list("select f from Formapagamento f where f.vendas.idvendas=" + nVenda.getIdvendas());
+        }
         if (listaFormaPagamento == null) {
             listaFormaPagamento = new ArrayList<Formapagamento>();
         }

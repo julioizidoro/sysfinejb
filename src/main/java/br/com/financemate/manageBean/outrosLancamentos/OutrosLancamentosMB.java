@@ -332,11 +332,11 @@ public class OutrosLancamentosMB implements Serializable {
     public String novaTransferencia() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("closable", false);
-        options.put("contentWidth", 500);
+        options.put("contentWidth", 600);
         RequestContext.getCurrentInstance().openDialog("cadTransferencia", options, null);
         return "";
     }
-
+   
     public void retornoDialogTransferencia(SelectEvent event) {
         String msg = (String) event.getObject();
         if (msg.length() > 2) {

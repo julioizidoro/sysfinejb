@@ -10,6 +10,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+         <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head> 
 
     <h:body >
@@ -33,91 +38,97 @@
 			</p:commandLink>
 			<p:commandLink id="historicoCobranca" value="&nbsp;&nbsp;&nbsp;&nbsp;Histórico de Cobrança&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cobrancaMB.historicoCobrancas()}" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Histórico de Cobrança">
 			</p:commandLink>
-			<br /><br /><br />
-            <h:panelGrid style="margin-left: 1%">
-            	<p:outputLabel value="Unidade" />
+            <br/><br/>
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="unidade" class="left3" >Unidade</h:outputLabel> 
+                        <h:inputText class="form-control"  id="unidade"  style="width: 87%;" readonly="true" value="#{cobrancaMB.contasReceber.cliente.nomeFantasia}"/>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="nomeCliente" class="left3" >Cliente</h:outputLabel> 
+                        <h:inputText class="form-control"  id="nomeCliente"  style="width: 87%;" readonly="true" value="#{cobrancaMB.contasReceber.nomeCliente}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left: 10%; margin-top:-4.5%;">
-                <p:inputText id="unidade" style="width: 135px" value="#{cobrancaMB.contasReceber.cliente.nomeFantasia}" readonly="true" disabled="true"/>
+            <h:panelGrid columns="3"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="valor" class="left3" >Valor</h:outputLabel> 
+                        <h:inputText class="form-control"  id="valor"  style="width: 87%;text-align: right;" readonly="true" value="#{cobrancaMB.contasReceber.valorParcela}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="dataVenc" class="left3" >Vencimento</h:outputLabel> 
+                        <p:inputMask class="form-control" id="dataVenc" style="width: 50%;" value="#{cobrancaMB.contasReceber.dataVencimento}" mask="99/99/9999" maxlength="15" >
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="numeroparcela" class="left3" >Parcela</h:outputLabel> 
+                        <h:inputText class="form-control"  id="numeroparcela"  style="width: 81%;" readonly="true" value="#{cobrancaMB.contasReceber.numeroParcela}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left: 37%; margin-top:-5.1%;">
-            	<p:outputLabel value="Cliente" for="nomeCliente"  />
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 45%; margin-top:-4.5%;">
-                <p:inputText id="nomeCliente" size="48" value="#{cobrancaMB.contasReceber.nomeCliente}" readonly="true" disabled="true"/>
-            </h:panelGrid>
-            <br />
-            <h:panelGrid style="margin-left:1%;"> 
-            	<p:outputLabel value="Valor"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:7%; margin-top:-4.5%;">
-            	<p:inputText id="valor" size="17" value="#{cobrancaMB.contasReceber.valorParcela}" readonly="true" disabled="true" style="text-align:right;"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 33%; margin-top:-5%;">
-            	<p:outputLabel value="Vencimento" for="dataVenc" /> 
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 46%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVenc" value="#{cobrancaMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15" >
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:68%; margin-top:-5%;">
-            	<p:outputLabel value="Parcela"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:78%; margin-top:-5%;">
-            	<p:inputText style="width:103px;" value="#{cobrancaMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
-            </h:panelGrid>
-            <br />
             <hr />
-            <br />
-            <h:panelGrid columns="4" id="panelCheckBoxTelefone">
-                <p:selectBooleanCheckbox value="#{cobrancaMB.noveDigito1}" style="margin-left: 78%;">
-                    <p:ajax listener="#{cobrancaMB.verificarDigitoFone1()}" update="idPanelFone1, idFone1, panelCheckBoxTelefone" event="change"/>
-                </p:selectBooleanCheckbox>
-                <p:outputLabel value="9 digitos"/>
-                <p:selectBooleanCheckbox value="#{cobrancaMB.noveDigito2}" style="margin-left:87%;">
-                    <p:ajax listener="#{cobrancaMB.verificarDigitoFone2()}" update="idPanelFone2, idFone2, panelCheckBoxTelefone" event="change"/>
-                </p:selectBooleanCheckbox>
-                <p:outputLabel value="9 digitos"/>
+            <h:panelGrid columns="3"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                         <h:outputLabel for="fone1" >
+                            Fone
+                            <p:selectBooleanCheckbox value="#{cobrancaMB.noveDigito1}">
+                                9°
+                                <p:ajax listener="#{cobrancaMB.verificarDigitoFone1()}" update="fone1" event="change"/>
+                            </p:selectBooleanCheckbox>
+                        </h:outputLabel>
+                        <p:inputMask id="fone1" maxlength="100" style="width: 80%;" class="form-control" mask="#{cobrancaMB.maskFone1}" value="#{cobrancaMB.cobranca.fone1}"/>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                         <h:outputLabel for="fone2" >
+                            Fone 
+                            <p:selectBooleanCheckbox value="#{cobrancaMB.noveDigito2}">
+                                9°
+                                   <p:ajax listener="#{cobrancaMB.verificarDigitoFone2()}" update="fone2" event="change"/>
+                            </p:selectBooleanCheckbox>
+                        </h:outputLabel>
+                        <p:inputMask id="fone2" maxlength="100" style="width: 80%;" class="form-control" mask="#{cobrancaMB.maskFone2}" value="#{cobrancaMB.cobranca.fone2}"/>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group" style="float: right;">
+                        <h:outputLabel  for="dataVencOri" class="left3" >Vcto. Original</h:outputLabel> 
+                        <p:inputMask class="form-control" id="dataVencOri" style="width: 75%;" value="#{cobrancaMB.contasReceber.dataVencimento}" readonly="true" mask="99/99/9999" maxlength="15" >
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left:1%;" >
-                <p:outputLabel value="Fone 1" />
+           <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="email" class="left3" >E mail</h:outputLabel> 
+                        <h:inputText class="form-control"  id="email"  style="width: 87%;" value="#{cobrancaMB.cobranca.email}"/>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="dataVencAlt" class="left3" >Alterar Vcto.</h:outputLabel> 
+                        <p:inputMask class="form-control" id="dataVencAlt" style="width: 50%;" value="#{cobrancaMB.cobranca.alterarvencimento}" mask="99/99/9999" maxlength="15" >
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid style="margin-left:10%; margin-top:-4.5%;" id="idPanelFone1">
-                <p:inputMask  mask="#{cobrancaMB.maskFone1}" value="#{cobrancaMB.cobranca.fone1}" size="17" id="idFone1"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:34%; margin-top:-4.5%;">
-            	<p:outputLabel value="Fone 2" />
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:43%; margin-top:-5%;" id="idPanelFone2">
-                <p:inputMask mask="#{cobrancaMB.maskFone2}" value="#{cobrancaMB.cobranca.fone2}" size="17" id="idFone2"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 67%; margin-top:-5%;">
-            	<p:outputLabel value="Vcto. Original" for="dataVencOri" /> 
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 81.5%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVencOri" value="#{cobrancaMB.contasReceber.dataVencimento}" readonly="true" mask="99/99/9999" size="10" maxlength="15" >
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
-            </h:panelGrid>
-            <br />
-            <h:panelGrid style="margin-left:1%;">
-            	<p:outputLabel value="E-mail"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
-            	<p:inputText value="#{cobrancaMB.cobranca.email}" size="51"/>
-            </h:panelGrid>
-             <h:panelGrid style="margin-left: 67%; margin-top:-5%;">
-            	<p:outputLabel value="Alterar Vcto." for="dataVencAlt" /> 
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 81.5%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVencAlt" value="#{cobrancaMB.cobranca.alterarvencimento}" mask="99/99/9999" size="10" maxlength="15" >
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
-            </h:panelGrid>
-            <br />
             <hr />
-            <br />
             <p:commandLink title="Salvar Cobrança" style="margin-left: 37%;text-decoration: none"  update="growl" action="#{cobrancaMB.salvarDadosCobranca()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>

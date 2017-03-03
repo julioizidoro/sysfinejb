@@ -10,6 +10,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head> 
 
     <h:body >
@@ -33,83 +38,109 @@
 			</p:commandLink>
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.notaFiscal()}" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
 			</p:commandLink>
-            <br /><br /><br />
+            <br /><br />
             
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
         		<p:commandButton style="margin-left:35%;" value="Sim" action="#" type="button" styleClass="ui-confirmdialog-yes"  />
         		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
     		</p:confirmDialog>
-            <h:panelGrid columns="1" style="margin-left:1%;">
-           		<p:outputLabel value="Comissão" style="margin-left:17%;"/>
-           		<p:inputText value="#{cadVendasMB.vendas.comissaoLiquidaTotal}" size="12" style="text-align: right;">
+            
+            <h:panelGrid columns="4"  style="margin-left: 2%;width: 98%;">
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="comissao" class="left3" >Comissão</h:outputLabel> 
+                        <h:inputText class="form-control"  id="comissao"  style="width: 90%;text-align: right;" value="#{cadVendasMB.vendas.comissaoLiquidaTotal}">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
-           			<f:convertNumber pattern="##,###,###,###.##"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
-           		<p:outputLabel value="Desp. Financeiras" />
-           		<p:inputText value="#{cadVendasMB.vendas.despesasFinanceiras}" size="12" style="text-align: right;">
-           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
-           			<f:convertNumber pattern="##,###,###,###.##"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <h:panelGrid columns="1" style="margin-left:54%; margin-top:-9.3%;">
-           		<p:outputLabel value="Comis. Vendedor"/> 
-           		<p:inputText value="#{cadVendasMB.vendas.comissaoFuncionarios}" size="12" style="text-align: right;">
-           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
-           			<f:convertNumber pattern="##,###,###,###.##"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;"> 
-           		<p:outputLabel value="Comis. Terceiros" />
-           		<p:inputText value="#{cadVendasMB.vendas.comissaoTerceiros}" size="12" style="text-align: right;">
-           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
-           			<f:convertNumber pattern="##,###,###,###.##"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <br />
-           <h:panelGrid columns="1" style="margin-left:1%;">
-           		<p:outputLabel value="Líquido da Venda"/>
-           		<p:inputText id="idliquidoVenda" value="#{cadVendasMB.vendas.liquidoVendas}" size="12" disabled="true" style="text-align: right;">
-           			<f:convertNumber currencySymbol="" type="currency"/>
-           		</p:inputText> 
-           </h:panelGrid>
-            <h:panelGrid columns="1" style="margin-left:28.5%; margin-top:-9.3%;">
-           		<p:outputLabel value="Observação" />
-           		<p:inputText value="#{cadVendasMB.vendas.observacao}" size="66"/>
-           </h:panelGrid>
-           <br />
-           <h:panelGrid columns="1" style="margin-left:1%;">
-           		<p:outputLabel value="Fornecedor" />
-           		<p:inputText value="#{cadVendasMB.vendas.nomeFornecedor}" size="60"/>
-           </h:panelGrid>
-           <h:panelGrid columns="1" style="margin-left:68%; margin-top:-9.3%;">
-           		<p:outputLabel value="Pgto Cliente direto fornecedor"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorPagoFornecedor}" title="Inserir o valor pago pelo cliente direto para o fornecedor. Este valor será abatido do contas a receber e do valor a ser pago ao fornecedor" size="18" style="text-align: right;margin-left:10%;">
-           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec"/>
-           			<f:convertNumber pattern="##,###,###,###.##"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <br />
-           <h:panelGrid columns="1" style="margin-left:1%;">
-           		<p:outputLabel value="Pagar/Receber" style="margin-left:9%;" /> 
-           		<p:inputText id="idTotalPagRec" value="#{cadVendasMB.valorPagarReceber}" readonly="true" size="12" style="text-align: right;#{cadVendasMB.corPagarReceber}">
-           			<f:convertNumber currencySymbol="" type="currency"/>
-           		</p:inputText>
-           </h:panelGrid>
-           <h:panelGrid columns="1" style="margin-left:35.5%; margin-top:-9.1%;"> 
-	            <p:outputLabel value="Data Pgto/Rcbto Fornecedor" for="dataPgRb" class="left3" />  
-	            
-	            <p:inputMask id="dataPgRb" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.vendas.dataPagamentoFornecedor}"  style="margin-left: 18%;">
-	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-	            </p:inputMask>
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="despesasfinanceiras" class="left3" >Desp. Financeiras</h:outputLabel> 
+                        <h:inputText class="form-control"  id="despesasfinanceiras"  style="width: 90%;text-align: right;" value="#{cadVendasMB.vendas.despesasFinanceiras}">
+                            <p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="comissaovendedor" class="left3" >Comis. Vendedor</h:outputLabel> 
+                        <h:inputText class="form-control"  id="comissaovendedor"  style="width: 90%;text-align: right;" value="#{cadVendasMB.vendas.comissaoFuncionarios}">
+                            <p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="comissaoterceiros" class="left3" >Comis. Terceiros</h:outputLabel> 
+                        <h:inputText class="form-control"  id="comissaoterceiros"  style="width: 90%;text-align: right;" value="#{cadVendasMB.vendas.comissaoTerceiros}">
+                            <p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
             </h:panelGrid>
-            <h:panelGrid style="margin-left: 85%; margin-top:-7.5%;"> 
-            	<p:commandLink title="Adicionar uma conta" style="text-decoration: none"   action="#{cadVendasMB.adicionarConta()}" >
-                	<img src="../../resources/img/iconeplus.png" width="40" height="40"/>
-            	</p:commandLink>
-            </h:panelGrid> 
-             <br /> 
+         <h:panelGrid columns="2"  style="margin-left: 2%;width: 60%;">
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="idliquidoVenda" class="left3" >Líquido da Venda</h:outputLabel> 
+                        <h:inputText class="form-control"  id="idliquidoVenda"  style="width: 80%;text-align: right;" readonly="true" value="#{cadVendasMB.vendas.liquidoVendas}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="obs" class="left3" >Observação</h:outputLabel> 
+                        <h:inputText class="form-control"  id="obs"  style="width: 221%;" value="#{cadVendasMB.vendas.observacao}"/>
+                    </div>
+                </h:panelGroup> 
+            </h:panelGrid>
+           
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="fornecedor" class="left3" >Fornecedor</h:outputLabel> 
+                        <h:inputText class="form-control"  id="fornecedor"  style="width: 100%;" value="#{cadVendasMB.vendas.nomeFornecedor}"/>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" style="margin-right:  9%;float: right;">
+                        <h:outputLabel  for="pgtclientefornecedor" class="left3" >Pgto Cliente direto fornecedor</h:outputLabel> 
+                        <h:inputText class="form-control" title="Inserir o valor pago pelo cliente direto para o fornecedor. Este valor será abatido do contas a receber e do valor a ser pago ao fornecedor"  id="pgtclientefornecedor"  style="width: 100%;text-align: right;" value="#{cadVendasMB.vendas.liquidoVendas}">
+                            <p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec"/>
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup>
+            </h:panelGrid>
+            
+            <h:panelGrid columns="3"  style="margin-left: 2%;width: 96%;">
+                <h:panelGroup>
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="idTotalPagRec" class="left3" >Pagar/Receber</h:outputLabel> 
+                        <h:inputText class="form-control"   id="idTotalPagRec"  style="width: 50%;text-align: right;" value="#{cadVendasMB.valorPagarReceber}" readonly="true">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel  for="dataPgRb" class="left3" >Data Pgto/Rcbto Fornecedor</h:outputLabel> 
+                        <p:inputMask id="dataPgRb" mask="99/99/9999" size="13" style="width: 56%;" class="form-control" value="#{cadVendasMB.vendas.dataPagamentoFornecedor}" >
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:inputMask>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <p:commandLink title="Adicionar uma conta" style="text-decoration: none;margin-left: 17%;"   action="#{cadVendasMB.adicionarConta()}" >
+                	<i class="fa fa-plus" style="color: #3D7E46;font-size: 32px;"/> 
+                    </p:commandLink>
+                </h:panelGroup>
+            </h:panelGrid>
            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
         		<p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />
         		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />

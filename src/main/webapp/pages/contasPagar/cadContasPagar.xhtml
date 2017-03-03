@@ -10,6 +10,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
 
 
@@ -27,140 +32,174 @@
                 <title  >Novo Pagamento</title>
                 <p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
 
-                <h:panelGrid>
-                    <br></br>
-                    <p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 10%;"/>
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                    <h:panelGroup>
+                        <h:outputLabel for="cliente" style="margin-left: 2%;" class="left3">Unidade</h:outputLabel>
+                        <br/>
+                        <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadContasPagarMB.cliente}" converter="ClienteConverter"
+                                          filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadContasPagarMB.habilitarUnidade}">
+                            <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                            <f:selectItems  value="#{cadContasPagarMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                            <f:attribute name="listaCliente" value="#{cadContasPagarMB.listaCliente}"/>
+                            <p:ajax event="change" listener="#{cadContasPagarMB.gerarListaBanco()}" update="idconta"/>
+                            <p:ajax event="change" listener="#{cadContasPagarMB.gerarListaPlanoContas()}" update="idPlanoConta"/>
+                        </p:selectOneMenu> 
+                    </h:panelGroup> 
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="dataEnv" style="margin-left:53%; ">Data de Envio</h:outputLabel>
+                            <br/>
+                            <p:inputMask id="dataEnv" mask="99/99/9999" style="width: 34%;float: right;margin-right: 15%;"  class="form-control" value="#{cadContasPagarMB.dataEnvio()}"  readonly="true">
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </p:inputMask>
+                        </div>
+                    </h:panelGroup>
                 </h:panelGrid>
-                <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
-                    <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadContasPagarMB.cliente}" converter="ClienteConverter"
-                                      filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadContasPagarMB.habilitarUnidade}">
-                        <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                        <f:selectItems  value="#{cadContasPagarMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
-                        <f:attribute name="listaCliente" value="#{cadContasPagarMB.listaCliente}"/>
-                        <p:ajax event="change" listener="#{cadContasPagarMB.gerarListaBanco()}" update="idconta"/>
-                        <p:ajax event="change" listener="#{cadContasPagarMB.gerarListaPlanoContas()}" update="idPlanoConta"/>
-                    </p:selectOneMenu> 
-                </h:panelGrid>  
-                <h:panelGrid columns="2" style="margin-left:68.5%; margin-top:-6.2%;"> 
-                    <p:outputLabel value="Data Envio" for="dataEnv" class="left3" /> 
+                <hr/>	 
+                <h:panelGrid columns="3"  style="margin-left: 2%;width: 95%;">
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="fornecedor">Fornecedor</h:outputLabel>
+                            <h:inputText  class="form-control" id="fornecedor" style="width: 80%;" value="#{cadContasPagarMB.contaPagar.fornecedor}"/>
+                        </div>
+                    </h:panelGroup> 
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="nDocumento">N° Documento</h:outputLabel>
+                            <h:inputText  class="form-control" id="nDocumento" style="width: 80%;" value="#{cadContasPagarMB.contaPagar.numeroDocumento}"/>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:commandLink  title="#{cadContasPagarMB.consultarArquivos()}" style="margin-left: 10%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivo()}" >
+                            <img src="../../resources/img/icone.jpg" width="20"/>
+                        </p:commandLink>
+                        <h:outputLabel value="#{cadContasPagarMB.nomeAnexo()}" />
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 81%;">
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="valor">Valor</h:outputLabel>
+                            <h:inputText  class="form-control" id="valor" style="width: 63%;text-align: right;" value="#{cadContasPagarMB.contaPagar.valor}">
+                                <f:convertNumber pattern="##,###,###,###.##"/>
+                            </h:inputText>
+                        </div>
+                    </h:panelGroup> 
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="descricao">Descrição</h:outputLabel>
+                            <h:inputText  class="form-control" id="descricao" style="width: 126%;" value="#{cadContasPagarMB.contaPagar.descricao}"/>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="3"  style="margin-left: 2%;width: 106%;">
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="dataVenc">Vencimento</h:outputLabel>
+                            <p:inputMask id="dataVenc"   mask="99/99/9999" size="11"  class="form-control"  value="#{cadContasPagarMB.contaPagar.dataVencimento}" style="width: 80%;">
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </p:inputMask>
+                        </div>
+                    </h:panelGroup> 
+                    <h:panelGroup>
+                        <h:outputLabel value="Conta" for="idconta" />
+                        <br/>
+                        <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{cadContasPagarMB.banco}"  converter="BancoConverter"
+                                         filter="true" filterMatchMode="contains" panelStyle="width:150px">
+                            <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+                            <f:selectItems value="#{cadContasPagarMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+                            <f:attribute name="listaBanco" value="#{cadContasPagarMB.listaBanco}" />
 
-                    <p:inputMask id="dataEnv" mask="99/99/9999" size="13"  class="left3" value="#{cadContasPagarMB.dataEnvio()}"   style="margin-left: 2%;" readonly="true">
-                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                    </p:inputMask>
-                </h:panelGrid> 
-                <br />   
-                <hr />    
-                <br />
-                <h:panelGrid columns="6" style="margin-left: 1%;"> 
-                    <p:outputLabel value="Fornecedor"  for="fornecedor"  class="left3" />
-                    <p:inputText id="fornecedor" size="20"  class="left3" value="#{cadContasPagarMB.contaPagar.fornecedor}"/>
-                    <p:outputLabel value="NºDocumento" for="nDocumento"  class="left2" style="margin-left: 21%;"/>     
-                    <p:inputText id="nDocumento" size="13"  class="left4" value="#{cadContasPagarMB.contaPagar.numeroDocumento}" style="margin-left: 16%;"/>
-                    <p:commandLink  title="#{cadContasPagarMB.consultarArquivos()}" style="margin-left: 10%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivo()}" >
-                        <img src="../../resources/img/icone.jpg" width="20"/>
-                    </p:commandLink>
-                    <p:outputLabel value="#{cadContasPagarMB.nomeAnexo()}" style="margin-left:10%; color:black;"/>
+                        </p:selectOneMenu> 
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:outputLabel value="Forma" for="formaPaga" class="left2" />   
+                        <br/>
+                        <p:selectOneMenu id="formaPaga" class="left5" style="width:156px;"  value="#{cadContasPagarMB.contaPagar.formaPagamento}">
+                            <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                            <f:selectItem itemLabel="Cartão" itemValue="Cartao" />  
+                            <f:selectItem itemLabel="Débito em Conta" itemValue="debito em conta" /> 
+                            <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
+                            <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
+                            <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
+                            <f:selectItem itemLabel="Depósito" itemValue="Deposito" />
+                            <f:selectItem itemLabel="Transferencia" itemValue="Transferencia"/>
+                            <p:ajax event="change" listener="#{cadContasPagarMB.transferenciaBancaria()}"  update="renderizar"/>   
+                        </p:selectOneMenu>
+                    </h:panelGroup>
                 </h:panelGrid>
-                <br />	 
-                <h:panelGrid style="margin-left:1%;" columns="4">
-                    <p:outputLabel value="Valor "  for="valor" class="leftvalor"/> 
-                    <p:inputText maxlength="10"  id="valor" size="12"  class="valorr"  value="#{cadContasPagarMB.contaPagar.valor}" style="text-align: right;">
-                        <f:convertNumber pattern="##,###,###,###.##"/>
-                    </p:inputText>
-                    <p:outputLabel value="Descrição" for="descricao" class="left3" style="margin-left: 2%;"/>
-                    <p:inputText style="width: 102%;"  id="descricao"  class="left3"  value="#{cadContasPagarMB.contaPagar.descricao}"/>
-                </h:panelGrid>
-                <br />
-                <h:panelGrid columns="6" style="margin-left:1%;">
-                    <p:outputLabel value="Vencimento" for="dataVenc" class="left3"/>
-                    <p:inputMask id="dataVenc"   mask="99/99/9999" size="11"  class="left3"  value="#{cadContasPagarMB.contaPagar.dataVencimento}" style="margin-left: 2%;">
-                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                    </p:inputMask>
-                    <p:outputLabel value="Conta" for="idconta" class="left3" style="margin-left:30%;"/>   
-                    <p:selectOneMenu id="idconta" class="left3" style="width:150px;margin-left:9%;"  value="#{cadContasPagarMB.banco}"  converter="BancoConverter"
-                                     filter="true" filterMatchMode="contains" panelStyle="width:150px">
-                        <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
-                        <f:selectItems value="#{cadContasPagarMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
-                        <f:attribute name="listaBanco" value="#{cadContasPagarMB.listaBanco}" />
-
-                    </p:selectOneMenu> 
-                    <p:outputLabel value="Forma" for="formaPaga" class="left2" style="margin-left: 27%;"/>   
-                    <p:selectOneMenu id="formaPaga" class="left5" style="width:156px; margin-left: 8%;"  value="#{cadContasPagarMB.contaPagar.formaPagamento}">
-                        <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-                        <f:selectItem itemLabel="Cartão" itemValue="Cartao" />  
-                        <f:selectItem itemLabel="Débito em Conta" itemValue="debito em conta" /> 
-                        <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
-                        <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
-                        <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
-                        <f:selectItem itemLabel="Depósito" itemValue="Deposito" />
-                        <f:selectItem itemLabel="Transferencia" itemValue="Transferencia"/>
-                        <p:ajax event="change" listener="#{cadContasPagarMB.transferenciaBancaria()}"  update="renderizar"/>   
-                    </p:selectOneMenu>
-                </h:panelGrid>  
-                <br />    
                 <hr />
-                <br />
-                <h:panelGrid style="margin-left:1%;" columns="4">
-                    <p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
-                    <p:selectOneMenu id="idPlanoConta" class="left3" style="width:320px;"  value="#{cadContasPagarMB.planoContas}" converter="PlanoContasConverter"
-                                     filter="true" filterMatchMode="contains" panelStyle="width:200px">
-                        <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                        <f:selectItems value="#{cadContasPagarMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
-                        <f:attribute name="listaPlanoConta" value="#{cadContasPagarMB.listaPlanoContas}"/>
-
-                    </p:selectOneMenu> 
-                    <p:outputLabel value="Competência" for="competencia" class="left5"/> 
-                    <p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadContasPagarMB.contaPagar.competencia}" size="8" mask="99/9999"  class="left1"/>
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                    <h:panelGroup>
+                        <h:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
+                        <br/>
+                        <p:selectOneMenu id="idPlanoConta" class="left3" style="width:320px;"  value="#{cadContasPagarMB.planoContas}" converter="PlanoContasConverter"
+                                         filter="true" filterMatchMode="contains" panelStyle="width:200px">
+                            <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                            <f:selectItems value="#{cadContasPagarMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
+                            <f:attribute name="listaPlanoConta" value="#{cadContasPagarMB.listaPlanoContas}"/>
+                        </p:selectOneMenu> 
+                    </h:panelGroup> 
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="competencia">Competência</h:outputLabel>
+                            <p:inputMask style="margin-left:2%;width: 71%;" id="competencia" label="competencia" value="#{cadContasPagarMB.contaPagar.competencia}" mask="99/9999"  class="form-control"/>
+                        </div>
+                    </h:panelGroup>
                 </h:panelGrid>
-                <br />
-                <h:panelGrid columns="4" style="margin-left:1%;"> 
-                    <p:outputLabel value="Agendamento" for="dataAgen" class="left4"/>
-                    <p:inputMask id="dataAgen"   mask="99/99/9999" size="12" maxlength="15" class="left4" value="#{cadContasPagarMB.contaPagar.dataAgendamento}" style="margin-left: 2%;">
-                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-
-                    </p:inputMask>
-                    <p:outputLabel value="Compensação" for="dataComp" class="left1" style="margin-left: 2.5%;"/>
-                    <p:inputMask style="margin-left:2%;" id="dataComp"  mask="99/99/9999" size="12" maxlength="15" class="left1" value="#{cadContasPagarMB.contaPagar.dataCompensacao}">
-                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-
-                    </p:inputMask>
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="dataAgen">Agendamento</h:outputLabel>
+                            <p:inputMask id="dataAgen"   mask="99/99/9999" maxlength="15" class="form-control" value="#{cadContasPagarMB.contaPagar.dataAgendamento}" style="width: 40%;">
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </p:inputMask>
+                        </div>
+                    </h:panelGroup> 
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="dataComp">Compensação</h:outputLabel>
+                            <p:inputMask style="width: 40%;" id="dataComp"  mask="99/99/9999" size="12" maxlength="15" class="form-control" value="#{cadContasPagarMB.contaPagar.dataCompensacao}">
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </p:inputMask>
+                        </div>
+                    </h:panelGroup>
                 </h:panelGrid>
                 <hr />
                 <h:panelGroup id="renderizar">
-                    <h:panelGrid id="idtransferencia"  rendered="#{cadContasPagarMB.selecionada}">
-     
-                        <br />
-                        <h:panelGrid style="margin-left:1%;">
-                            <p:outputLabel value="Banco" class="left2"/>
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-left:8%; margin-top:-5%;">
-                            <p:inputText id="banco" value="#{cadContasPagarMB.cptransferencia.banco}" size="12"/>
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-left:40%; margin-top:-6%;">
-                            <p:outputLabel value="Agência" />
-                        </h:panelGrid> 
-                        <h:panelGrid style="margin-left:49%; margin-top:-7.5%;">
-                            <p:inputText id="agencia" value="#{cadContasPagarMB.cptransferencia.agencia}" size="11"/>
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-left:78%; margin-top:-7.5%;">
-                            <p:outputLabel value="Conta" />
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-left:84.5%; margin-top:-8.9%;">
-                            <p:inputText id="conta" value="#{cadContasPagarMB.cptransferencia.conta}" size="9"/>
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-left:1%;">
-                            <p:outputLabel value="Beneficiário" />
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-left:13%; margin-top:-5.5%;">
-                            <p:inputText id="beneficiario" value="#{cadContasPagarMB.cptransferencia.beneficiario}" size="36"/>
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-left:57%; margin-top:-5.5%;">
-                            <p:outputLabel value="CPF/CNPJ" />
-                        </h:panelGrid> 
-                        <h:panelGrid style="margin-left:67.2%; margin-top:-7%;">
-                            <p:inputText id="cpfcnpj" value="#{cadContasPagarMB.cptransferencia.cpfcnpj}" size="26"/>
-                        </h:panelGrid>
-                        <hr /> 
+                    <h:panelGrid id="idtransferencia" columns="3"  rendered="#{cadContasPagarMB.selecionada}" style="width: 100%;margin-left: 2%;">
+                        <h:panelGroup>
+                            <div class="form-group" >
+                                <h:outputLabel for="banco">Banco</h:outputLabel>
+                                <h:inputText  class="form-control" id="banco" style="width: 63%;text-align: right;" value="#{cadContasPagarMB.cptransferencia.banco}"/>
+                            </div>
+                        </h:panelGroup> 
+                        <h:panelGroup>
+                            <div class="form-group" >
+                                <h:outputLabel for="agencia">Agência</h:outputLabel>
+                                <h:inputText  class="form-control" id="agencia" style="width: 56%;" value="#{cadContasPagarMB.cptransferencia.agencia}"/>
+                            </div>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <div class="form-group" >
+                                <h:outputLabel for="contabanco">Conta</h:outputLabel>
+                                <h:inputText  class="form-control" id="contabanco" style="width: 70%;" value="#{cadContasPagarMB.cptransferencia.conta}"/>
+                            </div>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGrid id="idtransferencia2" columns="2"  rendered="#{cadContasPagarMB.selecionada}" style="width: 100%;margin-left: 2%;">
+                        <h:panelGroup>
+                            <div class="form-group" >
+                                <h:outputLabel for="beneficiario">Beneficiário</h:outputLabel>
+                                <h:inputText  class="form-control" id="beneficiario" style="width: 82%;" value="#{cadContasPagarMB.cptransferencia.beneficiario}"/>
+                            </div>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <div class="form-group" >
+                                <h:outputLabel for="cpfcnpj">CPF/CNPJ</h:outputLabel>
+                                <h:inputText  class="form-control" id="cpfcnpj" style="width: 80%;" value="#{cadContasPagarMB.cptransferencia.cpfcnpj}"/>
+                            </div>
+                        </h:panelGroup>
                     </h:panelGrid>
                     <h:panelGrid columns="3" style="margin-left:40%;" > 
                         <p:commandLink title="Confirmar" style="text-decoration: none" update="growl"  action="#{cadContasPagarMB.salvar()}" >

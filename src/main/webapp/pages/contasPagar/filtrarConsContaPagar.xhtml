@@ -10,6 +10,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+         <!-- Bootstrap core CSS -->
+        <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
 
  <h:body > 
@@ -26,8 +31,9 @@
                 <title  >Novo Filtro</title>
                 <br />
 
-                <h:panelGrid style="margin-left:1%;" columns="4">
+                <h:panelGrid style="margin-left:2%;width: 93%;" columns="2">
                     <p:outputLabel value="Unidade" class="left3"/>
+                    <p:outputLabel value="Plano Contas" for="idPlanoConta" class="left3" style="margin-left: 22%;"/>
                     <p:selectOneMenu  id="cliente"  style="width: 150px;"  value="#{contasPagarMB.cliente}" converter="ClienteConverter"
                                       filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{contasPagarMB.habilitarUnidade}">
                         <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
@@ -35,32 +41,36 @@
                         <f:attribute name="listaCliente" value="#{contasPagarMB.listaCliente}"/>
                         <p:ajax event="change" listener="#{contasPagarMB.gerarListaPlanoContas()}" update="idPlanoConta"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="Plano Contas" for="idPlanoConta" class="left3"/>
-                    <p:selectOneMenu id="idPlanoConta" class="left3" style="width:315px;"  value="#{contasPagarMB.planocontas}" converter="PlanoContasConverter"
+                    <p:selectOneMenu id="idPlanoConta" class="left3" style="width:315px;float: right;"  value="#{contasPagarMB.planocontas}" converter="PlanoContasConverter"
                                      filter="true" filterMatchMode="contains" panelStyle="width:200px">
                         <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                         <f:selectItems value="#{contasPagarMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
                         <f:attribute name="listaPlanoConta" value="#{contasPagarMB.listaPlanoContas}"/>
                     </p:selectOneMenu>  
                 </h:panelGrid>
-                <br />
-                <h:panelGrid style="margin-left: 1%;" columns="6">  
-                    <p:outputLabel value="Descrição" for="descricao" class="left3" /> 
-                    <p:inputText  size="57" id="descricao"  class="left3"  value="#{contasPagarMB.descricao}"/>
-                     <p:selectBooleanCheckbox  class="left" value="#{contasPagarMB.liberadas}"/>
-                    <h:outputText value="Liberadas"  style="margin-left: 1%"/>
-                    <p:selectBooleanCheckbox   value="#{contasPagarMB.autorizadas}" style="margin-left: 4%"/>
-                    <h:outputText value="Autorizadas"  style="margin-left: 1%"/>
-                </h:panelGrid>		
+                <br/>
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                    <h:panelGroup>
+                        <h:outputLabel  for="descricao" class="left3" >Descrição</h:outputLabel> 
+                        <h:inputText class="form-control"  id="descricao"  style="width: 110%;" value="#{contasPagarMB.descricao}"/>
+                    </h:panelGroup> 
+                    <h:panelGroup>
+                        <div class="form-group" style="float: right;">
+                            <h:outputLabel value="Periodo" class="left3" />
+                            <h:panelGrid columns="2">
+                                <p:inputMask id="dataIni" mask="99/99/9999" style="width: 70%;"  maxlength="15" value="#{contasPagarMB.dataInicio}" class="form-control"  placeholder="Data Inicial" >
+                                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                </p:inputMask>
+                                <p:inputMask id="dataFinal"  mask="99/99/9999" style="width: 70%;" maxlength="15" class="form-control" value="#{contasPagarMB.dataFinal}"  placeholder="Data Final">
+                                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                </p:inputMask>
+                            </h:panelGrid>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
                 <br />		  
-                <h:panelGrid columns="5"  style="margin-left: 1%;"> 
-                    <p:outputLabel value="Periodo" class="left3" style="margin-left:1%;"/>	
-                    <p:inputMask id="dataIni" mask="99/99/9999"  size="15" maxlength="15" value="#{contasPagarMB.dataInicio}" class="tabelaRecebimento"  placeholder="Data Inicial" >
-                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                    </p:inputMask>
-                    <p:inputMask id="dataFinal"  mask="99/99/9999" size="15" maxlength="15" class="left6" value="#{contasPagarMB.dataFinal}"  placeholder="Data Final">
-                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                    </p:inputMask>
+                <h:panelGrid columns="1"  style="margin-left: 2%;"> 
+                   
                     <p:outputLabel value="Status" for="status"  style="margin-left: 2%;"/>
                     <p:selectOneMenu id="status" style="width:130px;" value="#{contasPagarMB.status}">
                         <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
@@ -68,7 +78,6 @@
                         <f:selectItem itemLabel="Canceladas" itemValue="Canceladas" />
                     </p:selectOneMenu>
                 </h:panelGrid>
-                <br /><br /> <br /> <br /> <br /> <br /> <br /> 
                 <hr />
                 <p:commandLink title="Pesquisar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{contasPagarMB.filtrar()}" >
                     <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
