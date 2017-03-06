@@ -31,27 +31,30 @@
             <title  >Nova Transferência</title>
             <p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
 
-            <h:panelGrid columns="2" style="margin-left:2%;width:99%">
-                <p:outputLabel value="Unidade" for="cliente"  class="left3"/>
-                <p:outputLabel value="Conta Debito" for="bancodebito" style="margin-left:24%;"/>
+            <h:panelGrid columns="2" style="margin-left:2%;width:100%">
+                <h:panelGroup>
+                    <h:outputLabel value="Unidade" for="cliente"  class="left3"/>
+                    <br/>
+                    <p:selectOneMenu  id="cliente"  style="width: 200px;"  value="#{cadTransferenciaMB.cliente}" converter="ClienteConverter"
+                                      filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadTransferenciaMB.habilitarUnidade}">
+                        <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                        <f:selectItems  value="#{cadTransferenciaMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                        <f:attribute name="listaCliente" value="#{cadTransferenciaMB.listaCliente}"/>
+                        <p:ajax event="change" listener="#{cadTransferenciaMB.gerarListaBanco()}" update="bancodebito, bancocredito"/>
+                    </p:selectOneMenu> 
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:outputLabel value="Conta Debito" for="bancodebito" />
+                    <br/>
+                    <p:selectOneMenu  id="bancodebito"  style="width: 200px;"  value="#{cadTransferenciaMB.bancoDebito}" converter="BancoConverter"
+                                      filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                        <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                        <f:selectItems  value="#{cadTransferenciaMB.listaBancoDebito}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+                        <f:attribute name="listaBanco" value="#{cadTransferenciaMB.listaBancoDebito}"/>
+                    </p:selectOneMenu> 
+                </h:panelGroup>
             </h:panelGrid> 
-            <h:panelGrid style="margin-left:2%;" columns="2">  
-                <p:selectOneMenu  id="cliente"  style="width: 200px;"  value="#{cadTransferenciaMB.cliente}" converter="ClienteConverter"
-                                  filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadTransferenciaMB.habilitarUnidade}">
-                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    <f:selectItems  value="#{cadTransferenciaMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
-                    <f:attribute name="listaCliente" value="#{cadTransferenciaMB.listaCliente}"/>
-                    <p:ajax event="change" listener="#{cadTransferenciaMB.gerarListaBanco()}" update="bancodebito, bancocredito"/>
-                </p:selectOneMenu> 
-
-                <p:selectOneMenu  id="bancodebito"  style="width: 200px;margin-left: 30%"  value="#{cadTransferenciaMB.bancoDebito}" converter="BancoConverter"
-                                  filter="true" filterMatchMode="contains" panelStyle="width:180px">
-                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    <f:selectItems  value="#{cadTransferenciaMB.listaBancoDebito}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
-                    <f:attribute name="listaBanco" value="#{cadTransferenciaMB.listaBancoDebito}"/>
-                </p:selectOneMenu> 
-            </h:panelGrid>
-               <br/>
+            <br/>
             <h:panelGrid columns="3"  style="margin-left: 2%;width: 94%;">
                 <h:panelGroup>
                     <div class="form-group" >

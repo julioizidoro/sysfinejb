@@ -71,7 +71,8 @@
                     </h:panelGroup>
                     <h:panelGroup>
                         <p:commandLink  title="#{cadContasPagarMB.consultarArquivos()}" style="margin-left: 10%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivo()}" >
-                            <img src="../../resources/img/icone.jpg" width="20"/>
+                            
+                            <i class="fa fa-paperclip" style="font-size: 34px; #{cadContasPagarMB.retornarCorAnexo()}"/>
                         </p:commandLink>
                         <h:outputLabel value="#{cadContasPagarMB.nomeAnexo()}" />
                     </h:panelGroup>

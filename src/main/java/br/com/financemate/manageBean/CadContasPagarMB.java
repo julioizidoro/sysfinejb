@@ -92,6 +92,8 @@ public class CadContasPagarMB implements Serializable {
     @EJB
     private PlanoContasDao planoContasDao;
     private List<String> nomeArquivos;
+    private String corAnexo = "color:#000000;";
+    private List<String> listaArquivos;
 
     @PostConstruct
     public void init() {
@@ -312,6 +314,17 @@ public class CadContasPagarMB implements Serializable {
     public void setPlanocontatipo(Planocontatipo planocontatipo) {
         this.planocontatipo = planocontatipo;
     }
+
+    public String getCorAnexo() {
+        return corAnexo;
+    }
+
+    public void setCorAnexo(String corAnexo) {
+        this.corAnexo = corAnexo;
+    }
+    
+    
+    
 
     public void cancelar() {
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -575,6 +588,16 @@ public class CadContasPagarMB implements Serializable {
         } else {
             nomeAnexo = "Anexado";
             return nomeAnexo;
+        }
+    }
+    
+    public String retornarCorAnexo(){
+        if (file != null) {
+            corAnexo = "color:#FF0000;";
+            return corAnexo;
+        }else{
+            corAnexo = "color:#000000;";
+            return corAnexo;
         }
     }
 

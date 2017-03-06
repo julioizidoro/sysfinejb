@@ -127,11 +127,10 @@
             	<p:ajax event="click" listener="#{cadContasReceberMB.habilitarCampoRepetir()}" update="habilitar"/>
             </h:panelGrid>
             <br />
-            <h:panelGrid id="habilitar" columns="4">
-	            <h:panelGrid style="margin-left: 2%;">
-	            	 <p:outputLabel value="Frequencia" for="frequencia"  />
-	            </h:panelGrid>
-	            <h:panelGrid style="margin-left: 2%;"> 
+            <h:panelGrid id="habilitar" columns="3" style="width: 100%;">
+	            <h:panelGroup style="margin-left: 2%;"> 
+	            	<h:outputLabel value="Frequencia" for="frequencia"  />
+                        <br/>s
 	            	<p:selectOneMenu id="frequencia" style="width:194px;" disabled="#{cadContasReceberMB.disabilitar}" value="#{cadContasReceberMB.frequencia}">
 	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
 	                    <f:selectItem itemLabel="Mensal" itemValue="mensal" />  
@@ -139,9 +138,11 @@
 	                    <f:selectItem itemLabel="Diária" itemValue="Diaria" />  
 	                    <f:selectItem itemLabel="Anual" itemValue="anual" />
 	                </p:selectOneMenu>
-	            </h:panelGrid>
-	            <h:panelGrid style="margin-left: 30%;"> 
-	            	<p:selectOneMenu id="vezes" style="width:100px;" disabled="#{cadContasReceberMB.disabilitar}" value="#{cadContasReceberMB.vezes}">
+	            </h:panelGroup>
+	            <h:panelGroup style="margin-left: 2%;"> 
+	            	<h:outputLabel value="Vezes" for="vezes"  />
+                       <br/>
+	            	<p:selectOneMenu id="vezes" style="width:100px;margin-left: 2%;" disabled="#{cadContasReceberMB.disabilitar}" value="#{cadContasReceberMB.vezes}">
 	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
 	                    <f:selectItem itemLabel="1" itemValue="1" />  
 	                    <f:selectItem itemLabel="2" itemValue="2" /> 
@@ -164,16 +165,13 @@
 	                    <f:selectItem itemLabel="19" itemValue="19" />
 	                    <f:selectItem itemLabel="20" itemValue="20" />
 	                </p:selectOneMenu>
-	            </h:panelGrid>
-	            <h:panelGrid style="margin-left: 2%;">
-	            	 <p:outputLabel value="Vezes" for="vezes"  />
-	            </h:panelGrid>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left: 90%; margin-top:-7%;">
-            	<p:commandLink title=" Visualizar Parcelas" style="text-decoration: none" update="growl"   action="#{cadContasReceberMB.abrirParcelamento()}" >
+	            </h:panelGroup>
+                <h:panelGroup>
+                    <p:commandLink title=" Visualizar Parcelas" style="text-decoration: none" update="growl"   action="#{cadContasReceberMB.abrirParcelamento()}" >
                		<img src="../../resources/img/iconelupaSS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
                		
-            	</p:commandLink>
+                    </p:commandLink>
+                </h:panelGroup>
             </h:panelGrid>
             
             <hr />
