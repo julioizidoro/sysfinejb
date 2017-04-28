@@ -60,7 +60,7 @@
                     <div class="form-group">
                         <h:outputLabel  for="valorParcela" class="left3" >Valor</h:outputLabel> 
                         <h:inputText class="form-control"  id="valorParcela"  style="width: 68%;text-align: right;" value="#{gerarParcelaMB.valorParcela}" >
-                            <f:convertNumber currencySymbol="" type="currency"/>
+                            <f:convertNumber pattern="##,###,###,###.##"/>
                         </h:inputText>
                     </div>
                 </h:panelGroup> 
@@ -153,7 +153,7 @@
                         <b class="caret"></b>
                     </p:commandLink>   
                     <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
-                        <p:commandLink action="#{gerarParcelaMB.editarParcela(gerarParcelaMB.contasReceber)}" style="text-align: left;">
+                        <p:commandLink action="#{gerarParcelaMB.editarParcela(parcelas)}" style="text-align: left;">
                             <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                 <p:outputLabel value="Editar" style="font-size: 15px;"/>
                             </i> 

@@ -41,7 +41,7 @@ public class Usuario implements Serializable {
     @Size(max = 45)
     @Column(name = "login")
     private String login;
-    @Size(max = 45)
+    @Size(max = 100)
     @Column(name = "senha")
     private String senha;
     @Column(name = "cliente")
@@ -59,9 +59,12 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Contasreceber> contasreceberList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Outroslancamentos> movimentobancoList;
+    private List<Movimentobanco> movimentobancoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Vendas> vendasList;
+    @Size(max = 100)
+    @Column(name = "senhaweb")
+    private String senhaweb;
 
     public Usuario() {
     }
@@ -142,11 +145,11 @@ public class Usuario implements Serializable {
         this.contasreceberList = contasreceberList;
     }
 
-    public List<Outroslancamentos> getMovimentobancoList() {
+    public List<Movimentobanco> getMovimentobancoList() {
         return movimentobancoList;
     }
 
-    public void setMovimentobancoList(List<Outroslancamentos> movimentobancoList) {
+    public void setMovimentobancoList(List<Movimentobanco> movimentobancoList) {
         this.movimentobancoList = movimentobancoList;
     }
 
@@ -157,6 +160,16 @@ public class Usuario implements Serializable {
     public void setVendasList(List<Vendas> vendasList) {
         this.vendasList = vendasList;
     }
+
+    public String getSenhaweb() {
+        return senhaweb;
+    }
+
+    public void setSenhaweb(String senhaweb) {
+        this.senhaweb = senhaweb;
+    }
+    
+    
 
     @Override
     public int hashCode() {

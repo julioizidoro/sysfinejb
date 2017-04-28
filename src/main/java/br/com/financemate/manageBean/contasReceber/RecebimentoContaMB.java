@@ -10,7 +10,7 @@ import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -319,7 +319,7 @@ public class RecebimentoContaMB implements Serializable {
     }
 
     public void lancaOutrosLancamentos(Contasreceber conta) {
-        Outroslancamentos outroslancamentos = new Outroslancamentos();
+        Movimentobanco outroslancamentos = new Movimentobanco();
         outroslancamentos.setBanco(conta.getBanco());
         outroslancamentos.setCliente(conta.getCliente());
         outroslancamentos.setDataVencimento(conta.getDataVencimento());
@@ -367,7 +367,7 @@ public class RecebimentoContaMB implements Serializable {
     }
 
     public void lancaOutrosLancamentosParcial(Contasreceber conta) {
-        Outroslancamentos outroslancamentos = new Outroslancamentos();
+        Movimentobanco outroslancamentos = new Movimentobanco();
         outroslancamentos.setBanco(conta.getBanco());
         outroslancamentos.setCliente(conta.getCliente());
         outroslancamentos.setDataVencimento(conta.getDataVencimento());

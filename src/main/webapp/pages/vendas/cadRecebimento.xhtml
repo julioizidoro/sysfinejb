@@ -87,13 +87,13 @@
                           <b class="caret"></b>
                       </p:commandLink>   
                       <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
-                          <p:commandLink update="idHistoricoRecebimento, saldorestante" action="#{cadVendasMB.excluir(recebimento)}" style="text-align: left;">
+                          <p:commandLink update="idHistoricoRecebimento, :frmIdCasRecebimento:saldorestante" action="#{cadVendasMB.excluir(recebimento)}" style="text-align: left;">
                               <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                   <p:outputLabel value="Excluir" style="font-size: 15px;"/>
                               </i> 
                           </p:commandLink> 
                           <br/><br/>
-                          <p:commandLink action="#{cadVendasMB.editarFormaPagamento(cadVendasMB.formapagamento)}" style="text-align: left;">
+                          <p:commandLink action="#{cadVendasMB.editarFormaPagamento(recebimento)}" style="text-align: left;">
                               <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
                                   <p:outputLabel value="Editar" style="font-size: 15px;"/>
                               </i> 

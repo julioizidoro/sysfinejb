@@ -23,7 +23,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.financemate.model.Banco;
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.util.Formatacao;
 import java.io.InputStream;
 import javax.ejb.EJB;
@@ -37,7 +37,7 @@ public class ConciliacaoMB implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     private Banco banco;
-    private List<Outroslancamentos> listaLacamentos;
+    private List<Movimentobanco> listaLacamentos;
     private List<TransacaoBean> listaTransacao;
     private Date dataInicial;
     private Date dataFinal;
@@ -45,10 +45,10 @@ public class ConciliacaoMB implements Serializable {
     private List<ConciliarBean> listaConciliacaoBancaria;
     private String nomeBotaoConciliar = "Conciliar";
     private List<TransacaoBean> listaTransacaoNaoConciliado;
-    private List<Outroslancamentos> listaOutrosNaoConciliado;
+    private List<Movimentobanco> listaOutrosNaoConciliado;
     private Integer sizeConciliada;
     private TransacaoBean transacaoBean;
-    private Outroslancamentos outroslancamentos;
+    private Movimentobanco outroslancamentos;
     @EJB
     private BancoDao bancoDao;
     @EJB
@@ -70,11 +70,11 @@ public class ConciliacaoMB implements Serializable {
         this.listaTransacaoNaoConciliado = listaTransacaoNaoConciliado;
     }
 
-    public List<Outroslancamentos> getListaOutrosNaoConciliado() {
+    public List<Movimentobanco> getListaOutrosNaoConciliado() {
         return listaOutrosNaoConciliado;
     }
 
-    public void setListaOutrosNaoConciliado(List<Outroslancamentos> listaOutrosNaoConciliado) {
+    public void setListaOutrosNaoConciliado(List<Movimentobanco> listaOutrosNaoConciliado) {
         this.listaOutrosNaoConciliado = listaOutrosNaoConciliado;
     }
 
@@ -94,11 +94,11 @@ public class ConciliacaoMB implements Serializable {
         this.transacaoBean = transacaoBean;
     }
 
-    public Outroslancamentos getOutroslancamentos() {
+    public Movimentobanco getOutroslancamentos() {
         return outroslancamentos;
     }
 
-    public void setOutroslancamentos(Outroslancamentos outroslancamentos) {
+    public void setOutroslancamentos(Movimentobanco outroslancamentos) {
         this.outroslancamentos = outroslancamentos;
     }
 
@@ -126,11 +126,11 @@ public class ConciliacaoMB implements Serializable {
         this.banco = banco;
     }
 
-    public List<Outroslancamentos> getListaLacamentos() {
+    public List<Movimentobanco> getListaLacamentos() {
         return listaLacamentos;
     }
 
-    public void setListaLacamentos(List<Outroslancamentos> listaLacamentos) {
+    public void setListaLacamentos(List<Movimentobanco> listaLacamentos) {
         this.listaLacamentos = listaLacamentos;
     }
 
@@ -197,7 +197,7 @@ public class ConciliacaoMB implements Serializable {
     }  
 
     public void carregarOutrosLancamentos() {
-        String sql = "SELECT o FROM Outroslancamentos o where o.dataCompensacao>='"
+        String sql = "SELECT o FROM Movimentobanco o where o.dataCompensacao>='"
                 + Formatacao.ConvercaoDataSql(dataInicial) + "' and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and o.banco.idbanco=" + banco.getIdbanco() + " order by o.dataCompensacao";
         listaLacamentos = outrosLancamentosDao.list(sql);
     }
@@ -213,7 +213,7 @@ public class ConciliacaoMB implements Serializable {
         gerarListaOutrosLancamentosNaoConciliado();
         for (int i = 0; i < listaConciliacaoBancaria.size(); i++) {
             if (listaConciliacaoBancaria.get(i).getOutroslancamentos() == null) {
-                listaConciliacaoBancaria.get(i).setOutroslancamentos(new Outroslancamentos());
+                listaConciliacaoBancaria.get(i).setOutroslancamentos(new Movimentobanco());
                 listaConciliacaoBancaria.get(i).getOutroslancamentos().setSelecionado(false);
             }
         }
@@ -266,7 +266,7 @@ public class ConciliacaoMB implements Serializable {
         return color;
     }
 
-    public String estiloDaTabelaOutrosLancamentos(Outroslancamentos outros) {
+    public String estiloDaTabelaOutrosLancamentos(Movimentobanco outros) {
         String color;
         if (outros.getConciliada() == true) {
             color = "color:gren";
@@ -292,7 +292,7 @@ public class ConciliacaoMB implements Serializable {
     public void gerarListaOutrosLancamentosNaoConciliado() {
         ConciliarBean conciliacaoBean = new ConciliarBean();
         if (listaOutrosNaoConciliado == null) {
-            listaOutrosNaoConciliado = new ArrayList<Outroslancamentos>();
+            listaOutrosNaoConciliado = new ArrayList<Movimentobanco>();
         }
         for (int i = 0; i < listaLacamentos.size(); i++) {
             if (listaLacamentos.get(i).getConciliada() == false) {
@@ -306,7 +306,7 @@ public class ConciliacaoMB implements Serializable {
 
     public String novaConciliacao(ConciliarBean conciliacao) {
         TransacaoBean transacao = null;
-        Outroslancamentos outros = null;
+        Movimentobanco outros = null;
         for (int i = 0; i < listaConciliacaoBancaria.size(); i++) {
             if (listaConciliacaoBancaria.get(i).getTransacao().isSelecionado()) {
                 transacao = listaConciliacaoBancaria.get(i).getTransacao();

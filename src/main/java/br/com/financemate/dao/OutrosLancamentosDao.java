@@ -6,7 +6,7 @@
 
 package br.com.financemate.dao;
 
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.util.Formatacao;
 
 import java.sql.SQLException;
@@ -19,13 +19,13 @@ import javax.persistence.Query;
 
 
 @Stateless
-public class OutrosLancamentosDao extends AbstractDao<Outroslancamentos>{
+public class OutrosLancamentosDao extends AbstractDao<Movimentobanco>{
     
     @PersistenceContext
     private EntityManager manager;
 
     public OutrosLancamentosDao() {
-        super(Outroslancamentos.class);
+        super(Movimentobanco.class);
     }
     
     
@@ -33,10 +33,10 @@ public class OutrosLancamentosDao extends AbstractDao<Outroslancamentos>{
     public float gerarSaldoInicial(Date dataInicio)throws SQLException {
     	float saldo= 0.0f;
         manager.getTransaction().begin();
-        Query q = manager.createNativeQuery("SELECT distinct sum(valorSaida) as totalsaida FROM outroslancamentos" +
+        Query q = manager.createNativeQuery("SELECT distinct sum(valorSaida) as totalsaida FROM movimentobanco" +
         									" where dataVencimento<'" + Formatacao.ConvercaoDataSql(dataInicio) + "'");
         Double totalsaida = (Double) q.getResultList().get(0);
-        q = manager.createNativeQuery("SELECT distinct sum(valorEntrada) as totalentrada FROM outroslancamentos" +
+        q = manager.createNativeQuery("SELECT distinct sum(valorEntrada) as totalentrada FROM movimentobanco" +
 				" where dataVencimento<'" + Formatacao.ConvercaoDataSql(dataInicio) + "'");
         Double totalentrada = (Double) q.getResultList().get(0);
         saldo = totalentrada.floatValue() - totalsaida.floatValue();

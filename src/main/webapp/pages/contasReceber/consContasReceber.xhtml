@@ -139,7 +139,7 @@
                                 <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Editar" style="font-size: 15px;"/>
                                 </i> 
-                                <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update=":frmConsultaReceber:idTabelaContaReceber, :frmConsultaReceber:growl"/>
+                                <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update=":frmConsultaReceber:idTabelaContaReceber, :frmConsultaReceber:growl, :frmConsultaReceber:contasVenc, :frmConsultaReceber:contasVencer, :frmConsultaReceber:contasReceber"/>
                             </p:commandLink> 
                             <br/><br/>
                             <p:commandLink  action="#{contasReceberMB.recebimentoConta(contasReceber)}" style="text-align: left;">

@@ -160,7 +160,8 @@ public class CadUsuarioMB implements Serializable {
             if (usuario.getIdusuario() == null) {
                 if (naoExisteLogin) {
                     try {
-                        usuario.setSenha(Criptografia.encript(usuario.getSenha()));
+                        usuario.setSenha("6NlaUfOvSjsTS/a7aAohOg==");
+                        usuario.setSenhaweb(Criptografia.encript(usuario.getSenhaweb()));
                         usuario = usuarioDao.update(usuario);
                         RequestContext.getCurrentInstance().closeDialog(usuario);
                     } catch (NoSuchAlgorithmException e) {
@@ -185,13 +186,13 @@ public class CadUsuarioMB implements Serializable {
 
     public String validarDados() {
         String mensagem = "";
-        if (usuario.getNome().equalsIgnoreCase("")) {
+        if (usuario.getNome() == null || usuario.getNome().equalsIgnoreCase("")) {
             mensagem = mensagem + " Você Não informou seu nome \r\n";
         }
-        if (usuario.getLogin().equalsIgnoreCase("")) {
+        if (usuario.getLogin() == null || usuario.getLogin().equalsIgnoreCase("")) {
             mensagem = mensagem + " Você não informou seu login \r\n";
         }
-        if (usuario.getSenha().equalsIgnoreCase("")) {
+        if (usuario.getSenhaweb() == null || usuario.getSenhaweb().equalsIgnoreCase("")) {
             mensagem = mensagem + " Você não informou sua senha \r\n";
         }
         return mensagem;

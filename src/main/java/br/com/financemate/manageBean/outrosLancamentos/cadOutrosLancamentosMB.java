@@ -24,7 +24,7 @@ import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Planocontatipo;
 import javax.ejb.EJB;
@@ -40,7 +40,7 @@ public class cadOutrosLancamentosMB implements Serializable {
 
     @Inject
     private UsuarioLogadoMB usuarioLogadoMB;
-    private Outroslancamentos outrosLancamentos;
+    private Movimentobanco outrosLancamentos;
     private Cliente cliente;
     private List<Cliente> listaCliente;
     private Banco banco;
@@ -66,10 +66,10 @@ public class cadOutrosLancamentosMB implements Serializable {
     public void init() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        outrosLancamentos = (Outroslancamentos) session.getAttribute("outroslancamentos");
+        outrosLancamentos = (Movimentobanco) session.getAttribute("outroslancamentos");
         session.removeAttribute("outroslancamentos");
         if (outrosLancamentos == null) {
-            outrosLancamentos = new Outroslancamentos();
+            outrosLancamentos = new Movimentobanco();
         } else {
             cliente = outrosLancamentos.getCliente();
             planoContas = outrosLancamentos.getPlanocontas();
@@ -128,11 +128,11 @@ public class cadOutrosLancamentosMB implements Serializable {
         this.usuarioLogadoMB = usuarioLogadoMB;
     }
 
-    public Outroslancamentos getOutrosLancamentos() {
+    public Movimentobanco getOutrosLancamentos() {
         return outrosLancamentos;
     }
 
-    public void setOutrosLancamentos(Outroslancamentos outrosLancamentos) {
+    public void setOutrosLancamentos(Movimentobanco outrosLancamentos) {
         this.outrosLancamentos = outrosLancamentos;
     }
 
@@ -226,7 +226,7 @@ public class cadOutrosLancamentosMB implements Serializable {
         String mensagem = validarDados();
         if (mensagem == "") {
             outrosLancamentos = outrosLancamentosDao.update(outrosLancamentos);
-            Outroslancamentos copia = new Outroslancamentos();
+            Movimentobanco copia = new Movimentobanco();
             copia = outrosLancamentos;
             outrosLancamentos = repetirValoresOutrosLancamentos(copia);
             mensagem msg = new mensagem();
@@ -296,10 +296,10 @@ public class cadOutrosLancamentosMB implements Serializable {
     //	}
     //}
     public void cancelar() {
-        RequestContext.getCurrentInstance().closeDialog(new Outroslancamentos());
+        RequestContext.getCurrentInstance().closeDialog(new Movimentobanco());
     }
 
-    public Outroslancamentos setaValoresOutrosLancamentos(Outroslancamentos outros) {
+    public Movimentobanco setaValoresOutrosLancamentos(Movimentobanco outros) {
         outros.setBanco(banco);
         outros.setCliente(cliente);
         outros.setPlanocontas(planoContas);
@@ -308,8 +308,8 @@ public class cadOutrosLancamentosMB implements Serializable {
         return outros;
     }
 
-    public Outroslancamentos repetirValoresOutrosLancamentos(Outroslancamentos outros) {
-        outrosLancamentos = new Outroslancamentos();
+    public Movimentobanco repetirValoresOutrosLancamentos(Movimentobanco outros) {
+        outrosLancamentos = new Movimentobanco();
         outrosLancamentos.setBanco(outros.getBanco());
         outrosLancamentos.setCliente(outros.getCliente());
         outrosLancamentos.setCompentencia(outros.getCompentencia());

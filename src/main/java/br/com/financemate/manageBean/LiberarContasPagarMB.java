@@ -4,11 +4,8 @@ import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.OperacaoUsuarioDao;
 import br.com.financemate.dao.OutrosLancamentosDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -22,7 +19,7 @@ import org.primefaces.context.RequestContext;
 
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Operacaousuairo;
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 import javax.ejb.EJB;
 
 @Named
@@ -165,7 +162,7 @@ public class LiberarContasPagarMB implements Serializable {
     public void salvarContaLiberadasMovimentoBanco(Contaspagar conta) {
         conta.setDataLiberacao(dataLiberacao);
         conta.setContaPaga("S");
-        Outroslancamentos outroslancamentos = new Outroslancamentos();
+        Movimentobanco outroslancamentos = new Movimentobanco();
         outroslancamentos.setBanco(conta.getBanco());
         outroslancamentos.setCliente(conta.getCliente());
         outroslancamentos.setDataVencimento(conta.getDataVencimento());

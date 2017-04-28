@@ -31,10 +31,9 @@ import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Planocontatipo;
-import br.com.financemate.model.Saldo;
 import br.com.financemate.model.Tipoplanocontas;
 import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
@@ -50,14 +49,14 @@ public class OutrosLancamentosMB implements Serializable {
 
     @Inject
     private UsuarioLogadoMB usuarioLogadoMB;
-    private List<Outroslancamentos> listaOutrosLancamentos;
+    private List<Movimentobanco> listaOutrosLancamentos;
     private Banco banco;
     private Cliente cliente;
     private List<Cliente> listaClientes;
     private String sql;
     private List<Banco> listaBancos;
     private boolean verCliente = false;
-    private Outroslancamentos outrosLancamentos;
+    private Movimentobanco outrosLancamentos;
     private String valorEntrada;
     private String valorSaida;
     private String valorTotal;
@@ -66,7 +65,7 @@ public class OutrosLancamentosMB implements Serializable {
     private Date dataFinal;
     private String todosBanco;
     private String nomeComboBanco = "Selecione";
-    private List<Outroslancamentos> listaOutrosLancamentosAnteriores;
+    private List<Movimentobanco> listaOutrosLancamentosAnteriores;
     @EJB
     private BancoDao bancoDao;
     @EJB
@@ -82,7 +81,7 @@ public class OutrosLancamentosMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaOutrosLancamentos = new ArrayList<Outroslancamentos>();
+        listaOutrosLancamentos = new ArrayList<Movimentobanco>();
         gerarListaCliente();
         getUsuarioLogadoMB();
         verificarCliente();
@@ -93,11 +92,11 @@ public class OutrosLancamentosMB implements Serializable {
         desabilitarUnidade();
     }
 
-    public List<Outroslancamentos> getListaOutrosLancamentosAnteriores() {
+    public List<Movimentobanco> getListaOutrosLancamentosAnteriores() {
         return listaOutrosLancamentosAnteriores;
     }
 
-    public void setListaOutrosLancamentosAnteriores(List<Outroslancamentos> listaOutrosLancamentosAnteriores) {
+    public void setListaOutrosLancamentosAnteriores(List<Movimentobanco> listaOutrosLancamentosAnteriores) {
         this.listaOutrosLancamentosAnteriores = listaOutrosLancamentosAnteriores;
     }
 
@@ -165,19 +164,19 @@ public class OutrosLancamentosMB implements Serializable {
         this.valorTotal = valorTotal;
     }
 
-    public Outroslancamentos getOutrosLancamentos() {
+    public Movimentobanco getOutrosLancamentos() {
         return outrosLancamentos;
     }
 
-    public void setOutrosLancamentos(Outroslancamentos outrosLancamentos) {
+    public void setOutrosLancamentos(Movimentobanco outrosLancamentos) {
         this.outrosLancamentos = outrosLancamentos;
     }
 
-    public List<Outroslancamentos> getListaOutrosLancamentos() {
+    public List<Movimentobanco> getListaOutrosLancamentos() {
         return listaOutrosLancamentos;
     }
 
-    public void setListaOutrosLancamentos(List<Outroslancamentos> listaOutrosLancamentos) {
+    public void setListaOutrosLancamentos(List<Movimentobanco> listaOutrosLancamentos) {
         this.listaOutrosLancamentos = listaOutrosLancamentos;
     }
 
@@ -246,13 +245,13 @@ public class OutrosLancamentosMB implements Serializable {
     public void gerarPesquisa() {
         if ((cliente != null) && (dataInicial != null) && (dataFinal != null)) {
             if (banco.getIdbanco() != null) {
-                sql = "Select o from Outroslancamentos o where o.banco.idbanco=" + banco.getIdbanco()
+                sql = "Select o from Movimentobanco o where o.banco.idbanco=" + banco.getIdbanco()
                         + "  and o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
                         + "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
                         + "' and o.cliente.idcliente=" + cliente.getIdcliente();
                 sql = sql + " order by o.dataCompensacao";
             } else {
-                sql = "Select o from Outroslancamentos o where"
+                sql = "Select o from Movimentobanco o where"
                         + " o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
                         + "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
                         + "' and o.cliente.idcliente=" + cliente.getIdcliente();
@@ -260,7 +259,7 @@ public class OutrosLancamentosMB implements Serializable {
             }
             listaOutrosLancamentos = outrosLancamentosDao.list(sql);
             if (listaOutrosLancamentos == null) {
-                listaOutrosLancamentos = new ArrayList<Outroslancamentos>();
+                listaOutrosLancamentos = new ArrayList<Movimentobanco>();
             }
             calcularTotal();
         } else {
@@ -298,7 +297,7 @@ public class OutrosLancamentosMB implements Serializable {
         }
     }
 
-    public String coresValoresEntrada(Outroslancamentos outroslancamentos) {
+    public String coresValoresEntrada(Movimentobanco outroslancamentos) {
         if (outroslancamentos.getValorEntrada() > outroslancamentos.getValorSaida()) {
             return "green";
         } else {
@@ -306,7 +305,7 @@ public class OutrosLancamentosMB implements Serializable {
         }
     }
 
-    public String coresValoresSaida(Outroslancamentos outroslancamentos) {
+    public String coresValoresSaida(Movimentobanco outroslancamentos) {
         if (outroslancamentos.getValorSaida() > outroslancamentos.getValorEntrada()) {
             return "red";
         } else {
@@ -314,8 +313,8 @@ public class OutrosLancamentosMB implements Serializable {
         }
     }
 
-    public String excluir() {
-        outrosLancamentosDao.remove(outrosLancamentos.getIdoutroslancamentos());
+    public String excluir(Movimentobanco outroslancamentos) {
+        outrosLancamentosDao.remove(outroslancamentos.getIdmovimentobanco());
         gerarPesquisa();
         mensagem mensagem = new mensagem();
         mensagem.excluiMessagem();
@@ -370,7 +369,7 @@ public class OutrosLancamentosMB implements Serializable {
         }
     }
 
-    public String editar(Outroslancamentos outroslancamentos) {
+    public String editar(Movimentobanco outroslancamentos) {
         if (outroslancamentos != null) {
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -383,8 +382,8 @@ public class OutrosLancamentosMB implements Serializable {
     }
 
     public void retornoDialogNovo(SelectEvent event) {
-        Outroslancamentos outroslancamentos = (Outroslancamentos) event.getObject();
-        if (outroslancamentos.getIdoutroslancamentos() != null) {
+        Movimentobanco outroslancamentos = (Movimentobanco) event.getObject();
+        if (outroslancamentos.getIdmovimentobanco()!= null) {
             mensagem mensagem = new mensagem();
             mensagem.saveMessagem();
         } else {
@@ -482,13 +481,13 @@ public class OutrosLancamentosMB implements Serializable {
         if (saldoInicial == null) {
             saldoInicial = 0.0f;
         }
-        String sql2 = "Select o from Outroslancamentos o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
+        String sql2 = "Select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
         if (banco.getIdbanco() != null) {
             sql2 = sql2 + " and o.banco.idbanco=" + banco.getIdbanco();
         }
         listaOutrosLancamentosAnteriores = outrosLancamentosDao.list(sql2);
         if (listaOutrosLancamentosAnteriores == null) {
-            listaOutrosLancamentosAnteriores = new ArrayList<Outroslancamentos>();
+            listaOutrosLancamentosAnteriores = new ArrayList<Movimentobanco>();
         }
         for (int i = 0; i < listaOutrosLancamentosAnteriores.size(); i++) {
             if (listaOutrosLancamentosAnteriores.get(i).getValorEntrada() > 0) {
@@ -526,13 +525,13 @@ public class OutrosLancamentosMB implements Serializable {
                 }
             }
         }
-        String sql2 = "Select o from Outroslancamentos o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
+        String sql2 = "Select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
         if (banco.getIdbanco() != null) {
             sql2 = sql2 + " and o.banco.idbanco=" + banco.getIdbanco();
         }
         listaOutrosLancamentosAnteriores = outrosLancamentosDao.list(sql2);
         if (listaOutrosLancamentosAnteriores == null) {
-            listaOutrosLancamentosAnteriores = new ArrayList<Outroslancamentos>();
+            listaOutrosLancamentosAnteriores = new ArrayList<Movimentobanco>();
         }
         for (int i = 0; i < listaOutrosLancamentosAnteriores.size(); i++) {
             if (listaOutrosLancamentosAnteriores.get(i).getValorEntrada() > 0) {

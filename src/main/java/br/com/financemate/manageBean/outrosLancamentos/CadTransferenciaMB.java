@@ -20,7 +20,7 @@ import org.primefaces.context.RequestContext;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
@@ -40,7 +40,7 @@ public class CadTransferenciaMB implements Serializable {
     private List<Banco> listaBancoDebito;
     private Cliente cliente;
     private List<Cliente> listaCliente;
-    private Outroslancamentos outroslancamentos;
+    private Movimentobanco outroslancamentos;
     private Float valor = 0.0f;
     @Inject
     private UsuarioLogadoMB usuarioLogadoMB;
@@ -59,7 +59,7 @@ public class CadTransferenciaMB implements Serializable {
         if (outroslancamentos == null) {
             bancoDebito = new Banco();
             bancoCredito = new Banco();
-            outroslancamentos = new Outroslancamentos();
+            outroslancamentos = new Movimentobanco();
             outroslancamentos.setDescricao("Transferência");
             outroslancamentos.setDataRegistro(new Date());
         }
@@ -120,11 +120,11 @@ public class CadTransferenciaMB implements Serializable {
         this.listaCliente = listaCliente;
     }
 
-    public Outroslancamentos getOutroslancamentos() {
+    public Movimentobanco getOutroslancamentos() {
         return outroslancamentos;
     }
 
-    public void setOutroslancamentos(Outroslancamentos outroslancamentos) {
+    public void setOutroslancamentos(Movimentobanco outroslancamentos) {
         this.outroslancamentos = outroslancamentos;
     }
 
@@ -172,20 +172,20 @@ public class CadTransferenciaMB implements Serializable {
 
     public void salvar() {
         Planocontas planocontas = new Planocontas();
-        Outroslancamentos debito = new Outroslancamentos();
+        Movimentobanco debito = new Movimentobanco();
         debito = pegarDebitar(debito);
         planocontas = planoContasDao.find(23);
         debito.setPlanocontas(planocontas);
         debito = pegarDebitar(debito);
         outrosLancamentosDao.update(debito);
-        Outroslancamentos credito = new Outroslancamentos();
+        Movimentobanco credito = new Movimentobanco();
         credito = pegarCredito(credito);
         credito.setPlanocontas(planocontas);
         outrosLancamentosDao.update(credito);
         RequestContext.getCurrentInstance().closeDialog("Transferência feita com sucesso");
     }
 
-    public Outroslancamentos pegarDebitar(Outroslancamentos debito) {
+    public Movimentobanco pegarDebitar(Movimentobanco debito) {
         debito.setBanco(bancoDebito);
         debito.setDataRegistro(outroslancamentos.getDataRegistro());
         debito.setDataCompensacao(outroslancamentos.getDataRegistro());
@@ -202,7 +202,7 @@ public class CadTransferenciaMB implements Serializable {
         return debito;
     }
 
-    public Outroslancamentos pegarCredito(Outroslancamentos credito) {
+    public Movimentobanco pegarCredito(Movimentobanco credito) {
         credito.setBanco(bancoCredito);
         credito.setDataRegistro(outroslancamentos.getDataRegistro());
         credito.setDataCompensacao(outroslancamentos.getDataRegistro());

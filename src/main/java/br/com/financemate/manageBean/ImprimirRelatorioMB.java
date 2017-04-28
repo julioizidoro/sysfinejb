@@ -297,49 +297,49 @@ public class ImprimirRelatorioMB implements Serializable {
                     + "' and fluxocaixa.data<='" + Formatacao.ConvercaoDataSql(dataFinal)
                     + "' order by fluxocaixa.data";
         } else if (relatorio.equalsIgnoreCase("Pagamentos")) {
-            sql = "Select distinct outroslancamentos.dataCompensacao, outroslancamentos.descricao, ";
-            sql = sql + "outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, ";
-            sql = sql + "planocontas.descricao as planoContas, outroslancamentos.planoContas_idplanoContas as idPlanoContas, outroslancamentos.compentencia ";
-            sql = sql + "from outroslancamentos join cliente on outroslancamentos.cliente_idcliente = cliente.idcliente ";
-            sql = sql + "join banco on outroslancamentos.banco_idbanco = banco.idbanco ";
-            sql = sql + "join planocontas on outroslancamentos.planoContas_idplanoContas = planocontas.idplanoContas ";
+            sql = "Select distinct movimentobanco.dataCompensacao, movimentobanco.descricao, ";
+            sql = sql + "movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, ";
+            sql = sql + "planocontas.descricao as planoContas, movimentobanco.planoContas_idplanoContas as idPlanoContas, movimentobanco.compentencia ";
+            sql = sql + "from movimentobanco join cliente on movimentobanco.cliente_idcliente = cliente.idcliente ";
+            sql = sql + "join banco on movimentobanco.banco_idbanco = banco.idbanco ";
+            sql = sql + "join planocontas on movimentobanco.planoContas_idplanoContas = planocontas.idplanoContas ";
             sql = sql + "where ";
             if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + "outroslancamentos.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
-                        + "' and outroslancamentos.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and ";
+                sql = sql + "movimentobanco.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                        + "' and movimentobanco.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and ";
             } else if (competencia != null && competencia != "") {
-                sql = sql + "outroslancamentos.compentencia='" + competencia + "' and ";
+                sql = sql + "movimentobanco.compentencia='" + competencia + "' and ";
             }
             sql = sql + "cliente.idcliente=" + cliente.getIdcliente();
-            sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaRecebimento();
-            sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaReceita();
-            sql = sql + " Group by outroslancamentos.planoContas_idplanoContas, outroslancamentos.dataCompensacao, outroslancamentos.descricao, outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  outroslancamentos.compentencia ";
-            sql = sql + " order by outroslancamentos.planoContas_idplanoContas, outroslancamentos.dataCompensacao, outroslancamentos.descricao, outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  outroslancamentos.compentencia";
+            sql = sql + " and movimentobanco.planoContas_idplanoContas<>" + cliente.getContaRecebimento();
+            sql = sql + " and movimentobanco.planoContas_idplanoContas<>" + cliente.getContaReceita();
+            sql = sql + " Group by movimentobanco.planoContas_idplanoContas, movimentobanco.dataCompensacao, movimentobanco.descricao, movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  movimentobanco.compentencia ";
+            sql = sql + " order by movimentobanco.planoContas_idplanoContas, movimentobanco.dataCompensacao, movimentobanco.descricao, movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  movimentobanco.compentencia";
 
         } else if (relatorio.equalsIgnoreCase("pagamentoSintetico")) {
-            sql = "Select distinct outroslancamentos.dataCompensacao, ";
-            sql = sql + "outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, ";
-            sql = sql + "planocontas.descricao, outroslancamentos.planoContas_idplanoContas as idPlanoContas ";
-            sql = sql + "from outroslancamentos join cliente on outroslancamentos.cliente_idcliente = cliente.idcliente ";
-            sql = sql + "join banco on outroslancamentos.banco_idbanco = banco.idbanco ";
-            sql = sql + "join planocontas on outroslancamentos.planoContas_idplanoContas = planocontas.idplanoContas ";
+            sql = "Select distinct movimentobanco.dataCompensacao, ";
+            sql = sql + "movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, ";
+            sql = sql + "planocontas.descricao, movimentobanco.planoContas_idplanoContas as idPlanoContas ";
+            sql = sql + "from movimentobanco join cliente on movimentobanco.cliente_idcliente = cliente.idcliente ";
+            sql = sql + "join banco on movimentobanco.banco_idbanco = banco.idbanco ";
+            sql = sql + "join planocontas on movimentobanco.planoContas_idplanoContas = planocontas.idplanoContas ";
             sql = sql + "where ";
             if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + "outroslancamentos.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
-                        + "' and outroslancamentos.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and ";
+                sql = sql + "movimentobanco.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                        + "' and movimentobanco.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and ";
             }
             sql = sql + "cliente.idcliente=" + cliente.getIdcliente();
             if (banco.getIdbanco() != null) {
                 sql = sql + " and banco.nome='" + banco.getNome() + "'";
             }
-            sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaRecebimento();
-            sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaReceita();
+            sql = sql + " and movimentobanco.planoContas_idplanoContas<>" + cliente.getContaRecebimento();
+            sql = sql + " and movimentobanco.planoContas_idplanoContas<>" + cliente.getContaReceita();
             if (banco.getIdbanco() != null) {
                 sql = sql + " Group by planocontas.descricao, banco.nome";
             } else {
                 sql = sql + " Group by  planocontas.descricao";
             }
-            sql = sql + " order by outroslancamentos.planoContas_idplanoContas, outroslancamentos.dataCompensacao, outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao";
+            sql = sql + " order by movimentobanco.planoContas_idplanoContas, movimentobanco.dataCompensacao, movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao";
         } else if (relatorio.equalsIgnoreCase("pagamento vencidas")) {
             sql = "Select distinct contasPagar.dataVencimento, contasPagar.descricao, contasPagar.valor, contasPagar.dataAgendamento,cliente.nomeFantasia, contasPagar.fornecedor, contasPagar.numeroDocumento";
             sql = sql + " From ";

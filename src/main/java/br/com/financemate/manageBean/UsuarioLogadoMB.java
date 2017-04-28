@@ -126,7 +126,7 @@ public class UsuarioLogadoMB implements Serializable {
                 FacesMessage mensagem = new FacesMessage("Erro: " + ex);
                 FacesContext.getCurrentInstance().addMessage(null, mensagem);
             }
-            usuario = usuarioDao.find("Select u From Usuario u Where u.login='" + login + "' and u.senha='" + senha + "'");
+            usuario = usuarioDao.find("Select u From Usuario u Where u.login='" + login + "' and u.senhaweb='" + senha + "'");
             login = "";
             if (usuario == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atenção!", "Acesso Negado."));
@@ -175,7 +175,7 @@ public class UsuarioLogadoMB implements Serializable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        if (repetirSenhaAtual.equalsIgnoreCase(usuario.getSenha())) {
+        if (repetirSenhaAtual.equalsIgnoreCase(usuario.getSenhaweb())) {
 
             if ((novaSenha.length() > 0) && (confirmaNovaSenha.length() > 0)) {
                 if (novaSenha.equalsIgnoreCase(confirmaNovaSenha)) {
@@ -187,7 +187,7 @@ public class UsuarioLogadoMB implements Serializable {
                         FacesMessage mensagem = new FacesMessage("Erro: " + ex);
                         FacesContext.getCurrentInstance().addMessage(null, mensagem);
                     }
-                    usuario.setSenha(senha);
+                    usuario.setSenhaweb(senha);
                     usuario = usuarioDao.update(usuario);
                     novaSenha = "";
                     confirmaNovaSenha = "";

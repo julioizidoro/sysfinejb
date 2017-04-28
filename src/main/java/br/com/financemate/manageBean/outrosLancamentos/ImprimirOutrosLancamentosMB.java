@@ -33,7 +33,7 @@ import br.com.financemate.manageBean.ImprimirRelatorioMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
@@ -329,7 +329,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
     private List<ConciliacaoBean> gerarListaConciliacao() {
         unidade = "TODAS";
         nomeBanco = "TODOS";
-        String sql = "Select o From Outroslancamentos o ";
+        String sql = "Select o From Movimentobanco o ";
         if (dataIncial != null || dataFinal != null || cliente != null || banco != null || planocontas != null) {
             sql = sql + " where ";
         }
@@ -359,11 +359,11 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
             sql = sql + " o.planocontas.idplanoContas=" + planocontas.getIdplanoContas();
         }
         sql = sql + " order by o.dataCompensacao";
-        List<Outroslancamentos> lista;
+        List<Movimentobanco> lista;
         lista = outrosLancamentosDao.list(sql);
         List<ConciliacaoBean> listaConciliacao = new ArrayList<ConciliacaoBean>();
         if (lista != null) {
-            List<Outroslancamentos> listaOutros = outrosLancamentosDao.list("SELECT o FROM Outroslancamentos o"  +
+            List<Movimentobanco> listaOutros = outrosLancamentosDao.list("SELECT o FROM Movimentobanco o"  +
         									" where o.dataVencimento<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'");
             for (int i = 0; i < listaOutros.size(); i++) {
                 if (listaOutros.get(i).getValorEntrada() > 0f) {
@@ -430,7 +430,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
     
     
     public float geralSqlSaldoInicial() {
-        List<Outroslancamentos> listaOutrosLancamentosAnteriores;
+        List<Movimentobanco> listaOutrosLancamentosAnteriores;
         float entrada = 0.0f;
         float saida = 0.0f;
         String sql;
@@ -463,13 +463,13 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         if (saldoInicial == null) {
             saldoInicial = 0.0f;
         }
-        String sql2 = "Select o from Outroslancamentos o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'";
+        String sql2 = "Select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'";
         if (banco.getIdbanco() != null) {
             sql2 = sql2 + " and o.banco.idbanco=" + banco.getIdbanco();
         }
         listaOutrosLancamentosAnteriores = outrosLancamentosDao.list(sql2);
         if (listaOutrosLancamentosAnteriores == null) {
-            listaOutrosLancamentosAnteriores = new ArrayList<Outroslancamentos>();
+            listaOutrosLancamentosAnteriores = new ArrayList<Movimentobanco>();
         }
         for (int i = 0; i < listaOutrosLancamentosAnteriores.size(); i++) {
             if (listaOutrosLancamentosAnteriores.get(i).getValorEntrada() > 0) {
@@ -487,7 +487,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
     }
 
     public Float gerarSqlSaldoTodasContas() {
-        List<Outroslancamentos> listaOutrosLancamentosAnteriores;
+        List<Movimentobanco> listaOutrosLancamentosAnteriores;
         float entrada = 0.0f;
         float saida = 0.0f;
         String sql;
@@ -503,13 +503,13 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
                 }
             }
         }
-        String sql2 = "Select o from Outroslancamentos o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'";
+        String sql2 = "Select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'";
         if (banco.getIdbanco() != null) {
             sql2 = sql2 + " and o.banco.idbanco=" + banco.getIdbanco();
         }
         listaOutrosLancamentosAnteriores = outrosLancamentosDao.list(sql2);
         if (listaOutrosLancamentosAnteriores == null) {
-            listaOutrosLancamentosAnteriores = new ArrayList<Outroslancamentos>();
+            listaOutrosLancamentosAnteriores = new ArrayList<Movimentobanco>();
         }
         for (int i = 0; i < listaOutrosLancamentosAnteriores.size(); i++) {
             if (listaOutrosLancamentosAnteriores.get(i).getValorEntrada() > 0) {

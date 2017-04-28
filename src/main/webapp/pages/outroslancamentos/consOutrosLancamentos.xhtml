@@ -104,10 +104,10 @@
                 <h4 style="margin-left:40%;">Consulta Outros Lançamentos</h4>
                 <hr style="margin-left:5%; width:92%;"/>  
                 <p:dataTable id="idTabelaOutrosLancamentos"  var="outrosLancamentos"  value="#{outrosLancamentosMB.listaOutrosLancamentos}" style="border:none;width:92%;margin-left:5%;" 
-                             scrollRows="10"  scrollable="true" scrollHeight="250" selection="#{outrosLancamentosMB.outrosLancamentos}" selectionMode="single" rowKey="#{outrosLancamentos.idoutroslancamentos}">
+                             scrollRows="10"  scrollable="true" scrollHeight="250" selection="#{outrosLancamentosMB.outrosLancamentos}" selectionMode="single" rowKey="#{outrosLancamentos.idmovimentobanco}">
 
-                    <p:column headerText="ID" sortBy="#{outrosLancamentos.idoutroslancamentos}" style="width:5%; font-size:12px; background:white; color:black; border:none; text-align:center;">
-                        <h:outputText  value="#{outrosLancamentos.idoutroslancamentos}" style="font-size:12px; color:gray;"/>
+                    <p:column headerText="ID" sortBy="#{outrosLancamentos.idmovimentobanco}" style="width:5%; font-size:12px; background:white; color:black; border:none; text-align:center;">
+                        <h:outputText  value="#{outrosLancamentos.idmovimentobanco}" style="font-size:12px; color:gray;"/>
                     </p:column> 
                     <p:column headerText="Data" sortBy="#{outrosLancamentos.dataCompensacao}" style="width:17%; font-size:12px; background:white; color:black; border:none; text-align:center;">
                         <h:outputText  value="#{outrosLancamentos.dataCompensacao}" style="font-size:12px; color:gray;" > 
@@ -139,10 +139,10 @@
                         </p:commandLink>   
                         <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                <p:commandButton style="margin-left:35%;" value="Sim" action="#{outrosLancamentosMB.excluir()}" type="button" styleClass="ui-confirmdialog-yes"  />
+                                <p:commandButton style="margin-left:35%;" value="Sim" action="#{outrosLancamentosMB.excluir(outrosLancamentos)}" type="button" styleClass="ui-confirmdialog-yes"  />
                                 <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
                             </p:confirmDialog>
-                            <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.eoutroslancamentos}" action="#{outrosLancamentosMB.excluir()}"  update=":frmConsultaOutrosLancamentos:growl, :frmConsultaOutrosLancamentos:idTabelaOutrosLancamentos"  style="text-align: left;">
+                            <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.eoutroslancamentos}" action="#{outrosLancamentosMB.excluir(outrosLancamentos)}"  update=":frmConsultaOutrosLancamentos:growl, :frmConsultaOutrosLancamentos:idTabelaOutrosLancamentos"  style="text-align: left;">
                                 <i class="fa fa-trash-o" style="color: #3D7E46;font-size: 15px;">  
                                     <p:outputLabel value="Excluir" style="font-size: 15px;"/>
                                 </i> 

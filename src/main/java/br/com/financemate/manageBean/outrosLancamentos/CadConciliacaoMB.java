@@ -19,7 +19,7 @@ import org.primefaces.context.RequestContext;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Planocontatipo;
 import javax.ejb.EJB;
@@ -36,7 +36,7 @@ public class CadConciliacaoMB implements Serializable {
     private List<Planocontas> listaPlanoConta;
     private ConciliacaoBean conciliacaoBean;
     private TransacaoBean transacaoBean;
-    private Outroslancamentos outroslancamentos;
+    private Movimentobanco outroslancamentos;
     private Banco banco;
     private String campoNomeValor;
     private Float valor;
@@ -58,7 +58,7 @@ public class CadConciliacaoMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         conciliacaoBean = (ConciliacaoBean) session.getAttribute("conciliacaoBean");
         transacaoBean = (TransacaoBean) session.getAttribute("transacaoBean");
-        outroslancamentos = (Outroslancamentos) session.getAttribute("outroslancamentos");
+        outroslancamentos = (Movimentobanco) session.getAttribute("outroslancamentos");
         banco = (Banco) session.getAttribute("banco");
         cliente = (Cliente) session.getAttribute("cliente");
         session.removeAttribute("banco");
@@ -67,7 +67,7 @@ public class CadConciliacaoMB implements Serializable {
         session.removeAttribute("cliente");
         carregarPlanoConta();
         if (outroslancamentos == null) {
-            outroslancamentos = new Outroslancamentos();
+            outroslancamentos = new Movimentobanco();
         }
     }
 
@@ -95,11 +95,11 @@ public class CadConciliacaoMB implements Serializable {
         this.banco = banco;
     }
 
-    public Outroslancamentos getOutroslancamentos() {
+    public Movimentobanco getOutroslancamentos() {
         return outroslancamentos;
     }
 
-    public void setOutroslancamentos(Outroslancamentos outroslancamentos) {
+    public void setOutroslancamentos(Movimentobanco outroslancamentos) {
         this.outroslancamentos = outroslancamentos;
     }
 

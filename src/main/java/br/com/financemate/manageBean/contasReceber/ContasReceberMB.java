@@ -33,7 +33,7 @@ import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobrancaparcelas;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Historicocobranca;
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
@@ -911,7 +911,7 @@ public class ContasReceberMB implements Serializable {
     }
 
     public void desfazerRecebimento(Contasreceber contasreceber) {
-        Outroslancamentos outroslancamentos = new Outroslancamentos();
+        Movimentobanco outroslancamentos = new Movimentobanco();
         outroslancamentos.setBanco(contasreceber.getBanco());
         outroslancamentos.setCliente(contasreceber.getCliente());
         outroslancamentos.setValorSaida(contasreceber.getValorPago());

@@ -1,18 +1,18 @@
 package br.com.financemate.manageBean.outrosLancamentos;
 
-import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Movimentobanco;
 
 public class ConciliarBean {
 	
-	private Outroslancamentos outroslancamentos;
+	private Movimentobanco outroslancamentos;
 	private TransacaoBean transacao;
 	
 	
 	
-	public Outroslancamentos getOutroslancamentos() {
+	public Movimentobanco getOutroslancamentos() {
 		return outroslancamentos;
 	}
-	public void setOutroslancamentos(Outroslancamentos outroslancamentos) {
+	public void setOutroslancamentos(Movimentobanco outroslancamentos) {
 		this.outroslancamentos = outroslancamentos;
 	}
 	public TransacaoBean getTransacao() {

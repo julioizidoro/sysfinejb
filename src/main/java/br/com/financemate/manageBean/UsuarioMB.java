@@ -147,7 +147,7 @@ public class UsuarioMB implements Serializable {
         try {
             senhaResetada = Criptografia.encript("senha");
             if (usuario != null) {
-                usuario.setSenha(senhaResetada);
+                usuario.setSenhaweb(senhaResetada);
                 usuarioDao.update(usuario);
                 mensagem mensagem = new mensagem();
                 mensagem.resetaSenha();

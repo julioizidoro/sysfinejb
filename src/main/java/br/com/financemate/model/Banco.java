@@ -64,7 +64,7 @@ public class Banco implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "banco")
     private List<Contasreceber> contasreceberList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "banco")
-    private List<Outroslancamentos> movimentobancoList;
+    private List<Movimentobanco> movimentobancoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "banco")
     private List<Contaspagar> contaspagarList;
     @Transient
@@ -165,11 +165,11 @@ public class Banco implements Serializable {
         this.contasreceberList = contasreceberList;
     }
 
-    public List<Outroslancamentos> getMovimentobancoList() {
+    public List<Movimentobanco> getMovimentobancoList() {
         return movimentobancoList;
     }
 
-    public void setMovimentobancoList(List<Outroslancamentos> movimentobancoList) {
+    public void setMovimentobancoList(List<Movimentobanco> movimentobancoList) {
         this.movimentobancoList = movimentobancoList;
     }
 

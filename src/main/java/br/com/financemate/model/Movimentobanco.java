@@ -21,14 +21,14 @@ import javax.validation.constraints.Size;
  * @author Greici
  */
 @Entity
-@Table(name = "outroslancamentos")
-public class Outroslancamentos implements Serializable {
+@Table(name = "movimentobanco")
+public class Movimentobanco implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idoutroslancamentos")
-    private Integer idoutroslancamentos;
+    @Column(name = "idmovimentobanco")
+    private Integer idmovimentobanco;
     @Column(name = "dataVencimento")
     @Temporal(TemporalType.DATE)
     private Date dataVencimento;
@@ -78,24 +78,23 @@ public class Outroslancamentos implements Serializable {
     private Boolean conciliada = false;
     
 
-    public Outroslancamentos() {
+    public Movimentobanco() {
     }
 
-    public Outroslancamentos(Integer idoutroslancamentos) {
-        this.idoutroslancamentos = idoutroslancamentos;
+    public Movimentobanco(Integer idmovimentobanco) {
+        this.idmovimentobanco = idmovimentobanco;
     }
 
-   
+    public Integer getIdmovimentobanco() {
+        return idmovimentobanco;
+    }
 
-    public Integer getIdoutroslancamentos() {
-		return idoutroslancamentos;
-	}
+    public void setIdmovimentobanco(Integer idmovimentobanco) {
+        this.idmovimentobanco = idmovimentobanco;
+    }
 
-	public void setIdoutroslancamentos(Integer idoutroslancamentos) {
-		this.idoutroslancamentos = idoutroslancamentos;
-	}
 
-	public Date getDataVencimento() {
+    public Date getDataVencimento() {
         return dataVencimento;
     }
 
@@ -246,18 +245,18 @@ public class Outroslancamentos implements Serializable {
 	@Override
     public int hashCode() {
         int hash = 0;
-        hash += (idoutroslancamentos != null ? idoutroslancamentos.hashCode() : 0);
+        hash += (idmovimentobanco != null ? idmovimentobanco.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // 
-        if (!(object instanceof Outroslancamentos)) {
+        if (!(object instanceof Movimentobanco)) {
             return false;
         }
-        Outroslancamentos other = (Outroslancamentos) object;
-        if ((this.idoutroslancamentos == null && other.idoutroslancamentos != null) || (this.idoutroslancamentos != null && !this.idoutroslancamentos.equals(other.idoutroslancamentos))) {
+        Movimentobanco other = (Movimentobanco) object;
+        if ((this.idmovimentobanco == null && other.idmovimentobanco != null) || (this.idmovimentobanco != null && !this.idmovimentobanco.equals(other.idmovimentobanco))) {
             return false;
         }
         return true;
@@ -265,7 +264,7 @@ public class Outroslancamentos implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.financemate.model.Movimentobanco[ idmovimentoBanco=" + idoutroslancamentos + " ]";
+        return "br.com.financemate.model.Movimentobanco[ idmovimentobanco=" + idmovimentobanco + " ]";
     }
     
 }
