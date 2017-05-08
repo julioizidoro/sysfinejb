@@ -69,14 +69,22 @@
                     </h:panelGroup>
                 </h:panelGrid>
                 <br />		  
-                <h:panelGrid columns="1"  style="margin-left: 2%;"> 
-                   
-                    <p:outputLabel value="Status" for="status"  style="margin-left: 2%;"/>
-                    <p:selectOneMenu id="status" style="width:130px;" value="#{contasPagarMB.status}">
-                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                        <f:selectItem itemLabel="Ativo" itemValue="Ativo" />  
-                        <f:selectItem itemLabel="Canceladas" itemValue="Canceladas" />
-                    </p:selectOneMenu>
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;"> 
+                    <h:panelGroup>
+                        <p:outputLabel value="Status" for="status"  style="margin-left: 2%;"/>
+                        <br/>
+                        <p:selectOneMenu id="status" style="width:130px;" value="#{contasPagarMB.status}">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Ativo" itemValue="Ativo" />  
+                            <f:selectItem itemLabel="Canceladas" itemValue="Canceladas" />
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:selectBooleanCheckbox  class="left" value="#{contasPagarMB.liberadas}"/>
+                       <h:outputText value="Liberadas"  style="margin-left: 1%"/>
+                       <p:selectBooleanCheckbox   value="#{contasPagarMB.autorizadas}" style="margin-left: 4%"/>
+                       <h:outputText value="Autorizadas"  style="margin-left: 1%"/>
+                    </h:panelGroup>
                 </h:panelGrid>
                 <hr />
                 <p:commandLink title="Pesquisar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{contasPagarMB.filtrar()}" >
