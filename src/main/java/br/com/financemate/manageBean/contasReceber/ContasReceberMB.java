@@ -629,7 +629,7 @@ public class ContasReceberMB implements Serializable {
     }
 
     public void verificarCliente() {
-        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+        if (usuarioLogadoMB.getCliente() != null && usuarioLogadoMB.getUsuario().getCliente() > 0) {
             cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
             verCliente = true;
             if (cliente == null) {
