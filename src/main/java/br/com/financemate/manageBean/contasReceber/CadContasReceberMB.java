@@ -88,6 +88,7 @@ public class CadContasReceberMB implements Serializable {
         vezes = (String) session.getAttribute("vezes");
         session.removeAttribute("frequencia");
         session.removeAttribute("vezes");
+        session.removeAttribute("contareceber");
         gerarListaCliente();
         //gerarListaPlanoContas();
         if (contasReceber == null) {

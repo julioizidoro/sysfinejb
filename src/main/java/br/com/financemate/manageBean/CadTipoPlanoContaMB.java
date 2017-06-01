@@ -138,8 +138,10 @@ public class CadTipoPlanoContaMB implements Serializable {
     public String salvar() {
         if (usuarioLogadoMB.getUsuario().getTipoacesso().getAcesso().getItipoplanocontas()) {
             tipoplanocontas = tipoPlanoContasDao.update(tipoplanocontas);
-            usuarioLogadoMB.getCliente().setTipoplanocontas(tipoplanocontas);
-            clienteDao.update(usuarioLogadoMB.getCliente());
+            if (usuarioLogadoMB.getCliente() != null && usuarioLogadoMB.getCliente().getTipoplanocontas() != null) {
+                usuarioLogadoMB.getCliente().setTipoplanocontas(tipoplanocontas);
+                clienteDao.update(usuarioLogadoMB.getCliente());
+            }
             if (tipoplanocontas != null) {
                 for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
                     if (listaPlanoContaTipo.get(i).getTipoplanocontas() == null) {
@@ -205,6 +207,7 @@ public class CadTipoPlanoContaMB implements Serializable {
         if (planocontas != null) {
             planocontastipo = new Planocontatipo();
             planocontastipo.setPlanocontas(planocontas);
+            planocontastipo.setPlanocontas1(planocontas);
             listaPlanoContaTipo.add(planocontastipo);
             listarPlanoContas.remove(planocontas);
         }

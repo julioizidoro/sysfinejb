@@ -191,4 +191,10 @@ public class mensagem {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Atualizado com Sucesso", ""));
     }
+    
+    
+    public void faltaInformacao(String msg) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(msg, ""));
+    }
 }

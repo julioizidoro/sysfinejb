@@ -28,6 +28,9 @@ public class Planocontatipo implements Serializable{
     @JoinColumn(name = "planoContas_idplanoContas", referencedColumnName = "idplanoContas")
     @ManyToOne(optional = false)
     private Planocontas planocontas;
+    @JoinColumn(name = "planoContas_idplanoContas1", referencedColumnName = "idplanoContas")
+    @ManyToOne(optional = false)
+    private Planocontas planocontas1;
     
 	public Planocontatipo() {
 		
@@ -62,6 +65,14 @@ public class Planocontatipo implements Serializable{
 	public void setPlanocontas(Planocontas planocontas) {
 		this.planocontas = planocontas;
 	}
+
+    public Planocontas getPlanocontas1() {
+        return planocontas1;
+    }
+
+    public void setPlanocontas1(Planocontas planocontas1) {
+        this.planocontas1 = planocontas1;
+    }
 
 	
 	@Override

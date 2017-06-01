@@ -159,6 +159,7 @@ public class CadVendasMB implements Serializable {
         desabilitarUnidade();
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
             cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+            gerarListaProduto();
         }
     }
 

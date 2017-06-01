@@ -30,6 +30,7 @@ import org.primefaces.context.RequestContext;
 
 import br.com.financemate.manageBean.ImprimirRelatorioMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobranca;
 import br.com.financemate.model.Cobrancaparcelas;
@@ -70,6 +71,7 @@ public class ImprimirContasReceberMB implements Serializable {
     private ClienteDao clienteDao;
     @EJB
     private CobrancaParcelasDao cobrancaParcelasDao;
+    private String notificacao;
 
     @PostConstruct
     public void init() {
@@ -200,6 +202,14 @@ public class ImprimirContasReceberMB implements Serializable {
         this.selecionadoTipoDocumento = selecionadoTipoDocumento;
     }
 
+    public String getNotificacao() {
+        return notificacao;
+    }
+
+    public void setNotificacao(String notificacao) {
+        this.notificacao = notificacao;
+    }
+
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
@@ -215,48 +225,73 @@ public class ImprimirContasReceberMB implements Serializable {
     }
 
     public String gerarRelatorio() throws SQLException, IOException {
-        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-        String caminhoRelatorio = "";
-        String nomeRelatorio = null;
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        if (relatorio.equalsIgnoreCase("Contas a Receber")) {
-            caminhoRelatorio = "reports/Relatorios/contasReceber/reportContasReceber.jasper";
-            nomeRelatorio = "Contas a Receber";
-        } else if (relatorio.equalsIgnoreCase("cobrancas")) {
-            gerarRelatorioCobranca();
-            return "relatoriocobranca";
-        }
-        parameters.put("sql", gerarSql());
-        File f = new File(servletContext.getRealPath("resources/img/logo.jpg"));
-        BufferedImage logo = ImageIO.read(f);
-        parameters.put("nomeFantasia", cliente.getNomeFantasia());
-        parameters.put("logo", logo);
-        String periodo = null;
-        periodo = "Periodo : " + Formatacao.ConvercaoDataPadrao(dataInicial)
-                + "    " + Formatacao.ConvercaoDataPadrao(dataFinal);
-        parameters.put("periodo", periodo);
-        String titulo = null;
-        if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")) {
-            titulo = "RELATÓRIO DE CONTAS RECEBIDAS";
-        } else if (nomeDosRelatorio.equalsIgnoreCase("contasAberto")) {
-            titulo = "RELATÓRIO DE CONTAS EM ABERTO";
-        } else {
-            titulo = "RELATÓRIO DE CONTAS A RECEBER";
-        }
-        if (cliente == null) {
-            parameters.put("unidade", "TODAS AS UNIDADES");
-        } else {
-            parameters.put("unidade", cliente.getNomeFantasia());
-        }
-        parameters.put("titulo", titulo);
-        GerarRelatorio gerarRelatorio = new GerarRelatorio();
-        try {
-            gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio);
-        } catch (JRException ex) {
-            Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
+        if (validarDados()) {
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            String caminhoRelatorio = "";
+            String nomeRelatorio = null;
+            Map<String, Object> parameters = new HashMap<String, Object>();
+            if (relatorio.equalsIgnoreCase("Contas a Receber")) {
+                caminhoRelatorio = "reports/Relatorios/contasReceber/reportContasReceber.jasper";
+                nomeRelatorio = "Contas a Receber";
+            } else if (relatorio.equalsIgnoreCase("cobrancas")) {
+                gerarRelatorioCobranca();
+                return "relatoriocobranca";
+            }
+            parameters.put("sql", gerarSql());
+            File f = new File(servletContext.getRealPath("resources/img/logo.jpg"));
+            BufferedImage logo = ImageIO.read(f);
+            if (cliente != null) {
+                parameters.put("nomeFantasia", cliente.getNomeFantasia());
+            }else{
+                parameters.put("nomeFantasia", "TODAS UNIDADES");
+            }
+            parameters.put("logo", logo);
+            String periodo = "Periodo : ";
+            if (dataInicial != null && dataFinal != null) {   
+                periodo = periodo + Formatacao.ConvercaoDataPadrao(dataInicial)
+                        + "    " + Formatacao.ConvercaoDataPadrao(dataFinal);
+            }else{
+                periodo = " SEM PERIODO ";
+            }
+            parameters.put("periodo", periodo);
+            String titulo;
+            if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")) {
+                titulo = "RELATÓRIO DE CONTAS RECEBIDAS";
+            } else if (nomeDosRelatorio.equalsIgnoreCase("contasAberto")) {
+                titulo = "RELATÓRIO DE CONTAS EM ABERTO";
+            } else {
+                titulo = "RELATÓRIO DE CONTAS A RECEBER";
+            }
+            if (cliente == null) {
+                parameters.put("unidade", "TODAS AS UNIDADES");
+            } else {
+                parameters.put("unidade", cliente.getNomeFantasia());
+            }
+            parameters.put("titulo", titulo);
+            GerarRelatorio gerarRelatorio = new GerarRelatorio();
+            try {
+                gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio);
+            } catch (JRException ex) {
+                Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            mensagem mensagem = new mensagem();
+            mensagem.faltaInformacao(notificacao);
         }
         return "";
     }
+    
+    public boolean validarDados(){
+        if (relatorio == null || relatorio.length() == 0) {
+            notificacao = "Selecione o Tipo de Relatório \r\n";
+            return false;
+        }
+        if (nomeDosRelatorio == null || nomeDosRelatorio.length() == 0) {
+            notificacao = "Escolhe quais tipos de contas deseja";
+            return false;
+        }
+        return true;
+    }    
 
     public String gerarSql() {
         String sql = "";
@@ -268,20 +303,26 @@ public class ImprimirContasReceberMB implements Serializable {
             sql = sql + "where ";
             String ordem = "";
             if (nomeDosRelatorio.equalsIgnoreCase("contasAberto")) {
-                sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
-                sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
-                sql = sql + " and contasreceber.dataPagamento is null ";
+                if (dataInicial != null && dataFinal != null) {
+                    sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
+                    sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
+                    sql = sql + " and contasreceber.dataPagamento is null ";
+                }
                 ordem = " order by contasreceber.dataVencimento";
             } 
             if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")) {
-                sql = sql + " contasreceber.datapagamento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
-                sql = sql + " and contasreceber.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
-                sql = sql + " and valorPago>0 ";
+                if (dataInicial != null && dataFinal != null) {
+                    sql = sql + " contasreceber.datapagamento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
+                    sql = sql + " and contasreceber.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
+                    sql = sql + " and valorPago>0 ";
+                }
                 ordem = " order by contasreceber.dataPagamento";
             }
             if (nomeDosRelatorio.equalsIgnoreCase("todascontas")) {
-                sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
-                sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
+                if (dataInicial != null && dataFinal != null) {
+                    sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
+                    sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
+                }
                 ordem = " order by contasreceber.dataVencimento";
             }
             if (cliente != null) {
