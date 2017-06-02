@@ -84,8 +84,10 @@ public class ParcelasMB implements Serializable {
     }
 
     public void gerarListaParcelas() {
-        String sql = "SELECT c FROM Contasreceber c  WHERE c.numeroDocumento=" + contasreceber.getNumeroDocumento();
-        listaParcela = contasReceberDao.list(sql);
+        if (contasreceber.getNumeroDocumento() != null && contasreceber.getNumeroDocumento().length() > 0) {
+            String sql = "SELECT c FROM Contasreceber c  WHERE c.numeroDocumento=" + contasreceber.getNumeroDocumento();
+            listaParcela = contasReceberDao.list(sql);
+        }
         if (listaParcela == null) {
             listaParcela = new ArrayList<Contasreceber>();
         }
