@@ -834,4 +834,53 @@ public class Formatacao {
         int diaSemana = calendario.get(Calendar.DAY_OF_WEEK);
         return diaSemana;
     }
+
+    public static String formatarHoraString() {
+        DateFormat formato = new SimpleDateFormat("HH:mm");
+        String formattedDate = formato.format(new Date());
+        return formattedDate;
+    }
+
+    public static int getAnoData(Date data) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(data);
+        int ano = calendar.get(GregorianCalendar.YEAR);
+        return ano;
+    }
+
+    public static String diaSemanaEscrito(Date data) {
+        Calendar cal = Calendar.getInstance();    // hoje  
+        cal.setTime(data);    // uma Date  
+        int diaSemana = cal.get(Calendar.DAY_OF_WEEK);
+        if (diaSemana == 1) {
+            return "Domingo";
+        } else if (diaSemana == 2) {
+            return "Segunda";
+        } else if (diaSemana == 3) {
+            return "Terça";
+        } else if (diaSemana == 4) {
+            return "Quarta";
+        } else if (diaSemana == 5) {
+            return "Quinta";
+        } else if (diaSemana == 6) {
+            return "Sexta";
+        } else if (diaSemana == 7) {
+            return "Sabado";
+        }
+        return "Erro";
+    }
+
+    public static int getMesData(Date data) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(data);
+        int mes = calendar.get(GregorianCalendar.MONTH);
+        return mes;
+    }
+
+    public static int getDiaData(Date data) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(data);
+        int dia = calendar.get(GregorianCalendar.DAY_OF_MONTH);
+        return dia;
+    }
 }

@@ -195,6 +195,23 @@ public class PrincipalMB implements Serializable {
     public void mensagemEmBreve() {
         mensagem mensagem = new mensagem();
         mensagem.notificacao("Disponivel em breve!!");
+    }   
+    
+    
+    public String retornarHora() {
+        String horario = Formatacao.formatarHoraString();
+        return horario;
     }
+
+    public String retornarDataPorExtenso() {
+        Date data = new Date();
+        String retorno = Formatacao.diaSemanaEscrito(data);
+        retorno = retorno + ", " + Formatacao.getDiaData(data) + " "
+                + Formatacao.nomeMes(Formatacao.getMesData(data) + 1) + " " + Formatacao.getAnoData(data);
+        return retorno;
+    }
+    
+    
+    
 
 }

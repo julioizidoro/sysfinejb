@@ -255,14 +255,24 @@
             </aside>
             <br /><br />
         </h:form>
-        <h:form style="margin-left:16%;">
+        <h:form style="margin-left:16%;" id="formDashBoard">
             <div class="padding-md"> 
                 <div class="row"> 
                     <div class="col-md-9">  
                         <h3 style=" color:black;">VENDAS</h3>
                         <p:chart type="bar" model="#{grafico.animatedModel2}" style="width:100%;" responsive="true"/>
-                    </div>>
+                    </div>
                     <div class="col-md-3">
+                        <p:poll interval="20" update="panelRelogio"/>
+                        <h:panelGroup id="panelRelogio">
+                            <div id="colunaHorario" class="symbol" style="width: 100%;padding:1px;text-align: center;">     
+                                <h1 id="relogio" style="font-size:50px;color:#302E2E;margin-top: 2px;font-family: cursive;">#{principalMB.retornarHora()}</h1>                   
+                                <p style="font-size:14px;color:#302E2E;">
+                                    <p:outputLabel style="font-family: cursive;color: #302E2E;" value="#{principalMB.retornarDataPorExtenso()}"/>
+                                </p>           
+                            </div> 
+                        </h:panelGroup>
+                        <br/>
                         <div class="panel-stat3 bg-success">  
                             <h4>FATURAMENTO </h4>
                             <h3 class="m-top-none" id="userCount" style="color:black;">R$: #{grafico.valorTotalFaturamento}</h3>
@@ -270,17 +280,6 @@
                             <div class="stat-icon">
                                 <i class="fa fa-usd fa-3x"></i> 
                             </div>
-                        </div>
-                        <br/>
-                        <div class="panel-stat3 bg-info">
-                            <p:commandLink action="#{menuMB.consContasReceber()}" style="color: white;">
-                                <h4>CONTAS A RECEBER</h4>
-                                <h3 class="m-top-none" style="color:black;">R$: #{calculosContasMB.crVencendo}</h3>
-                                <span class="m-left-xs" style="color:black;">para o dia de hoje</span>
-                                <div class="stat-icon">
-                                    <i class="fa fa-signal fa-3x"></i> 
-                                </div>
-                            </p:commandLink>
                         </div>
                         <br/>
                     </div>
@@ -317,11 +316,21 @@
                 </div>
                 <div class="col-md-4">
                     <h4 style="color:black;" >FLUXO DE CAIXA</h4>
-                    <h5 style="color:black;" > Diario - #{principalMB.pegarMesAno()}</h5>
+                    <h5 style="color:black;" > DIÁRIO - #{principalMB.pegarMesAno()}</h5>
                     <p:chart type="line" model="#{grafico.animatedModel1}" style="width:100%;" responsive="true"/>
                 </div>
                 <div class="col-md-3">
-
+                    <div class="panel-stat3 bg-info" style="margin-right: 6%;">
+                        <p:commandLink action="#{menuMB.consContasReceber()}" style="color: white;">
+                            <h4>CONTAS A RECEBER</h4>
+                            <h3 class="m-top-none" style="color:black;">R$: #{calculosContasMB.crVencendo}</h3>
+                            <span class="m-left-xs" style="color:black;">para o dia de hoje</span>
+                            <div class="stat-icon">
+                                <i class="fa fa-signal fa-3x"></i> 
+                            </div>
+                        </p:commandLink>
+                    </div>
+                     <br/>
                     <div class="panel-stat3 bg-danger" style="margin-right: 6%;">
                         <p:commandLink action="#{menuMB.contasPagar()}" style="color: white;">
                             <h4>CONTAS A PAGAR</h4>
