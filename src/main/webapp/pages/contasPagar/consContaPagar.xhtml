@@ -82,35 +82,35 @@
                             <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                             <b class="caret"></b>
                         </p:commandLink>   
-                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width: 200px;">
-                            <p:commandLink   action="#{contasPagarMB.autorizarPagamento(contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagar)}" update=" :frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
+                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width: 170px;">
+                            <p:commandLink title="Autorizar um Conta"  action="#{contasPagarMB.autorizarPagamento(contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagar)}" update=" :frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
                                 <i class="fa fa-check-square-o" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Autorizar" style="font-size: 15px;text-align: left;"/>
+                                    <b>Autorizar</b>
                                 </i> 
                             </p:commandLink>   
                             <br/><br/>
-                            <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.acontaspargar}" actionListener="#{contasPagarMB.editar(contasPagar)}" style="text-align: left;">
+                            <p:commandLink title="Editar um Conta" rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.acontaspargar}" actionListener="#{contasPagarMB.editar(contasPagar)}" style="text-align: left;">
                                 <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Editar" style="font-size: 15px;text-align: left;"/>
+                                    <b>Editar</b>
                                 </i>  
                                 <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update=":frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar, :frmConsultaPagar:contasVenc, :frmConsultaPagar:contasVencendo, :frmConsultaPagar:contasPagar"/>
                             </p:commandLink> 
                             <br/><br/>
-                            <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.econtaspargar}"  actionListener="#{contasPagarMB.cancelar(contasPagar)}" update=":frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar, :frmConsultaPagar:contasPagar, :frmConsultaPagar:contasVencendo, :frmConsultaPagar:contasVenc" style="text-align: left;">
+                            <p:commandLink title="Cancelar um Conta" rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.econtaspargar}"  actionListener="#{contasPagarMB.cancelar(contasPagar)}" update=":frmConsultaPagar:growl, :frmConsultaPagar:idTabelaContaPagar, :frmConsultaPagar:contasPagar, :frmConsultaPagar:contasVencendo, :frmConsultaPagar:contasVenc" style="text-align: left;">
                                 <i class="fa fa-ban" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Cancelar" style="font-size: 15px;text-align: left;"/>
+                                    <b>Cancelar</b>
                                 </i> 
                             </p:commandLink> 
                             <br/><br/>
-                            <p:commandLink   action="#{contasPagarMB.operacoesUsuario(contasPagar)}" update=":frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
+                            <p:commandLink title="Movimentação de Usuários na Conta"   action="#{contasPagarMB.operacoesUsuario(contasPagar)}" update=":frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
                                 <i class="fa fa-user" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Operações Usuário" style="font-size: 15px;text-align: left;"/>
+                                    <b>Operações Usuário</b>
                                 </i> 
                             </p:commandLink> 
                             <br/><br/>
-                            <p:commandLink  action="#{contasPagarMB.consultarArquivo(contasPagar)}" update=":frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
+                            <p:commandLink title="Visualizar Arquivos Anexados na Conta"  action="#{contasPagarMB.consultarArquivo(contasPagar)}" update=":frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
                                 <i class="fa fa-eye" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Visualizar Arquivo" style="font-size: 15px;text-align: left;"/>
+                                    <b>Visualizar Arquivo</b>
                                 </i> 
                             </p:commandLink> 
                         </p:overlayPanel> 

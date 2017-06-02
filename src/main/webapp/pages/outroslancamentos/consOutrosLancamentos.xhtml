@@ -137,21 +137,21 @@
                             <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                             <b class="caret"></b>
                         </p:commandLink>   
-                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width:90px;">
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                 <p:commandButton style="margin-left:35%;" value="Sim" action="#{outrosLancamentosMB.excluir(outrosLancamentos)}" type="button" styleClass="ui-confirmdialog-yes"  />
                                 <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
                             </p:confirmDialog>
                             <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.eoutroslancamentos}" action="#{outrosLancamentosMB.excluir(outrosLancamentos)}"  update=":frmConsultaOutrosLancamentos:growl, :frmConsultaOutrosLancamentos:idTabelaOutrosLancamentos"  style="text-align: left;">
                                 <i class="fa fa-trash-o" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Excluir" style="font-size: 15px;"/>
+                                    <b>Excluir</b>
                                 </i> 
                                 <p:confirm header="Confirmação" message="Tem certeza que deseja excluir esse lançamento?" icon="ui-icon-alert" />
                             </p:commandLink> 
                             <br/><br/>
                             <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.aoutroslancamentos}" actionListener="#{outrosLancamentosMB.editar(outrosLancamentos)}"  style="text-align: left;">
                                 <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                                    <b>Editar</b>
                                 </i> 
                                 <p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogNovo}" update=":frmConsultaOutrosLancamentos:growl, :frmConsultaOutrosLancamentos:idTabelaOutrosLancamentos, :frmConsultaOutrosLancamentos:idsaida, :frmConsultaOutrosLancamentos:identrada, :frmConsultaOutrosLancamentos:idtotal"/>
                             </p:commandLink> 

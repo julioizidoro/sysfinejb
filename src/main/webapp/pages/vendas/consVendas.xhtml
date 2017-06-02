@@ -84,17 +84,17 @@
                             <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                             <b class="caret"></b>
                         </p:commandLink>   
-                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
-                            <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.avendas}" action="#{vendasMB.editar(vendas)}" style="text-align: left;">
+                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width:140px;">
+                            <p:commandLink title="Editar esta Venda" rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.avendas}" action="#{vendasMB.editar(vendas)}" style="text-align: left;">
                                 <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                                    <b>Editar</b>
                                 </i> 
                                 <p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogNovo}" update=":frmConsultaReceber:idTabelaVendas, :frmConsultaReceber:growl"/>
                            </p:commandLink> 
                              <br/><br/>
-                             <p:commandLink action="#{vendasMB.gerarParcelas(vendas)}" style="text-align: left;">
+                             <p:commandLink title="Gerar Parcelas desta Venda" action="#{vendasMB.gerarParcelas(vendas)}" style="text-align: left;">
                                 <i class="fa fa-money" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Gerar Parcela" style="font-size: 15px;"/>
+                                    <b>Gerar Parcela</b>
                                 </i> 
                                 <p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogParcela}" update=":frmConsultaReceber:idTabelaVendas, :frmConsultaReceber:growl"/>
                            </p:commandLink> 
@@ -103,9 +103,9 @@
                                 <p:commandButton style="margin-left:35%;" value="Sim" action="#{vendasMB.cancelarVenda(vendasMB.venda)}" type="button" styleClass="ui-confirmdialog-yes"  />
                                 <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
                             </p:confirmDialog>
-                           <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.evendas}" action="#{mensagem.cancelado()}"  actionListener="#{vendasMB.cancelarVenda(vendas)}" update=":frmConsultaReceber:growl, :frmConsultaReceber:idTabelaVendas" style="text-align: left;">
+                           <p:commandLink title="Cancelar esta Venda" rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.evendas}" action="#{mensagem.cancelado()}"  actionListener="#{vendasMB.cancelarVenda(vendas)}" update=":frmConsultaReceber:growl, :frmConsultaReceber:idTabelaVendas" style="text-align: left;">
                                 <i class="fa fa-ban" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Cancelar" style="font-size: 15px;"/>
+                                    <b>Cancelar</b>
                                 </i> 
                                 <p:confirm  header="Confirmação" message="Tem certeza que deseja cancelar essa venda ?" icon="ui-icon-alert" />
                            </p:commandLink> 

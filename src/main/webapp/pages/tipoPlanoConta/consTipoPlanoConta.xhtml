@@ -35,11 +35,11 @@
                             <p:commandLink id="btnMenu">
                                 <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                                 <b class="caret"></b>
-                            </p:commandLink>   
-                            <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                            </p:commandLink>     
+                            <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width:90px;">
                                 <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.atipoplanocontas}" action="#{tipoPlanoContaMB.editar(tipoPlanoConta)}" style="text-align: left;">
-                                    <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
-                                        <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                                    <i class="fa fa-pencil-square-o" title="Editar um Tipo de `Plano de Conta" style="color: #3D7E46;font-size: 15px;">  
+                                      <b>Editar</b>
                                     </i> 
                                    <p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogEdicao}" update=":frmConsultaTipoPlanoConta:growl, :frmConsultaTipoPlanoConta:idTabelaTipoPlanoConta"/>
                                </p:commandLink> 

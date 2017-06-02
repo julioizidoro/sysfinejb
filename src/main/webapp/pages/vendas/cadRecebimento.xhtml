@@ -65,7 +65,7 @@
 		
               <p:dataTable id="idHistoricoRecebimento" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadVendasMB.listaFormaPagamento}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{cadVendasMB.formapagamento}" rowKey="#{recebimento.idformaPagamento}"  rows="10" style="margin-bottom:20px;"> 
-                <p:column headerText="Data" style="background:white; color:black; border:none; width:70px; text-align:center;">
+                <p:column headerText="Data" style="background:white; color:black; border:none; width:80px; text-align:center;">
                     <h:outputText  value="#{recebimento.dataVencimento}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
@@ -87,15 +87,15 @@
                           <b class="caret"></b>
                       </p:commandLink>   
                       <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
-                          <p:commandLink update="idHistoricoRecebimento, :frmIdCasRecebimento:saldorestante" action="#{cadVendasMB.excluir(recebimento)}" style="text-align: left;">
-                              <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
-                                  <p:outputLabel value="Excluir" style="font-size: 15px;"/>
+                          <p:commandLink title="Excluir este recebimento" update="idHistoricoRecebimento, :frmIdCasRecebimento:saldorestante" action="#{cadVendasMB.excluir(recebimento)}" style="text-align: left;">
+                              <i class="fa fa-trash-o" style="color: #3D7E46;font-size: 15px;">  
+                                  <b>Excluir</b>
                               </i> 
                           </p:commandLink> 
                           <br/><br/>
-                          <p:commandLink action="#{cadVendasMB.editarFormaPagamento(recebimento)}" style="text-align: left;">
-                              <i class="fa fa-copy" style="color: #3D7E46;font-size: 15px;">  
-                                  <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                          <p:commandLink title="Editar este recebimento" action="#{cadVendasMB.editarFormaPagamento(recebimento)}" style="text-align: left;">
+                              <i class="fa fa-pencil" style="color: #3D7E46;font-size: 15px;">  
+                                  <b>Editar</b>
                               </i> 
                           </p:commandLink> 
                       </p:overlayPanel> 

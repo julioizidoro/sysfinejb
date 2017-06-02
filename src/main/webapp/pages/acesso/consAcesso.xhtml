@@ -36,10 +36,10 @@
                             <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                             <b class="caret"></b>
                         </p:commandLink>   
-                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width:90px;">
                             <p:commandLink action="#{acessoMB.editarAcesso(acesso)}" style="text-align: left;">
                                 <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
-                                    <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                                    <b>Editar</b>
                                 </i> 
                                 <p:ajax event="dialogReturn" listener="#{acessoMB.retornoDialogEdicao}" update=":frmConsultaAcesso:idTabelaAcesso, :frmConsultaAcesso:growl"/>
                            </p:commandLink> 

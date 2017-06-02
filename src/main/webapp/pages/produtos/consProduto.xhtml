@@ -23,7 +23,7 @@
                          </div>
 			<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
              <br /><br /><br /><br />
-             <h4 style="margin-left:50%;">Consulta Produto</h4>
+             <h4 style="margin-left:50%;">Consultar Produtos</h4>
              <hr style="margin-left:17%; width:80%;"/>    
              <p:dataTable id="idTabelaProduto"  var="produto"  value="#{produtoMB.listaProduto}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{produtoMB.produto}" selectionMode="single" rowKey="#{produto.idproduto}">
@@ -41,10 +41,10 @@
                         <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                         <b class="caret"></b>
                     </p:commandLink>   
-                    <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade">
+                    <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width:90px;">
                         <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.aproduto}" action="#{produtoMB.editar(produto)}" update=":frmConsultaProduto:idTabelaProduto" style="text-align: left;">
                             <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
-                                <p:outputLabel value="Editar" style="font-size: 15px;"/>
+                                <b>Editar</b>
                             </i> 
                             <p:ajax event="dialogReturn" listener="#{produtoMB.retornoDialog}" update=":frmConsultaProduto:growl, :frmConsultaProduto:idTabelaProduto"/>
                         </p:commandLink> 
