@@ -223,7 +223,7 @@
                                 </ul>
                             </li>
                             <li  style="background:#302E2E;">
-                                <p:commandLink action="#{principalMB.mensagemEmBreve()}">
+                                <p:commandLink action="#{principalMB.mensagemEmBreve()}" update="growl">
                                     <span class="menu-icon">
                                         <i>
                                             <img src="resources/img/iconeAreaClienteSysfin.png" style="width: 14%;"/>
@@ -293,16 +293,16 @@
                     <p:dataTable reflow="true" styleClass="table table-striped dt-responsive" value="#{principalMB.lista10Vendas}"
                                  var="venda" style="color:black; width:100%;" rows="5" >
                         <f:facet name="header"> TOTAL DO MÊS DE #{principalMB.pegarMes()}: R$ #{principalMB.valorTotalMesVendas}</f:facet>
-                        <p:column headerText="ID" style="background:white;color:black;">
+                        <p:column headerText="ID" style="background:white;color:black;width: 60px;text-align: right;">
                             <h:outputText value="#{venda.idvendas}" />
                         </p:column>
-                        <p:column headerText="Cliente" style="background:white;color:black;">
+                        <p:column headerText="Cliente" style="background:white;color:black;text-align: left;">
                             <h:outputText value="#{venda.nomeCliente}" style="float:left;"/>
                         </p:column>
-                        <p:column headerText="Produto" style="background:white;color:black;">
+                        <p:column headerText="Produto" style="background:white;color:black;text-align: left;">
                             <h:outputText value="#{venda.produto.descricao}" />
                         </p:column>
-                        <p:column headerText="Data" style="background:white;color:black;">
+                        <p:column headerText="Data" style="background:white;color:black;text-align: center;">
                             <h:outputText value="#{venda.dataVenda}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText>
