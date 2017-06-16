@@ -71,7 +71,7 @@
                             <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
                             <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
                             <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
-                            <f:selectItem itemLabel="Depósito" itemValue="Deposito" />
+                            <f:selectItem itemLabel="Depósito" itemValue="Depósito" />
                         </p:selectOneMenu>
                     </div>
                 </h:panelGroup> 
@@ -93,10 +93,12 @@
                 </h:panelGroup>
             </h:panelGrid>
             <h:panelGrid columns="1" style="margin-left: 2%;width: 100%;"> 
-                <div class="form-group">
-                    <h:outputLabel value="Descrição" for="descricao" class="left3"/> 
-                    <h:inputText  style="width: 93%;"  id="descricao"  class="form-control"  value="#{cadOutrosLancamentosMB.outrosLancamentos.descricao}"/>
-                </div>
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel value="Descrição" for="descricao" class="left3"/> 
+                        <h:inputText  style="width: 93%;"  id="descricao"  class="form-control"  value="#{cadOutrosLancamentosMB.outrosLancamentos.descricao}"/>
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
             <br />
             <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
@@ -124,6 +126,24 @@
 
                         </p:selectOneMenu> 
                     </div>
+                </h:panelGroup>
+            </h:panelGrid>
+            <h:panelGrid columns="2" style="width: 100%;margin-left: 2%;">
+                <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="valorentrada">Valor Entrada</h:outputLabel>
+                            <h:inputText  class="form-control" id="valorentrada" style="width: 55%;text-align: right;" value="#{cadOutrosLancamentosMB.outrosLancamentos.valorEntrada}">
+                                <f:convertNumber pattern="##,###,###,###.##"/>
+                            </h:inputText>
+                        </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="valorsaida">Valor Saida</h:outputLabel>
+                            <h:inputText  class="form-control" id="valorsaida" style="width: 55%;text-align: right;" value="#{cadOutrosLancamentosMB.outrosLancamentos.valorSaida}">
+                                <f:convertNumber pattern="##,###,###,###.##"/>
+                            </h:inputText>
+                        </div>
                 </h:panelGroup>
             </h:panelGrid>
            
