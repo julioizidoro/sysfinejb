@@ -5,6 +5,7 @@ import br.com.financemate.dao.PlanoContaTipoDao;
 import br.com.financemate.dao.PlanoContasDao;
 import br.com.financemate.dao.TipoPlanoContasDao;
 import br.com.financemate.dao.UsuarioDao;
+import br.com.financemate.model.Cliente;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -52,6 +53,10 @@ public class CadTipoPlanoContaMB implements Serializable {
     private PlanoContaTipoDao planoContaTipoDao;
     @EJB
     private ClienteDao clienteDao;
+    private List<Cliente> listaCliente;
+    private Cliente cliente;
+    private boolean habilitarUnidade = false;
+    private List<Cliente> listaClienteTabela;
 
     @PostConstruct
     public void init() {
@@ -61,6 +66,8 @@ public class CadTipoPlanoContaMB implements Serializable {
         session.removeAttribute("tipoplanocontas");
         gerarListaTipoPlanoConta();
         gerarListaPlanoContas();
+        gerarListaCliente();
+        listaClienteTabela = new ArrayList<>();
         if (tipoplanocontas == null) {
             tipoplanocontas = new Tipoplanocontas();
             listaPlanoContaTipo = new ArrayList<Planocontatipo>();
@@ -71,12 +78,15 @@ public class CadTipoPlanoContaMB implements Serializable {
                 if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
                     listaPlanoContaTipo = new ArrayList<Planocontatipo>();
                 }
+                listaClienteTabela = clienteDao.list("Select c from Cliente c Where c.tipoplanocontas.idtipoplanocontas=" + tipoplanocontas.getIdtipoplanocontas());
                 verificarListaPlanoContas();
+                verificarListaCliente();
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
+        desabilitarUnidade();
     }
 
     public Tipoplanocontas getTipoplanocontas() {
@@ -135,12 +145,44 @@ public class CadTipoPlanoContaMB implements Serializable {
         this.planocontas = planocontas;
     }
 
+    public List<Cliente> getListaCliente() {
+        return listaCliente;
+    }
+
+    public void setListaCliente(List<Cliente> listaCliente) {
+        this.listaCliente = listaCliente;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public boolean isHabilitarUnidade() {
+        return habilitarUnidade;
+    }
+
+    public void setHabilitarUnidade(boolean habilitarUnidade) {
+        this.habilitarUnidade = habilitarUnidade;
+    }
+
+    public List<Cliente> getListaClienteTabela() {
+        return listaClienteTabela;
+    }
+
+    public void setListaClienteTabela(List<Cliente> listaClienteTabela) {
+        this.listaClienteTabela = listaClienteTabela;
+    }
+
     public String salvar() {
-        if (usuarioLogadoMB.getUsuario().getTipoacesso().getAcesso().getItipoplanocontas()) {
+          if (usuarioLogadoMB.getUsuario().getTipoacesso().getAcesso().getItipoplanocontas()) {
             tipoplanocontas = tipoPlanoContasDao.update(tipoplanocontas);
-            if (usuarioLogadoMB.getCliente() != null && usuarioLogadoMB.getCliente().getTipoplanocontas() != null) {
-                usuarioLogadoMB.getCliente().setTipoplanocontas(tipoplanocontas);
-                clienteDao.update(usuarioLogadoMB.getCliente());
+            for (int i = 0; i < listaClienteTabela.size(); i++) {
+                listaClienteTabela.get(i).setTipoplanocontas(tipoplanocontas);
+                clienteDao.update(listaClienteTabela.get(i));
             }
             if (tipoplanocontas != null) {
                 for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
@@ -225,13 +267,70 @@ public class CadTipoPlanoContaMB implements Serializable {
     }
     
     
+    public void verificarListaCliente(){
+        if (listaClienteTabela != null) {
+            for (int i = 0; i < listaCliente.size(); i++) {
+                if (listaClienteTabela.get(i).getIdcliente() == listaCliente.get(i).getIdcliente()) {
+                    listaCliente.remove(listaCliente.get(i));
+                }
+            }
+        } else {
+        }
+    }
+    
+    
     public void excluirPlanoConta(Planocontatipo planocontatipo){
         if (listarPlanoContas == null || listarPlanoContas.isEmpty()) {
             listaPlanoContaTipo = new ArrayList<Planocontatipo>();
         }
         listarPlanoContas.add(planocontatipo.getPlanocontas());
-        planoContaTipoDao.remove(planocontatipo.getIdplanocontatipo());
         listaPlanoContaTipo.remove(planocontatipo);
+        if (planocontatipo.getIdplanocontatipo() != null) {
+            planoContaTipoDao.remove(planocontatipo.getIdplanocontatipo());
+        }
         
     }
+    
+    public void gerarListaCliente() {
+        listaCliente = clienteDao.list("Select c From Cliente c order by c.nomeFantasia");
+        if (listaCliente == null) {
+            listaCliente = new ArrayList<Cliente>();
+        }
+
+    }
+     
+   public void adicionarCliente(){
+       if (cliente != null) {
+           listaClienteTabela.add(cliente);
+           listaCliente.remove(cliente);
+       }
+   }
+   
+   public void excluirCliente(Cliente cliente){
+       if (cliente != null) {
+           listaClienteTabela.remove(cliente);
+           listaCliente.add(cliente);
+       }
+   }
+   
+   public void desabilitarUnidade() {
+        if (usuarioLogadoMB.getCliente() != null) {
+            habilitarUnidade = true;
+            listaCliente.add(usuarioLogadoMB.getCliente());
+            listaClienteTabela.add(usuarioLogadoMB.getCliente());
+        } else {
+            habilitarUnidade = false;
+        }
+
+    }
+   
+   public boolean validarDados(){
+       if (listaClienteTabela == null && listaClienteTabela.isEmpty()) {
+           mensagem msg = new mensagem();
+           msg.faltaInformacao("Adicione o(s) cliente(s)");
+           return false;
+       }
+       return false;
+   }
+
 }

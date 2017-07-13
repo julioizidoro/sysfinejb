@@ -28,11 +28,39 @@
             </p:dialog>
 
             <title  >Novo Tipo de Conta</title>
+             
             
              <div class="form-group">
                 <h:outputLabel for="descricao" style="margin-left: 2%">Descrição</h:outputLabel>
                 <h:inputText  class="form-control" id="descricao" style="width: 80%;margin-left: 2%;" value="#{cadTipoPlanoContaMB.tipoplanocontas.descricao}"/>
             </div>
+            <br/>
+            
+            
+            <h:panelGrid style="margin-left:1%;" columns="3">
+             	<p:outputLabel value="Unidade" for="cliente" class="left3"/>
+                <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadTipoPlanoContaMB.cliente}" converter="ClienteConverter"
+                                          filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadTipoPlanoContaMB.habilitarUnidade}">
+                            <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                            <f:selectItems  value="#{cadTipoPlanoContaMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                            <f:attribute name="listaCliente" value="#{cadTipoPlanoContaMB.listaCliente}"/>
+                    </p:selectOneMenu> 
+                <p:commandLink   action="#{cadTipoPlanoContaMB.adicionarCliente()}" disabled="#{cadTipoPlanoContaMB.habilitarUnidade}" update="idTabelaCliente, cliente" style="margin-left:25%;text-decoration:none;" title="Adicionar">
+					<img src="../../resources/img/iconeplus.png"/>
+				</p:commandLink>
+            </h:panelGrid> 
+            <p:dataTable id="idTabelaCliente" var="cliente"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadTipoPlanoContaMB.listaClienteTabela}" 
+                         scrollRows="10"  scrollable="true" scrollHeight="80"   rowKey="#{cliente.idcliente}" style="margin-bottom:20px;"> 
+               
+                <p:column headerText="Descrição" style=" background:white; color:black; border:none; text-align:left;">
+                    <h:outputText value="#{cliente.nomeFantasia}" /> 
+                </p:column>
+                <p:column headerText="" style=" background:white; color:black; border:none; text-align:right;">
+                    <p:commandLink disabled="#{cadTipoPlanoContaMB.habilitarUnidade}" update=":idFrmCadTipoConta:idTabelaCliente, :idFrmCadTipoConta:cliente" title="Confirmar" style="text-decoration: none;"  action="#{cadTipoPlanoContaMB.excluirCliente(cliente)}" >
+                        <img src="../../resources/img/cancelarS.png" width="20" height="20"/>
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable> 
             <br/>
             <h:panelGrid style="margin-left:1%;" columns="3">
              	<p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
@@ -48,13 +76,13 @@
 				</p:commandLink>
             </h:panelGrid>     
             <p:dataTable id="idPlanoContas" var="planoContasTipo"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadTipoPlanoContaMB.listaPlanoContaTipo}" 
-                          scrollRows="10"  scrollable="true" scrollHeight="80"   rowKey="#{planoContasTipo.idplanocontatipo}"  rows="10" style="margin-bottom:20px;"> 
+                          scrollRows="10"  scrollable="true" scrollHeight="80"   rowKey="#{planoContasTipo.idplanocontatipo}" style="margin-bottom:20px;"> 
                
                 <p:column headerText="Descrição" style=" background:white; color:black; border:none; text-align:left;">
                     <h:outputText value="#{planoContasTipo.planocontas.descricao}" /> 
                 </p:column>
                 <p:column headerText="" style=" background:white; color:black; border:none; text-align:right;">
-                    <p:commandLink update=":idFrmCadTipoConta:idPlanoContas" title="Confirmar" style="text-decoration: none;"  action="#{cadTipoPlanoContaMB.excluirPlanoConta(planoContasTipo)}" >
+                    <p:commandLink update=":idFrmCadTipoConta:idPlanoConta, :idFrmCadTipoConta:idPlanoContas" title="Confirmar" style="text-decoration: none;"  action="#{cadTipoPlanoContaMB.excluirPlanoConta(planoContasTipo)}" >
                         <img src="../../resources/img/cancelarS.png" width="20" height="20"/>
                     </p:commandLink>
                 </p:column>

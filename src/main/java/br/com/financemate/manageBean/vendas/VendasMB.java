@@ -271,13 +271,45 @@ public class VendasMB implements Serializable {
     }
 
     public void gerarListaVendas() {
+        Date dataIni;
+        Date dataFin;
+        String data = Formatacao.ConvercaoDataPadrao(new Date());
+        String mesString = data.substring(3, 5);
+        String anoString = data.substring(6, 10);
+        int mesInicio = Integer.parseInt(mesString);
+        int anoInicio = Integer.parseInt(anoString);
+        int mescInicio;
+        int mescFinal;
+        int anocInicio = 0;
+        int anocFinal = 0;
+        if (mesInicio == 1) {
+            mescInicio = 12;
+            anocInicio = anoInicio - 1;
+        } else {
+            mescInicio = mesInicio - 1;
+            anocInicio = anoInicio;
+        }
+        if (mesInicio == 12) {
+            mescFinal = 1;
+            anocFinal = anoInicio + 1;
+        } else {
+            mescFinal = mesInicio + 1;
+            anocFinal = anoInicio;
+        }
+        String dataInicial = anocInicio + "-" + Formatacao.retornaDataInicia(mescInicio);
+        String dataTermino = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
+        dataIni = Formatacao.ConvercaoStringData(dataInicial);
+        dataFin = Formatacao.ConvercaoStringData(dataTermino);
         if (usuarioLogadoMB.getUsuario().getCliente() != null){
             if(usuarioLogadoMB.getUsuario().getCliente() > 0) {
                 sql = " Select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada'  and v.cliente.idcliente="
-                    + usuarioLogadoMB.getUsuario().getCliente() + " order by v.dataVenda";
+                    + usuarioLogadoMB.getUsuario().getCliente() + " and v.dataVenda>='" + dataInicial +
+                         "' and v.dataVenda<='" + dataTermino +  "' order by v.dataVenda";
             } else {
                 sql = " Select v from Vendas v where v.cliente.visualizacao='Operacional' and "
-                        + " v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada' order by v.dataVenda";
+                        + " v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada'"
+                        + " and v.dataVenda>='" + dataInicial +
+                         "' and v.dataVenda<='" + dataTermino + "' order by v.dataVenda";
             }
         
             listaVendas = vendasDao.list(sql);
