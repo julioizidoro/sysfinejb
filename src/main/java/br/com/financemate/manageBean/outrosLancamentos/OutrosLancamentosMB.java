@@ -275,12 +275,14 @@ public class OutrosLancamentosMB implements Serializable {
     }
 
     public void verificarCliente() {
-        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
-            cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
-            verCliente = true;
-            if (cliente == null) {
-                verCliente = false;
-                cliente = new Cliente();
+        if (usuarioLogadoMB.getCliente() != null) {
+            if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+                cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+                verCliente = true;
+                if (cliente == null) {
+                    verCliente = false;
+                    cliente = new Cliente();
+                }
             }
         }
     }

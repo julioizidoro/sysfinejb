@@ -1,5 +1,7 @@
 package br.com.financemate.manageBean;
 
+import br.com.financemate.bean.wsCep.ControladorCEPBean;
+import br.com.financemate.bean.wsCep.EnderecoBean;
 import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.TipoPlanoContasDao;
@@ -177,6 +179,30 @@ public class CadClienteMB implements Serializable {
         banco.setNome("Nenhum");
         banco.setNumeroBanco("0");
         bancoDao.update(banco);
+    }
+    
+    
+    public void buscarendereco() {
+        ControladorCEPBean cep = new ControladorCEPBean();
+        cep.setCep(cliente.getCep());
+        EnderecoBean endereco = cep.carregarEndereco();
+        if (endereco.getLogradouro() != null) {
+            cliente.setBairro(endereco.getBairro());
+            cliente.setEstado(endereco.getUf());
+            cliente.setCidade(endereco.getLocalidade());
+            cliente.setComplemento(endereco.getComplemento());
+            String logradouro = endereco.getLogradouro().substring(endereco.getLogradouro().indexOf(" "), endereco.getLogradouro().length());
+            int posicao = endereco.getLogradouro().length();
+            for (int i = 0; i <= logradouro.length(); i++) {
+                posicao = posicao - 1;
+            }
+            String tipo = endereco.getLogradouro().substring(0, posicao + 1);
+            cliente.setLogradouro(logradouro);
+            cliente.setTipoLogradouro(tipo);
+        }else{
+            mensagem mensagem = new mensagem();
+            mensagem.faltaInformacao("Endereço não encontrado!!");
+        }
     }
 
 }

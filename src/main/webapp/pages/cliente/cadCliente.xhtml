@@ -26,6 +26,7 @@
                 <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
+            <p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
 
             <title  >Novo Cliente</title>
             <h:panelGrid columns="2"  style="margin-left: 1%;width: 100%;"> 
@@ -73,7 +74,10 @@
                             <f:selectItem itemLabel="Rodivia" itemValue="Rodivia" />  
                             <f:selectItem itemLabel="Estrada" itemValue="Estrada" />  
                             <f:selectItem itemLabel="Servidão" itemValue="Servidão" />  
-                            <f:selectItem itemLabel="BR" itemValue="BR" />       
+                            <f:selectItem itemLabel="BR" itemValue="BR" />
+                            <f:selectItem itemLabel="Avenida" itemValue="Avenida" />
+                            <f:selectItem itemLabel="Parque" itemValue="Parque" />
+                            <f:selectItem itemLabel="Travessa" itemValue="Travessa" />
                         </p:selectOneMenu>
                     </div>
                 </h:panelGroup>
@@ -147,12 +151,21 @@
                         </p:selectOneMenu>
                     </div>
                 </h:panelGroup>
-                <h:panelGroup >
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel for="cep" style="margin-left:2% ">CEP</h:outputLabel>
-                        <p:inputMask id="cep" size="11"  maxlength="9" class="form-control" value="#{cadClienteMB.cliente.cep}" style="width: 80%;" mask="99999-999"/> 
-                    </div>
-                </h:panelGroup>
+               <h:panelGrid style="width:83%;" columns="2">
+                    <h:panelGroup >
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel for="cep" style="margin-left:2% ">CEP</h:outputLabel>
+                            <p:inputMask id="cep" size="11"  maxlength="9" class="form-control" value="#{cadClienteMB.cliente.cep}" style="width: 80%;" mask="99999-999"/>
+
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                       <p:commandLink title="Buscar Cep" style="text-decoration: none;margin-left:2%;"   action="#{cadClienteMB.buscarendereco()}" update="estado, cidade, bairro, complemento, tipologra, logradouro, :idFrmCadCliente:growl">
+                            <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
+                        </p:commandLink>
+                    </h:panelGroup>
+                </h:panelGrid>
+
             </h:panelGrid>
              <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;"> 
                 <h:panelGroup >
