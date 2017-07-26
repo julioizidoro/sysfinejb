@@ -490,6 +490,11 @@ public class ContasReceberMB implements Serializable {
     public String novaConta() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("closable", false);
+        if (cliente != null) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("cliente", cliente);
+        }
         RequestContext.getCurrentInstance().openDialog("cadContasReceber", options, null);
         return "";
     }

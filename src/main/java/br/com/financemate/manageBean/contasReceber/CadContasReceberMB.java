@@ -86,9 +86,11 @@ public class CadContasReceberMB implements Serializable {
         contasReceber = (Contasreceber) session.getAttribute("contareceber");
         frequencia = (String) session.getAttribute("frequencia");
         vezes = (String) session.getAttribute("vezes");
+        cliente = (Cliente) session.getAttribute("cliente");
         session.removeAttribute("frequencia");
         session.removeAttribute("vezes");
         session.removeAttribute("contareceber");
+        session.removeAttribute("cliente");
         gerarListaCliente();
         //gerarListaPlanoContas();
         if (contasReceber == null) {
@@ -98,8 +100,12 @@ public class CadContasReceberMB implements Serializable {
             if (usuarioLogadoMB.getCliente() != null) {
                 cliente = usuarioLogadoMB.getCliente();
                 gerarListaBanco();
+                gerarListaPlanoContas();
             } else {
-                cliente = new Cliente();
+                if (cliente != null) {
+                    gerarListaBanco();
+                    gerarListaPlanoContas();
+                }
             }
         } else {
             cliente = contasReceber.getCliente();

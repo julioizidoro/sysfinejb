@@ -93,6 +93,8 @@ public class Formapagamento implements Serializable {
     private Vendas vendas;
     @Transient
     private boolean selecionado;
+    @Transient
+    private boolean editar = false;
 
     public Formapagamento() {
     }
@@ -260,16 +262,26 @@ public class Formapagamento implements Serializable {
     public void setVendas(Vendas vendas) {
         this.vendas = vendas;
     }
-    
-    
+
 
     public boolean isSelecionado() {
-		return selecionado;
-	}
+        return selecionado;
+    }
 
-	public void setSelecionado(boolean selecionado) {
-		this.selecionado = selecionado;
-	}
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
+    }
+    
+    
+    public boolean isEditar() {
+        return editar;
+    }
+
+    public void setEditar(boolean editar) {
+        this.editar = editar;
+    }
+    
+    
 
 	@Override
     public int hashCode() {

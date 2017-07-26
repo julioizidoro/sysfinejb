@@ -56,9 +56,11 @@
                 <h:panelGroup>
                     <div class="form-group" >
                         <h:outputLabel for="dataRecebimento" style="margin-left:2% ">Data</h:outputLabel>
-                        <p:inputMask id="dataRecebimento"   mask="99/99/9999" style="width: 60%;" maxlength="15" class="form-control" value="#{recebimentoLoteMB.dataPagamento}">
-                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask> 
+                        <br/> 
+                        <p:calendar pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoLoteMB.dataPagamento}">
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup >

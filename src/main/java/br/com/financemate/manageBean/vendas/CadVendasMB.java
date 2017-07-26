@@ -102,6 +102,7 @@ public class CadVendasMB implements Serializable {
     @EJB
     private PlanoContaTipoDao planoContaTipoDao;
     private List<Planocontatipo> listaPlanoContaTipo;
+    private Formapagamento formapagamentoAnterior;
 
     @PostConstruct
     public void init() {
@@ -126,6 +127,9 @@ public class CadVendasMB implements Serializable {
         gerarListaCliente();
         if (vendas == null) {
             vendas = new Vendas();
+            vendas.setValorDesconto(0f);
+            vendas.setValorBruto(0f);
+            vendas.setValorJuros(0f);
         } else {
             if (cliente == null) {
                 cliente = vendas.getCliente();
@@ -868,8 +872,7 @@ public class CadVendasMB implements Serializable {
     }
 
     public String excluir(Formapagamento formapagamento) {
-        formaPagamentoDao.remove(formapagamento.getIdformaPagamento());
-        listaFormaPagamento.remove(formapagamento.getIdformaPagamento());
+        listaFormaPagamento.remove(formapagamento);
         mensagem msg = new mensagem();
         msg.excluiMessagem();
         gerarListaFormaPagamento();
@@ -878,22 +881,17 @@ public class CadVendasMB implements Serializable {
     }
 
     public String SalvarFormaPagamento() {
-        Vendas nVenda;
+        if (listaFormaPagamento == null) {
+            listaFormaPagamento = new ArrayList<>();
+        }
         if (saldoRestante >= formapagamento.getValor()) {
-            if (vendas.getIdvendas() == null) {
-                nVenda = vendasDao.find(1);
-            } else {
-                nVenda = vendas;
-            }
             if (!TipoDocumento.equalsIgnoreCase("sn")) {
                 if (TipoDocumento.equalsIgnoreCase("Boleto")) {
                     String mensagens = validaDadosDocumentoBoleto();
                     if (mensagens == "") {
                         if (formapagamento.getDataVencimento() != null) {
                             formapagamento.setTipoDocumento(TipoDocumento);
-                            formapagamento.setVendas(nVenda);
-                            formapagamento = formaPagamentoDao.update(formapagamento);
-                            gerarListaFormaPagamento();
+                            listaFormaPagamento.add(formapagamento);
                             return "cadRecebimento";
                         } else {
                             mensagem mensagem = new mensagem();
@@ -907,9 +905,7 @@ public class CadVendasMB implements Serializable {
 
                 } else if (formapagamento.getDataVencimento() != null) {
                     formapagamento.setTipoDocumento(TipoDocumento);
-                    formapagamento.setVendas(nVenda);
-                    formapagamento = formaPagamentoDao.update(formapagamento);
-                    gerarListaFormaPagamento();
+                    listaFormaPagamento.add(formapagamento);
                     return "cadRecebimento";
                 } else {
                     mensagem mensagem = new mensagem();
@@ -1049,6 +1045,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("vendas", vendas);
         session.setAttribute("formapagamento", formapagamento);
         session.setAttribute("importadoSystm", importadoSystm);
+        session.setAttribute("saldoRestante", saldoRestante);
         return "lancaFormaPagamento";
     }
 

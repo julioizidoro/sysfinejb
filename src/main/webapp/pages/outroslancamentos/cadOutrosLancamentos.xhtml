@@ -128,7 +128,7 @@
                     </div>
                 </h:panelGroup>
             </h:panelGrid>
-            <h:panelGrid columns="2" style="width: 100%;margin-left: 2%;">
+            <h:panelGrid columns="3" style="width: 100%;margin-left: 2%;">
                 <h:panelGroup>
                         <div class="form-group" >
                             <h:outputLabel for="valorentrada">Valor Entrada</h:outputLabel>
@@ -144,6 +144,14 @@
                                 <f:convertNumber pattern="##,###,###,###.##"/>
                             </h:inputText>
                         </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group"  >
+                        <h:outputLabel for="competencia" value="Competência" class="left3" />
+                        <p:inputMask id="competencia" mask="99/9999" style="width: 80%;"  maxlength="15" value="#{cadOutrosLancamentosMB.outrosLancamentos.compentencia}" class="form-control">
+                            
+                        </p:inputMask>
+                    </div>
                 </h:panelGroup>
             </h:panelGrid>
            
