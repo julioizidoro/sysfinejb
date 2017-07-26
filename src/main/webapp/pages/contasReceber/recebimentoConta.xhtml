@@ -77,9 +77,11 @@
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="dataRec" class="left3" >Recebimento</h:outputLabel> 
-                        <p:inputMask class="form-control" id="dataRec" style="width: 50%;" value="#{recebimentoContaMB.contasReceber.dataPagamento}" mask="99/99/9999" maxlength="15" >
+                        <br/>
+                        <p:calendar pattern="dd/MM/yyyy" id="dataRec" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoContaMB.contasReceber.dataPagamento}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup>
@@ -133,9 +135,11 @@
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="dataRec1" class="left3" >Recebimento</h:outputLabel> 
-                        <p:inputMask class="form-control" id="dataRec1" style="width: 50%;" value="#{recebimentoContaMB.dataRecebimentoParcial}" disabled="#{recebimentoContaMB.disabilitar}" mask="99/99/9999" maxlength="15" >
+                        <br/>
+                        <p:calendar pattern="dd/MM/yyyy" disabled="#{recebimentoContaMB.disabilitar}" id="dataRec1" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoContaMB.dataRecebimentoParcial}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup>
