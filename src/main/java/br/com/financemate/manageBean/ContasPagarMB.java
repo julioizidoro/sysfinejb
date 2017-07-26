@@ -3,6 +3,7 @@ package br.com.financemate.manageBean;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.CpTransferenciaDao;
+import br.com.financemate.dao.FtpDadosDao;
 import br.com.financemate.dao.NomeArquivoDao;
 import br.com.financemate.dao.OperacaoUsuarioDao;
 import br.com.financemate.dao.PlanoContaTipoDao;
@@ -31,6 +32,7 @@ import org.primefaces.event.SelectEvent;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
+import br.com.financemate.model.Ftpdados;
 import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
@@ -93,6 +95,9 @@ public class ContasPagarMB implements Serializable {
     private PlanoContaTipoDao planoContaTipoDao;
     private Planocontatipo planocontatipo;
     private List<Planocontatipo> listaPlanoContaTipo;
+    private Ftpdados ftpdados;
+    @EJB
+    private FtpDadosDao ftpDadosDao;
 
     @PostConstruct
     public void init() {
@@ -107,6 +112,7 @@ public class ContasPagarMB implements Serializable {
         }
         criarConsultaContasPagarInicial();
         gerarListaContas();
+        pegarFtpDados();
     }
 
     public String getStatus() {
@@ -347,6 +353,14 @@ public class ContasPagarMB implements Serializable {
 
     public void setListaPlanoContaTipo(List<Planocontatipo> listaPlanoContaTipo) {
         this.listaPlanoContaTipo = listaPlanoContaTipo;
+    }
+
+    public Ftpdados getFtpdados() {
+        return ftpdados;
+    }
+
+    public void setFtpdados(Ftpdados ftpdados) {
+        this.ftpdados = ftpdados;
     }
     
     
@@ -847,5 +861,22 @@ public class ContasPagarMB implements Serializable {
         }else{
             return "Autorizar";
         }
+    }
+    
+    
+    public String consultarArquivos(Contaspagar contaspagar) {
+        // TODO Auto-generated catch block
+
+       Nomearquivo nomeArquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
+        if (nomeArquivo == null) {
+            nomeArquivo = new Nomearquivo();
+            return "Não Existe Arquivo";
+        }
+       return nomeArquivo.getNomearquivo01();
+    }
+    
+    
+     public void pegarFtpDados(){
+        ftpdados = ftpDadosDao.find(1);
     }
 }

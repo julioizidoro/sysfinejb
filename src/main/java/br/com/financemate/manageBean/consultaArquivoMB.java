@@ -166,5 +166,11 @@ public class consultaArquivoMB implements Serializable {
     public void pegarFtpDados(){
         ftpdados = ftpDadosDao.find(1);
     }
+    
+    
+    public String pegarCaminho(){
+        ftpdados = ftpDadosDao.find(1);
+        return "//http://" + ftpdados.getHost() + ":82/ftproot/sysfin/contasPagar/ContasPagar-ContratoEstagioAustralia-8.pdf";
+    }
 
 }

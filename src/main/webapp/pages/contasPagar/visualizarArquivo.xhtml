@@ -18,7 +18,7 @@
     </h:head>
 
     <h:body > 
-        <h:form id="idFrmConsultaArquivo" class="body2" style="font-size: 12px; background-color: white;">
+        <h:form target="_blank" id="idFrmConsultaArquivo" class="body2" style="font-size: 12px; background-color: white;">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog id="dialog" style="width:80%;" widgetVar="statusDialog" modal="true" header="Status"  draggable="false" closable="false" resizable="false" showHeader="false" >
@@ -35,20 +35,20 @@
                 </h:panelGroup>
                 <h:panelGroup   rendered="#{consultaArquivoMB.desabilitarDownload()}"> 
                     <h:outputLabel/>
-                    <a  title="Download" name="download" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank" style="text-decoration:none;font-size:18px;">
-                        
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-
-                                <li>
-                                        <i class="fa fa-download" style="font-size: 22px;"/> 
-                                </li>
-                            </ul>
-                        </nav>
-                    </a>
-                </h:panelGroup>
-
+                   <a  title="Download" name="download" onclick="form.target='_blank'" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
+                              
+                                <img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
+                          
+                            </a>
+               </h:panelGroup>
+               
+ 
             </h:panelGrid>
+            <a  title="Download" name="download" onclick="form.target='_blank'" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
+                              
+                                <img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
+                          
+                            </a>
             <hr />
             <p:commandLink title="Fechar" style="margin-left: 45%;text-decoration: none" action="#{consultaArquivoMB.voltar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>

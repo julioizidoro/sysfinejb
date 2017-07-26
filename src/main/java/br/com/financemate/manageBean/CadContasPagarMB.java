@@ -40,6 +40,8 @@ import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Planocontatipo;
 import br.com.financemate.util.Ftp;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import javax.ejb.EJB;
 
 @Named
@@ -410,19 +412,14 @@ public class CadContasPagarMB implements Serializable {
                 salvarTransferencia();
             }
             if (file != null) {
-                String arquivoFtp = nomeArquivoSemId();
-                if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
-                    Nomearquivo nomearquivo = new Nomearquivo();
-                    nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
-                    if (nomearquivo != null) {
-                        nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
-                    }else{
-                        nomearquivo = new Nomearquivo();
-                    }
-                    nomearquivo.setNomearquivo01(arquivoFtp);
-                    nomearquivo.setContaspagar(contaPagar);
-                    nomeArquivoDao.update(nomearquivo);
+                String arquivoFtp = nomeArquivo();
+                Nomearquivo nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
+                if (nomearquivo == null) {
+                    nomearquivo = new Nomearquivo();
                 }
+                nomearquivo.setNomearquivo01(arquivoFtp);
+                nomearquivo.setContaspagar(contaPagar);
+                nomeArquivoDao.update(nomearquivo);
             }
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -478,7 +475,7 @@ public class CadContasPagarMB implements Serializable {
                 cptransferencia = repetirValoresTransferencia(copiaTranferencia);
             }
             if (file != null) {
-                String arquivoFtp = nomeArquivoSemId();
+                String arquivoFtp = nomeArquivo();
                 if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
                     Nomearquivo nomearquivo = new Nomearquivo();
                     nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
@@ -691,15 +688,23 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public String nomeArquivo() {
-        if (contaPagar.getIdcontasPagar() != null) {
-            nomeAquivoFTP = "ContasPagar-" + contaPagar.getIdcontasPagar() + "-" + file.getFileName().trim();
-        } else {
-            nomeAquivoFTP = "ContasPagar-" + file.getFileName().trim();
+        String nome = file.getFileName().trim();
+        try {
+            nome = new String(nome.getBytes(Charset.defaultCharset()), "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        nomeAquivoFTP = "ContasPagar-" + nome;
         return nomeAquivoFTP;
     }
 
     public String nomeArquivoSemId() {
+        String nome = file.getFileName().trim();
+        try {
+            nome = new String(nome.getBytes(Charset.defaultCharset()), "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
         nomeAquivoFTP = "ContasPagar-" + file.getFileName().trim();
         return nomeAquivoFTP;
     }
