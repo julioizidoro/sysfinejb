@@ -8,9 +8,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/> 
         <title>Login SysFin</title>  
         <link href="resources/css/cssLogin.css" rel="stylesheet" type="text/css" />
-        <link rel="icon" href="resources/img/logofinanceGuia.png" type="image/x-icon" />
+        <link rel="icon" href="resources/img/logotipoFinancemate.png" type="image/x-icon" />
         
-       <link href="resources/css/cssteste.css" rel="stylesheet" type="text/css" />
         <!-- Bootstrap core CSS -->
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
 
@@ -23,21 +22,21 @@
         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
         	<p:outputLabel value="Aguarde.."/>
         	<br/> 
-            <img src="resources/img/ajax-carregando.gif" />
+                <img src="resources/img/ajax-carregando.gif" style=""/>
         </p:dialog>
         <p:growl id="growl" showDetail="true" sticky="false" />
         <h:form id="login">
             <div id="tudo">  
                 <img src="resources/img/novaTelaLogin.png" width="100%" height="659px;"/>
-            	  <h:panelGrid columns="1" style=" margin-left:45%; margin-top:-397px;width: 53%;">
+            	  <h:panelGrid columns="1" style=" margin-left:44.7%; margin-top:-394px;width: 54%;">
                     <div class="form-group" >
-                       <p:inputText id="nome" placeholder="Login" style="padding:2px;color: white;font-size: 17px;width:48%;"  class="form-control" value="#{usuarioLogadoMB.login}" required="required" requiredMessage="Campo Obrigatorio"/>
+                       <p:inputText id="nome" placeholder="Login" style="padding:2px;color: white;font-size: 17px;width:49%;background:#377591;border:0px;border-radius:2px;" value="#{usuarioLogadoMB.login}" required="required" requiredMessage="Campo Obrigatorio"/>
                        <p:outputLabel/>
-                       <p:password id="senha" placeholder="Senha" style="padding:2px;color: white;font-size: 17px;width:48%;"  class="form-control" value="#{usuarioLogadoMB.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
+                       <p:password id="senha" placeholder="Senha" style="padding:2px;color: white;font-size: 17px;width:49%;background:#377591;border:0px;border-radius:2px;margin-top:8px;" value="#{usuarioLogadoMB.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
                     </div>
                       <p:outputLabel/>
                        <p:commandLink title="Entra"   style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" update="growl">
-                           <img src="resources/img/botaoEntrar.png" style="width:110px;height: 27px;margin-left: -4px;margin-top: -12px;"/>
+                           <img src="resources/img/botaoEntrar.png" style="width:116px;height: 27px;margin-left: -4px;margin-top: -12px;"/>
                     </p:commandLink> 
                 </h:panelGrid>
             </div>
