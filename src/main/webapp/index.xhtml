@@ -29,11 +29,11 @@
         <h:form id="login">
             <div id="tudo">  
                 <img src="resources/img/novaTelaLogin.png" width="100%" height="659px;"/>
-            	  <h:panelGrid columns="1" style=" margin-left:45%; margin-top:-397px;">
+            	  <h:panelGrid columns="1" style=" margin-left:45%; margin-top:-397px;width: 53%;">
                     <div class="form-group" >
-                       <p:inputText id="nome" placeholder="Login" size="40" style="padding:2px;color: white;font-size: 17px;"  class="form-control" value="#{usuarioLogadoMB.login}" required="required" requiredMessage="Campo Obrigatorio"/>
+                       <p:inputText id="nome" placeholder="Login" style="padding:2px;color: white;font-size: 17px;width:48%;"  class="form-control" value="#{usuarioLogadoMB.login}" required="required" requiredMessage="Campo Obrigatorio"/>
                        <p:outputLabel/>
-                       <p:password id="senha" size="40" placeholder="Senha" style="padding:2px;color: white;font-size: 17px;"  class="form-control" value="#{usuarioLogadoMB.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
+                       <p:password id="senha" placeholder="Senha" style="padding:2px;color: white;font-size: 17px;width:48%;"  class="form-control" value="#{usuarioLogadoMB.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
                     </div>
                       <p:outputLabel/>
                        <p:commandLink title="Entra"   style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" update="growl">
