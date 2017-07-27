@@ -59,7 +59,7 @@
                     <div class="form-group" style="border: 1px solid #ffffff;">
                         <h:outputLabel  for="dataVenc" class="left3" >Vencimento</h:outputLabel> 
                         <br/>
-                        <p:calendar pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoContaMB.contasReceber.dataVencimento}">
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoContaMB.contasReceber.dataVencimento}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             <p:ajax event="change"/>
                         </p:calendar>
@@ -78,14 +78,14 @@
                     <div class="form-group">
                         <h:outputLabel  for="dataRec" class="left3" >Recebimento</h:outputLabel> 
                         <br/>
-                        <p:calendar pattern="dd/MM/yyyy" id="dataRec" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoContaMB.contasReceber.dataPagamento}">
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataRec" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoContaMB.contasReceber.dataPagamento}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             <p:ajax event="change"/>
                         </p:calendar>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup>
-                    <div class="form-group" style="margin-left: 49%;">
+                    <div class="form-group" style="margin-left: 230px;;">
                         <h:outputLabel  for="idconta" class="left3" >Conta</h:outputLabel> 
                         <br/>
                         <p:selectOneMenu id="idconta"  style="width:180px;"  value="#{recebimentoContaMB.banco}"
@@ -97,7 +97,7 @@
                     </div>
                 </h:panelGroup> 
             </h:panelGrid>
-            <h:panelGrid columns="3"  style="margin-left: 2%;width: 100%;">
+            <h:panelGrid columns="3"  style="margin-left: 2%;width: 98%;">
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="desagio" class="left3" >Deságio</h:outputLabel> 
@@ -119,7 +119,7 @@
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="idValorPagoRecebido" class="left3" >Valor Recebido</h:outputLabel> 
-                        <h:inputText class="form-control"  id="idValorPagoRecebido"  style="width: 81%;text-align: right;" readonly="true" value="#{recebimentoContaMB.valorTotal}">
+                        <h:inputText class="form-control"  id="idValorPagoRecebido"  style="width: 150px;text-align: right;" readonly="true" value="#{recebimentoContaMB.valorTotal}">
                             <f:convertNumber pattern="##,###,###,###.##"/>
                         </h:inputText>
                     </div>
@@ -136,7 +136,7 @@
                     <div class="form-group">
                         <h:outputLabel  for="dataRec1" class="left3" >Recebimento</h:outputLabel> 
                         <br/>
-                        <p:calendar pattern="dd/MM/yyyy" disabled="#{recebimentoContaMB.disabilitar}" id="dataRec1" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoContaMB.dataRecebimentoParcial}">
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" disabled="#{recebimentoContaMB.disabilitar}" id="dataRec1" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoContaMB.dataRecebimentoParcial}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             <p:ajax event="change"/>
                         </p:calendar>
@@ -177,6 +177,36 @@
             <p:commandLink title="Cancelar" style="margin-left: 9%;text-decoration: none" action="#{recebimentoContaMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
+            
+            <script>
+                PrimeFaces.locales['pt_BR'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Começo',
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+                dayNamesMin: ['D','S','T','Q','Q','S','S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Só Horas',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Data Atual',
+                ampm: false,
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText : 'Todo Dia'
+            };
+            </script>
         </h:form>
     </h:body>
 </html>
