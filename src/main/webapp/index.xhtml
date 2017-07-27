@@ -9,6 +9,13 @@
         <title>Login SysFin</title>  
         <link href="resources/css/cssLogin.css" rel="stylesheet" type="text/css" />
         <link rel="icon" href="resources/img/logofinanceGuia.png" type="image/x-icon" />
+        
+       <link href="resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap core CSS -->
+        <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+        <!-- Font Awesome -->
+        <link href="resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head> 
     <h:body style="width:100%;"> 
         <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
@@ -21,15 +28,16 @@
         <p:growl id="growl" showDetail="true" sticky="false" />
         <h:form id="login">
             <div id="tudo">  
-                <img src="resources/img/loginSysfin.jpg" width="100%" height="659px;"/>
-            	  <h:panelGrid columns="3" style=" margin-left:8%; margin-top:-12%;">
-                    <p:outputLabel value="Nome do usuário" style="color:white"/> 
-	            <p:outputLabel value="Senha" style="color:white"/> 
-                    <p:outputLabel/>
-	            <p:inputText id="nome" size="23" style="padding:2px;"  class="meio" value="#{usuarioLogadoMB.login}" required="required" requiredMessage="Campo Obrigatorio"/>
-	            <p:password id="senha" size="23" style="padding:2px;"  class="meio" value="#{usuarioLogadoMB.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
-	            <p:commandLink title="Entra"   style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" update="growl">
-                	<img src="resources/img/iconeEntrar.png" width="20" height="20"/>
+                <img src="resources/img/novaTelaLogin.png" width="100%" height="659px;"/>
+            	  <h:panelGrid columns="1" style=" margin-left:45%; margin-top:-29%;">
+                    <div class="form-group" >
+                       <p:inputText id="nome" placeholder="Login" size="40" style="padding:2px;color: white;font-size: 17px;"  class="form-control" value="#{usuarioLogadoMB.login}" required="required" requiredMessage="Campo Obrigatorio"/>
+                       <p:outputLabel/>
+                       <p:password id="senha" size="40" placeholder="Senha" style="padding:2px;color: white;font-size: 17px;"  class="form-control" value="#{usuarioLogadoMB.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
+                    </div>
+                      <p:outputLabel/>
+                       <p:commandLink title="Entra"   style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" update="growl">
+                           <img src="resources/img/botaoEntrar.png" style="width:110px;height: 27px;margin-left: -1%;margin-top: -3%;"/>
                     </p:commandLink> 
                 </h:panelGrid>
             </div>
