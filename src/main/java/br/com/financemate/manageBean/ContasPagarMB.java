@@ -879,4 +879,15 @@ public class ContasPagarMB implements Serializable {
      public void pegarFtpDados(){
         ftpdados = ftpDadosDao.find(1);
     }
+     
+     
+      public boolean verificarArquivo(Contaspagar contaspagar) {
+        // TODO Auto-generated catch block
+
+       Nomearquivo nomeArquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
+        if (nomeArquivo == null) {
+            return false;
+        }
+       return true;
+    }
 }
