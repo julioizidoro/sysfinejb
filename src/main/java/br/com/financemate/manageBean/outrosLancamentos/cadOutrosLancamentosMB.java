@@ -209,7 +209,7 @@ public class cadOutrosLancamentosMB implements Serializable {
     public void salvar() {
         outrosLancamentos = setaValoresOutrosLancamentos(outrosLancamentos);
         String mensagem = validarDados();
-        if (mensagem == "") {
+        if (mensagem.length() < 1) {
             outrosLancamentos = outrosLancamentosDao.update(outrosLancamentos);
             mensagem msg = new mensagem();
             msg.saveMessagem();
@@ -224,7 +224,7 @@ public class cadOutrosLancamentosMB implements Serializable {
     public void salvarRepetir() {
         outrosLancamentos = setaValoresOutrosLancamentos(outrosLancamentos);
         String mensagem = validarDados();
-        if (mensagem == "") {
+        if (mensagem.length() < 1) {
             outrosLancamentos = outrosLancamentosDao.update(outrosLancamentos);
             Movimentobanco copia = new Movimentobanco();
             copia = outrosLancamentos;
@@ -252,16 +252,16 @@ public class cadOutrosLancamentosMB implements Serializable {
         if (outrosLancamentos.getCliente() == null) {
             mensagem = mensagem + "Unidade não informada \r\n";
         }
-        if (outrosLancamentos.getDataRegistro().equals(null)) {
+        if (outrosLancamentos.getDataRegistro() == null) {
             mensagem = mensagem + " Data de Registro não informada \n";
         }
         if (outrosLancamentos.getTipoDocumento().equalsIgnoreCase(null)) {
             mensagem = mensagem + "Tipo de documento não informado \r\n";
         }
-        if (outrosLancamentos.getBanco().equals(null)) {
+        if (banco == null || banco.getIdbanco() == null) {
             mensagem = mensagem + "Conta não selecionada \r\n";
         }
-        if (outrosLancamentos.getDataVencimento().equals(null)) {
+        if (outrosLancamentos.getDataVencimento() == null) {
             mensagem = mensagem + "Data de Vencimento não informada \r\n";
         }
         if (outrosLancamentos.getValorEntrada() == null) {
@@ -273,7 +273,7 @@ public class cadOutrosLancamentosMB implements Serializable {
         if (outrosLancamentos.getDescricao().equalsIgnoreCase(null)) {
             mensagem = mensagem + "Descrição não informada \r\n";
         }
-        if (outrosLancamentos.getPlanocontas() == null) {
+        if (planoContas == null) {
             mensagem = mensagem + "Plano de contas não informada \r\n";
         }
         if (outrosLancamentos.getDataCompensacao() == null) {

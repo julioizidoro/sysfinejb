@@ -260,15 +260,14 @@ public class GerarParcelaMB implements Serializable {
                     contasreceber.setNumeroParcela(i + 1 + "/" + vezes);
                     contasreceber.setStatus("Ativo");
                     if (vendas.getCliente() != null) {
-                        banco = bancoDao.find("Select b From Banco b Where b.cliente.idcliente=" + vendas.getCliente().getIdcliente()
-                                + " and b.nome='Nenhum'");
-                        contasreceber.setBanco(banco);
+                        List<Banco> listaBanco = bancoDao.list("Select b From Banco b Where b.cliente.idcliente=" + vendas.getCliente().getIdcliente());
+                        contasreceber.setBanco(listaBanco.get(0));
                         contasreceber.setCliente(vendas.getCliente());
                         planocontas = planoContasDao.find(1);
                         contasreceber.setPlanocontas(planocontas);
                     } else {
-                        banco = bancoDao.find("Select b From Banco b Where b.cliente.idcliente=8 and b.nome='Nenhum'");
-                        contasreceber.setBanco(banco);
+                        List<Banco> listaBanco = bancoDao.list("Select b From Banco b Where b.cliente.idcliente=8");
+                        contasreceber.setBanco(listaBanco.get(0));
                         cliente = clienteDao.find(8);
                         contasreceber.setCliente(cliente);
                         planocontas = planoContasDao.find(8);
