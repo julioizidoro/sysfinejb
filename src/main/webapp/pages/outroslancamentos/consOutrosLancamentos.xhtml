@@ -109,12 +109,12 @@
                     <p:column headerText="ID" sortBy="#{outrosLancamentos.idmovimentobanco}" style="width:5%; font-size:12px; background:white; color:black; border:none; text-align:center;">
                         <h:outputText  value="#{outrosLancamentos.idmovimentobanco}" style="font-size:12px; color:gray;"/>
                     </p:column> 
-                    <p:column headerText="Data" sortBy="#{outrosLancamentos.dataCompensacao}" style="width:17%; font-size:12px; background:white; color:black; border:none; text-align:center;">
+                    <p:column headerText="Data" sortBy="#{outrosLancamentos.dataCompensacao}" style="width:10%; font-size:12px; background:white; color:black; border:none; text-align:center;">
                         <h:outputText  value="#{outrosLancamentos.dataCompensacao}" style="font-size:12px; color:gray;" > 
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                         </h:outputText> 
                     </p:column> 
-                    <p:column headerText="Historico" width="40%" sortBy="#{outrosLancamentos.descricao}" style=" font-size:12px; background:white; color:black; border:#fff; text-align:left;">
+                    <p:column headerText="Descrição" width="35%" sortBy="#{outrosLancamentos.descricao}" style=" font-size:12px; background:white; color:black; border:#fff; text-align:left;">
                         <h:outputText value="#{outrosLancamentos.descricao}" style="font-size:12px; color:gray;"/>
                     </p:column> 
                     <p:column headerText="Valor Entrada" sortBy="#{outrosLancamentos.valorEntrada}" style="width:10%; background:white; font-size:12px; color:black; border:none; text-align:right;" styleClass="alinharCenter">
@@ -122,11 +122,14 @@
                             <f:convertNumber currencySymbol="" type="currency"/>
                         </h:outputText>                                     
                     </p:column>
-                    <p:column headerText="Valor Saida" sortBy="#{outrosLancamentos.valorSaida}" style="width:8%; background:white; font-size:12px; color:black; border:none; text-align:right;" styleClass="alinharCenter">
+                    <p:column headerText="Valor Saida" sortBy="#{outrosLancamentos.valorSaida}" style="width:10%; background:white; font-size:12px; color:black; border:none; text-align:right;" styleClass="alinharCenter">
                         <h:outputText value="#{outrosLancamentos.valorSaida}" style="font-size:12px; color:#{outrosLancamentosMB.coresValoresSaida(outrosLancamentos)};">
                             <f:convertNumber currencySymbol="" type="currency"/>
                         </h:outputText>                                    
                     </p:column>
+                    <p:column headerText="Plano Conta" sortBy="#{outrosLancamentos.planocontas.descricao}" style="width:15%;font-size:12px; background:white; color:black; border:#fff; text-align:left;">
+                        <h:outputText value="#{outrosLancamentos.planocontas.descricao}" style="font-size:12px; color:gray;"/>
+                    </p:column> 
                     <p:column headerText="Saldo" sortBy="#{outrosLancamentos.saldo}" style="width:8%;text-align:right; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
                         <h:outputText value="#{outrosLancamentos.saldo}" style="font-size:12px; color:gray;">
                             <f:convertNumber currencySymbol="" type="currency"/>
