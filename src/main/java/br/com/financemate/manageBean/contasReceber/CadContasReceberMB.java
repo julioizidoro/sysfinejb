@@ -324,7 +324,7 @@ public class CadContasReceberMB implements Serializable {
                 contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
                 contasReceber.setStatus("Ativo");
                 String mensagem = validarDados();
-                if (mensagem == "") {
+                if (mensagem.length() < 1) {
                     Contasreceber copia = new Contasreceber();
                     copia = contasReceber;
                     contasReceber = contasReceberDao.update(contasReceber);
@@ -378,7 +378,7 @@ public class CadContasReceberMB implements Serializable {
             contasReceber.setNumeroParcela("1/1");
             contasReceber.setStatus("Ativo");
             String mensagem = validarDados();
-            if (mensagem == "") {
+            if (mensagem.length() < 1) {
                 contasReceber = contasReceberDao.update(contasReceber);
                 RequestContext.getCurrentInstance().closeDialog(contasReceber);
             } else {
@@ -399,23 +399,26 @@ public class CadContasReceberMB implements Serializable {
 
     public String validarDados() {
         String mensagem = "";
-        if (contasReceber.getCliente().equals("")) {
+        if (cliente == null || cliente.getIdcliente() == null) {
             mensagem = mensagem + "Unidade não selecionada \r\n";
         }
         if (contasReceber.getNomeCliente().equals("")) {
             mensagem = mensagem + "Nome do Cliente não informado \r\n";
         }
-        if (contasReceber.getDataVencimento().equals(null)) {
+        if (contasReceber.getDataVencimento() == null) {
             mensagem = mensagem + "Data de vencimento não informado \r\n";
         }
-        if (contasReceber.getValorParcela().equals("")) {
+        if (contasReceber.getValorParcela() == null) {
             mensagem = mensagem + "Valor não informado \r\n";
         }
-        if (contasReceber.getBanco().equals(null)) {
+        if (banco == null || banco.getIdbanco() == null) {
             mensagem = mensagem + "Banco não selecionado";
         }
         if (contasReceber.getNumeroDocumento().equalsIgnoreCase("")) {
             mensagem = mensagem + "Número de documento não informado \r\n";
+        }
+        if (planoContas == null || planoContas.getIdplanoContas() == null) {
+            mensagem = mensagem + "Selecione o plano de conta \r\n";
         }
         return mensagem;
     }
