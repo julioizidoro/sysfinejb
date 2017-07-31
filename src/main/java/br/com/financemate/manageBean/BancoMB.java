@@ -3,13 +3,10 @@ package br.com.financemate.manageBean;
 import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;

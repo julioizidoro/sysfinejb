@@ -43,6 +43,7 @@ public class EditarParcelaMB implements Serializable {
         vendas = (Vendas) session.getAttribute("vendas");
         contasReceber = (Contasreceber) session.getAttribute("contasreceber");
         session.removeAttribute("contasreceber");
+        session.removeAttribute("vendas");
         if (contasReceber == null) {
             contasReceber = new Contasreceber();
         } else {
@@ -106,10 +107,10 @@ public class EditarParcelaMB implements Serializable {
         Float totalParcela;
         Contasreceber conta = new Contasreceber();
         List<Contasreceber> listarConta = null;
-        conta = contasReceberDao.find(contasReceber.getIdcontasReceber());
-        conta.setTipodocumento(tipoDocumento);
-        conta.setValorParcela(valorEditado);
-        contasReceberDao.update(conta);
+//        conta = contasReceberDao.find(contasReceber.getIdcontasReceber());
+//        conta.setTipodocumento(tipoDocumento);
+//        conta.setValorParcela(valorEditado);
+        contasReceberDao.update(contasReceber);
         listarConta = contasReceberDao.list("Select c From Contasreceber c where c.venda=" + contasReceber.getVenda() + " and c.valorParcela=" + contasReceber.getValorParcela());
         if (listarConta == null) {
             listarConta = new ArrayList<Contasreceber>();
@@ -130,6 +131,14 @@ public class EditarParcelaMB implements Serializable {
             contasReceberDao.update(listarConta.get(i));
         }
         FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
+        return "gerarParcelas";
+    }
+    
+    
+    public String CancelarEdicao() {
+         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
         return "gerarParcelas";

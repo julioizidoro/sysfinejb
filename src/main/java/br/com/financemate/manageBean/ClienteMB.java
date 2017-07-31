@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -150,24 +148,19 @@ public class ClienteMB implements Serializable {
 
     public String novo() {
         if (usuarioLogadoMB.getUsuario().getTipoacesso().getAcesso().getIcliente()) {
-            try {
-                listarTipoPlanoContas();
-                cliente = new Cliente();
-                Map<String, Object> options = new HashMap<String, Object>();
-                options.put("contentWidth", 700);
-                options.put("closable", false);
-                RequestContext.getCurrentInstance().openDialog("cadCliente", options, null);
-                return "";
-            } catch (SQLException ex) {
-                Logger.getLogger(ClienteMB.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            listarTipoPlanoContas();
+            cliente = new Cliente();
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("contentWidth", 700);
+            options.put("closable", false);
+            RequestContext.getCurrentInstance().openDialog("cadCliente", options, null);
+            return "";
 
         } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
-        return null;
     }
 
     public void retornoDialogNovo(SelectEvent event) {
@@ -178,7 +171,7 @@ public class ClienteMB implements Serializable {
             listaClientes.add(cliente);
         }
     }
-    
+
     public void retornoDialogEdicao(SelectEvent event) {
         Cliente cliente = (Cliente) event.getObject();
         if (cliente.getIdcliente() != null) {
@@ -201,7 +194,7 @@ public class ClienteMB implements Serializable {
         return null;
     }
 
-    public void listarTipoPlanoContas() throws SQLException {
+    public void listarTipoPlanoContas() {
         listarTipoPlanoContas = tipoPlanoContasDao.list("Select t From Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas == null) {
             listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();

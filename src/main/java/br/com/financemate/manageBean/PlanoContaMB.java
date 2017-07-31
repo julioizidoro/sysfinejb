@@ -84,15 +84,9 @@ public class PlanoContaMB implements Serializable {
     }
 
     public void gerarListaPlanoConta() {
-        try {
-            listarPlanoContas = planoContasDao.list("Select p From Planocontas p order by p.descricao");
-            if (listarPlanoContas == null) {
-                listarPlanoContas = new ArrayList<Planocontas>();
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(PlanoContaMB.class.getName()).log(Level.SEVERE, null, ex);
-            mostrarMensagem(ex, "Erro! ", "Ao gerar Lista Plano de Contas");
+        listarPlanoContas = planoContasDao.list("Select p From Planocontas p order by p.descricao");
+        if (listarPlanoContas == null) {
+            listarPlanoContas = new ArrayList<Planocontas>();
         }
 
     }
