@@ -28,7 +28,9 @@
 			
 			 <h:panelGrid columns="1" style="margin-left:15%;">
            		<p:outputLabel value="Valor" style="margin-left:30%;"/>
-           		<p:inputText value="#{editarParcelaMB.valorEditado}" size="12" style="text-align: right;"/>
+           		<p:inputText value="#{editarParcelaMB.valorEditado}" size="12" style="text-align: right;">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </p:inputText>
              </h:panelGrid>
              
              <h:panelGrid style="margin-left:55%; margin-top:-9%;">   

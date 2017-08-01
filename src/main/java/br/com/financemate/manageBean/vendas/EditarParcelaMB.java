@@ -101,31 +101,32 @@ public class EditarParcelaMB implements Serializable {
     }
 
     public String SalvarParcelaEditada() {
+        Float valorOriginal = 0f;
         Float valorDividir;
         Float valorDivido = 0f;
         Integer numeroParcelas;
         Float totalParcela;
-        Contasreceber conta = new Contasreceber();
         List<Contasreceber> listarConta = null;
-//        conta = contasReceberDao.find(contasReceber.getIdcontasReceber());
-//        conta.setTipodocumento(tipoDocumento);
-//        conta.setValorParcela(valorEditado);
+        valorOriginal = contasReceber.getValorParcela();
+        contasReceber.setTipodocumento(tipoDocumento);
+        contasReceber.setValorParcela(valorEditado);
         contasReceberDao.update(contasReceber);
-        listarConta = contasReceberDao.list("Select c From Contasreceber c where c.venda=" + contasReceber.getVenda() + " and c.valorParcela=" + contasReceber.getValorParcela());
+        listarConta = contasReceberDao.list("Select c From Contasreceber c where c.venda=" + contasReceber.getVenda() + " and c.valorParcela=" + valorOriginal);
         if (listarConta == null) {
             listarConta = new ArrayList<Contasreceber>();
         }
         numeroParcelas = listarConta.size();
+        listarConta.remove(contasReceber);
         for (int i = 0; i < listarConta.size(); i++) {
-            if (contasReceber.getValorParcela() < valorEditado) {
-                valorDividir = valorEditado - contasReceber.getValorParcela();
+            if (valorOriginal < valorEditado) {
+                valorDividir = valorEditado - valorOriginal;
                 valorDivido = valorDividir / numeroParcelas;
-                totalParcela = contasReceber.getValorParcela() - valorDivido;
+                totalParcela = valorOriginal - valorDivido;
                 listarConta.get(i).setValorParcela(totalParcela);
             } else {
-                valorDividir = contasReceber.getValorParcela() - valorEditado;
+                valorDividir = valorOriginal - valorEditado;
                 valorDivido = valorDividir / numeroParcelas;
-                totalParcela = contasReceber.getValorParcela() + valorDivido;
+                totalParcela = valorOriginal + valorDivido;
                 listarConta.get(i).setValorParcela(totalParcela);
             }
             contasReceberDao.update(listarConta.get(i));
