@@ -489,32 +489,32 @@ public class VendasMB implements Serializable {
         sql = "Select v from Vendas v where ";
         if (cliente != null) {
             sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente();
-            if (nomeCliente != "") {
+            if (!nomeCliente.equalsIgnoreCase("")) {
                 sql = sql + " and ";
             } else if (nVenda != null && nVenda > 0) {
                 sql = sql + " and ";
-            } else if (situacao != null && situacao != "") {
+            } else if (situacao != null && !situacao.equalsIgnoreCase("")) {
                 sql = sql + " and ";
             } else if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
             }
         } else {
             sql = sql + " v.cliente.visualizacao='Operacional'";
-            if (nomeCliente != "") {
+            if (!nomeCliente.equalsIgnoreCase("")) {
                 sql = sql + " and ";
             } else if (nVenda != null && nVenda > 0) {
                 sql = sql + " and ";
-            } else if (situacao != null && situacao != "") {
+            } else if (situacao != null && !situacao.equalsIgnoreCase("")) {
                 sql = sql + " and ";
             } else if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
             }
         }
-        if (nomeCliente != "") {
+        if (!nomeCliente.equalsIgnoreCase("")) {
             sql = sql + " v.nomeCliente like '%" + nomeCliente + "%'";
             if (nVenda != null && nVenda > 0) {
                 sql = sql + " and ";
-            } else if (situacao != null && situacao != "") {
+            } else if (situacao != null && !situacao.equalsIgnoreCase("")) {
                 sql = sql + " and ";
             } else if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
@@ -522,13 +522,13 @@ public class VendasMB implements Serializable {
         }
         if (nVenda != null && nVenda > 0) {
             sql = sql + " v.idvendas=" + nVenda;
-            if (situacao != null && situacao != "") {
+            if (situacao != null && !situacao.equalsIgnoreCase("")) {
                 sql = sql + " and ";
             } else if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + " and ";
             }
         }
-        if (situacao != null && situacao != "") {
+        if (situacao != null && !situacao.equalsIgnoreCase("")) {
             if (situacao.equalsIgnoreCase("amarelo") || situacao.equalsIgnoreCase("vermelho")) {
                 sql = sql + " v.situacao='" + situacao + "'";
                 if ((dataInicial != null) && (dataFinal != null)) {
