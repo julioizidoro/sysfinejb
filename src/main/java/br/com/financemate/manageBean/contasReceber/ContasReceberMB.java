@@ -724,142 +724,48 @@ public class ContasReceberMB implements Serializable {
     }
 
     public void filtrar() {
-        sql = "Select v from Contasreceber v  where ";
+        sql = "Select v from Contasreceber v  where  v.nomeCliente like '%" + nomeCliente + "%'";
         if (cliente != null) {
-            sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente();
-            if (nomeCliente != "") {
-                sql = sql + " and ";
-            } else if (valorParcela != 0f) {
-                sql = sql + " and ";
-            } else if (nVenda != 0) {
-                sql = sql + " and ";
-            } else if (banco != null && banco.getIdbanco() != null) {
-                sql = sql + " and ";
-            } else if (status != null && !status.equalsIgnoreCase("sn")) {
-                sql = sql + " and ";
-            } else if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            } else if (dataRecebimentoInicial != null && dataRecebimentoFinal != null) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.cliente.idcliente=" + cliente.getIdcliente();
         } else {
-            sql = sql + " v.cliente.visualizacao='Operacional'";
-            if (nomeCliente != "") {
-                sql = sql + " and ";
-            } else if (valorParcela != 0f) {
-                sql = sql + " and ";
-            } else if (nVenda != 0) {
-                sql = sql + " and ";
-            } else if (banco != null && banco.getIdbanco() != null) {
-                sql = sql + " and ";
-            } else if (status != null && !status.equalsIgnoreCase("sn")) {
-                sql = sql + " and ";
-            } else if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            } else if (dataRecebimentoInicial != null && dataRecebimentoFinal != null) {
-                sql = sql + " and ";
-            }
-        }
-
-        if (nomeCliente != "") {
-            sql = sql + " v.nomeCliente like '%" + nomeCliente + "%'";
-            if (valorParcela != 0f) {
-                sql = sql + " and ";
-            } else if (nVenda != 0) {
-                sql = sql + " and ";
-            } else if (banco != null && banco.getIdbanco() != null) {
-                sql = sql + " and ";
-            } else if (status != null && !status.equalsIgnoreCase("sn")) {
-                sql = sql + " and ";
-            } else if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            } else if (dataRecebimentoInicial != null && dataRecebimentoFinal != null) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.cliente.visualizacao='Operacional'";
         }
 
         if (valorParcela != 0f) {
-            sql = sql + " v.valorParcela=" + valorParcela;
-            if (nVenda != 0) {
-                sql = sql + " and ";
-            } else if (banco != null && banco.getIdbanco() != null) {
-                sql = sql + " and ";
-            } else if (status != null && !status.equalsIgnoreCase("sn")) {
-                sql = sql + " and ";
-            } else if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            } else if (dataRecebimentoInicial != null && dataRecebimentoFinal != null) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.valorParcela=" + valorParcela;
         }
 
         if (nVenda != 0) {
-            sql = sql + " v.idcontasReceber=" + nVenda;
-            if (banco != null && banco.getIdbanco() != null) {
-                sql = sql + " and ";
-            } else if (status != null && !status.equalsIgnoreCase("sn")) {
-                sql = sql + " and ";
-            } else if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            } else if (dataRecebimentoInicial != null && dataRecebimentoFinal != null) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.idcontasReceber=" + nVenda;
         }
 
         if (banco != null && banco.getIdbanco() != null) {
-            sql = sql + " v.banco.idbanco=" + banco.getIdbanco();
-            if (status != null && !status.equalsIgnoreCase("sn")) {
-                sql = sql + " and ";
-            } else if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            } else if (dataRecebimentoInicial != null && dataRecebimentoFinal != null) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.banco.idbanco=" + banco.getIdbanco();
         }
 
         if (status.equalsIgnoreCase("Recebidas")) {
-            sql = sql + " v.valorPago>0";
-            if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            } else if (dataRecebimentoInicial != null && dataRecebimentoFinal != null) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.valorPago>0";
         } else if (status.equalsIgnoreCase("Vencidas")) {
-            sql = sql + " v.dataVencimento<'" + Formatacao.ConvercaoDataSql(new Date()) + "' and v.dataPagamento=null";
-            if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            } else if (dataRecebimentoInicial != null && dataRecebimentoFinal != null) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.dataVencimento<'" + Formatacao.ConvercaoDataSql(new Date()) + "' and v.dataPagamento=null";
         } else if (status.equalsIgnoreCase("A vencer")) {
-            sql = sql + " v.dataVencimento>'" + Formatacao.ConvercaoDataSql(new Date()) + "'";
-            if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            } else if (dataRecebimentoInicial != null && dataRecebimentoFinal != null) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.dataVencimento>'" + Formatacao.ConvercaoDataSql(new Date()) + "'";
         } else if (status.equalsIgnoreCase("Canceladas")) {
-            sql = sql + " v.status=" + "'CANCELADA'";
-            if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            } else if (dataRecebimentoInicial != null && dataRecebimentoFinal != null) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.status=" + "'CANCELADA'";
+        }else{
+            sql = sql + " and v.status<>" + "'RECEBIMENTO'";
         }
 
         if ((dataRecebimentoInicial != null) && (dataRecebimentoFinal != null)) {
-            sql = sql + "v.dataPagamento>='" + Formatacao.ConvercaoDataSql(dataRecebimentoInicial)
+            sql = sql + " and v.dataPagamento>='" + Formatacao.ConvercaoDataSql(dataRecebimentoInicial)
                     + "' and v.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataRecebimentoFinal) + "'";
-            if ((dataInicial != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            }  
         }
 
         if ((dataInicial != null) && (dataFinal != null)) {
-            sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
+            sql = sql + " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
                     + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
-                    + "' order by v.dataVencimento";
+                    + "'";
         }
+        sql = sql  + "  order by v.dataVencimento";
         RequestContext.getCurrentInstance().closeDialog(sql);
     }
 
