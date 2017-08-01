@@ -595,78 +595,43 @@ public class ContasPagarMB implements Serializable {
     }
 
     public void filtrar() {
-        sql = "Select v from Contaspagar v where ";
+        sql = "Select v from Contaspagar v where v.descricao like '%" + descricao + "%'";
         if (liberadas) {
-            sql = sql + " v.contaPaga='S' and ";
+            sql = sql + " and v.contaPaga='S'";
         } else {
-            sql = sql + " v.contaPaga='N' and ";
+            sql = sql + " and v.contaPaga='N'";
 
         }
         if (autorizadas) {
-            sql = sql + " v.autorizarPagamento='S' and ";
+            sql = sql + " and v.autorizarPagamento='S'";
         }
         if (cliente != null) {
-            sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente();
-            if (!descricao.equalsIgnoreCase("")) {
-                sql = sql + " and ";
-            } else if (planocontas != null) {
-                sql = sql + " and ";
-            } else if (status != null && status != "") {
-                sql = sql + " and ";
-            } else if ((dataInicio != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.cliente.idcliente=" + cliente.getIdcliente();
         } else {
-            sql = sql + " v.cliente.visualizacao='Operacional'";
-            if (!descricao.equalsIgnoreCase("")) {
-                sql = sql + " and ";
-            } else if (planocontas != null) {
-                sql = sql + " and ";
-            } else if (status != null && status != "") {
-                sql = sql + " and ";
-            } else if ((dataInicio != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            }
-        }
-        if (!descricao.equalsIgnoreCase("")) {
-            sql = sql + " v.descricao like '%" + descricao + "%'";
-            if (planocontas != null) {
-                sql = sql + " and ";
-            } else if (status != null && status != "") {
-                sql = sql + " and ";
-            } else if ((dataInicio != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.cliente.visualizacao='Operacional'";
         }
         if (planocontas != null) {
-            sql = sql + " v.planocontas.idplanoContas=" + planocontas.getIdplanoContas();
-            if (status != null && status != "") {
-                sql = sql + " and ";
-            } else if ((dataInicio != null) && (dataFinal != null)) {
-                sql = sql + " and ";
-            }
+            sql = sql + " and v.planocontas.idplanoContas=" + planocontas.getIdplanoContas();
         }
-        if (status != "" && status != null) {
+        if (status != null && !status.equalsIgnoreCase("")) {
             if (status.equalsIgnoreCase("Canceladas")) {
-                sql = sql + " v.status='CANCELADA' ";
+                sql = sql + " and v.status='CANCELADA'";
             } else if (status.equalsIgnoreCase("Ativo")) {
-                sql = sql + " v.status='Ativo' ";
-            }
-            if ((dataInicio != null) && (dataFinal != null)) {
-                sql = sql + " and ";
+                sql = sql + " and v.status='Ativo'";
             }
         }
         if ((dataInicio != null) && (dataFinal != null)) {
             if (liberadas) {
-                sql = sql + "v.dataLiberacao>='" + Formatacao.ConvercaoDataSql(dataInicio)
+                sql = sql + " and v.dataLiberacao>='" + Formatacao.ConvercaoDataSql(dataInicio)
                         + "' and v.dataLiberacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
-                        + "' order by v.dataLiberacao";
+                        + "'";
             } else {
-                sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicio)
+                sql = sql + " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicio)
                         + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
-                        + "' order by v.dataVencimento";
+                        + "'";
             }
         }
+        sql = sql + " order by v.dataVencimento";
         gerarListaContas();
         RequestContext.getCurrentInstance().closeDialog(sql);
     }
