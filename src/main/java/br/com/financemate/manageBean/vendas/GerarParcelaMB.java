@@ -311,16 +311,9 @@ public class GerarParcelaMB implements Serializable {
     }
 
     public void SemParcela() {
-        List<Vendas> listaVendas = null;
-        listaVendas = vendasDao.list("Select v from Vendas v where v.idvendas=" + vendas.getIdvendas());
-        if (listaVendas == null) {
-            listaVendas = new ArrayList<Vendas>();
-        }
-        for (int i = 0; i < listaVendas.size(); i++) {
-            listaVendas.get(i).setSituacao("Sem Parcela");
-            vendasDao.update(listaVendas.get(i));
-        }
-        RequestContext.getCurrentInstance().closeDialog(null);
+        vendas.setSituacao("verde");
+        vendasDao.update(vendas);
+        RequestContext.getCurrentInstance().closeDialog("Atualizado com sucesso!!");
     }
 
     public void gerarListaFormaPagamento() {
