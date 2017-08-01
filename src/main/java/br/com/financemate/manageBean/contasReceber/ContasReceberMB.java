@@ -518,6 +518,8 @@ public class ContasReceberMB implements Serializable {
     }
 
     public void criarConsultaContaReceber() {
+        Date dataIni;
+        Date dataFin;
         String data = Formatacao.ConvercaoDataPadrao(new Date());
         String mesString = data.substring(3, 5);
         String anoString = data.substring(6, 10);
@@ -545,13 +547,19 @@ public class ContasReceberMB implements Serializable {
         String dataFinal = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
         setDataInicial(Formatacao.ConvercaoStringData(dataInicial));
         setDataFinal(Formatacao.ConvercaoStringData(dataFinal));
+        dataIni = Formatacao.ConvercaoStringData(dataInicial);
+        dataFin = Formatacao.ConvercaoStringData(dataFinal);
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
             sql = " Select v from Contasreceber v where "
                     + " v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente()
-                    + " and v.dataPagamento is null and v.status<>'CANCELADA' and v.status<>'RECEBIMENTO' " + " order by v.dataVencimento";
+                    + " and v.dataPagamento is null and v.status<>'CANCELADA' and v.status<>'RECEBIMENTO' " +
+                    " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataIni) + "' and v.dataVencimento<='" +
+                    Formatacao.ConvercaoDataSql(dataFin) + "' order by v.dataVencimento";
         } else {
             sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and v.cliente.idcliente=" + cliente.getIdcliente()
-                    + " and v.dataPagamento is null and v.status<>'CANCELADA' and v.status<>'RECEBIMENTO' " + " order by v.dataVencimento";
+                    + " and v.dataPagamento is null and v.status<>'CANCELADA' and v.status<>'RECEBIMENTO' " + 
+                    " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataIni) + "' and v.dataVencimento<='" +
+                    Formatacao.ConvercaoDataSql(dataFin) + "' order by v.dataVencimento";
         }
         gerarListaContas();
     }
@@ -559,7 +567,7 @@ public class ContasReceberMB implements Serializable {
     public void gerarListaContas() {
         listaContasReceber = contasReceberDao.list(sql);
         if (listaContasReceber == null) {
-            listaContasReceber = new ArrayList<Contasreceber>();
+            listaContasReceber = new ArrayList<>();
         }
         calcularTotal();
         gerarTotalContas();
@@ -614,7 +622,7 @@ public class ContasReceberMB implements Serializable {
             corStatus = "../../resources/img/bolaVerde.png";
         } else if (contasreceber.getDataVencimento().before(data)) {
             corStatus =  "../../resources/img/bolaVermelha.png";
-        } else if (contasreceber.equals(data)) {
+        } else if (contasreceber.getDataVencimento().equals(data)) {
             corStatus = "../../resources/img/bolaAmarela.png";
         }
         
@@ -629,7 +637,7 @@ public class ContasReceberMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
     }
 
@@ -661,7 +669,7 @@ public class ContasReceberMB implements Serializable {
     }
 
     public String excluir() {
-        List<Contasreceber> listaContasMultiplas = new ArrayList<Contasreceber>();
+        List<Contasreceber> listaContasMultiplas = new ArrayList<>();
         for (int i = 0; i < listaContasReceber.size(); i++) {
             if (listaContasReceber.get(i).isSelecionado()) {
                 listaContasMultiplas.add(listaContasReceber.get(i));
@@ -684,13 +692,12 @@ public class ContasReceberMB implements Serializable {
     }
 
     private String excluirCobrancaParcela(Integer idcontasReceber) {
-        Cobrancaparcelas cobrancaparcelas = new Cobrancaparcelas();
+        Cobrancaparcelas cobrancaparcelas;
         cobrancaparcelas = cobrancaParcelasDao.find("SELECT c FROM Cobrancaparcelas c where c.contasreceber.idcontasReceber=" + idcontasReceber);
         if (cobrancaparcelas == null) {
             return "";
         } else {
             cobrancaParcelasDao.remove(cobrancaparcelas.getIdcobrancaparcelas());
-            cobrancaparcelas = new Cobrancaparcelas();
         }
         return "";
     }
@@ -710,10 +717,10 @@ public class ContasReceberMB implements Serializable {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
-                listaBanco = new ArrayList<Banco>();
+                listaBanco = new ArrayList<>();
             }
         } else {
-            listaBanco = new ArrayList<Banco>();
+            listaBanco = new ArrayList<>();
         }
     }
 
@@ -799,7 +806,7 @@ public class ContasReceberMB implements Serializable {
     }
 
     public String novaCobranca(Contasreceber contasreceber) {
-        listaContasSelecionadas = new ArrayList<Contasreceber>();
+        listaContasSelecionadas = new ArrayList<>();
         for (int i = 0; i < listaContasReceber.size(); i++) {
             if (listaContasReceber.get(i).isSelecionado()) {
                 listaContasSelecionadas.add(listaContasReceber.get(i));
@@ -835,7 +842,7 @@ public class ContasReceberMB implements Serializable {
         outroslancamentos.setTipoDocumento(contasreceber.getTipodocumento());
         outroslancamentos.setDataRegistro(new Date());
         outroslancamentos.setDescricao("Desfazendo recebimento do cliente: " + contasreceber.getNomeCliente() + " da parcela:" + contasreceber.getNumeroParcela());
-        outroslancamentos = outrosLancamentosDao.update(outroslancamentos);
+        outrosLancamentosDao.update(outroslancamentos);
         float valorPago = contasreceber.getValorPago();
         contasreceber.setDataPagamento(null);
         contasreceber.setDesagio(0f);
@@ -848,7 +855,7 @@ public class ContasReceberMB implements Serializable {
 
     public Boolean habilitarDesabilitarDesfazer(Contasreceber contasreceber) {
         Boolean desabilitar = true;
-        if (contasreceber.getDataPagamento().equals(null)) {
+        if (contasreceber.getDataPagamento() == null) {
             desabilitar = false;
             return desabilitar;
         }
@@ -905,7 +912,7 @@ public class ContasReceberMB implements Serializable {
     public void gerarListaContaas(String sql) {
         listaContasReceber = contasReceberDao.list(sql);
         if (listaContasReceber == null) {
-            listaContasReceber = new ArrayList<Contasreceber>();
+            listaContasReceber = new ArrayList<>();
         }
         calcularTotal();
     }
@@ -917,7 +924,7 @@ public class ContasReceberMB implements Serializable {
     }
 
     public void cancelar(Contasreceber contasreceber) {
-        List<Contasreceber> listaContasMultiplas = new ArrayList<Contasreceber>();
+        List<Contasreceber> listaContasMultiplas = new ArrayList<>();
         for (int i = 0; i < listaContasReceber.size(); i++) {
             if (listaContasReceber.get(i).isSelecionado()) {
                 listaContasMultiplas.add(listaContasReceber.get(i));

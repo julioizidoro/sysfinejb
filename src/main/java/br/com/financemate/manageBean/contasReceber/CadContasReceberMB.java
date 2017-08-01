@@ -4,9 +4,7 @@ import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.PlanoContaTipoDao;
-import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,8 +12,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -27,7 +23,6 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 
-import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
@@ -69,8 +64,6 @@ public class CadContasReceberMB implements Serializable {
     @EJB
     private BancoDao bancoDao;
     @EJB
-    private PlanoContasDao planoContasDao;
-    @EJB
     private ClienteDao clienteDao;
     @EJB
     private ContasReceberDao contasReceberDao;
@@ -92,7 +85,6 @@ public class CadContasReceberMB implements Serializable {
         session.removeAttribute("contareceber");
         session.removeAttribute("cliente");
         gerarListaCliente();
-        //gerarListaPlanoContas();
         if (contasReceber == null) {
             contasReceber = new Contasreceber();
             cobranca = new Cobranca();
@@ -274,7 +266,7 @@ public class CadContasReceberMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
 
     }
@@ -285,10 +277,10 @@ public class CadContasReceberMB implements Serializable {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
-                listaBanco = new ArrayList<Banco>();
+                listaBanco = new ArrayList<>();
             }
         } else {
-            listaBanco = new ArrayList<Banco>();
+            listaBanco = new ArrayList<>();
         }
     }
 
@@ -456,15 +448,16 @@ public class CadContasReceberMB implements Serializable {
         try {
             listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
             if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
-                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+                listaPlanoContaTipo = new ArrayList<>();
             }
-            listaPlanoContas = new ArrayList<Planocontas>();
+            listaPlanoContas = new ArrayList<>();
             for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
                 listaPlanoContas.add(listaPlanoContaTipo.get(i).getPlanocontas());
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            mensagem mensagem = new mensagem();
+            mensagem.faltaInformacao("" + e);
         }
     }
 
