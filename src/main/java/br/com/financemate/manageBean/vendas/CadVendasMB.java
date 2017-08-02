@@ -28,7 +28,6 @@ import javax.xml.bind.JAXBException;
 
 import org.primefaces.context.RequestContext;
 
-import br.com.financemate.manageBean.CadContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
@@ -145,6 +144,7 @@ public class CadVendasMB implements Serializable {
                 ConsultarEmissaoNota();
             }
             gerarListaFormaPagamento();
+            calculoValoresBackOffice();
         }
         if (emissaonota == null) {
             emissaonota = new Emissaonota();
@@ -466,13 +466,11 @@ public class CadVendasMB implements Serializable {
     public void setListaPlanoContaTipo(List<Planocontatipo> listaPlanoContaTipo) {
         this.listaPlanoContaTipo = listaPlanoContaTipo;
     }
-    
-    
 
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
 
     }
@@ -496,11 +494,11 @@ public class CadVendasMB implements Serializable {
         if (cliente != null) {
             listaProduto = produtoDao.list("Select p From Produto p Where p.cliente.idcliente=" + cliente.getIdcliente());
             if (listaProduto == null) {
-                listaProduto = new ArrayList<Produto>();
+                listaProduto = new ArrayList<>();
             }
 
         } else {
-            listaProduto = new ArrayList<Produto>();
+            listaProduto = new ArrayList<>();
         }
     }
 
@@ -547,7 +545,7 @@ public class CadVendasMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
         if (listaFormaPagamento == null) {
-            listaFormaPagamento = new ArrayList<Formapagamento>();
+            listaFormaPagamento = new ArrayList<>();
         }
         session.setAttribute("produto", produto);
         session.setAttribute("cliente", cliente);
@@ -556,7 +554,6 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("importadoSystm", importadoSystm);
         return "cadRecebimento";
     }
-
 
     public String nomeConta() {
         if (corPagarReceber.equalsIgnoreCase("color:red;")) {
@@ -701,7 +698,7 @@ public class CadVendasMB implements Serializable {
                 cliente = clienteDao.find(8);
                 contaspagar.setCliente(cliente);
             }
-            contaspagar = contasPagarDao.update(contaspagar);
+            contasPagarDao.update(contaspagar);
         } else if (corPagarReceber.equalsIgnoreCase("color:blue;")) {
             Contasreceber contasreceber = new Contasreceber();
             contasreceber.setDataVencimento(vendas.getDataVenda());
@@ -729,7 +726,7 @@ public class CadVendasMB implements Serializable {
             }
             contasreceber = contasReceberDao.update(contasreceber);
             contasreceber.setNumeroDocumento("" + contasreceber.getIdcontasReceber());
-            contasreceber = contasReceberDao.update(contasreceber);
+            contasReceberDao.update(contasreceber);
         }
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -774,20 +771,9 @@ public class CadVendasMB implements Serializable {
         } else {
             vendas.setSituacao("amarelo");
         }
-//		if (usuarioLogadoMB.getCliente() != null) {
-//			vendas.setCliente(usuarioLogadoMB.getCliente());
-//		}else{
-//			try {
-//				cliente = clienteFacade.consultar(8);
-//				vendas.setCliente(cliente);
-//			} catch (SQLException ex) {
-//				Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
-//				mostrarMensagem(ex, "Erro ao consultar um cliente:", "Erro");
-//			}
-//		}
         vendas.setCliente(cliente);
         String mensagem = validarDados();
-        if (mensagem == "") {
+        if (mensagem.length() == 0) {
             if (listaFormaPagamento == null || listaFormaPagamento.isEmpty() == true) {
                 vendas.setSituacao("vermelho");
             } else {
@@ -819,8 +805,8 @@ public class CadVendasMB implements Serializable {
                     importaVendasBean.salvarVendaImportada(vendas.getIdVendaSystm());
                     getListaVendasSystm();
                 } catch (JAXBException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    mensagem m = new mensagem();
+                    m.faltaInformacao("" + e);
                 }
                 session.removeAttribute("importadoSystm");
                 return "importarVenda";
@@ -888,7 +874,7 @@ public class CadVendasMB implements Serializable {
             if (!TipoDocumento.equalsIgnoreCase("sn")) {
                 if (TipoDocumento.equalsIgnoreCase("Boleto")) {
                     String mensagens = validaDadosDocumentoBoleto();
-                    if (mensagens == "") {
+                    if (mensagens.length() == 0) {
                         if (formapagamento.getDataVencimento() != null) {
                             formapagamento.setTipoDocumento(TipoDocumento);
                             listaFormaPagamento.add(formapagamento);
@@ -927,39 +913,39 @@ public class CadVendasMB implements Serializable {
 
     public String validaDadosDocumentoBoleto() {
         String msg = "";
-        if (formapagamento.getCpf() == "") {
+        if (formapagamento.getCpf().equalsIgnoreCase("")) {
             msg = msg + "Cpf não informado \r \n";
         }
 
-        if (formapagamento.getTipoLogradouro() == "") {
+        if (formapagamento.getTipoLogradouro().equalsIgnoreCase("")) {
             msg = msg + " Tipo Logradouro não informado \r \n";
         }
 
-        if (formapagamento.getLogradouro() == "") {
+        if (formapagamento.getLogradouro().equalsIgnoreCase("")) {
             msg = msg + " Logradouro não informado \r \n";
         }
 
-        if (formapagamento.getCep() == "") {
+        if (formapagamento.getCep().equalsIgnoreCase("")) {
             msg = msg + " Cep não informado \r \n";
         }
 
-        if (formapagamento.getNumero() == "") {
+        if (formapagamento.getNumero().equalsIgnoreCase("")) {
             msg = msg + " Número do endereço não informado \r \n";
         }
 
-        if (formapagamento.getBairro() == "") {
+        if (formapagamento.getBairro().equalsIgnoreCase("")) {
             msg = msg + " Bairro não informado \r \n";
         }
 
-        if (formapagamento.getCidade() == "") {
+        if (formapagamento.getCidade().equalsIgnoreCase("")) {
             msg = msg + " Cidade não informado \r \n";
         }
 
-        if (formapagamento.getComplemento() == "") {
+        if (formapagamento.getComplemento().equalsIgnoreCase("")) {
             msg = msg + " Complemento não informado";
         }
 
-        if (formapagamento.getEstado() == "") {
+        if (formapagamento.getEstado().equalsIgnoreCase("")) {
             msg = msg + " Estado não informado";
         }
 
@@ -981,7 +967,7 @@ public class CadVendasMB implements Serializable {
             listaFormaPagamento = formaPagamentoDao.list("select f from Formapagamento f where f.vendas.idvendas=" + nVenda.getIdvendas());
         }
         if (listaFormaPagamento == null) {
-            listaFormaPagamento = new ArrayList<Formapagamento>();
+            listaFormaPagamento = new ArrayList<>();
         }
     }
 
@@ -1062,48 +1048,14 @@ public class CadVendasMB implements Serializable {
         emissaonota.setEstado(cliente.getEstado());
     }
 
-    /* -----PARA PEGAR Só 1 VENDA------
-	
-	public void importaVenda(){
-		importaVendasBean importaVendasBean = new importaVendasBean();
-		VendasSystmBean vendasSystmBean = new VendasSystmBean();
-		ClienteFacade clienteFacade = new ClienteFacade();
-		ProdutoFacade produtoFacade = new ProdutoFacade();
-		try {
-			vendasSystmBean = importaVendasBean.pegarInformacao();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			cliente = clienteFacade.consultarUnidade(vendasSystmBean.getIdUnidade());
-			if (cliente != null) {
-				gerarListaProduto();
-				produto = produtoFacade.consultarProduto(vendasSystmBean.getIdProduto(), cliente.getIdcliente());
-			}
-			vendas.setNomeFornecedor(vendasSystmBean.getFornecedor());
-			vendas.setConsultor(vendasSystmBean.getConsultor());
-			vendas.setNomeCliente(vendasSystmBean.getNomeCliente());
-			vendas.setValorBruto(vendasSystmBean.getValorBruto());
-			calculoTotalVenda();
-			vendas.setDataVenda(vendasSystmBean.getDataVenda());
-			vendas.setComissaoLiquidaTotal(vendasSystmBean.getLiquidoFranquia());
-			calculoValoresBackOffice();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-     */
     public void getListaVendasSystm() {
         importaVendasBean importaVendasBean = new importaVendasBean();
         ListaVendasSystmBean vendaImportada;
-        listaImportada = new ArrayList<ListaVendasSystmBean>();
+        listaImportada = new ArrayList<>();
         try {
             listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
             if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
-                listaVendasSystm = new ArrayList<VendasSystmBean>();
+                listaVendasSystm = new ArrayList<>();
             }
             for (int i = 0; i < listaVendasSystm.size(); i++) {
                 vendaImportada = new ListaVendasSystmBean();
@@ -1125,8 +1077,8 @@ public class CadVendasMB implements Serializable {
                 listaImportada.add(vendaImportada);
             }
         } catch (JAXBException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -1147,8 +1099,8 @@ public class CadVendasMB implements Serializable {
                     + " and p.cliente.idcliente=" + cliente.getIdcliente());
             for (int i = 0; i < listaProduto.size(); i++) {
                 produto = listaProduto.get(i);
-            } 
-        } 
+            }
+        }
         vendas.setNomeFornecedor(vendaImportada.getVendasSystmBean().getFornecedor());
         vendas.setConsultor(vendaImportada.getVendasSystmBean().getConsultor());
         vendas.setNomeCliente(vendaImportada.getVendasSystmBean().getNomeCliente());
@@ -1173,11 +1125,11 @@ public class CadVendasMB implements Serializable {
     public void filtroListaVendasSystm() {
         importaVendasBean importaVendasBean = new importaVendasBean();
         ListaVendasSystmBean vendaImportada;
-        listaImportada = new ArrayList<ListaVendasSystmBean>();
+        listaImportada = new ArrayList<>();
         try {
             listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
             if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
-                listaVendasSystm = new ArrayList<VendasSystmBean>();
+                listaVendasSystm = new ArrayList<>();
             }
             for (int i = 0; i < listaVendasSystm.size(); i++) {
                 if (clienteImportacao != null) {
@@ -1212,13 +1164,12 @@ public class CadVendasMB implements Serializable {
                 }
             }
         } catch (JAXBException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
     }
 
     public ListaVendasSystmBean setandoVenda(VendasSystmBean vendasSystmBean) {
-        List<ListaVendasSystmBean> listaSystm = new ArrayList<>();
         ListaVendasSystmBean vendaImportada = new ListaVendasSystmBean();
         vendaImportada.setConsultor(vendasSystmBean.getConsultor());
         vendaImportada.setDataVenda("" + Formatacao.ConvercaoDataPadrao(vendasSystmBean.getDataVenda()));
@@ -1238,20 +1189,19 @@ public class CadVendasMB implements Serializable {
         return vendaImportada;
     }
 
-    
     public void gerarListaPlanoContas() {
         try {
             listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
             if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
-                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+                listaPlanoContaTipo = new ArrayList<>();
             }
-            listaPlanocontas = new ArrayList<Planocontas>();
+            listaPlanocontas = new ArrayList<>();
             for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
                 listaPlanocontas.add(listaPlanoContaTipo.get(i).getPlanocontas());
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
     }
 }

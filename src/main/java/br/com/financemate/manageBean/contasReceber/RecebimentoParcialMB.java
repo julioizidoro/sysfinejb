@@ -2,7 +2,6 @@ package br.com.financemate.manageBean.contasReceber;
 
 import br.com.financemate.dao.ContasReceberDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class RecebimentoParcialMB implements Serializable {
         session.removeAttribute("listaRecebimentoParial");
         gerarListaRecebimentoParcial();
         if (listaRecebimentoParcial == null) {
-            listaRecebimentoParcial = new ArrayList<Contasreceber>();
+            listaRecebimentoParcial = new ArrayList<>();
         }
     }
 
@@ -96,7 +95,7 @@ public class RecebimentoParcialMB implements Serializable {
                 + " and  c.dataPagamento<>null order by c.dataPagamento";
         listaRecebimentoParcial = contasReceberDao.list(sql);
         if (listaRecebimentoParcial == null) {
-            listaRecebimentoParcial = new ArrayList<Contasreceber>();
+            listaRecebimentoParcial = new ArrayList<>();
         }
     }
 

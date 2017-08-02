@@ -2,10 +2,9 @@ package br.com.financemate.manageBean.outrosLancamentos;
 
 import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.OutrosLancamentosDao;
+import br.com.financemate.manageBean.mensagem;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +24,7 @@ import org.primefaces.model.UploadedFile;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.util.Formatacao;
+import java.io.IOException;
 import java.io.InputStream;
 import javax.ejb.EJB;
 
@@ -164,10 +164,10 @@ public class ConciliacaoMB implements Serializable {
         File arq = new File(arquivo.getFileName());
         InputStream file = null;
         try {
-            file =  arquivo.getInputstream();
-        } catch (Exception ex) {
-            // TODO Auto-generated catch block
-            ex.printStackTrace();
+            file = arquivo.getInputstream();
+        } catch (IOException ex) {
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         LerOFXBean ler = new LerOFXBean();
         ler.iniciarLeitura(file);
@@ -194,7 +194,7 @@ public class ConciliacaoMB implements Serializable {
             banco = listabanco.get(i);
         }
         return banco;
-    }  
+    }
 
     public void carregarOutrosLancamentos() {
         String sql = "SELECT o FROM Movimentobanco o where o.dataCompensacao>='"
@@ -222,7 +222,7 @@ public class ConciliacaoMB implements Serializable {
     public void verficarLancamentos(TransacaoBean transacao) {
         ConciliarBean cb = new ConciliarBean();
         if (listaConciliacaoBancaria == null) {
-            listaConciliacaoBancaria = new ArrayList<ConciliarBean>();
+            listaConciliacaoBancaria = new ArrayList<>();
         }
         for (int j = 0; j < listaLacamentos.size(); j++) {
             Float valor;
@@ -279,7 +279,7 @@ public class ConciliacaoMB implements Serializable {
     public void gerarListaTransacaoNaoConciliada(TransacaoBean transacao) {
         ConciliarBean conciliacaoBean = new ConciliarBean();
         if (listaTransacaoNaoConciliado == null) {
-            listaTransacaoNaoConciliado = new ArrayList<TransacaoBean>();
+            listaTransacaoNaoConciliado = new ArrayList<>();
         }
         if (transacao.getConciliada() == false) {
             listaTransacaoNaoConciliado.add(transacao);
@@ -292,7 +292,7 @@ public class ConciliacaoMB implements Serializable {
     public void gerarListaOutrosLancamentosNaoConciliado() {
         ConciliarBean conciliacaoBean = new ConciliarBean();
         if (listaOutrosNaoConciliado == null) {
-            listaOutrosNaoConciliado = new ArrayList<Movimentobanco>();
+            listaOutrosNaoConciliado = new ArrayList<>();
         }
         for (int i = 0; i < listaLacamentos.size(); i++) {
             if (listaLacamentos.get(i).getConciliada() == false) {

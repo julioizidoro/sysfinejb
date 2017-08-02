@@ -189,10 +189,10 @@ public class cadOutrosLancamentosMB implements Serializable {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
-                listaBanco = new ArrayList<Banco>();
+                listaBanco = new ArrayList<>();
             }
         } else {
-            listaBanco = new ArrayList<Banco>();
+            listaBanco = new ArrayList<>();
         }
     }
 
@@ -226,8 +226,7 @@ public class cadOutrosLancamentosMB implements Serializable {
         String mensagem = validarDados();
         if (mensagem.length() < 1) {
             outrosLancamentos = outrosLancamentosDao.update(outrosLancamentos);
-            Movimentobanco copia = new Movimentobanco();
-            copia = outrosLancamentos;
+            Movimentobanco copia = outrosLancamentos;
             outrosLancamentos = repetirValoresOutrosLancamentos(copia);
             mensagem msg = new mensagem();
             msg.saveMessagem();
@@ -283,18 +282,6 @@ public class cadOutrosLancamentosMB implements Serializable {
         return mensagem;
     }
 
-    //public void gerarListaPlanoContas() {
-    //	PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-    //	try {
-    //		listaPlanoContas = planoContasFacade.listar();
-    //		if (listaPlanoContas == null) {
-    //		listaPlanoContas = new ArrayList<Planocontas>();
-    //		}
-    //} catch (Exception ex) {
-    //		Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-    //		mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
-    //	}
-    //}
     public void cancelar() {
         RequestContext.getCurrentInstance().closeDialog(new Movimentobanco());
     }
@@ -331,15 +318,15 @@ public class cadOutrosLancamentosMB implements Serializable {
             listaPlanoContaTipo = planoContaTipoDao.list("Select p From Planocontatipo p Where tipoplanocontas.idtipoplanocontas="
                     + cliente.getTipoplanocontas().getIdtipoplanocontas());
             if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
-                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+                listaPlanoContaTipo = new ArrayList<>();
             }
-            listaPlanoContas = new ArrayList<Planocontas>();
+            listaPlanoContas = new ArrayList<>();
             for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
                 listaPlanoContas.add(listaPlanoContaTipo.get(i).getPlanocontas());
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
     }
 

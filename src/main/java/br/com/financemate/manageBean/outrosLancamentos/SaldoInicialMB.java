@@ -49,7 +49,7 @@ public class SaldoInicialMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaSaldo = new ArrayList<Saldo>();
+        listaSaldo = new ArrayList<>();
         gerarListaCliente();
         desabilitarUnidade();
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
@@ -113,13 +113,11 @@ public class SaldoInicialMB implements Serializable {
     public void setHabilitarUnidade(boolean habilitarUnidade) {
         this.habilitarUnidade = habilitarUnidade;
     }
-    
-    
 
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
 
     }
@@ -129,10 +127,10 @@ public class SaldoInicialMB implements Serializable {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
-                listaBanco = new ArrayList<Banco>();
+                listaBanco = new ArrayList<>();
             }
         } else {
-            listaBanco = new ArrayList<Banco>();
+            listaBanco = new ArrayList<>();
         }
     }
 
@@ -145,7 +143,7 @@ public class SaldoInicialMB implements Serializable {
     public void gerarListaSaldoInicial() {
         listaSaldo = saldoDao.list("Select s from Saldo s where s.banco.idbanco=" + banco.getIdbanco());
         if (listaSaldo == null) {
-            listaSaldo = new ArrayList<Saldo>();
+            listaSaldo = new ArrayList<>();
         }
     }
 
@@ -160,9 +158,8 @@ public class SaldoInicialMB implements Serializable {
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
     }
-    
-    
-     public void desabilitarUnidade() {
+
+    public void desabilitarUnidade() {
         if (usuarioLogadoMB.getCliente() != null) {
             habilitarUnidade = true;
         } else {

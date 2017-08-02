@@ -3,13 +3,10 @@ package br.com.financemate.manageBean;
 import br.com.financemate.dao.PlanoContasDao;
 import br.com.financemate.dao.TipoPlanoContasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -86,7 +83,7 @@ public class PlanoContaMB implements Serializable {
     public void gerarListaPlanoConta() {
         listarPlanoContas = planoContasDao.list("Select p From Planocontas p order by p.descricao");
         if (listarPlanoContas == null) {
-            listarPlanoContas = new ArrayList<Planocontas>();
+            listarPlanoContas = new ArrayList<>();
         }
 
     }
@@ -94,7 +91,7 @@ public class PlanoContaMB implements Serializable {
     public void gerarlistaTipoPlanoContas() {
         listarTipoPlanoContas = tipoPlanoContasDao.list("Select t From Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas != null) {
-            listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
+            listarTipoPlanoContas = new ArrayList<>();
         }
 
     }

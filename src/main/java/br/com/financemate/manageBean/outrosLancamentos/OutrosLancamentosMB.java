@@ -81,7 +81,7 @@ public class OutrosLancamentosMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaOutrosLancamentos = new ArrayList<Movimentobanco>();
+        listaOutrosLancamentos = new ArrayList<>();
         gerarListaCliente();
         getUsuarioLogadoMB();
         verificarCliente();
@@ -259,7 +259,7 @@ public class OutrosLancamentosMB implements Serializable {
             }
             listaOutrosLancamentos = outrosLancamentosDao.list(sql);
             if (listaOutrosLancamentos == null) {
-                listaOutrosLancamentos = new ArrayList<Movimentobanco>();
+                listaOutrosLancamentos = new ArrayList<>();
             }
             calcularTotal();
         } else {
@@ -270,7 +270,7 @@ public class OutrosLancamentosMB implements Serializable {
     public void gerarListaCliente() {
         listaClientes = clienteDao.list("Select c From Cliente c");
         if (listaClientes == null || listaClientes.isEmpty()) {
-            listaClientes = new ArrayList<Cliente>();
+            listaClientes = new ArrayList<>();
         }
     }
 
@@ -292,10 +292,10 @@ public class OutrosLancamentosMB implements Serializable {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBancos = bancoDao.list(sql);
             if (listaBancos == null) {
-                listaBancos = new ArrayList<Banco>();
+                listaBancos = new ArrayList<>();
             }
         } else {
-            listaBancos = new ArrayList<Banco>();
+            listaBancos = new ArrayList<>();
         }
     }
 
@@ -337,7 +337,7 @@ public class OutrosLancamentosMB implements Serializable {
         RequestContext.getCurrentInstance().openDialog("cadTransferencia", options, null);
         return "";
     }
-   
+
     public void retornoDialogTransferencia(SelectEvent event) {
         String msg = (String) event.getObject();
         if (msg.length() > 2) {
@@ -357,15 +357,12 @@ public class OutrosLancamentosMB implements Serializable {
     }
 
     public void salvarTransferencia() {
-        Planocontas planocontas = new Planocontas();
         Planocontatipo planocontatipo;
-        Tipoplanocontas tipoplanocontas = new Tipoplanocontas();
-        planocontas = planoContasDao.find(23);
+        Planocontas planocontas = planoContasDao.find(23);
         List<Cliente> listaCliente = clienteDao.list("Select c From Cliente c");
         for (int i = 0; i < listaCliente.size(); i++) {
-            tipoplanocontas = listaCliente.get(i).getTipoplanocontas();
             planocontatipo = new Planocontatipo();
-            planocontatipo.setTipoplanocontas(tipoplanocontas);
+            planocontatipo.setTipoplanocontas(listaCliente.get(i).getTipoplanocontas());
             planocontatipo.setPlanocontas(planocontas);
             planoContaTipoDao.update(planocontatipo);
         }
@@ -385,7 +382,7 @@ public class OutrosLancamentosMB implements Serializable {
 
     public void retornoDialogNovo(SelectEvent event) {
         Movimentobanco outroslancamentos = (Movimentobanco) event.getObject();
-        if (outroslancamentos.getIdmovimentobanco()!= null) {
+        if (outroslancamentos.getIdmovimentobanco() != null) {
             mensagem mensagem = new mensagem();
             mensagem.saveMessagem();
         } else {
@@ -397,11 +394,11 @@ public class OutrosLancamentosMB implements Serializable {
 
     public void calcularTotal() {
         float entrada = 0.0f;
-        float saida = 0.0f;  
+        float saida = 0.0f;
         float saldo = 0.0f;
         if (banco.getIdbanco() == null) {
-            saldo =  gerarSqlSaldoTodasContas();
-        }else{
+            saldo = gerarSqlSaldoTodasContas();
+        } else {
             saldo = geralSqlSaldoInicial();
         }
         for (int i = 0; i < listaOutrosLancamentos.size(); i++) {
@@ -453,9 +450,8 @@ public class OutrosLancamentosMB implements Serializable {
     public float geralSqlSaldoInicial() {
         float entrada = 0.0f;
         float saida = 0.0f;
-        String sql;
         Float saldoInicial = 0f;
-        sql = "Select max(s.valor) from Saldo s";
+        String sql = "Select max(s.valor) from Saldo s";
         if (banco.getIdbanco() != null) {
             sql = sql + " where s.banco.idbanco=" + banco.getIdbanco();
         }
@@ -463,7 +459,7 @@ public class OutrosLancamentosMB implements Serializable {
             List<Banco> listaBanco;
             listaBanco = bancoDao.list("Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente());
             if (listaBanco == null) {
-                listaBanco = new ArrayList<Banco>();
+                listaBanco = new ArrayList<>();
             }
             for (int i = 0; i < listaBanco.size(); i++) {
                 String sql3 = "Select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBanco.get(i).getIdbanco();
@@ -489,7 +485,7 @@ public class OutrosLancamentosMB implements Serializable {
         }
         listaOutrosLancamentosAnteriores = outrosLancamentosDao.list(sql2);
         if (listaOutrosLancamentosAnteriores == null) {
-            listaOutrosLancamentosAnteriores = new ArrayList<Movimentobanco>();
+            listaOutrosLancamentosAnteriores = new ArrayList<>();
         }
         for (int i = 0; i < listaOutrosLancamentosAnteriores.size(); i++) {
             if (listaOutrosLancamentosAnteriores.get(i).getValorEntrada() > 0) {
@@ -509,9 +505,8 @@ public class OutrosLancamentosMB implements Serializable {
     public String conciliacaoBancaria() {
         return "conciliacaoBancaria";
     }
-    
-    
-    public Float gerarSqlSaldoTodasContas(){
+
+    public Float gerarSqlSaldoTodasContas() {
         float entrada = 0.0f;
         float saida = 0.0f;
         String sql;
@@ -533,7 +528,7 @@ public class OutrosLancamentosMB implements Serializable {
         }
         listaOutrosLancamentosAnteriores = outrosLancamentosDao.list(sql2);
         if (listaOutrosLancamentosAnteriores == null) {
-            listaOutrosLancamentosAnteriores = new ArrayList<Movimentobanco>();
+            listaOutrosLancamentosAnteriores = new ArrayList<>();
         }
         for (int i = 0; i < listaOutrosLancamentosAnteriores.size(); i++) {
             if (listaOutrosLancamentosAnteriores.get(i).getValorEntrada() > 0) {

@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,10 +22,10 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.LineChartSeries;
 
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Vendas;
 import javax.ejb.EJB;
 
@@ -644,7 +643,8 @@ public class grafico implements Serializable {
                 recebimento = 0f;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         saldoPrimeiroDia = saldoPrimeiroDia + recebimento;
         if (recebimento >= valorMaximo) {
@@ -672,7 +672,8 @@ public class grafico implements Serializable {
                 recebimento = 0f;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         saldoSegundoDia = saldoSegundoDia + recebimento;
         if (recebimento >= valorMaximo) {
@@ -700,7 +701,8 @@ public class grafico implements Serializable {
                 recebimento = 0f;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         saldoTerceiroDia = saldoTerceiroDia + recebimento;
         if (recebimento >= valorMaximo) {
@@ -728,7 +730,8 @@ public class grafico implements Serializable {
                 recebimento = 0f;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         saldoQuartoDia = saldoQuartoDia + recebimento;
         if (recebimento >= valorMaximo) {
@@ -756,7 +759,8 @@ public class grafico implements Serializable {
                 recebimento = 0f;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         saldoQuintaDia = saldoQuintaDia + recebimento;
         if (recebimento >= valorMaximo) {
@@ -784,7 +788,8 @@ public class grafico implements Serializable {
                 pagamento = 0f;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         saldoPrimeiroDia = saldoPrimeiroDia - pagamento;
         if (pagamento >= valorMaximo) {
@@ -812,7 +817,8 @@ public class grafico implements Serializable {
                 pagamento = 0f;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         saldoSegundoDia = saldoSegundoDia - pagamento;
         if (pagamento >= valorMaximo) {
@@ -840,7 +846,8 @@ public class grafico implements Serializable {
                 pagamento = 0f;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         saldoTerceiroDia = saldoTerceiroDia - pagamento;
         if (pagamento >= valorMaximo) {
@@ -868,7 +875,8 @@ public class grafico implements Serializable {
                 pagamento = 0f;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         saldoQuartoDia = saldoQuartoDia - pagamento;
         if (pagamento >= valorMaximo) {
@@ -896,7 +904,8 @@ public class grafico implements Serializable {
                 pagamento = 0f;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         saldoQuintaDia = saldoQuintaDia - pagamento;
         if (pagamento >= valorMaximo) {

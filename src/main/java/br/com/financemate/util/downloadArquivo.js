@@ -1,7 +1,7 @@
 function start() {
-	PF('statusDialog').show();
+    PF('statusDialog').show();
 }
 
 function stop() {
-	PF('statusDialog').hide();
+    PF('statusDialog').hide();
 }

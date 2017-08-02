@@ -2,7 +2,6 @@ package br.com.financemate.manageBean;
 
 import br.com.financemate.dao.OperacaoUsuarioDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,12 +114,10 @@ public class OperacoesUsuarioMB implements Serializable {
 
     public void gerarListaOperacoesUsuarios() {
         if (contasPagar != null) {
-            // TODO Auto-generated catch block
-
             listaOperacaousuairo = operacaoUsuarioDao.list("SELECT o FROM Operacaousuairo o "
                     + " WHERE o.contaspagar.idcontasPagar=" + contasPagar.getIdcontasPagar());
             if (listaOperacaousuairo == null) {
-                listaOperacaousuairo = new ArrayList<Operacaousuairo>();
+                listaOperacaousuairo = new ArrayList<>();
             }
         }
     }

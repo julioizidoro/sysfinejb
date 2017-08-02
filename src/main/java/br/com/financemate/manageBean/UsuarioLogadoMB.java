@@ -172,8 +172,8 @@ public class UsuarioLogadoMB implements Serializable {
         try {
             repetirSenhaAtual = Criptografia.encript(senhaAtual);
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         if (repetirSenhaAtual.equalsIgnoreCase(usuario.getSenhaweb())) {
 

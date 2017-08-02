@@ -213,7 +213,7 @@ public class ImprimirContasReceberMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
 
     }
@@ -364,11 +364,10 @@ public class ImprimirContasReceberMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         carregarListaContasReceber();
         session.setAttribute("listaRelatorio", listaRelatorio);
-       // return "relatoriocobranca";
     }
 
     public void carregarListaContasReceber() {
-        listaRelatorio = new ArrayList<RelatorioCobrancaBean>();
+        listaRelatorio = new ArrayList<>();
         int diaSemana = Formatacao.diaSemana(new Date());
         String data = "";
         if (diaSemana == 1) {
@@ -398,7 +397,7 @@ public class ImprimirContasReceberMB implements Serializable {
     }
 
     public void carregarCobranca(List<Contasreceber> listaContas) {
-        List<Contasreceber> listaContasCobranca = new ArrayList<Contasreceber>();
+        List<Contasreceber> listaContasCobranca = new ArrayList<>();
         Cobranca cobranca = null;
         float valorTotal = 0.0f;
         Contasreceber contasreceber = null;
@@ -419,7 +418,7 @@ public class ImprimirContasReceberMB implements Serializable {
                 if ((i + 1) < listaContas.size()) {
                     incluirListaRelatorio(cobranca, listaContasCobranca, valorTotal, contasreceber);
                     cobranca = null;
-                    listaContasCobranca = new ArrayList<Contasreceber>();
+                    listaContasCobranca = new ArrayList<>();
                     valorTotal = 0.0f;
                 }
             }

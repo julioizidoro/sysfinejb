@@ -2,7 +2,6 @@ package br.com.financemate.manageBean;
 
 import br.com.financemate.dao.UsuarioDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,7 +78,7 @@ public class UsuarioMB implements Serializable {
             listaUsuario = usuarioDao.list("Select u From Usuario u");
         }
         if (listaUsuario == null || listaUsuario.isEmpty()) {
-            listaUsuario = new ArrayList<Usuario>();
+            listaUsuario = new ArrayList<>();
         }
     }
 

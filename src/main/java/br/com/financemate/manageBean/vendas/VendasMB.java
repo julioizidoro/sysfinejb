@@ -5,14 +5,11 @@ import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.FormaPagamentoDao;
 import br.com.financemate.dao.VendasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -83,7 +80,7 @@ public class VendasMB implements Serializable {
         gerarListaCliente();
         desabilitarUnidade();
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
-            cliente =  clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+            cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
         }
     }
 
@@ -271,8 +268,6 @@ public class VendasMB implements Serializable {
     }
 
     public void gerarListaVendas() {
-        Date dataIni;
-        Date dataFin;
         String data = Formatacao.ConvercaoDataPadrao(new Date());
         String mesString = data.substring(3, 5);
         String anoString = data.substring(6, 10);
@@ -280,8 +275,8 @@ public class VendasMB implements Serializable {
         int anoInicio = Integer.parseInt(anoString);
         int mescInicio;
         int mescFinal;
-        int anocInicio = 0;
-        int anocFinal = 0;
+        int anocInicio;
+        int anocFinal;
         if (mesInicio == 1) {
             mescInicio = 12;
             anocInicio = anoInicio - 1;
@@ -298,25 +293,23 @@ public class VendasMB implements Serializable {
         }
         String dataInicial = anocInicio + "-" + Formatacao.retornaDataInicia(mescInicio);
         String dataTermino = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
-        dataIni = Formatacao.ConvercaoStringData(dataInicial);
-        dataFin = Formatacao.ConvercaoStringData(dataTermino);
-        if (usuarioLogadoMB.getUsuario().getCliente() != null){
-            if(usuarioLogadoMB.getUsuario().getCliente() > 0) {
+        if (usuarioLogadoMB.getUsuario().getCliente() != null) {
+            if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
                 sql = " Select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada'  and v.cliente.idcliente="
-                    + usuarioLogadoMB.getUsuario().getCliente() + " and v.dataVenda>='" + dataInicial +
-                         "' and v.dataVenda<='" + dataTermino +  "' order by v.dataVenda";
+                        + usuarioLogadoMB.getUsuario().getCliente() + " and v.dataVenda>='" + dataInicial
+                        + "' and v.dataVenda<='" + dataTermino + "' order by v.dataVenda";
             } else {
                 sql = " Select v from Vendas v where v.cliente.visualizacao='Operacional' and "
                         + " v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada'"
-                        + " and v.dataVenda>='" + dataInicial +
-                         "' and v.dataVenda<='" + dataTermino + "' order by v.dataVenda";
+                        + " and v.dataVenda>='" + dataInicial
+                        + "' and v.dataVenda<='" + dataTermino + "' order by v.dataVenda";
             }
-        
+
             listaVendas = vendasDao.list(sql);
         }
-            if (listaVendas == null) {
-                listaVendas = new ArrayList<Vendas>();
-            }
+        if (listaVendas == null) {
+            listaVendas = new ArrayList<>();
+        }
     }
 
     public void gerarDataInicial() {
@@ -327,8 +320,8 @@ public class VendasMB implements Serializable {
         int anoInicio = Integer.parseInt(anoString);
         int mescInicio;
         int mescFinal;
-        int anocInicio = 0;
-        int anocFinal = 0;
+        int anocInicio;
+        int anocFinal;
         if (mesInicio == 1) {
             mescInicio = 12;
             anocInicio = anoInicio - 1;
@@ -443,7 +436,7 @@ public class VendasMB implements Serializable {
 
     public String importarVenda() {
         List<ListaVendasSystmBean> listaImportada = new ArrayList<>();
-                //getListaVendasSystm();
+        //getListaVendasSystm();
         Boolean importadoSystm = true;
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("closable", false);
@@ -465,7 +458,7 @@ public class VendasMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
 
     }
@@ -558,14 +551,14 @@ public class VendasMB implements Serializable {
     public void retornoDialogFiltrar(SelectEvent event) {
         String sql = (String) event.getObject();
         if (sql.length() > 1) {
-            gerarListaVendaas(sql); 
+            gerarListaVendaas(sql);
         }
     }
 
     public void gerarListaVendaas(String sql) {
         listaVendas = vendasDao.list(sql);
         if (listaVendas == null) {
-            listaVendas = new ArrayList<Vendas>();
+            listaVendas = new ArrayList<>();
         }
     }
 
@@ -577,8 +570,8 @@ public class VendasMB implements Serializable {
         }
         gerarListaVendas();
     }
-    
-     public void retornoDialogParcela(SelectEvent event) {
+
+    public void retornoDialogParcela(SelectEvent event) {
         String mensag = (String) event.getObject();
         if (mensag.length() > 0) {
             gerarListaVendas();
@@ -586,7 +579,6 @@ public class VendasMB implements Serializable {
             msg.parcela();
         }
     }
-  
 
     public void cancelarVenda(Vendas vendas) {
         vendas.setSituacao("CANCELADA");
@@ -642,12 +634,12 @@ public class VendasMB implements Serializable {
     public List<ListaVendasSystmBean> getListaVendasSystm() {
         importaVendasBean importaVendasBean = new importaVendasBean();
         ListaVendasSystmBean vendaImportada;
-        List<ListaVendasSystmBean> listaImportada = new ArrayList<ListaVendasSystmBean>();
+        List<ListaVendasSystmBean> listaImportada = new ArrayList<>();
         List<VendasSystmBean> listaVendasSystm;
         try {
             listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
             if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
-                listaVendasSystm = new ArrayList<VendasSystmBean>();
+                listaVendasSystm = new ArrayList<>();
             }
             for (int i = 0; i < listaVendasSystm.size(); i++) {
                 vendaImportada = new ListaVendasSystmBean();
@@ -669,8 +661,8 @@ public class VendasMB implements Serializable {
                 listaImportada.add(vendaImportada);
             }
         } catch (JAXBException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         return listaImportada;
     }

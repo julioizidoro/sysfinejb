@@ -14,20 +14,20 @@ import sun.misc.BASE64Encoder;
  * @author Julio
  */
 public class Criptografia {
-    
+
     private static MessageDigest messageDigest;
     private static BASE64Encoder encoder;
 
-	public static String encript(String value) throws NoSuchAlgorithmException{
-		if (messageDigest == null || messageDigest.getAlgorithm() != "SHA-256") {
-			messageDigest = MessageDigest.getInstance("SHA-256");
-		}
+    public static String encript(String value) throws NoSuchAlgorithmException {
+        if (messageDigest == null || !messageDigest.getAlgorithm().equalsIgnoreCase("SHA-256")) {
+            messageDigest = MessageDigest.getInstance("SHA-256");
+        }
 
-		if (encoder == null) {
-			encoder = new BASE64Encoder();
-		}
-		
-	    byte[] hash = messageDigest.digest(value.getBytes());
-	    return encoder.encode(hash);
-	}
+        if (encoder == null) {
+            encoder = new BASE64Encoder();
+        }
+
+        byte[] hash = messageDigest.digest(value.getBytes());
+        return encoder.encode(hash);
+    }
 }

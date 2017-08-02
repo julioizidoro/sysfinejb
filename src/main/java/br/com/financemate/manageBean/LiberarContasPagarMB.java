@@ -135,7 +135,7 @@ public class LiberarContasPagarMB implements Serializable {
         mensagem msg = new mensagem();
         for (int i = 0; i < listaContasSelecionadas.size(); i++) {
             String mensagem = validarDados(listaContasSelecionadas.get(i));
-            if (mensagem == "") {
+            if (mensagem.length() == 0) {
                 if (listaContasSelecionadas.get(i).getAutorizarPagamento().equals("S")) {
 
                     salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
@@ -181,7 +181,7 @@ public class LiberarContasPagarMB implements Serializable {
         outroslancamentos.setCompentencia(conta.getCompetencia());
         conta = contasPagarDao.update(conta);
         outroslancamentos.setIdcontaspagar(conta.getIdcontasPagar());
-        outroslancamentos = outrosLancamentosDao.update(outroslancamentos);
+        outrosLancamentosDao.update(outroslancamentos);
 
     }
 

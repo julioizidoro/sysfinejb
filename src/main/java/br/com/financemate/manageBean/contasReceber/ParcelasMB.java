@@ -2,11 +2,8 @@ package br.com.financemate.manageBean.contasReceber;
 
 import br.com.financemate.dao.ContasReceberDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -89,7 +86,7 @@ public class ParcelasMB implements Serializable {
             listaParcela = contasReceberDao.list(sql);
         }
         if (listaParcela == null) {
-            listaParcela = new ArrayList<Contasreceber>();
+            listaParcela = new ArrayList<>();
         }
         totalParcela();
     }

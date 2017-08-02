@@ -292,7 +292,7 @@ public class ImprimirVendasMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
 
     }
@@ -359,7 +359,7 @@ public class ImprimirVendasMB implements Serializable {
             gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio);
         } catch (JRException ex) {
             Logger.getLogger(ImprimirVendasMB.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return "";
     }
 
@@ -442,16 +442,16 @@ public class ImprimirVendasMB implements Serializable {
         listaFaturamentoVendas4 = vendasDao.list("Select v from Vendas v where v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataFinal)
                 + "' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(data4) + "' and v.cliente.idcliente=" + cliente.getIdcliente());
         if (listaFaturamentoVendas == null) {
-            listaFaturamentoVendas = new ArrayList<Vendas>();
+            listaFaturamentoVendas = new ArrayList<>();
         }
         if (listaFaturamentoVendas2 == null) {
-            listaFaturamentoVendas2 = new ArrayList<Vendas>();
+            listaFaturamentoVendas2 = new ArrayList<>();
         }
         if (listaFaturamentoVendas3 == null) {
-            listaFaturamentoVendas3 = new ArrayList<Vendas>();
+            listaFaturamentoVendas3 = new ArrayList<>();
         }
         if (listaFaturamentoVendas4 == null) {
-            listaFaturamentoVendas4 = new ArrayList<Vendas>();
+            listaFaturamentoVendas4 = new ArrayList<>();
         }
         for (int i = 0; i < listaFaturamentoVendas.size(); i++) {
             faturamento = faturamento + listaFaturamentoVendas.get(i).getValorLiquido();
@@ -487,16 +487,16 @@ public class ImprimirVendasMB implements Serializable {
                 + Formatacao.ConvercaoDataSql(dataFinal) + "' and  c.dataVencimento<='" + Formatacao.ConvercaoDataSql(data4)
                 + "' and c.valorPago>0 and c.status<>'CANCELADA' and c.cliente.idcliente=" + cliente.getIdcliente());
         if (listaTotalRecebidoMes == null) {
-            listaTotalRecebidoMes = new ArrayList<Contasreceber>();
+            listaTotalRecebidoMes = new ArrayList<>();
         }
         if (listaTotalRecebidoMes2 == null) {
-            listaTotalRecebidoMes2 = new ArrayList<Contasreceber>();
+            listaTotalRecebidoMes2 = new ArrayList<>();
         }
         if (listaTotalRecebidoMes3 == null) {
-            listaTotalRecebidoMes3 = new ArrayList<Contasreceber>();
+            listaTotalRecebidoMes3 = new ArrayList<>();
         }
         if (listaTotalRecebidoMes4 == null) {
-            listaTotalRecebidoMes4 = new ArrayList<Contasreceber>();
+            listaTotalRecebidoMes4 = new ArrayList<>();
         }
         for (int i = 0; i < listaTotalRecebidoMes.size(); i++) {
             totalRecebidoMes = totalRecebidoMes + listaTotalRecebidoMes.get(i).getValorPago();
@@ -528,16 +528,16 @@ public class ImprimirVendasMB implements Serializable {
         listaTotalAberto4 = contasReceberDao.list("Select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataFinal)
                 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data4) + "' and c.valorPago=0 and c.status<>'CANCELADA' and c.cliente.idcliente=" + cliente.getIdcliente());
         if (listaTotalAberto == null) {
-            listaTotalAberto = new ArrayList<Contasreceber>();
+            listaTotalAberto = new ArrayList<>();
         }
         if (listaTotalAberto2 == null) {
-            listaTotalAberto2 = new ArrayList<Contasreceber>();
+            listaTotalAberto2 = new ArrayList<>();
         }
         if (listaTotalAberto3 == null) {
-            listaTotalAberto3 = new ArrayList<Contasreceber>();
+            listaTotalAberto3 = new ArrayList<>();
         }
         if (listaTotalAberto4 == null) {
-            listaTotalAberto4 = new ArrayList<Contasreceber>();
+            listaTotalAberto4 = new ArrayList<>();
         }
         for (int i = 0; i < listaTotalAberto.size(); i++) {
             totalAberto = totalAberto + listaTotalAberto.get(i).getValorParcela();

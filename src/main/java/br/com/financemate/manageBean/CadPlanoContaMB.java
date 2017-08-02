@@ -48,9 +48,7 @@ public class CadPlanoContaMB implements Serializable {
         gerarlistaTipoPlanoContas();
         if (planocontas == null) {
             planocontas = new Planocontas();
-        }//else{
-        //	 tipoPlanoContas = planocontas.get;
-        //}
+        }
 
     }
 
@@ -89,7 +87,7 @@ public class CadPlanoContaMB implements Serializable {
     public void gerarlistaTipoPlanoContas() {
         listarTipoPlanoContas = tipoPlanoContasDao.list("select t from Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas == null) {
-            listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
+            listarTipoPlanoContas = new ArrayList<>();
         }
     }
 

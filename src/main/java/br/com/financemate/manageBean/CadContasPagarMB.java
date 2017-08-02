@@ -95,7 +95,6 @@ public class CadContasPagarMB implements Serializable {
     private PlanoContasDao planoContasDao;
     private List<String> nomeArquivos;
     private String corAnexo = "color:#000000;";
-    private List<String> listaArquivos;
 
     @PostConstruct
     public void init() {
@@ -112,7 +111,6 @@ public class CadContasPagarMB implements Serializable {
         session.removeAttribute("banco");
         session.removeAttribute("planocontas");
         gerarListaCliente();
-        //gerarListaPlanoContas();
         if (contaPagar == null) {
             contaPagar = new Contaspagar();
             if (usuarioLogadoMB.getCliente() != null) {
@@ -344,7 +342,7 @@ public class CadContasPagarMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c order by c.nomeFantasia");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
 
     }
@@ -354,25 +352,13 @@ public class CadContasPagarMB implements Serializable {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
-                listaBanco = new ArrayList<Banco>();
+                listaBanco = new ArrayList<>();
             }
         } else {
-            listaBanco = new ArrayList<Banco>();
+            listaBanco = new ArrayList<>();
         }
     }
 
-    //public void gerarListaPlanoContas() {
-    //    PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-    //    try {
-    //        listaPlanoContas = planoContasFacade.listar();
-    //        if (listaPlanoContas == null) {
-    //            listaPlanoContas = new ArrayList<Planocontas>();
-    //       }
-    //    } catch (Exception ex) {
-    //       Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-    //       mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
-    //   }
-    //}
     public void salvar() {
         Operacaousuairo operacaousuairo = new Operacaousuairo();
         contaPagar.setBanco(banco);
@@ -398,7 +384,7 @@ public class CadContasPagarMB implements Serializable {
         }
 
         String mensagem = validarDados();
-        if (mensagem == "") {
+        if (mensagem.length() == 0) {
             contaPagar.setStatus("Ativo");
             if (contaPagar.getIdcontasPagar() != null) {
                 operacaousuairo.setTipooperacao("Usuário Alterou");
@@ -406,17 +392,17 @@ public class CadContasPagarMB implements Serializable {
                 operacaousuairo.setTipooperacao("Usuário Cadastrou");
             }
             contaPagar = contasPagarDao.update(contaPagar);
-            operacaousuairo = salvarOperacaoUsuario(contaPagar, operacaousuairo);
+            salvarOperacaoUsuario(contaPagar, operacaousuairo);
             if (cptransferencia != null) {
-
                 salvarTransferencia();
             }
             if (file != null) {
                 String arquivoFtp = nomeArquivo();
                 Nomearquivo nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
-                if (nomearquivo == null) {
-                    nomearquivo = new Nomearquivo();
+                if (nomearquivo != null && nomearquivo.getIdnomearquivo() != null){
+                    nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
                 }
+                nomearquivo = new Nomearquivo();
                 nomearquivo.setNomearquivo01(arquivoFtp);
                 nomearquivo.setContaspagar(contaPagar);
                 nomeArquivoDao.update(nomearquivo);
@@ -459,7 +445,7 @@ public class CadContasPagarMB implements Serializable {
         }
 
         String mensagem = validarDados();
-        if (mensagem == "") {
+        if (mensagem.length() == 0) {
             contaPagar.setStatus("Ativo");
             if (contaPagar.getIdcontasPagar() != null) {
                 operacaousuairo.setTipooperacao("Usuário Alterou");
@@ -467,28 +453,26 @@ public class CadContasPagarMB implements Serializable {
                 operacaousuairo.setTipooperacao("Usuário Cadastrou");
             }
             contaPagar = contasPagarDao.update(contaPagar);
-            operacaousuairo = salvarOperacaoUsuario(contaPagar, operacaousuairo);
+            salvarOperacaoUsuario(contaPagar, operacaousuairo);
             if (cptransferencia != null) {
                 salvarTransferencia();
-                Cptransferencia copiaTranferencia = new Cptransferencia();
-                copiaTranferencia = cptransferencia;
+                Cptransferencia copiaTranferencia = cptransferencia;
                 cptransferencia = repetirValoresTransferencia(copiaTranferencia);
             }
             if (file != null) {
                 String arquivoFtp = nomeArquivo();
                 if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
-                    Nomearquivo nomearquivo = new Nomearquivo();
-                    nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
+                    Nomearquivo nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
                     if (nomearquivo.getIdnomearquivo() != null) {
                         nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
                     }
+                    nomearquivo = new Nomearquivo();
                     nomearquivo.setNomearquivo01(arquivoFtp);
                     nomearquivo.setContaspagar(contaPagar);
                     nomeArquivoDao.update(nomearquivo);
                 }
             }
-            Contaspagar copia = new Contaspagar();
-            copia = contaPagar;
+            Contaspagar copia = contaPagar;
             contaPagar = repetirValoresContasPagar(copia);
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
@@ -549,7 +533,7 @@ public class CadContasPagarMB implements Serializable {
         if (contaPagar.getFormaPagamento() == null) {
             mensagem = mensagem + "Forma de Pagamento não selecionada \r\n";
         }
-        if (contaPagar.getNumeroDocumento() == "") {
+        if (contaPagar.getNumeroDocumento().equalsIgnoreCase("")) {
             mensagem = mensagem + "Número de documento não informado \r\n";
         }
 
@@ -614,8 +598,7 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public boolean salvarArquivoFTP() {
-        Ftpdados dadosFTP = null;
-        dadosFTP = ftpDadosDao.find(1);
+        Ftpdados dadosFTP = ftpDadosDao.find(1);
         if (dadosFTP == null) {
             return false;
         }
@@ -649,8 +632,7 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public boolean salvarArquivoFTP(String nomeArquivoLocal, String nomeArquivoFTP) {
-        Ftpdados dadosFTP = null;
-        dadosFTP = ftpDadosDao.find("Select f From FtpDados f");
+        Ftpdados dadosFTP = ftpDadosDao.find("Select f From FtpDados f");
         if (dadosFTP == null) {
             return false;
         }
@@ -705,7 +687,7 @@ public class CadContasPagarMB implements Serializable {
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        nomeAquivoFTP = "ContasPagar-" + file.getFileName().trim();
+        nomeAquivoFTP = "ContasPagar-" + nome;
         return nomeAquivoFTP;
     }
 
@@ -788,7 +770,7 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public String consultarArquivos() {
-        String nomeFile = "";
+        String nomeFile;
         if (contaPagar.getIdcontasPagar() != null) {
             nomearquivo = nomeArquivoDao.find("SELECT n FROM Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
             if (nomearquivo == null) {
@@ -812,15 +794,15 @@ public class CadContasPagarMB implements Serializable {
         try {
             listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
             if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
-                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+                listaPlanoContaTipo = new ArrayList<>();
             }
-            listaPlanoContas = new ArrayList<Planocontas>();
+            listaPlanoContas = new ArrayList<>();
             for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
                 listaPlanoContas.add(listaPlanoContaTipo.get(i).getPlanocontas());
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
     }
 

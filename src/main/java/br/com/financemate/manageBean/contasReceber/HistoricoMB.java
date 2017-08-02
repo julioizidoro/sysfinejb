@@ -4,11 +4,8 @@ import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.CobrancaDao;
 import br.com.financemate.dao.HistoricoCobrancaDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -124,7 +121,7 @@ public class HistoricoMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
     }
 

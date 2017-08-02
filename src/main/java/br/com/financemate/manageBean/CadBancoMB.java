@@ -131,7 +131,7 @@ public class CadBancoMB implements Serializable {
 
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
     }
     

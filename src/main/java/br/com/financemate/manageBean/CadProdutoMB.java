@@ -3,11 +3,8 @@ package br.com.financemate.manageBean;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ProdutoDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -18,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 
-import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Produto;
 import javax.ejb.EJB;
@@ -79,10 +75,9 @@ public class CadProdutoMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        // TODO Auto-generated catch block
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
     }
 

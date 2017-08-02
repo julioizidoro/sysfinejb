@@ -117,7 +117,7 @@ public class ClienteMB implements Serializable {
         }
         listaClientes = clienteDao.list("select c from Cliente c where c.nomeFantasia like '%" + nomeCliente + "%' order by c.razaoSocial");
         if (listaClientes == null) {
-            listaClientes = new ArrayList<Cliente>();
+            listaClientes = new ArrayList<>();
         }
     }
 
@@ -197,7 +197,7 @@ public class ClienteMB implements Serializable {
     public void listarTipoPlanoContas() {
         listarTipoPlanoContas = tipoPlanoContasDao.list("Select t From Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas == null) {
-            listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
+            listarTipoPlanoContas = new ArrayList<>();
         }
     }
 

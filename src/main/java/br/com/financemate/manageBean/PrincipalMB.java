@@ -2,7 +2,6 @@ package br.com.financemate.manageBean;
 
 import br.com.financemate.dao.VendasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -86,7 +85,7 @@ public class PrincipalMB implements Serializable {
 
     public void gerarListaUltimasVendas() {
         List<Vendas> listaVendas;
-        lista10Vendas = new ArrayList<Vendas>();
+        lista10Vendas = new ArrayList<>();
         if (usuarioLogadoMB.getCliente() == null) {
             listaVendas = vendasDao.list("Select v from Vendas v order by v.idvendas DESC");
         } else {
@@ -95,7 +94,7 @@ public class PrincipalMB implements Serializable {
         for (int i = 0; i < 10; i++) {
             if (i <= lista10Vendas.size()) {
                 if (listaVendas == null || listaVendas.isEmpty()) {
-                    listaVendas = new ArrayList<Vendas>();
+                    listaVendas = new ArrayList<>();
                 } else {
                     lista10Vendas.add(listaVendas.get(i)); 
                 }
@@ -119,7 +118,7 @@ public class PrincipalMB implements Serializable {
         }
         List<Vendas> listaQuantidadeVendas = vendasDao.list(sql);
         if (listaQuantidadeVendas == null || listaQuantidadeVendas.isEmpty()) {
-            listaQuantidadeVendas = new ArrayList<Vendas>();
+            listaQuantidadeVendas = new ArrayList<>();
         }
         for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
             valorMesVendas = valorMesVendas + listaQuantidadeVendas.get(i).getValorLiquido();
@@ -127,8 +126,8 @@ public class PrincipalMB implements Serializable {
     }
 
     public String pegarMesAno() {
-        String mes = "";
-        String ano = "";
+        String mes;
+        String ano;
         ano = "" + new Year();
         Calendar cal = new GregorianCalendar();
         mes = "" + (cal.get(Calendar.MONDAY) + 1);
@@ -161,7 +160,7 @@ public class PrincipalMB implements Serializable {
     }
 
     public String pegarMes() {
-        String mes = "";
+        String mes;
         Calendar cal = new GregorianCalendar();
         mes = "" + (cal.get(Calendar.MONDAY) + 1);
         if (mes.equalsIgnoreCase("1")) {

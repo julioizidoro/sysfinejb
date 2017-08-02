@@ -158,7 +158,8 @@ public class CalculosContasMB implements Serializable {
         try {
             listaTotais = contasPagarDao.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()), idcliente);
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         if (listaTotais != null) {
             vencida = listaTotais.get(0).floatValue();
@@ -185,7 +186,8 @@ public class CalculosContasMB implements Serializable {
         try {
             listaTotais = contasReceberDao.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()), idcliente);
         } catch (SQLException e) {
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
         if (listaTotais != null) {
             vencida = listaTotais.get(0).floatValue();

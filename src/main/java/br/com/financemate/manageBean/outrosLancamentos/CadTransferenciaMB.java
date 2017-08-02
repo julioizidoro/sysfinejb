@@ -5,7 +5,6 @@ import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.OutrosLancamentosDao;
 import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,7 +68,7 @@ public class CadTransferenciaMB implements Serializable {
             cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
             gerarListaBanco();
         }
-        
+
     }
 
     public Banco getBancoCredito() {
@@ -151,18 +150,16 @@ public class CadTransferenciaMB implements Serializable {
     public void setHabilitarUnidade(boolean habilitarUnidade) {
         this.habilitarUnidade = habilitarUnidade;
     }
-    
-    
 
     public void gerarListaBanco() {
         String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente();
         listaBancoDebito = bancoDao.list(sql);
         listaBancoCredito = bancoDao.list(sql);
         if (listaBancoCredito == null || listaBancoCredito.isEmpty()) {
-            listaBancoCredito = new ArrayList<Banco>();
+            listaBancoCredito = new ArrayList<>();
         }
         if (listaBancoDebito == null || listaBancoDebito.isEmpty()) {
-            listaBancoDebito = new ArrayList<Banco>();
+            listaBancoDebito = new ArrayList<>();
         }
     }
 
@@ -171,10 +168,9 @@ public class CadTransferenciaMB implements Serializable {
     }
 
     public void salvar() {
-        Planocontas planocontas = new Planocontas();
         Movimentobanco debito = new Movimentobanco();
         debito = pegarDebitar(debito);
-        planocontas = planoContasDao.find(23);
+        Planocontas planocontas = planoContasDao.find(23);
         debito.setPlanocontas(planocontas);
         debito = pegarDebitar(debito);
         outrosLancamentosDao.update(debito);
@@ -222,12 +218,11 @@ public class CadTransferenciaMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
     }
-    
-    
-     public void desabilitarUnidade() {
+
+    public void desabilitarUnidade() {
         if (usuarioLogadoMB.getCliente() != null) {
             habilitarUnidade = true;
         } else {

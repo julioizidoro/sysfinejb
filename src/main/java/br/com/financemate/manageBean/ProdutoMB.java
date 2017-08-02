@@ -3,7 +3,6 @@ package br.com.financemate.manageBean;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ProdutoDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,24 +80,20 @@ public class ProdutoMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        // TODO Auto-generated catch block
-
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
     }
 
     public void gerarListaProdutos() {
-        // TODO Auto-generated catch block
-
         if (usuarioLogadoMB.getCliente() == null) {
             listaProduto = produtoDao.list("Select p From Produto p");
         } else {
             listaProduto = produtoDao.list("Select p from Produto p where p.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente());
         }
         if (listaProduto == null) {
-            listaProduto = new ArrayList<Produto>();
+            listaProduto = new ArrayList<>();
         }
     }
 

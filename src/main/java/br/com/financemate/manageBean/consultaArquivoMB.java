@@ -4,7 +4,6 @@ import br.com.financemate.dao.FtpDadosDao;
 import br.com.financemate.dao.NomeArquivoDao;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -97,8 +96,6 @@ public class consultaArquivoMB implements Serializable {
     
 
     public void consultarArquivos() {
-        // TODO Auto-generated catch block
-
         nomeArquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
         if (nomeArquivo == null) {
             nomeArquivo = new Nomearquivo();
@@ -113,8 +110,7 @@ public class consultaArquivoMB implements Serializable {
     }
 
     public boolean salvarArquivoFTP(String nomeArquivoLocal, String nomeArquivoFTP) {
-        Ftpdados dadosFTP = null;
-        dadosFTP = ftpDadosDao.find("Select f From Ftpdados f");
+        Ftpdados dadosFTP  = ftpDadosDao.find("Select f From Ftpdados f");
         if (dadosFTP == null) {
             return false;
         }

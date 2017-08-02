@@ -224,7 +224,7 @@ public class ImprimirRelatorioMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
 
     }
@@ -265,7 +265,7 @@ public class ImprimirRelatorioMB implements Serializable {
         File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
         BufferedImage logo = ImageIO.read(f);
         parameters.put("logo", logo);
-        String periodo = null;
+        String periodo;
         if (relatorio.equalsIgnoreCase("Pagamentos")) {
             if (dataInicial != null && dataFinal != null) {
                 periodo = "Periodo : " + Formatacao.ConvercaoDataPadrao(dataInicial)
@@ -307,7 +307,7 @@ public class ImprimirRelatorioMB implements Serializable {
             if ((dataInicial != null) && (dataFinal != null)) {
                 sql = sql + "movimentobanco.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
                         + "' and movimentobanco.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and ";
-            } else if (competencia != null && competencia != "") {
+            } else if (competencia != null && !competencia.equalsIgnoreCase("")) {
                 sql = sql + "movimentobanco.compentencia='" + competencia + "' and ";
             }
             sql = sql + "cliente.idcliente=" + cliente.getIdcliente();
@@ -389,10 +389,10 @@ public class ImprimirRelatorioMB implements Serializable {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
-                listaBanco = new ArrayList<Banco>();
+                listaBanco = new ArrayList<>();
             }
         } else {
-            listaBanco = new ArrayList<Banco>();
+            listaBanco = new ArrayList<>();
         }
     }
 

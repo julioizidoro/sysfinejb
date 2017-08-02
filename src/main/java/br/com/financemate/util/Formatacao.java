@@ -7,7 +7,6 @@ package br.com.financemate.util;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
-import java.sql.SQLException;
 import java.text.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -261,33 +260,7 @@ public class Formatacao {
         return percentual;
     }
 
-    // public static Double calcularValorVenda(double percentualDesejado, double
-    // valorCusto){
-    // double percentual = valorCusto * percentualDesejado;
-    // double novoValorVenda = valorCusto / 100;
-    // return novoValorVenda;
-    // }
-    //
-    // public static Double calcularPercentualVenda(double valorVenda, double
-    // valorCusto){
-    // valorVenda = valorVenda * 100;
-    // double percentual = valorVenda / valorCusto;
-    // percentual = percentual - 100;
-    // return percentual;
-    // }
-    // public static String criptografarSenha(char[] s){
-    // Criptografia cripto = new CriptografiaMD5();
-    // String senha="";
-    // for (int i=0;i<s.length;i++){
-    // senha+= s[i];
-    // }
-    // try {
-    // senha = cripto.encrypt(senha);
-    // } catch (NoSuchAlgorithmException ex) {
-    // Logger.getLogger(Formatacao.class.getName()).log(Level.SEVERE, null, ex);
-    // }
-    // return senha;
-    // }
+    
     public static String getDataDoDia() {
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         String data = df.format(new Date(System.currentTimeMillis()));
@@ -790,7 +763,7 @@ public class Formatacao {
     public static String retirarNegativo(String valor) {
         String novoValor = "";
         for (int i = 0; i < valor.length(); i++) {
-            if (valor.substring(i) != "-") {
+            if (!valor.substring(i).equalsIgnoreCase("-")) {
                 novoValor = novoValor + valor.substring(i + 1);
                 i = 1000;
             }
@@ -810,7 +783,7 @@ public class Formatacao {
         calendar.setTime(data);
         int mes = calendar.get(GregorianCalendar.MONTH);
         int ano = calendar.get(GregorianCalendar.YEAR);
-        String smes = "";
+        String smes;
         if (mes > 9) {
             smes = String.valueOf(mes);
         } else {

@@ -1,6 +1,7 @@
 package br.com.financemate.manageBean.outrosLancamentos;
 
-import java.io.FileInputStream;
+import br.com.financemate.manageBean.mensagem;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import net.sf.ofx4j.domain.data.banking.BankStatementResponseTransaction;
 import net.sf.ofx4j.domain.data.banking.BankingResponseMessageSet;
 import net.sf.ofx4j.domain.data.common.Transaction;
 import net.sf.ofx4j.io.AggregateUnmarshaller;
+import net.sf.ofx4j.io.OFXParseException;
 
 public class LerOFXBean {
 	
@@ -37,7 +39,7 @@ public class LerOFXBean {
 					System.out.println("dataDoArquivo: " + b.getMessage().getLedgerBalance().getAsOfDate());
 					BankStatementResponse message = b.getMessage();
 					List<Transaction> listTransactions = message.getTransactionList().getTransactions();
-					listaTransacao = new ArrayList<TransacaoBean>();
+					listaTransacao = new ArrayList<>();
 					for (Transaction transaction : listTransactions) {
 						TransacaoBean transacao = new TransacaoBean();
 						transacao.setTipo(transaction.getTransactionType().name());
@@ -56,8 +58,9 @@ public class LerOFXBean {
 					}
 				}
 			}
-		}catch (Exception ex){
-			
+		}catch (IOException | OFXParseException ex){
+			mensagem m = new mensagem();
+                        m.faltaInformacao("" + ex);
 		}
 	}
 

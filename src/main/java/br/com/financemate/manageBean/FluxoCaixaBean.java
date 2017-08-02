@@ -14,7 +14,6 @@ import br.com.financemate.model.Fluxocaixa;
 import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 

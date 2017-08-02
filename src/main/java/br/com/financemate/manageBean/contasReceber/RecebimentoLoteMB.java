@@ -3,12 +3,9 @@ package br.com.financemate.manageBean.contasReceber;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.OutrosLancamentosDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -21,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 import br.com.financemate.manageBean.CalculosContasMB;
-import br.com.financemate.manageBean.LiberarContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -66,7 +62,7 @@ public class RecebimentoLoteMB implements Serializable {
         }
         dataPagamento = new Date();
         if (listaContasSelecionadas == null) {
-            listaContasSelecionadas = new ArrayList<Contasreceber>();
+            listaContasSelecionadas = new ArrayList<>();
         }
     }
 
@@ -136,7 +132,7 @@ public class RecebimentoLoteMB implements Serializable {
 
     public String salvarContasReceberLote() {
         String mensagens = validarDadosRecebimentoLote();
-        if (mensagens == "") {
+        if (mensagens.length() == 0) {
             for (int i = 0; i < listaContasSelecionadas.size(); i++) {
                 contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
                 listaContasSelecionadas.get(i).setUsuario(usuarioLogadoMB.getUsuario());
@@ -180,7 +176,7 @@ public class RecebimentoLoteMB implements Serializable {
         outroslancamentos.setDataRegistro(new Date());
         outroslancamentos.setDescricao("Recebimento através do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
-        outroslancamentos = outrosLancamentosDao.update(outroslancamentos);
+        outrosLancamentosDao.update(outroslancamentos);
 
     }
 

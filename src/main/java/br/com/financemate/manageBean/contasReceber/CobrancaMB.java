@@ -76,7 +76,7 @@ public class CobrancaMB implements Serializable {
         contasReceber = (Contasreceber) session.getAttribute("contasreceber");
         //listaContasSelecionadas = (List<Contasreceber>) session.getAttribute("listaContasSelecionadas");
         if (listaContasSelecionadas == null) {
-            listaContasSelecionadas = new ArrayList<Contasreceber>();
+            listaContasSelecionadas = new ArrayList<>();
             listaContasSelecionadas.add(contasReceber);
         }
         gerarListaCliente();
@@ -88,11 +88,11 @@ public class CobrancaMB implements Serializable {
         }
         if (cobranca == null) {
             cobranca = new Cobranca();
-            listaHistorico = new ArrayList<Historicocobranca>();
+            listaHistorico = new ArrayList<>();
         } else {
             gerarListaHistorico();
             if (listaHistorico == null) {
-                listaHistorico = new ArrayList<Historicocobranca>();
+                listaHistorico = new ArrayList<>();
             }
         }
     }
@@ -264,7 +264,7 @@ public class CobrancaMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
     }
 
@@ -416,7 +416,7 @@ public class CobrancaMB implements Serializable {
         }
         listaHistorico = historicoCobrancaDao.list("Select h from Historicocobranca h Where h.cobranca.idcobranca=" + cobranca.getIdcobranca());
         if (listaHistorico == null) {
-            listaHistorico = new ArrayList<Historicocobranca>();
+            listaHistorico = new ArrayList<>();
         }
     }
 
@@ -430,7 +430,7 @@ public class CobrancaMB implements Serializable {
         sql = sql + " Where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber();
         sql = sql + " and cp.cobranca.idcobranca=" + cobranca.getIdcobranca();
         listaCobrancaParcelas = cobrancaParcelaDao.list(sql);
-        if (listaCobrancaParcelas.size() == 0) {
+        if (listaCobrancaParcelas.isEmpty()) {
             for (int i = 0; i < listaContasSelecionadas.size(); i++) {
                 if (cobranca != null && contasReceber != null) {
                     cobrancaParcela = new Cobrancaparcelas();

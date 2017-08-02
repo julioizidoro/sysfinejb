@@ -7,16 +7,12 @@ import br.com.financemate.dao.FtpDadosDao;
 import br.com.financemate.dao.NomeArquivoDao;
 import br.com.financemate.dao.OperacaoUsuarioDao;
 import br.com.financemate.dao.PlanoContaTipoDao;
-import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -89,8 +85,6 @@ public class ContasPagarMB implements Serializable {
     private NomeArquivoDao nomeArquivoDao;
     @EJB
     private OperacaoUsuarioDao operacaoUsuarioDao;
-    @EJB
-    private PlanoContasDao planoContasDao;
     @EJB
     private PlanoContaTipoDao planoContaTipoDao;
     private Planocontatipo planocontatipo;
@@ -433,7 +427,7 @@ public class ContasPagarMB implements Serializable {
     public void gerarListaContas() {
         listaContasPagar = contasPagarDao.list(sql);
         if (listaContasPagar == null) {
-            listaContasPagar = new ArrayList<Contaspagar>();
+            listaContasPagar = new ArrayList<>();
         }
         calcularTotal();
     }
@@ -441,7 +435,7 @@ public class ContasPagarMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c order by c.nomeFantasia");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
   
     }
@@ -486,7 +480,7 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String excluir() {
-        List<Contaspagar> listaContasMultiplas = new ArrayList<Contaspagar>();
+        List<Contaspagar> listaContasMultiplas = new ArrayList<>();
         for (int i = 0; i < listaContasPagar.size(); i++) {
             if (listaContasPagar.get(i).isSelecionado()) {
                 listaContasMultiplas.add(listaContasPagar.get(i));
@@ -574,7 +568,7 @@ public class ContasPagarMB implements Serializable {
         totalLiberadas = "0.00";
         dataLiberacao = new Date();
         float valorTotal = 0.0f;
-        listaContasSelecionadas = new ArrayList<Contaspagar>();
+        listaContasSelecionadas = new ArrayList<>();
         for (int i = 0; i < listaContasPagar.size(); i++) {
             if (listaContasPagar.get(i).isSelecionado()) {
                 listaContasSelecionadas.add(listaContasPagar.get(i));
@@ -648,7 +642,7 @@ public class ContasPagarMB implements Serializable {
     public void gerarListaContaas(String sql) {
         listaContasPagar = contasPagarDao.list(sql);
         if (listaContasPagar == null) {
-            listaContasPagar = new ArrayList<Contaspagar>();
+            listaContasPagar = new ArrayList<>();
         }
     }
 
@@ -741,19 +735,17 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String excluirNomeArquivo(int idConta) {
-        Nomearquivo nomearquivo = new Nomearquivo();
-        nomearquivo = nomeArquivoDao.find("SELECT n FROM Nomearquivo n where n.contaspagar.idcontasPagar=" + idConta);
+        Nomearquivo nomearquivo = nomeArquivoDao.find("SELECT n FROM Nomearquivo n where n.contaspagar.idcontasPagar=" + idConta);
         if (nomearquivo == null) {
             return "";
         } else {
             nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
-            nomearquivo = new Nomearquivo();
         }
         return "";
     }
 
     public void cancelar(Contaspagar contaspagar) {
-        List<Contaspagar> listaContasMultiplas = new ArrayList<Contaspagar>();
+        List<Contaspagar> listaContasMultiplas = new ArrayList<>();
         for (int i = 0; i < listaContasPagar.size(); i++) {
             if (listaContasPagar.get(i).isSelecionado()) {
                 listaContasMultiplas.add(listaContasPagar.get(i));
@@ -789,7 +781,7 @@ public class ContasPagarMB implements Serializable {
     
     
     public void desabilitarUnidade() {
-        if (usuarioLogadoMB.getCliente() != null) {
+        if(usuarioLogadoMB.getCliente() != null) {
             habilitarUnidade = true;
         } else {
             habilitarUnidade = false;
@@ -803,15 +795,15 @@ public class ContasPagarMB implements Serializable {
         try {
             listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
             if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
-                listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+                listaPlanoContaTipo = new ArrayList<>();
             }
-            listaPlanoContas = new ArrayList<Planocontas>();
+            listaPlanoContas = new ArrayList<>();
             for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
                 listaPlanoContas.add(listaPlanoContaTipo.get(i).getPlanocontas());
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + e);
         }
     }
     
@@ -830,11 +822,8 @@ public class ContasPagarMB implements Serializable {
     
     
     public String consultarArquivos(Contaspagar contaspagar) {
-        // TODO Auto-generated catch block
-
        Nomearquivo nomeArquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
         if (nomeArquivo == null) {
-            nomeArquivo = new Nomearquivo();
             return "Não Existe Arquivo";
         }
        return nomeArquivo.getNomearquivo01();
@@ -847,10 +836,8 @@ public class ContasPagarMB implements Serializable {
      
      
       public boolean verificarArquivo(Contaspagar contaspagar) {
-        // TODO Auto-generated catch block
-
        Nomearquivo nomeArquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
-        if (nomeArquivo == null) {
+        if(nomeArquivo == null) {
             return false;
         }
        return true;

@@ -71,9 +71,11 @@
                 <h:panelGroup >
                     <div class="form-group" style="margin-left: 5%;">
                         <h:outputLabel for="dataVenc" >Vencimento</h:outputLabel>
-                        <p:inputMask id="dataVenc" class="form-control" value="#{cadContasReceberMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15"  >
+                        <br/>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{cadContasReceberMB.contasReceber.dataVencimento}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup >

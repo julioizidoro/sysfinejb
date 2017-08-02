@@ -3,115 +3,114 @@ package br.com.financemate.manageBean.vendas;
 import java.util.Date;
 
 public class VendasSystmBean {
-	
-	 private int idProduto;
-	    private Date dataVenda;
-	    private int idCliente;
-	    private String fornecedor;
-	    private Float valorBruto;
-	    private Float liquidoFranquia;
-	    private Float valorFormaPagamento;
-	    private String nomeCliente;
-	    private String consultor;
-	    private int idVenda;
-	    private int idUsuario;
-	    private int idUnidade;
-	    
 
-	    public int getIdProduto() {
-	        return idProduto;
-	    }
+    private int idProduto;
+    private Date dataVenda;
+    private int idCliente;
+    private String fornecedor;
+    private Float valorBruto;
+    private Float liquidoFranquia;
+    private Float valorFormaPagamento;
+    private String nomeCliente;
+    private String consultor;
+    private int idVenda;
+    private int idUsuario;
+    private int idUnidade;
 
-	    public void setIdProduto(int idProduto) {
-	        this.idProduto = idProduto;
-	    }
+    public int getIdProduto() {
+        return idProduto;
+    }
 
-	    public Date getDataVenda() {
-	        return dataVenda;
-	    }
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
+    }
 
-	    public void setDataVenda(Date dataVenda) {
-	        this.dataVenda = dataVenda;
-	    }
+    public Date getDataVenda() {
+        return dataVenda;
+    }
 
-	    public int getIdCliente() {
-	        return idCliente;
-	    }
+    public void setDataVenda(Date dataVenda) {
+        this.dataVenda = dataVenda;
+    }
 
-	    public void setIdCliente(int idCliente) {
-	        this.idCliente = idCliente;
-	    }
+    public int getIdCliente() {
+        return idCliente;
+    }
 
-	    public String getFornecedor() {
-	        return fornecedor;
-	    }
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
 
-	    public void setFornecedor(String fornecedor) {
-	        this.fornecedor = fornecedor;
-	    }
+    public String getFornecedor() {
+        return fornecedor;
+    }
 
-	    public Float getValorBruto() {
-	        return valorBruto;
-	    }
+    public void setFornecedor(String fornecedor) {
+        this.fornecedor = fornecedor;
+    }
 
-	    public void setValorBruto(Float valorBruto) {
-	        this.valorBruto = valorBruto;
-	    }
+    public Float getValorBruto() {
+        return valorBruto;
+    }
 
-	    public Float getLiquidoFranquia() {
-	        return liquidoFranquia;
-	    }
+    public void setValorBruto(Float valorBruto) {
+        this.valorBruto = valorBruto;
+    }
 
-	    public void setLiquidoFranquia(Float liquidoFranquia) {
-	        this.liquidoFranquia = liquidoFranquia;
-	    }
+    public Float getLiquidoFranquia() {
+        return liquidoFranquia;
+    }
 
-	    public Float getValorFormaPagamento() {
-	        return valorFormaPagamento;
-	    }
+    public void setLiquidoFranquia(Float liquidoFranquia) {
+        this.liquidoFranquia = liquidoFranquia;
+    }
 
-	    public void setValorFormaPagamento(Float valorFormaPagamento) {
-	        this.valorFormaPagamento = valorFormaPagamento;
-	    }
+    public Float getValorFormaPagamento() {
+        return valorFormaPagamento;
+    }
 
-	    public String getNomeCliente() {
-	        return nomeCliente;
-	    }
+    public void setValorFormaPagamento(Float valorFormaPagamento) {
+        this.valorFormaPagamento = valorFormaPagamento;
+    }
 
-	    public void setNomeCliente(String nomeCliente) {
-	        this.nomeCliente = nomeCliente;
-	    }
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
 
-	    public String getConsultor() {
-	        return consultor;
-	    }
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
 
-	    public void setConsultor(String consultor) {
-	        this.consultor = consultor;
-	    }
+    public String getConsultor() {
+        return consultor;
+    }
 
-	    public int getIdVenda() {
-	        return idVenda;
-	    }
+    public void setConsultor(String consultor) {
+        this.consultor = consultor;
+    }
 
-	    public void setIdVenda(int idVenda) {
-	        this.idVenda = idVenda;
-	    }
+    public int getIdVenda() {
+        return idVenda;
+    }
 
-	    public int getIdUsuario() {
-	        return idUsuario;
-	    }
+    public void setIdVenda(int idVenda) {
+        this.idVenda = idVenda;
+    }
 
-	    public void setIdUsuario(int idUsuario) {
-	        this.idUsuario = idUsuario;
-	    }
-	    
-	    public int getIdUnidade() {
-	        return idUnidade;
-	    }
+    public int getIdUsuario() {
+        return idUsuario;
+    }
 
-	    public void setIdUnidade(int idUnidade) {
-	        this.idUnidade = idUnidade;
-	    }
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int getIdUnidade() {
+        return idUnidade;
+    }
+
+    public void setIdUnidade(int idUnidade) {
+        this.idUnidade = idUnidade;
+    }
 
 }

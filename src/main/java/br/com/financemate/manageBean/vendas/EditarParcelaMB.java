@@ -101,19 +101,19 @@ public class EditarParcelaMB implements Serializable {
     }
 
     public String SalvarParcelaEditada() {
-        Float valorOriginal = 0f;
+        Float valorOriginal;
         Float valorDividir;
-        Float valorDivido = 0f;
+        Float valorDivido;
         Integer numeroParcelas;
         Float totalParcela;
-        List<Contasreceber> listarConta = null;
+        List<Contasreceber> listarConta;
         valorOriginal = contasReceber.getValorParcela();
         contasReceber.setTipodocumento(tipoDocumento);
         contasReceber.setValorParcela(valorEditado);
         contasReceberDao.update(contasReceber);
         listarConta = contasReceberDao.list("Select c From Contasreceber c where c.venda=" + contasReceber.getVenda() + " and c.valorParcela=" + valorOriginal);
         if (listarConta == null) {
-            listarConta = new ArrayList<Contasreceber>();
+            listarConta = new ArrayList<>();
         }
         numeroParcelas = listarConta.size();
         listarConta.remove(contasReceber);
@@ -136,10 +136,9 @@ public class EditarParcelaMB implements Serializable {
         session.setAttribute("vendas", vendas);
         return "gerarParcelas";
     }
-    
-    
+
     public String CancelarEdicao() {
-         FacesContext fc = FacesContext.getCurrentInstance();
+        FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
         return "gerarParcelas";

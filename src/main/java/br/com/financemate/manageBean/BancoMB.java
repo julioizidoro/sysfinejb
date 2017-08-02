@@ -110,7 +110,7 @@ public class BancoMB implements Serializable {
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
     }
 
@@ -129,7 +129,7 @@ public class BancoMB implements Serializable {
         }
         listaBanco = bancoDao.list(sql);
         if (listaBanco == null) {
-            listaBanco = new ArrayList<Banco>();
+            listaBanco = new ArrayList<>();
         }
     }
 

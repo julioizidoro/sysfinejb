@@ -4,7 +4,6 @@ import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.OutrosLancamentosDao;
-import br.com.financemate.manageBean.LiberarContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
@@ -13,12 +12,9 @@ import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Movimentobanco;
 
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -73,7 +69,7 @@ public class RecebimentoContaMB implements Serializable {
         gerarListaBanco();
         cliente = contasReceber.getCliente();
         banco = contasReceber.getBanco();
-        listaRecebimentoParial = new ArrayList<Contasreceber>();
+        listaRecebimentoParial = new ArrayList<>();
         if (valorTotal == null || valorTotal == 0f) {
             valorTotal = contasReceber.getValorParcela();
         }
@@ -188,17 +184,17 @@ public class RecebimentoContaMB implements Serializable {
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
-                listaBanco = new ArrayList<Banco>();
+                listaBanco = new ArrayList<>();
             }
         } else {
-            listaBanco = new ArrayList<Banco>();
+            listaBanco = new ArrayList<>();
         }
     }
 
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
     }
 
@@ -210,7 +206,7 @@ public class RecebimentoContaMB implements Serializable {
 
     public String salvar() {
         String mensagens = validarDadosRecebimentoTotal();
-        if (mensagens == "") {
+        if (mensagens.length() == 0) {
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             if (valorParcial > 0f) {
@@ -265,7 +261,7 @@ public class RecebimentoContaMB implements Serializable {
 
     public String salvarRecebimentoParcial() {
         String mensagens = validarDadosRecebimentoParcial();
-        if (mensagens == "") {
+        if (mensagens.length() == 0) {
             if (valorParcial <= contasReceber.getValorParcela()) {
                 contasReceber.setBanco(banco);
                 contasReceber.setCliente(cliente);
@@ -296,7 +292,7 @@ public class RecebimentoContaMB implements Serializable {
                 conta.setNomeCliente(listaRecebimentoParial.get(i).getNomeCliente());
                 conta.setTipodocumento(listaRecebimentoParial.get(i).getTipodocumento());
                 conta.setStatus("RECEBIMENTO-" + listaRecebimentoParial.get(i).getIdcontasReceber());
-                conta = contasReceberDao.update(conta);
+                contasReceberDao.update(conta);
             }
             mensagem mensagem = new mensagem();
             mensagem.recebidoParcial();
@@ -332,7 +328,7 @@ public class RecebimentoContaMB implements Serializable {
         outroslancamentos.setDataRegistro(new Date());
         outroslancamentos.setDescricao("Recebimento através do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
-        outroslancamentos = outrosLancamentosDao.update(outroslancamentos);
+        outrosLancamentosDao.update(outroslancamentos);
 
     }
 
@@ -380,7 +376,7 @@ public class RecebimentoContaMB implements Serializable {
         outroslancamentos.setDataRegistro(new Date());
         outroslancamentos.setDescricao("Recebimento parcial através do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
-        outroslancamentos = outrosLancamentosDao.update(outroslancamentos);
+        outrosLancamentosDao.update(outroslancamentos);
 
     }
 

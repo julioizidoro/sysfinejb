@@ -5,8 +5,6 @@
  */
 package br.com.financemate.util;
 
-
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -37,7 +35,7 @@ import net.sf.jasperreports.engine.JasperRunManager;
  * @author Wolverine
  */
 public class GerarRelatorio {
-    
+
     @Resource(lookup = "java:/sysfinDS")
     private DataSource dataSource;
 
@@ -46,7 +44,7 @@ public class GerarRelatorio {
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         caminhoRelatorio = servletContext.getRealPath(caminhoRelatorio);
 
-        JasperPrint arquivoPrint = null;
+        JasperPrint arquivoPrint;
         HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
         response.reset();
         response.setContentType("application/pdf");
@@ -68,7 +66,7 @@ public class GerarRelatorio {
         HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
         response.reset();
         response.setContentType("application/pdf");
-        facesContext.responseComplete();   
+        facesContext.responseComplete();
         ServletOutputStream servletOutputStream = response.getOutputStream();
         RequestContext.getCurrentInstance().closeDialog(null);
         Connection conn = null;
@@ -85,9 +83,8 @@ public class GerarRelatorio {
 
         facesContext.responseComplete();
     }
-    
-    
-    public static Connection getConexao() throws NamingException{
+
+    public static Connection getConexao() throws NamingException {
         InitialContext context = null;
         try {
             context = new InitialContext();

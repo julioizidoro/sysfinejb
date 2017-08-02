@@ -1,7 +1,6 @@
 package br.com.financemate.util;
 
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +34,7 @@ public class Ftp {
     public String enviarArquivo(UploadedFile uploadedFile, String arquivoFTP) throws IOException{
         ftpClient.changeWorkingDirectory("/sysfin/contasPagar/");
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-        InputStream arquivo = null;  
+        InputStream arquivo;  
         arquivo = new BufferedInputStream(uploadedFile.getInputstream());
         arquivoFTP = new String(arquivoFTP.getBytes("ISO-8859-1"), "UTF-8");
         if (ftpClient.storeFile(arquivoFTP, arquivo)) {

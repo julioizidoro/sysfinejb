@@ -5,7 +5,6 @@ import br.com.financemate.dao.TipoAcessoDao;
 import br.com.financemate.dao.UsuarioDao;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,7 +137,7 @@ public class CadUsuarioMB implements Serializable {
     public void gerarListaTipoAcesso() {
         listaTipoAcesso = tipoAcessoDao.list("select t from Tipoacesso t order by t.descricao");
         if (listaTipoAcesso == null || listaTipoAcesso.isEmpty()) {
-            listaTipoAcesso = new ArrayList<Tipoacesso>();
+            listaTipoAcesso = new ArrayList<>();
         }
     }
 
@@ -165,16 +164,14 @@ public class CadUsuarioMB implements Serializable {
                         usuario = usuarioDao.update(usuario);
                         RequestContext.getCurrentInstance().closeDialog(usuario);
                     } catch (NoSuchAlgorithmException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        mensagem m = new mensagem();
+                        m.faltaInformacao("" + e);
                     }
                 } else {
                     mensagem mensagem = new mensagem();
                     mensagem.existeLogin();
                 }
             } else {
-                // TODO Auto-generated catch block
-
                 usuario = usuarioDao.update(usuario);
                 RequestContext.getCurrentInstance().closeDialog(usuario);
             }
@@ -200,7 +197,7 @@ public class CadUsuarioMB implements Serializable {
 
     public boolean verificacaoLogin() {
         Usuario user = usuarioDao.find("Select u From Usuario u Where u.login='" + usuario.getLogin() + "'");
-        if (user == null) {
+        if(user == null) {
             return true;
         } else {
             return false;
@@ -208,16 +205,14 @@ public class CadUsuarioMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        // TODO Auto-generated catch block
-
         listaCliente = clienteDao.list("Select c From Cliente c");
         if (listaCliente == null) {
-            listaCliente = new ArrayList<Cliente>();
+            listaCliente = new ArrayList<>();
         }
     }
 
     public void habilitarEscolhaCliente() {
-        if (eCliente) {
+        if(eCliente) {
             habilitarCliente = true;
         } else {
             habilitarCliente = false;

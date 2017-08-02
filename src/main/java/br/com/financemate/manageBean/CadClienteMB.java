@@ -141,7 +141,7 @@ public class CadClienteMB implements Serializable {
     public void gerarListaTipoPlanoContas() {
         listarTipoPlanoContas = tipoPlanoContaDao.list("select t from Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas == null) {
-            listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
+            listarTipoPlanoContas = new ArrayList<>();
         }
     }
 

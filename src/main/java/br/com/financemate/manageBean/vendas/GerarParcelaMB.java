@@ -7,14 +7,11 @@ import br.com.financemate.dao.FormaPagamentoDao;
 import br.com.financemate.dao.PlanoContasDao;
 import br.com.financemate.dao.VendasDao;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -238,7 +235,7 @@ public class GerarParcelaMB implements Serializable {
     }
 
     public void SalvarParcela() {
-        if (vezes != "" && valorParcela != 0f && dataVencimento != null) {
+        if (!vezes.equalsIgnoreCase("") && valorParcela != 0f && dataVencimento != null) {
             if (valorParcela <= saldoTotal()) {
                 Integer numerovezes = Integer.parseInt(vezes);
                 Contasreceber contasreceber = new Contasreceber();
@@ -274,8 +271,7 @@ public class GerarParcelaMB implements Serializable {
                         contasreceber.setPlanocontas(planocontas);
 
                     }
-                    Contasreceber copia = new Contasreceber();
-                    copia = contasreceber;
+                    Contasreceber copia = contasreceber;
                     contasreceber = contasReceberDao.update(contasreceber);
                     if (contasreceber.getIdcontasReceber() != null) {
                         vendas.setSituacao("Parcela Gerada");
@@ -287,7 +283,6 @@ public class GerarParcelaMB implements Serializable {
                     Date data = c.getTime();
                     copia.setDataVencimento(data);
                     if (i < numerovezes) {
-                        contasreceber = new Contasreceber();
                         contasreceber = copia;
                     }
                 }
@@ -319,7 +314,7 @@ public class GerarParcelaMB implements Serializable {
     public void gerarListaFormaPagamento() {
         listaFormaPagamento = formaPagamentoDao.list("Select f From Formapagamento f Where f.vendas.idvendas=" + vendas.getIdvendas());
         if (listaFormapagamento == null) {
-            listaFormapagamento = new ArrayList<Formapagamento>();
+            listaFormapagamento = new ArrayList<>();
         }
     }
 
@@ -343,7 +338,7 @@ public class GerarParcelaMB implements Serializable {
         listarContasreceber = contasReceberDao.list("Select c from Contasreceber c "
                 + " where c.venda=" + vendas.getIdvendas());
         if (listarContasreceber == null) {
-            listarContasreceber = new ArrayList<Contasreceber>();
+            listarContasreceber = new ArrayList<>();
         }
     }
 
@@ -352,7 +347,7 @@ public class GerarParcelaMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
         if (listaFormaPagamento == null) {
-            listaFormaPagamento = new ArrayList<Formapagamento>();
+            listaFormaPagamento = new ArrayList<>();
         }
         session.setAttribute("listaFormaPagamento", listaFormaPagamento);
         return "selecionarForma";
