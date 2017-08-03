@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
@@ -19,14 +18,14 @@
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog> 
-            
+
             <h2  >Visualizar Recebimento Parcial</h2>
             <br />
             <p:dataTable id="idVisualizarRecebimentoParcial" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#{recebimentoParcialMB.listaRecebimentoParcial}" 
-                          scrollRows="10"  scrollable="true" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
+                         scrollRows="10"  scrollable="true" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
                 <p:column headerText="Data Vencimento" style="background:white; text-align:center; color:black; border:none;">
                     <h:outputText  value="#{recebimento.dataPagamento}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
@@ -40,7 +39,7 @@
                         <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>
-                
+
             </p:dataTable>
             <br /> 
             <hr />
@@ -48,6 +47,6 @@
             <p:commandLink title="Voltar" style="margin-left: 45%;text-decoration: none" action="#{recebimentoParcialMB.voltar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
-       </h:form>
+        </h:form>
     </h:body>
 </html>

@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
@@ -19,20 +18,20 @@
             <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
-            
+
             <br />
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Cobrança&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cobrancaMB.cobrancas()}" style="font-size:16px;color:gray;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Cobrança">
-			</p:commandLink>  
+            </p:commandLink>  
             <p:commandLink id="listacontas" value="&nbsp;&nbsp;&nbsp;&nbsp;Lista de Contas&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cobrancaMB.listaContasCobrancas()}" style="background:#E8E8E8;font-size:16px;color:#696969;text-decoration:none;border: 2px solid; border-color:#696969;" title="Lista de contas">
-			</p:commandLink>
-			<p:commandLink id="historicoCobranca" value="&nbsp;&nbsp;&nbsp;&nbsp;Histórico de Cobrança&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cobrancaMB.historicoCobrancas()}" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Histórico de Cobrança">
-			</p:commandLink>
-			<br /><br /><br />
-             <p:dataTable id="idListaConta" var="contasReceber"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cobrancaMB.listaContasSelecionadas}" 
-                          scrollRows="10"  scrollable="true" selection="#{cobrancaMB.contasReceber}" rowKey="#{contasReceber.idcontasReceber}" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
+            </p:commandLink>
+            <p:commandLink id="historicoCobranca" value="&nbsp;&nbsp;&nbsp;&nbsp;Histórico de Cobrança&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cobrancaMB.historicoCobrancas()}" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Histórico de Cobrança">
+            </p:commandLink>
+            <br /><br /><br />
+            <p:dataTable id="idListaConta" var="contasReceber"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cobrancaMB.listaContasSelecionadas}" 
+                         scrollRows="10"  scrollable="true" selection="#{cobrancaMB.contasReceber}" rowKey="#{contasReceber.idcontasReceber}" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
                 <p:column headerText="Parcelas" style=" background:white; text-align:center; color:black; border:none;">
                     <h:outputText value="#{contasReceber.numeroParcela}"/> 
                 </p:column>
@@ -46,7 +45,7 @@
                         <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>
-                
+
             </p:dataTable>
             <hr /> 
             <br />

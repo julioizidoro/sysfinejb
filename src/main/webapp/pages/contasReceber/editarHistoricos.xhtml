@@ -48,9 +48,10 @@
             	<p:outputLabel value="Vencimento" for="dataVenc" /> 
             </h:panelGrid>
             <h:panelGrid style="margin-left: 46%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVenc" value="#{historicoMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15" >
-                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{historicoMB.contasReceber.dataVencimento}">
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            <p:ajax event="change"/>
+                        </p:calendar>
             </h:panelGrid>
             <h:panelGrid style="margin-left:68%; margin-top:-5%;">
             	<p:outputLabel value="Parcela"/>
@@ -65,9 +66,10 @@
             	<p:outputLabel value="Data" for="dataVencOri" /> 
             </h:panelGrid>
             <h:panelGrid style="margin-left: 7%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVencOri" value="#{historicoMB.historicaCobranca.data}" mask="99/99/9999" size="10" maxlength="15" >
+                 <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVencOri" style="width: 50%;border: 1px solid #ffffff;" value="#{historicoMB.historicaCobranca.data}">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask>
+                    <p:ajax event="change"/>
+                 </p:calendar>
             </h:panelGrid> 
             <h:panelGrid style="margin-left:63%; margin-top:-4.5%;">
             	<p:outputLabel value="Contato"/>

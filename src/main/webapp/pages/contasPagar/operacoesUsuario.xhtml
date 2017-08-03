@@ -12,21 +12,21 @@
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
     </h:head>
 
- <h:body > 
+    <h:body > 
         <h:form id="idFrmOperacoesUsuario" class="body2" style="font-size: 12px; background-color: white;">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Operações por Usuário</title>
             <br />
-            
-           <p:dataTable id="idOperacoesUsuario" var="operacoes"  rowStyleClass="tabela" class="tabelaselecionar" value="#{operacoesUsuarioMB.listaOperacaousuairo}" 
-                          scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{operacoesUsuarioMB.operacaousuairo}" rowKey="#{operacoes.idoperacaousuairo}"  rows="10" style="margin-bottom:20px;"> 
+
+            <p:dataTable id="idOperacoesUsuario" var="operacoes"  rowStyleClass="tabela" class="tabelaselecionar" value="#{operacoesUsuarioMB.listaOperacaousuairo}" 
+                         scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{operacoesUsuarioMB.operacaousuairo}" rowKey="#{operacoes.idoperacaousuairo}"  rows="10" style="margin-bottom:20px;"> 
                 <p:column headerText="Usuario" style=" background:white; text-align:left; color:black; border:none;">
                     <h:outputText value="#{operacoes.usuario.nome}"/> 
                 </p:column>
@@ -38,7 +38,7 @@
                 <p:column headerText="Operação" style="text-align:left; background:white; color:black; border:none;">
                     <h:outputText value="#{operacoes.tipooperacao}"/> 
                 </p:column>
-                
+
             </p:dataTable>
             <br />
             <hr />
@@ -47,5 +47,5 @@
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
         </h:form>
- </h:body>
+    </h:body>
 </html>

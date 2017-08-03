@@ -44,14 +44,14 @@
                             <p:outputLabel value="Periodo" class="left3" />
                             <p:outputLabel/>
                             <p:outputLabel/>
-                            <p:inputMask mask="99/99/9999" id="dataIni" style="color:gray;margin-left:5%;width: 76%;"  size="15" maxlength="15" value="#{outrosLancamentosMB.dataInicial}"  class="form-control"  placeholder="Data Inicial" >
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIni" style="width: 50%;border: 1px solid #ffffff;" value="#{outrosLancamentosMB.dataInicial}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                                <p:ajax event="blur" />
-                            </p:inputMask>
-                            <p:inputMask id="dataFinal"  mask="99/99/9999" style="color:gray;margin-left: 15%;width: 76%;" size="15" maxlength="15" class="form-control" value="#{outrosLancamentosMB.dataFinal}"  placeholder="Data Final">
+                                <p:ajax event="change"/>
+                            </p:calendar>
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataFinal" style="width: 50%;border: 1px solid #ffffff;" value="#{outrosLancamentosMB.dataFinal}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                                <p:ajax event="blur" /> 
-                            </p:inputMask> 
+                                <p:ajax event="change"/>
+                            </p:calendar>
                             <p:commandLink title="Pesquisar" style="text-decoration: none;margin-left:2%;"   action="#{outrosLancamentosMB.gerarPesquisa()}" update="idTabelaOutrosLancamentos, idsaida, identrada, idtotal">
                                 <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
                             </p:commandLink>

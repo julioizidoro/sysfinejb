@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
@@ -47,11 +46,12 @@
                     </h:panelGroup> 
                     <h:panelGroup>
                         <div class="form-group" >
-                            <h:outputLabel for="dataEnv" style="margin-left:53%; ">Data de Envio</h:outputLabel>
+                            <h:outputLabel for="dataEnv">Data de Envio</h:outputLabel>
                             <br/>
-                            <p:inputMask id="dataEnv" mask="99/99/9999" style="width: 34%;float: right;margin-right: 15%;"  class="form-control" value="#{cadContasPagarMB.dataEnvio()}"  readonly="true">
-                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataEnv" style="width: 50%;border: 1px solid #ffffff;" readonly="true" value="#{cadContasPagarMB.dataEnvio()}">
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                         </div>
                     </h:panelGroup>
                 </h:panelGrid>
@@ -97,9 +97,11 @@
                     <h:panelGroup>
                         <div class="form-group" >
                             <h:outputLabel for="dataVenc">Vencimento</h:outputLabel>
-                            <p:inputMask id="dataVenc"   mask="99/99/9999" size="11"  class="form-control"  value="#{cadContasPagarMB.contaPagar.dataVencimento}" style="width: 80%;">
+                            <br/>
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{cadContasPagarMB.contaPagar.dataVencimento}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
+                                <p:ajax event="change"/>
+                            </p:calendar>
                         </div>
                     </h:panelGroup> 
                     <h:panelGroup>
@@ -152,17 +154,21 @@
                     <h:panelGroup>
                         <div class="form-group" >
                             <h:outputLabel for="dataAgen">Agendamento</h:outputLabel>
-                            <p:inputMask id="dataAgen"   mask="99/99/9999" maxlength="15" class="form-control" value="#{cadContasPagarMB.contaPagar.dataAgendamento}" style="width: 40%;">
+                            <br/>
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataAgen" style="width: 50%;border: 1px solid #ffffff;" value="#{cadContasPagarMB.contaPagar.dataAgendamento}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
+                                <p:ajax event="change"/>
+                            </p:calendar>
                         </div>
                     </h:panelGroup> 
                     <h:panelGroup>
                         <div class="form-group" >
                             <h:outputLabel for="dataComp">Compensação</h:outputLabel>
-                            <p:inputMask style="width: 40%;" id="dataComp"  mask="99/99/9999" size="12" maxlength="15" class="form-control" value="#{cadContasPagarMB.contaPagar.dataCompensacao}">
+                            <br/>
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataComp" style="width: 50%;border: 1px solid #ffffff;" value="#{cadContasPagarMB.contaPagar.dataCompensacao}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
+                                <p:ajax event="change"/>
+                            </p:calendar>
                         </div>
                     </h:panelGroup>
                 </h:panelGrid>

@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
@@ -35,9 +34,10 @@
                     <div class="form-group" >
                         <h:outputLabel for="dataSaldo" value="Data do saldo" class="left3" />
                         <h:panelGrid columns="2">
-                            <p:inputMask id="dataSaldo" mask="99/99/9999" style="width: 70%;"  maxlength="15" value="#{cadSaldoInicialMB.saldo.datasaldo}" class="form-control" >
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataSaldo" style="width: 50%;border: 1px solid #ffffff;" value="#{cadSaldoInicialMB.saldo.datasaldo}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
+                                <p:ajax event="change"/>
+                            </p:calendar>
                         </h:panelGrid>
                     </div>
                 </h:panelGroup>
@@ -54,9 +54,11 @@
                 <h:panelGroup>
                     <div class="form-group" >
                         <h:outputLabel for="dataInclusao" value="Data de inclusão" class="left3" />
-                        <p:inputMask id="dataInclusao" mask="99/99/9999" style="width: 50%;"  maxlength="15" value="#{cadSaldoInicialMB.saldo.datainclusao}" class="form-control">
+                        <br/>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataInclusao" style="width: 50%;border: 1px solid #ffffff;" value="#{cadSaldoInicialMB.saldo.datainclusao}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup>

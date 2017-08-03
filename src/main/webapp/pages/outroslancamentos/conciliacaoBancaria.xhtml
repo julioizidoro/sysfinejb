@@ -1,126 +1,126 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<ui:composition template="/pages/templates/default.xhtml">
-	<ui:define name="corpo">
-		<h:form id="frmConciliacaoBancaria" > 
-			<p:growl id="growl" showDetail="true" sticky="true" /> 
-				<br/><br/><br/>
-				<div style="margin-left:17%;"> 
-					<p:outputLabel value="Cliente" for="cliente"  class="left3" style="margin-left:2%;"/>
-					<p:outputLabel value="Periodo" class="left3" style="margin-left:23%;"/>
-					<br/>
-					<p:inputText id="cliente" size="35" class="left6" value="#{conciliacaoMB.banco.cliente.nomeFantasia}" readonly="true" style="margin-left:2%;"/>
-		           	<p:inputMask mask="99/99/9999" id="dataIni" style="color:black;margin-left:2%;"  size="15" maxlength="15" value="#{conciliacaoMB.dataInicial}"  class="tabelaRecebimento"  placeholder="Data Inicial" readonly="true">
-		            	 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-		            </p:inputMask>
-		            <p:inputMask id="dataFinal"  mask="99/99/9999" style="color:black;" size="15" maxlength="15" class="left6" value="#{conciliacaoMB.dataFinal}"  placeholder="Data Final" readonly="true">
-		                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/> 
-		            </p:inputMask>
-		            <br/><br/> 
-					<p:outputLabel value="Banco" for="banco"  class="left3" style="margin-left:2%;"/>
-					<p:outputLabel value="Agência" for="agencia"  class="left3" style="margin-left:16.5%;"/>
-					<p:outputLabel value="Conta" for="conta"  class="left3" style="margin-left:7.2%;"/>
-					<br/>
-					<p:inputText id="banco" size="35"  class="left6" value="#{conciliacaoMB.banco.nome}" readonly="true" style="margin-left:2%;"/>
-					<p:inputText id="agencia" size="10" maxlength="15" class="left6" value="#{conciliacaoMB.banco.agencia}" style="margin-left:2%;"  readonly="true"/>
-					<p:inputText id="conta" size="10" maxlength="15" class="left6" value="#{conciliacaoMB.banco.conta}" style="margin-left:4.2%;" readonly="true"/>
-					<br/><br/>
-                                        <p:fileUpload  fileUploadListener="#{conciliacaoMB.carregarArquivo}" label="Carregar"  value="#{conciliacaoMB.arquivo}" mode="advanced"
-                                                       update="tabelaConciliacao, banco, agencia, conta, cliente, dataIni, dataFinal" auto="true" style="width:39%;margin-left:2%;">
-                                        </p:fileUpload>
-				</div>
-				<br /><br /> <br /> 
-				<hr style="width:84%; margin-left:16%;"/>
-				<div class="menuTabelaConciliacao" id="divtab" style="width:70%; margin-left:22%;"> 
-					<p:dataScroller  value="#{conciliacaoMB.listaConciliacaoBancaria}"  var="conciliacao" scrollHeight="50" chunkSize="10" style="width:20px;margin-left:18%;" id="tabelaConciliacao">
-				        <f:facet name="header">
-				        	<h4 style="margin-left:-50%;">Transações</h4>
-							<h4 style="text-align:right;margin-right:18%;margin-top:-3.8%;">Outros Lançamentos</h4>
-				        </f:facet>
-				 	<h:panelGrid columns="3"> 
-				        <h:panelGrid  id="tabelaConciliacaoTransacao" columns="2" style="width:100%;margin-left:4%;border-radius:2px;background:#D8F6CE !important;color:black !important" columnClasses="logo,detail">
-				        	<p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;background:#D8F6CE !important;">
-				                <h:panelGrid columns="2"  style="font-size:12px;border:1px;border-color:black; background:#D8F6CE !important;width:100%;">
-				                   <h:outputText value="Data Compensação" style="margin-left:10%;"/> 
-				                    <h:outputText value="#{conciliacao.transacao.data}" style="font-weight: bold;margin-left:1%;">
-				                    	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-				                    </h:outputText>
-				  
-				                    <h:outputText value="Descrição" style="margin-left:10%;"/>
-				                    <h:outputText value="#{conciliacao.transacao.descricao}" style="font-weight: bold;"/>
-				  
-				                    <h:outputText value="Valor Entrada" style="margin-left:10%;"/>
-				                    <h:outputText value="#{conciliacao.transacao.valorEntrada}" style="font-weight: bold;">
-				                    	<f:convertNumber currencySymbol="" type="currency"/>
-				                    </h:outputText>
-				                    
-				                    <h:outputText value="Valor Saida" style="margin-left:10%;"/>
-				                    <h:outputText value="#{conciliacao.transacao.valorSaida}" style="font-weight: bold;">
-				                    	<f:convertNumber currencySymbol="" type="currency"/>
-				                    </h:outputText>
-				                    
-				                    <h:outputText value="ID" style="margin-left:10%;"/>
-				                    <h:outputText value="#{conciliacao.transacao.id}" style="font-weight: bold;"/>
-				                    <br />
-				                </h:panelGrid> 
-				                
-				                <h:panelGrid style="margin-left:93%;margin-top:-20%;">
-				                   	 	<p:selectBooleanCheckbox disabled="#{conciliacao.transacao.conciliada}" value="#{conciliacao.transacao.selecionado}" style=" color:white !important;"/>
-				                </h:panelGrid> 
-				                
-				            </p:outputPanel> 
-				        </h:panelGrid> 
-				        
-				        <h:panelGrid columns="2" style="width:100%;margin-left:25%;margin-top:1.2%;" >
-				            <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black;">
-				                <h:panelGrid columns="2" cellpadding="5" style="font-size:12px;border:1px;border-color:black;width:100%;"> 
-				                     <p:commandButton   disabled="#{conciliacao.transacao.conciliada}" readonly="#{conciliacao.transacao.conciliada}" update="frmConciliacaoBancaria" class="imagemm" onclick="" icon="ui-icon-arrowthick-1-e" value="#{conciliacaoMB.nomeBotaoConciliar}" action="#{conciliacaoMB.novaConciliacao(conciliacao)}">
-				                     	<p:ajax event="dialogReturn" listener="#{conciliacaoMB.retornoDialogConciliado}"  update="frmConciliacaoBancaria"/>
-				                     </p:commandButton>
-				                </h:panelGrid>  
-				            </p:outputPanel>
-				        </h:panelGrid>   
-				         
-				        <h:panelGrid columns="2" id="tabelaConciliacaoOutros" style="width:100%;margin-left:5%;border-radius:2px;background:#D8F6CE !important;color:black !important" columnClasses="logo,detail">
-				            <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;background:#D8F6CE !important;">
-				                <h:panelGrid columns="2"  style="width:100%;font-size:12px;border-radius:2px;background:#D8F6CE !important;color:black !important;">
-				                	<h:outputText value="Data Compensação" style="margin-left:10%;"/>
-				                    <h:outputText value="#{conciliacao.outroslancamentos.dataCompensacao}" style="font-weight: bold;margin-left:1%;">
-				                    	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-				                    </h:outputText>
-				                    <h:outputText value="Descrição" style="margin-left:10%;"/>
-				                    <h:outputText value="#{conciliacao.outroslancamentos.descricao}" style="font-weight: bold;text-align:left;"/>
-				   
-				                    <h:outputText value="Valor Entrada" style="margin-left:10%;"/>
-				                    <h:outputText value="#{conciliacao.outroslancamentos.valorEntrada}" style="font-weight: bold;">
-				                    	<f:convertNumber currencySymbol="" type="currency"/>
-				                    </h:outputText>
-				                    
-				                    <h:outputText value="Valor Saida" style="margin-left:10%;"/>
-				                    <h:outputText value="#{conciliacao.outroslancamentos.valorSaida}" style="font-weight: bold;">
-				                    	<f:convertNumber currencySymbol="" type="currency"/>
-				                    </h:outputText> 
-				                    
-				                    <h:outputText value="ID" style="margin-left:10%;"/>
-				                    <h:outputText value="#{conciliacao.outroslancamentos.conciliacao}" style="font-weight: bold;"/>
-				                     <br />
-				                </h:panelGrid> 
-				                <h:panelGrid style="margin-left:93%;margin-top:-20%;">
-				                	<p:selectBooleanCheckbox disabled="#{conciliacao.outroslancamentos.conciliada}" value="#{conciliacao.outroslancamentos.selecionado}" style=" color:white !important;"/>
-				                </h:panelGrid> 
-				            </p:outputPanel>
-				            <br />
-				        </h:panelGrid>
-				       </h:panelGrid>
-				        <br /><br /><br /><br /><br />
-				    </p:dataScroller>
-				 </div>
-		</h:form>
-	</ui:define>
-</ui:composition>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form id="frmConciliacaoBancaria" > 
+                <p:growl id="growl" showDetail="true" sticky="true" /> 
+                <br/><br/><br/>
+                <div style="margin-left:17%;"> 
+                    <p:outputLabel value="Cliente" for="cliente"  class="left3" style="margin-left:2%;"/>
+                    <p:outputLabel value="Periodo" class="left3" style="margin-left:23%;"/>
+                    <br/>
+                    <p:inputText id="cliente" size="35" class="left6" value="#{conciliacaoMB.banco.cliente.nomeFantasia}" readonly="true" style="margin-left:2%;"/>
+                    <p:inputMask mask="99/99/9999" id="dataIni" style="color:black;margin-left:2%;"  size="15" maxlength="15" value="#{conciliacaoMB.dataInicial}"  class="tabelaRecebimento"  placeholder="Data Inicial" readonly="true">
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:inputMask>
+                    <p:inputMask id="dataFinal"  mask="99/99/9999" style="color:black;" size="15" maxlength="15" class="left6" value="#{conciliacaoMB.dataFinal}"  placeholder="Data Final" readonly="true">
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/> 
+                    </p:inputMask>
+                    <br/><br/> 
+                    <p:outputLabel value="Banco" for="banco"  class="left3" style="margin-left:2%;"/>
+                    <p:outputLabel value="Agência" for="agencia"  class="left3" style="margin-left:16.5%;"/>
+                    <p:outputLabel value="Conta" for="conta"  class="left3" style="margin-left:7.2%;"/>
+                    <br/>
+                    <p:inputText id="banco" size="35"  class="left6" value="#{conciliacaoMB.banco.nome}" readonly="true" style="margin-left:2%;"/>
+                    <p:inputText id="agencia" size="10" maxlength="15" class="left6" value="#{conciliacaoMB.banco.agencia}" style="margin-left:2%;"  readonly="true"/>
+                    <p:inputText id="conta" size="10" maxlength="15" class="left6" value="#{conciliacaoMB.banco.conta}" style="margin-left:4.2%;" readonly="true"/>
+                    <br/><br/>
+                    <p:fileUpload  fileUploadListener="#{conciliacaoMB.carregarArquivo}" label="Carregar"  value="#{conciliacaoMB.arquivo}" mode="advanced"
+                                   update="tabelaConciliacao, banco, agencia, conta, cliente, dataIni, dataFinal" auto="true" style="width:39%;margin-left:2%;">
+                    </p:fileUpload>
+                </div>
+                <br /><br /> <br /> 
+                <hr style="width:84%; margin-left:16%;"/>
+                <div class="menuTabelaConciliacao" id="divtab" style="width:70%; margin-left:22%;"> 
+                    <p:dataScroller  value="#{conciliacaoMB.listaConciliacaoBancaria}"  var="conciliacao" scrollHeight="50" chunkSize="10" style="width:20px;margin-left:18%;" id="tabelaConciliacao">
+                        <f:facet name="header">
+                            <h4 style="margin-left:-50%;">Transações</h4>
+                            <h4 style="text-align:right;margin-right:18%;margin-top:-3.8%;">Outros Lançamentos</h4>
+                        </f:facet>
+                        <h:panelGrid columns="3"> 
+                            <h:panelGrid  id="tabelaConciliacaoTransacao" columns="2" style="width:100%;margin-left:4%;border-radius:2px;background:#D8F6CE !important;color:black !important" columnClasses="logo,detail">
+                                <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;background:#D8F6CE !important;">
+                                    <h:panelGrid columns="2"  style="font-size:12px;border:1px;border-color:black; background:#D8F6CE !important;width:100%;">
+                                        <h:outputText value="Data Compensação" style="margin-left:10%;"/> 
+                                        <h:outputText value="#{conciliacao.transacao.data}" style="font-weight: bold;margin-left:1%;">
+                                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                        </h:outputText>
+
+                                        <h:outputText value="Descrição" style="margin-left:10%;"/>
+                                        <h:outputText value="#{conciliacao.transacao.descricao}" style="font-weight: bold;"/>
+
+                                        <h:outputText value="Valor Entrada" style="margin-left:10%;"/>
+                                        <h:outputText value="#{conciliacao.transacao.valorEntrada}" style="font-weight: bold;">
+                                            <f:convertNumber currencySymbol="" type="currency"/>
+                                        </h:outputText>
+
+                                        <h:outputText value="Valor Saida" style="margin-left:10%;"/>
+                                        <h:outputText value="#{conciliacao.transacao.valorSaida}" style="font-weight: bold;">
+                                            <f:convertNumber currencySymbol="" type="currency"/>
+                                        </h:outputText>
+
+                                        <h:outputText value="ID" style="margin-left:10%;"/>
+                                        <h:outputText value="#{conciliacao.transacao.id}" style="font-weight: bold;"/>
+                                        <br />
+                                    </h:panelGrid> 
+
+                                    <h:panelGrid style="margin-left:93%;margin-top:-20%;">
+                                        <p:selectBooleanCheckbox disabled="#{conciliacao.transacao.conciliada}" value="#{conciliacao.transacao.selecionado}" style=" color:white !important;"/>
+                                    </h:panelGrid> 
+
+                                </p:outputPanel> 
+                            </h:panelGrid> 
+
+                            <h:panelGrid columns="2" style="width:100%;margin-left:25%;margin-top:1.2%;" >
+                                <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black;">
+                                    <h:panelGrid columns="2" cellpadding="5" style="font-size:12px;border:1px;border-color:black;width:100%;"> 
+                                        <p:commandButton   disabled="#{conciliacao.transacao.conciliada}" readonly="#{conciliacao.transacao.conciliada}" update="frmConciliacaoBancaria" class="imagemm" onclick="" icon="ui-icon-arrowthick-1-e" value="#{conciliacaoMB.nomeBotaoConciliar}" action="#{conciliacaoMB.novaConciliacao(conciliacao)}">
+                                            <p:ajax event="dialogReturn" listener="#{conciliacaoMB.retornoDialogConciliado}"  update="frmConciliacaoBancaria"/>
+                                        </p:commandButton>
+                                    </h:panelGrid>  
+                                </p:outputPanel>
+                            </h:panelGrid>   
+
+                            <h:panelGrid columns="2" id="tabelaConciliacaoOutros" style="width:100%;margin-left:5%;border-radius:2px;background:#D8F6CE !important;color:black !important" columnClasses="logo,detail">
+                                <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;background:#D8F6CE !important;">
+                                    <h:panelGrid columns="2"  style="width:100%;font-size:12px;border-radius:2px;background:#D8F6CE !important;color:black !important;">
+                                        <h:outputText value="Data Compensação" style="margin-left:10%;"/>
+                                        <h:outputText value="#{conciliacao.outroslancamentos.dataCompensacao}" style="font-weight: bold;margin-left:1%;">
+                                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                        </h:outputText>
+                                        <h:outputText value="Descrição" style="margin-left:10%;"/>
+                                        <h:outputText value="#{conciliacao.outroslancamentos.descricao}" style="font-weight: bold;text-align:left;"/>
+
+                                        <h:outputText value="Valor Entrada" style="margin-left:10%;"/>
+                                        <h:outputText value="#{conciliacao.outroslancamentos.valorEntrada}" style="font-weight: bold;">
+                                            <f:convertNumber currencySymbol="" type="currency"/>
+                                        </h:outputText>
+
+                                        <h:outputText value="Valor Saida" style="margin-left:10%;"/>
+                                        <h:outputText value="#{conciliacao.outroslancamentos.valorSaida}" style="font-weight: bold;">
+                                            <f:convertNumber currencySymbol="" type="currency"/>
+                                        </h:outputText> 
+
+                                        <h:outputText value="ID" style="margin-left:10%;"/>
+                                        <h:outputText value="#{conciliacao.outroslancamentos.conciliacao}" style="font-weight: bold;"/>
+                                        <br />
+                                    </h:panelGrid> 
+                                    <h:panelGrid style="margin-left:93%;margin-top:-20%;">
+                                        <p:selectBooleanCheckbox disabled="#{conciliacao.outroslancamentos.conciliada}" value="#{conciliacao.outroslancamentos.selecionado}" style=" color:white !important;"/>
+                                    </h:panelGrid> 
+                                </p:outputPanel>
+                                <br />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <br /><br /><br /><br /><br />
+                    </p:dataScroller>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>

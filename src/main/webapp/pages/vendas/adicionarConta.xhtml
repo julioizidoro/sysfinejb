@@ -24,19 +24,21 @@
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
-            
+
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-            
+
             <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="dataPgRb" class="left3" >Data</h:outputLabel> 
-                        <p:inputMask id="dataPgRb" mask="99/99/9999" size="13" style="width: 56%;" class="form-control" value="#{cadVendasMB.vendas.dataVenda}"  >
+                        <br/>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataPgRb" style="width: 50%;border: 1px solid #ffffff;" value="#{cadVendasMB.vendas.dataVenda}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup>
@@ -48,17 +50,17 @@
                     </div>
                 </h:panelGroup> 
             </h:panelGrid>
-           
-           <h:panelGrid style="margin-left:2%;" columns="1">
-             	<p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
-	              <p:selectOneMenu id="idPlanoConta" class="left3" style="width:320px;"  value="#{cadVendasMB.planocontas}" converter="PlanoContasConverter"
-	              					 filter="true" filterMatchMode="contains" panelStyle="width:200px">
-	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-	                    <f:selectItems value="#{cadVendasMB.listaPlanocontas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
-	                    <f:attribute name="listaPlanoConta" value="#{cadVendasMB.listaPlanocontas}"/>
-	                    
-	              </p:selectOneMenu> 
-             </h:panelGrid>
+
+            <h:panelGrid style="margin-left:2%;" columns="1">
+                <p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
+                <p:selectOneMenu id="idPlanoConta" class="left3" style="width:320px;"  value="#{cadVendasMB.planocontas}" converter="PlanoContasConverter"
+                                 filter="true" filterMatchMode="contains" panelStyle="width:200px">
+                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems value="#{cadVendasMB.listaPlanocontas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
+                    <f:attribute name="listaPlanoConta" value="#{cadVendasMB.listaPlanocontas}"/>
+
+                </p:selectOneMenu> 
+            </h:panelGrid>
             <br/>
             <h:panelGrid columns="2"  style="margin-left: 2%;width: 94%;">
                 <h:panelGroup>
@@ -83,19 +85,19 @@
                     </div>
                 </h:panelGroup> 
             </h:panelGrid>
-             
-              <hr />
-             <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none"   action="#{cadVendasMB.salvarConta()}" >
-                  <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-             </p:commandLink>
-             <h:panelGrid style="margin-top:-6.5%;margin-left:37%;">
-                  <p:outputLabel style="color:black;margin-top:-5%;" value="#{cadVendasMB.nomeConta()}"/>
-             </h:panelGrid>
-             <h:panelGrid style="margin-left:62%;margin-top:-6.8%;">
-             	<p:commandLink title="Fechar" style="margin-left: 2%;text-decoration: none" action="#{cadVendasMB.voltarCadastro()}" >
-                	 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-             	</p:commandLink>
-             </h:panelGrid>
-		</h:form>
-	</h:body>	  
+
+            <hr />
+            <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none"   action="#{cadVendasMB.salvarConta()}" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <h:panelGrid style="margin-top:-6.5%;margin-left:37%;">
+                <p:outputLabel style="color:black;margin-top:-5%;" value="#{cadVendasMB.nomeConta()}"/>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:62%;margin-top:-6.8%;">
+                <p:commandLink title="Fechar" style="margin-left: 2%;text-decoration: none" action="#{cadVendasMB.voltarCadastro()}" >
+                    <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+                </p:commandLink>
+            </h:panelGrid>
+        </h:form>
+    </h:body>	  
 </html>

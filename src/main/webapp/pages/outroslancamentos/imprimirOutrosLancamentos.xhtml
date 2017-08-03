@@ -71,12 +71,14 @@
                     <div class="form-group">
                         <h:outputLabel value="Periodo" class="left3" />
                         <h:panelGrid columns="2">
-                            <p:inputMask id="dataIni" mask="99/99/9999" style="width: 70%;"  maxlength="15" value="#{imprimirOutrosLancamentosMB.dataIncial}" class="form-control"  placeholder="Data Inicial" >
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIni" style="width: 50%;border: 1px solid #ffffff;" value="#{imprimirOutrosLancamentosMB.dataIncial}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
-                            <p:inputMask id="dataFinal"  mask="99/99/9999" style="width: 70%;" maxlength="15" class="form-control" value="#{imprimirOutrosLancamentosMB.dataFinal}"  placeholder="Data Final">
+                                <p:ajax event="change"/>
+                            </p:calendar>
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataFinal" style="width: 50%;border: 1px solid #ffffff;" value="#{imprimirOutrosLancamentosMB.dataFinal}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
+                                <p:ajax event="change"/>
+                            </p:calendar>
                         </h:panelGrid>
                     </div>
                 </h:panelGroup>

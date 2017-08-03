@@ -30,12 +30,14 @@
                         <f:attribute name="listaCliente" value="#{cadVendasMB.listaCliente}"/>
                         <p:ajax event="blur" />
                     </p:selectOneMenu>
-                    <p:inputMask mask="99/99/9999" id="dataIni" style="color:gray;margin-left:1%;"  size="15" maxlength="15" value="#{cadVendasMB.dataInicial}"  class="tabelaRecebimento"  placeholder="Data Inicial" >
+                    <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIni" style="width: 50%;border: 1px solid #ffffff;" value="#{cadVendasMB.dataInicial}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                    </p:inputMask>
-                    <p:inputMask id="dataFinal"  mask="99/99/9999" style="color:gray;" size="15" maxlength="15" class="left6" value="#{cadVendasMB.dataFinal}"  placeholder="Data Final">
+                        <p:ajax event="change"/>
+                    </p:calendar>
+                    <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataFinal" style="width: 50%;border: 1px solid #ffffff;" value="#{cadVendasMB.dataFinal}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                    </p:inputMask>
+                        <p:ajax event="change"/>
+                    </p:calendar>
                     <p:commandLink title="Pesquisar" style="text-decoration: none;"   action="#{cadVendasMB.filtroListaVendasSystm()}" update="idImportacaoVenda">
                         <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
                     </p:commandLink> 
@@ -57,7 +59,7 @@
                     </p:column> 
                     <p:column headerText="Valor"   style="background:white; text-align:left; color:black; width: 80px; border:none;">
                         <h:outputText value="#{vendaSystm.valorBruto}">
-                             <f:convertNumber currencySymbol="" type="currency"/>
+                            <f:convertNumber currencySymbol="" type="currency"/>
                         </h:outputText>
                     </p:column>
                     <p:column headerText=""   style="background:white; text-align:left; color:black; width: 80px; border:none;">

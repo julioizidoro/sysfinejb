@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
@@ -79,9 +78,11 @@
                 <h:panelGroup>
                     <div class="form-group" >
                         <h:outputLabel for="dataReg">Data Registro</h:outputLabel>
-                        <p:inputMask id="dataReg" mask="99/99/9999" size="13"  class="form-control" value="#{cadTransferenciaMB.outroslancamentos.dataRegistro}">
+                        <br/>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataReg" style="width: 50%;border: 1px solid #ffffff;" value="#{cadTransferenciaMB.outroslancamentos.dataRegistro}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
             </h:panelGrid>

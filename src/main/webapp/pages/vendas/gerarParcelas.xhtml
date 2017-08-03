@@ -3,14 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
-         <!-- Bootstrap core CSS -->
+        <!-- Bootstrap core CSS -->
         <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
 
         <!-- Font Awesome -->
@@ -30,8 +29,8 @@
 
             <title  >Gerar Parcela</title>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-            
-              <h:panelGrid columns="3"  style="margin-left: 2%;width: 106%;">
+
+            <h:panelGrid columns="3"  style="margin-left: 2%;width: 106%;">
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="nomeCliente" class="left3" >Cliente</h:outputLabel> 
@@ -56,7 +55,7 @@
                 </h:panelGroup> 
             </h:panelGrid>
             <h:panelGrid columns="4"  style="margin-left: 2%;width: 105%;">
-                 <h:panelGroup>
+                <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="valorParcela" class="left3" >Valor</h:outputLabel> 
                         <h:inputText class="form-control"  id="valorParcela"  style="width: 68%;text-align: right;" value="#{gerarParcelaMB.valorParcela}" >
@@ -91,7 +90,7 @@
                         <f:selectItem itemLabel="20" itemValue="20" /> 
                     </p:selectOneMenu> 
                 </h:panelGroup> 
-                 <h:panelGroup>
+                <h:panelGroup>
                     <h:outputLabel  for="tipoDoc" class="left3" >Tipo de Doc.</h:outputLabel> 
                     <br/>
                     <p:selectOneMenu id="tipoDoc" class="left5" style="width:156px"  value="#{gerarParcelaMB.tipoDocumento}">
@@ -107,13 +106,15 @@
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel value="1° Vencimento" class="left3" />
-                            <p:inputMask id="dataIni" mask="99/99/9999" style="width: 70%;"  maxlength="15" value="#{gerarParcelaMB.dataVencimento}" class="form-control"  >
-                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
+                        <br/>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIni" style="width: 50%;border: 1px solid #ffffff;" value="#{gerarParcelaMB.dataVencimento}">
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
             </h:panelGrid>
-           
+
             <br />
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Selecionar Forma&nbsp;&nbsp;&nbsp;&nbsp;" action="#{gerarParcelaMB.recebimento()}" style="background:#3D9446; font-size:16px;color:white;margin-left:12%; text-decoration:none; border-radius:5px;" title="Selecione Forma">
             </p:commandLink>  

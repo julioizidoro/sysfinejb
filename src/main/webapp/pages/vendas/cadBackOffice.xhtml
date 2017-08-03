@@ -24,33 +24,33 @@
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
-            
+
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-			  <br />
-			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="font-size:16px;color:gray;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
-			</p:commandLink>  
+            <br />
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="font-size:16px;color:gray;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
+            </p:commandLink>  
             <p:commandLink id="backoffice" value="&nbsp;&nbsp;&nbsp;&nbsp;Back Office&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.backOffice()}" update="@all" style="background:#E8E8E8;font-size:16px;color:#696969;text-decoration:none;border: 2px solid; border-color:#696969;" title="Back Office">
-			</p:commandLink>
+            </p:commandLink>
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Recebimento&nbsp;&nbsp;&nbsp;&nbsp;"   action="#{cadVendasMB.recebimento()}" style=" font-size:16px;color:gray;border: 2px solid; text-decoration:none; border-color:#696969;" title="Recebimento" ajax="false">
-			</p:commandLink>
+            </p:commandLink>
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.notaFiscal()}" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
-			</p:commandLink>
+            </p:commandLink>
             <br /><br />
-            
+
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-        		<p:commandButton style="margin-left:35%;" value="Sim" action="#" type="button" styleClass="ui-confirmdialog-yes"  />
-        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
-    		</p:confirmDialog>
-            
+                <p:commandButton style="margin-left:35%;" value="Sim" action="#" type="button" styleClass="ui-confirmdialog-yes"  />
+                <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+            </p:confirmDialog>
+
             <h:panelGrid columns="4"  style="margin-left: 2%;width: 98%;">
                 <h:panelGroup>
                     <div class="form-group" style="margin-left: 2%;">
                         <h:outputLabel  for="comissao" class="left3" >Comissão</h:outputLabel> 
                         <h:inputText class="form-control"  id="comissao"  style="width: 90%;text-align: right;" value="#{cadVendasMB.vendas.comissaoLiquidaTotal}">
-           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+                            <p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
                             <f:convertNumber pattern="##,###,###,###.##"/>
                         </h:inputText>
                     </div>
@@ -83,7 +83,7 @@
                     </div>
                 </h:panelGroup> 
             </h:panelGrid>
-         <h:panelGrid columns="2"  style="margin-left: 2%;width: 60%;">
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 60%;">
                 <h:panelGroup>
                     <div class="form-group" style="margin-left: 2%;">
                         <h:outputLabel  for="idliquidoVenda" class="left3" >Líquido da Venda</h:outputLabel> 
@@ -99,7 +99,7 @@
                     </div>
                 </h:panelGroup> 
             </h:panelGrid>
-           
+
             <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
                 <h:panelGroup>
                     <div class="form-group" style="margin-left: 2%;">
@@ -117,7 +117,7 @@
                     </div>
                 </h:panelGroup>
             </h:panelGrid>
-            
+
             <h:panelGrid columns="3"  style="margin-left: 2%;width: 96%;">
                 <h:panelGroup>
                     <div class="form-group" style="margin-left: 2%;">
@@ -130,25 +130,27 @@
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="dataPgRb" class="left3" >Data Pgto/Rcbto Fornecedor</h:outputLabel> 
-                        <p:inputMask id="dataPgRb" mask="99/99/9999" size="13" style="width: 56%;" class="form-control" value="#{cadVendasMB.vendas.dataPagamentoFornecedor}" >
+                        <br/>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataPgRb" style="width: 50%;border: 1px solid #ffffff;" value="#{cadVendasMB.vendas.dataPagamentoFornecedor}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup>
                     <p:commandLink title="Adicionar uma conta" style="text-decoration: none;margin-left: 17%;"   action="#{cadVendasMB.adicionarConta()}" >
-                	<i class="fa fa-plus" style="color: #3D7E46;font-size: 32px;"/> 
+                        <i class="fa fa-plus" style="color: #3D7E46;font-size: 32px;"/> 
                     </p:commandLink>
                 </h:panelGroup>
             </h:panelGrid>
-           <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-        		<p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />
-        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
-    	   </p:confirmDialog>
-           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />
+                <p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+            </p:confirmDialog>
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                 <p:confirm  header="Confirmação" message="#{cadVendasMB.salvarVendaSemFormaRecebimento()}" icon="ui-icon-alert" />
-           </p:commandLink>  
+            </p:commandLink>  
             <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink> 

@@ -19,14 +19,14 @@
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
-            
+
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
             <br /><br /><br />
-              <p:dataTable id="idHistoricoRecebimento" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadVendasMB.listaFormaPagamento}" 
-                          scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{cadVendasMB.formapagamento}" rowKey="#{recebimento.idformaPagamento}"  rows="10" style="margin-bottom:20px;"> 
+            <p:dataTable id="idHistoricoRecebimento" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadVendasMB.listaFormaPagamento}" 
+                         scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{cadVendasMB.formapagamento}" rowKey="#{recebimento.idformaPagamento}"  rows="10" style="margin-bottom:20px;"> 
                 <p:column headerText="Data" style="background:white; text-align:center; color:black; border:none; width:70px;">
                     <h:outputText  value="#{recebimento.dataVencimento}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
@@ -40,23 +40,23 @@
                 </p:column> 
                 <p:column headerText="Valor"   style="background:white; text-align: right; color:black; width: 80px; border:none;">
                     <h:outputText value="#{recebimento.valor}">
-                    	<f:convertNumber currencySymbol="" type="currency"/>
+                        <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>
                 <p:column  style="width:28px; background:white; color:black; border:none;">
-                     <p:selectBooleanCheckbox value="#{recebimento.selecionado}" style="background:white !important; color:white !important;"/>
+                    <p:selectBooleanCheckbox value="#{recebimento.selecionado}" style="background:white !important; color:white !important;"/>
                 </p:column>
-                
+
             </p:dataTable>
             <br />
-			<hr />
-			<br />
-           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" action="#{cadVendasMB.selecionarForma()}" >
+            <hr />
+            <br />
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" action="#{cadVendasMB.selecionarForma()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink> 
-			<p:commandLink title="Fechar" style="margin-left: 5%;text-decoration: none" action="#{cadVendasMB.voltarGerarParcelas()}" >
+            <p:commandLink title="Fechar" style="margin-left: 5%;text-decoration: none" action="#{cadVendasMB.voltarGerarParcelas()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/> 
             </p:commandLink>  
-	    </h:form>
-	</h:body>
+        </h:form>
+    </h:body>
 </html>

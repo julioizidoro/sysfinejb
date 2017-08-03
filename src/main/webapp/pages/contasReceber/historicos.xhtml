@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
@@ -56,9 +55,11 @@
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="dataVenc" class="left3" >Vencimento</h:outputLabel> 
-                        <p:inputMask class="form-control" id="dataVenc" style="width: 50%;" value="#{historicoMB.contasReceber.dataVencimento}" mask="99/99/9999" maxlength="15" >
+                        <br/>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{historicoMB.contasReceber.dataVencimento}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup>
@@ -73,9 +74,11 @@
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="data" class="left3" >Data</h:outputLabel> 
-                        <p:inputMask class="form-control" id="data" style="width: 50%;" value="#{historicoMB.historicaCobranca.data}" mask="99/99/9999" maxlength="15" >
+                        <br/>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="data" style="width: 50%;border: 1px solid #ffffff;" value="#{historicoMB.historicaCobranca.data}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup>

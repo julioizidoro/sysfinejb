@@ -35,20 +35,20 @@
                 </h:panelGroup>
                 <h:panelGroup   rendered="#{consultaArquivoMB.desabilitarDownload()}"> 
                     <h:outputLabel/>
-                   <a  title="Download" name="download" onclick="form.target='_blank'" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
-                              
-                                <img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
-                          
-                            </a>
-               </h:panelGroup>
-               
- 
+                    <a  title="Download" name="download" onclick="form.target = '_blank'" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
+
+                        <img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
+
+                    </a>
+                </h:panelGroup>
+
+
             </h:panelGrid>
-            <a  title="Download" name="download" onclick="form.target='_blank'" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
-                              
-                                <img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
-                          
-                            </a>
+            <a  title="Download" name="download" onclick="form.target = '_blank'" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
+
+                <img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
+
+            </a>
             <hr />
             <p:commandLink title="Fechar" style="margin-left: 45%;text-decoration: none" action="#{consultaArquivoMB.voltar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>

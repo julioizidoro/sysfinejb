@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
@@ -17,79 +16,79 @@
         <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
 
- <h:body > 
+    <h:body > 
         <h:form id="idFrmCadUsuario" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-			<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
+            <p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Novo Usuario</title> 
-                <br/>
-                <div class="form-group">
-                    <h:outputLabel for="nome" style="margin-left: 2%">Nome</h:outputLabel>
-                    <h:inputText  class="form-control" id="nome" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.nome}"/>
-                </div>
-                <div class="form-group">
-                    <h:outputLabel for="email" style="margin-left: 2%">Email</h:outputLabel>
-                    <h:inputText  class="form-control" id="email" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.email}"/>
-                </div>
-                <h:panelGrid columns="2" style="margin-left:2%;">
-                    <h:panelGroup>
-                        <div class="form-group">
-                           <h:outputLabel for="login" style="margin-left: 2%">Login</h:outputLabel>
-                           <h:inputText  class="form-control" id="login" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.login}"/>
-                       </div>
-                    </h:panelGroup>
-                    <h:panelGroup rendered="#{cadUsuarioMB.habilitarSenha}">
-                        <div class="form-group" style="margin-left: 33%;">
-                           <h:outputLabel for="senha" style="margin-left: 2%">Senha</h:outputLabel>
-                           <h:inputText  class="form-control"  id="senha" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.senhaweb}"/>
-                       </div>
-                    </h:panelGroup>
+            <br/>
+            <div class="form-group">
+                <h:outputLabel for="nome" style="margin-left: 2%">Nome</h:outputLabel>
+                <h:inputText  class="form-control" id="nome" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.nome}"/>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="email" style="margin-left: 2%">Email</h:outputLabel>
+                <h:inputText  class="form-control" id="email" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.email}"/>
+            </div>
+            <h:panelGrid columns="2" style="margin-left:2%;">
+                <h:panelGroup>
+                    <div class="form-group">
+                        <h:outputLabel for="login" style="margin-left: 2%">Login</h:outputLabel>
+                        <h:inputText  class="form-control" id="login" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.login}"/>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{cadUsuarioMB.habilitarSenha}">
+                    <div class="form-group" style="margin-left: 33%;">
+                        <h:outputLabel for="senha" style="margin-left: 2%">Senha</h:outputLabel>
+                        <h:inputText  class="form-control"  id="senha" style="width: 95%;margin-left: 2%;" value="#{cadUsuarioMB.usuario.senhaweb}"/>
+                    </div>
+                </h:panelGroup>
+            </h:panelGrid>
+            <br/>  
+            <h:panelGrid columns="2" style="margin-left:2%;">
+                <h:outputLabel value="Tipo de Acesso" for="tipoacesso"  class="left"/>
+                <p:selectOneMenu id="tipoacesso" class="left" style="width:300px;margin-left: 3%;"  value="#{cadUsuarioMB.tipoacesso}" 
+                                 filter="true" filterMatchMode="contains" panelStyle="width:180px" converter="TipoAcessoConverter">
+                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems value="#{cadUsuarioMB.listaTipoAcesso}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado}"/>
+                    <f:attribute name="listaTipoAcesso" value="#{cadUsuarioMB.listaTipoAcesso}"/>
+                </p:selectOneMenu> 
+            </h:panelGrid>
+            <br/>
+            <h:panelGrid columns="2" style="margin-left:2%;">
+                <h:panelGrid >
+                    <p:selectBooleanCheckbox value="#{cadUsuarioMB.eCliente}">
+                        É Cliente ?
+                        <p:ajax event="change" listener="#{cadUsuarioMB.habilitarEscolhaCliente()}" update="idPanelCliente"/>
+                    </p:selectBooleanCheckbox>
                 </h:panelGrid>
-                <br/>  
-               <h:panelGrid columns="2" style="margin-left:2%;">
-               		<h:outputLabel value="Tipo de Acesso" for="tipoacesso"  class="left"/>
-                	<p:selectOneMenu id="tipoacesso" class="left" style="width:300px;margin-left: 3%;"  value="#{cadUsuarioMB.tipoacesso}" 
-                	 		filter="true" filterMatchMode="contains" panelStyle="width:180px" converter="TipoAcessoConverter">
-                    	<f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    	<f:selectItems value="#{cadUsuarioMB.listaTipoAcesso}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado}"/>
-                    	<f:attribute name="listaTipoAcesso" value="#{cadUsuarioMB.listaTipoAcesso}"/>
-                    </p:selectOneMenu> 
-               </h:panelGrid>
-                <br/>
-               <h:panelGrid columns="2" style="margin-left:2%;">
-		           <h:panelGrid >
-		               	<p:selectBooleanCheckbox value="#{cadUsuarioMB.eCliente}">
-		               		É Cliente ?
-		               		<p:ajax event="change" listener="#{cadUsuarioMB.habilitarEscolhaCliente()}" update="idPanelCliente"/>
-		               </p:selectBooleanCheckbox>
-		           </h:panelGrid>
-		           <h:panelGroup id="idPanelCliente">
-		               <h:panelGrid columns="2" style="margin-left:2%;" id="idPanelComboCliente" rendered="#{cadUsuarioMB.habilitarCliente}">
-		               		<p:outputLabel value="Unidade" for="cliente"  class="left"/>
-		                	<p:selectOneMenu id="cliente" class="left" style="width:250px"  value="#{cadUsuarioMB.cliente}" 
-		                	 		filter="true" filterMatchMode="contains" panelStyle="width:180px" converter="ClienteConverter">
-		                    	<f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-		                    	<f:selectItems value="#{cadUsuarioMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
-		                    	<f:attribute name="listaCliente" value="#{cadUsuarioMB.listaCliente}"/>
-		                    </p:selectOneMenu> 
-		               </h:panelGrid>
-	               </h:panelGroup>
-               </h:panelGrid>
-                <hr />
-                <br />
-                    <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{cadUsuarioMB.salvar()}"> 
-                        <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-                    </p:commandLink>
-                    <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{cadUsuarioMB.cancelar()}" ajax="false">
-                        <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-                    </p:commandLink>
-                <br></br>
-		</h:form>
-</h:body>
+                <h:panelGroup id="idPanelCliente">
+                    <h:panelGrid columns="2" style="margin-left:2%;" id="idPanelComboCliente" rendered="#{cadUsuarioMB.habilitarCliente}">
+                        <p:outputLabel value="Unidade" for="cliente"  class="left"/>
+                        <p:selectOneMenu id="cliente" class="left" style="width:250px"  value="#{cadUsuarioMB.cliente}" 
+                                         filter="true" filterMatchMode="contains" panelStyle="width:180px" converter="ClienteConverter">
+                            <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                            <f:selectItems value="#{cadUsuarioMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                            <f:attribute name="listaCliente" value="#{cadUsuarioMB.listaCliente}"/>
+                        </p:selectOneMenu> 
+                    </h:panelGrid>
+                </h:panelGroup>
+            </h:panelGrid>
+            <hr />
+            <br />
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{cadUsuarioMB.salvar()}"> 
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{cadUsuarioMB.cancelar()}" ajax="false">
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <br></br>
+        </h:form>
+    </h:body>
 </html>

@@ -47,7 +47,7 @@
             </p:confirmDialog>
 
 
-            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 94%;">
                 <h:panelGroup>
                     <h:outputLabel  for="cliente" class="left3" >Unidade</h:outputLabel> 
                     <br/>
@@ -63,9 +63,10 @@
                     <div class="form-group" style="float: right;">
                         <h:outputLabel value="Data Venda" class="left3" />
                         <h:panelGrid columns="2">
-                            <p:inputMask id="dataIni" mask="99/99/9999" style="width: 85%;"  maxlength="15" value="#{cadVendasMB.vendas.dataVenda}" class="form-control">
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIni" style="width: 30%;border: 1px solid #ffffff;" value="#{cadVendasMB.vendas.dataVenda}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
+                                <p:ajax event="change"/>
+                            </p:calendar>
                         </h:panelGrid>
                     </div>
                 </h:panelGroup>
@@ -76,12 +77,12 @@
                 <h:inputText class="form-control"  id="nomeCliente"  style="width: 98%;" value="#{cadVendasMB.vendas.nomeCliente}"/>
             </div>
             <br />
-             <h:panelGrid columns="2"  style="margin-left: 2%;width: 96%;">
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 96%;">
                 <h:panelGroup>
                     <h:outputLabel  for="idproduto" class="left3" >Produto</h:outputLabel> 
                     <br/>
                     <p:selectOneMenu  id="idproduto"  style="width: 200px;margin-left: 1%"  value="#{cadVendasMB.produto}" converter="ProdutoConverter"
-                                  filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                                      filter="true" filterMatchMode="contains" panelStyle="width:180px">
                         <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                         <f:selectItems  value="#{cadVendasMB.listaProduto}" var="produtoselecionado" itemLabel="#{produtoselecionado.descricao}" itemValue="#{produtoselecionado}"/>
                         <f:attribute name="listaProduto" value="#{cadVendasMB.listaProduto}"/>

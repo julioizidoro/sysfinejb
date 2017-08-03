@@ -32,7 +32,7 @@
             <br />
 
 
-            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 93%;">
                 <h:panelGroup>
                     <h:outputLabel  for="cliente" class="left3" >Unidade</h:outputLabel> 
                     <br/>
@@ -48,12 +48,14 @@
                     <div class="form-group" style="float: right;">
                         <h:outputLabel value="Vencimento" class="left3" />
                         <h:panelGrid columns="2">
-                            <p:inputMask id="dataIni" mask="99/99/9999" style="width: 70%;"  maxlength="15" value="#{contasReceberMB.dataInicial}" class="form-control"  placeholder="Data Inicial" >
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIni" style="width: 50%;border: 1px solid #ffffff;" value="#{contasReceberMB.dataInicial}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
-                            <p:inputMask id="dataFinal"  mask="99/99/9999" style="width: 70%;" maxlength="15" class="form-control" value="#{contasReceberMB.dataFinal}"  placeholder="Data Final">
+                                <p:ajax event="change"/>
+                            </p:calendar>
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataFinal" style="width: 50%;border: 1px solid #ffffff;" value="#{contasReceberMB.dataFinal}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:inputMask>
+                                <p:ajax event="change"/>
+                            </p:calendar>
                         </h:panelGrid>
                     </div>
                 </h:panelGroup>
@@ -112,12 +114,14 @@
             <div class="form-group" style="margin-left: 2%;">
                 <h:outputLabel value="Data de Recebimento" class="left3" />
                 <h:panelGrid columns="2">
-                    <p:inputMask id="dataIniRec" mask="99/99/9999" style="width: 70%;"  maxlength="15" value="#{contasReceberMB.dataRecebimentoInicial}" class="form-control"  placeholder="Data Inicial" >
+                    <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIniRec" style="width: 50%;border: 1px solid #ffffff;" value="#{contasReceberMB.dataRecebimentoInicial}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                    </p:inputMask>
-                    <p:inputMask id="dataFinalRec"  mask="99/99/9999" style="width: 70%;" maxlength="15" class="form-control" value="#{contasReceberMB.dataRecebimentoFinal}"  placeholder="Data Final">
+                        <p:ajax event="change"/>
+                    </p:calendar>
+                    <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataFinalRec" style="width: 50%;border: 1px solid #ffffff;" value="#{contasReceberMB.dataRecebimentoFinal}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                    </p:inputMask>
+                        <p:ajax event="change"/>
+                    </p:calendar>
                 </h:panelGrid>
             </div>      
             <hr />

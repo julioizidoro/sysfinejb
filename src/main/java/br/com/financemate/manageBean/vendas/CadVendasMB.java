@@ -123,6 +123,7 @@ public class CadVendasMB implements Serializable {
         session.removeAttribute("corPagarReceber");
         session.removeAttribute("listaVendasSystm");
         session.removeAttribute("listaImportada");
+        session.removeAttribute("vendas");
         gerarListaCliente();
         if (vendas == null) {
             vendas = new Vendas();
@@ -913,41 +914,41 @@ public class CadVendasMB implements Serializable {
 
     public String validaDadosDocumentoBoleto() {
         String msg = "";
-        if (formapagamento.getCpf().equalsIgnoreCase("")) {
-            msg = msg + "Cpf não informado \r \n";
-        }
-
-        if (formapagamento.getTipoLogradouro().equalsIgnoreCase("")) {
-            msg = msg + " Tipo Logradouro não informado \r \n";
-        }
-
-        if (formapagamento.getLogradouro().equalsIgnoreCase("")) {
-            msg = msg + " Logradouro não informado \r \n";
-        }
-
-        if (formapagamento.getCep().equalsIgnoreCase("")) {
-            msg = msg + " Cep não informado \r \n";
-        }
-
-        if (formapagamento.getNumero().equalsIgnoreCase("")) {
-            msg = msg + " Número do endereço não informado \r \n";
-        }
-
-        if (formapagamento.getBairro().equalsIgnoreCase("")) {
-            msg = msg + " Bairro não informado \r \n";
-        }
-
-        if (formapagamento.getCidade().equalsIgnoreCase("")) {
-            msg = msg + " Cidade não informado \r \n";
-        }
-
-        if (formapagamento.getComplemento().equalsIgnoreCase("")) {
-            msg = msg + " Complemento não informado";
-        }
-
-        if (formapagamento.getEstado().equalsIgnoreCase("")) {
-            msg = msg + " Estado não informado";
-        }
+//        if (formapagamento.getCpf().equalsIgnoreCase("")) {
+//            msg = msg + "Cpf não informado \r \n";
+//        }
+//
+//        if (formapagamento.getTipoLogradouro().equalsIgnoreCase("")) {
+//            msg = msg + " Tipo Logradouro não informado \r \n";
+//        }
+//
+//        if (formapagamento.getLogradouro().equalsIgnoreCase("")) {
+//            msg = msg + " Logradouro não informado \r \n";
+//        }
+//
+//        if (formapagamento.getCep().equalsIgnoreCase("")) {
+//            msg = msg + " Cep não informado \r \n";
+//        }
+//
+//        if (formapagamento.getNumero().equalsIgnoreCase("")) {
+//            msg = msg + " Número do endereço não informado \r \n";
+//        }
+//
+//        if (formapagamento.getBairro().equalsIgnoreCase("")) {
+//            msg = msg + " Bairro não informado \r \n";
+//        }
+//
+//        if (formapagamento.getCidade().equalsIgnoreCase("")) {
+//            msg = msg + " Cidade não informado \r \n";
+//        }
+//
+//        if (formapagamento.getComplemento().equalsIgnoreCase("")) {
+//            msg = msg + " Complemento não informado";
+//        }
+//
+//        if (formapagamento.getEstado().equalsIgnoreCase("")) {
+//            msg = msg + " Estado não informado";
+//        }
 
         return msg;
     }

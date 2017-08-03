@@ -11,29 +11,29 @@
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
     </h:head>
-    
 
- <h:body style="background:white;" > 
+
+    <h:body style="background:white;" > 
         <h:form id="idFrmCadVendas" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Editar Parcela</title>
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-			
-			 <h:panelGrid columns="1" style="margin-left:15%;">
-           		<p:outputLabel value="Valor" style="margin-left:30%;"/>
-           		<p:inputText value="#{editarParcelaMB.valorEditado}" size="12" style="text-align: right;">
-                            <f:convertNumber pattern="##,###,###,###.##"/>
-                        </p:inputText>
-             </h:panelGrid>
-             
-             <h:panelGrid style="margin-left:55%; margin-top:-9%;">   
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+            <h:panelGrid columns="1" style="margin-left:15%;">
+                <p:outputLabel value="Valor" style="margin-left:30%;"/>
+                <p:inputText value="#{editarParcelaMB.valorEditado}" size="12" style="text-align: right;">
+                    <f:convertNumber pattern="##,###,###,###.##"/>
+                </p:inputText>
+            </h:panelGrid>
+
+            <h:panelGrid style="margin-left:55%; margin-top:-9%;">   
                 <p:outputLabel value="Tipo de Documento" for="tipoDoc" class="left2"/>
                 <p:selectOneMenu id="tipoDoc" class="left5" style="width:156px"  value="#{editarParcelaMB.tipoDocumento}">
                     <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
@@ -44,25 +44,26 @@
                     <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
                     <f:selectItem itemLabel="Deposito/Transferencia" itemValue="Depósito" />
                 </p:selectOneMenu>
-             </h:panelGrid>
-             <br />
-			 <h:panelGrid columns="1" style="margin-left:15%;"> 
-	            <p:outputLabel value="1° Vencimento" for="venc" class="left3" style="margin-left:10%;"/>  
-	            <p:inputMask id="venc" mask="99/99/9999" size="13"  class="left3" value="#{editarParcelaMB.contasReceber.dataVencimento}">
-	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-	            </p:inputMask>
+            </h:panelGrid>
+            <br />
+            <h:panelGrid columns="1" style="margin-left:15%;"> 
+                <p:outputLabel value="1° Vencimento" for="venc" class="left3" style="margin-left:10%;"/>  
+                <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="venc" style="width: 50%;border: 1px solid #ffffff;" value="#{editarParcelaMB.contasReceber.dataVencimento}">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    <p:ajax event="change"/>
+                </p:calendar>
             </h:panelGrid>
             <h:panelGrid columns="1" style="margin-left:60%; margin-top:-9.5%;">
-            	<p:outputLabel value="Nº Documento" for="nDocumento"  class="left2" style="margin-left:10%;"/>
+                <p:outputLabel value="Nº Documento" for="nDocumento"  class="left2" style="margin-left:10%;"/>
                 <p:inputText id="nDocumento" size="13"  class="left4" value="#{editarParcelaMB.contasReceber.numeroDocumento}" style="margin-left: 5px;"/>
             </h:panelGrid> 
-			<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-			<p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{editarParcelaMB.SalvarParcelaEditada()}" >
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{editarParcelaMB.SalvarParcelaEditada()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
-			<p:commandLink title="Cancelar" style="margin-left: 5%;text-decoration: none" action="#{gerarParcelaMB.CancelarEdicao()}" >
+            <p:commandLink title="Cancelar" style="margin-left: 5%;text-decoration: none" action="#{gerarParcelaMB.CancelarEdicao()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/> 
             </p:commandLink> 
-		</h:form>
- </h:body>
+        </h:form>
+    </h:body>
 </html>

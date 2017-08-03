@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
@@ -24,12 +23,12 @@
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
-            
+
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-            
+
             <h:panelGrid style="margin-left:2;">   
                 <p:outputLabel value="Tipo de Documento" for="tipoDoc" class="left2"/>
                 <p:selectOneMenu id="tipoDoc" class="left5" style="width:156px"  value="#{cadVendasMB.tipoDocumento}">
@@ -42,23 +41,25 @@
                     <f:selectItem itemLabel="Deposito/Transferencia" itemValue="Deposito" />
                     <p:ajax event="change" listener="#{cadVendasMB.desabilitarCampos()}" update="habilitarCampos"/>
                 </p:selectOneMenu>
-             </h:panelGrid>
-             <br />
-             <h:panelGrid columns="4"  style="margin-left: 2%;width: 98%;">
+            </h:panelGrid>
+            <br />
+            <h:panelGrid columns="4"  style="margin-left: 2%;width: 98%;">
                 <h:panelGroup>
                     <div class="form-group" style="margin-left: 2%;">
                         <h:outputLabel  for="parcelas" class="left3" >N° Parcelas</h:outputLabel> 
                         <h:inputText class="form-control"  id="parcelas"  style="width: 90%;text-align: right;" value="#{cadVendasMB.formapagamento.numeroParcelas}">
-           			<p:ajax event="blur"/>
+                            <p:ajax event="blur"/>
                         </h:inputText>
                     </div>
                 </h:panelGroup>
                 <h:panelGroup>
                     <div class="form-group" style="margin-left: 2%;">
                         <h:outputLabel  for="dataVenc" class="left3" >Data Vencimento</h:outputLabel> 
-                        <p:inputMask id="dataVenc" class="form-control" mask="99/99/9999" size="13" value="#{cadVendasMB.formapagamento.dataVencimento}">
+                        <br/>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{cadVendasMB.formapagamento.dataVencimento}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </p:inputMask>
+                            <p:ajax event="change"/>
+                        </p:calendar>
                     </div> 
                 </h:panelGroup> 
                 <h:panelGroup>
@@ -79,85 +80,85 @@
                     </div>
                 </h:panelGroup> 
             </h:panelGrid>
-             <h:panelGrid id="habilitarCampos" style="width: 96%;">
-            <h:panelGrid columns="2"  style="margin-left: 2%;width: 98%;">
-                <h:panelGroup>
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel  for="nome" class="left3" >Nome</h:outputLabel> 
-                        <h:inputText class="form-control"  id="nome"  style="width: 95%;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.nomeCliente}"/>
-                    </div>
-                </h:panelGroup>
-                <h:panelGroup>
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel  for="cpfcnpj" class="left3" >N° CPF/CNPJ</h:outputLabel> 
-                        <h:inputText class="form-control"  id="cpfcnpj"  style="width: 104%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.cpf}">
-           			<p:ajax event="blur"/>
-                        </h:inputText>
-                    </div>
-                </h:panelGroup>
-            </h:panelGrid>
-            <h:panelGrid columns="2"  style="margin-left: 2%;width: 69%;">
-                <h:panelGroup>
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel  for="tipologra" class="left3" >Tipo Logradouro</h:outputLabel> 
-                        <br/>
-                        <p:selectOneMenu id="tipologra" value="#{cadVendasMB.formapagamento.tipoLogradouro}" style="width:154px"  disabled="#{cadVendasMB.habilitarCampos}" class="left">
-	                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-	                    <f:selectItem itemLabel="Rua" itemValue="Rua" />  
-	                    <f:selectItem itemLabel="Rodivia" itemValue="Rodivia" />  
-	                    <f:selectItem itemLabel="Estrada" itemValue="Estrada" />  
-	                    <f:selectItem itemLabel="Servidão" itemValue="Servidão" />  
-	                    <f:selectItem itemLabel="BR" itemValue="BR" />       
-                        </p:selectOneMenu>
-                    </div>
-                </h:panelGroup>
-                <h:panelGroup>
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel  for="logra" class="left3" >Logradouro</h:outputLabel> 
-                        <h:inputText class="form-control"  id="logra"  style="width: 187%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.logradouro}"/>
-                    </div>
-                </h:panelGroup>
-            </h:panelGrid>
-            <h:panelGrid columns="3"  style="margin-left: 2%;width: 100%;">
-                <h:panelGroup>
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel  for="numero" class="left3" >Número</h:outputLabel> 
-                        <br/>
-                        <h:inputText class="form-control"  id="numero"  style="width: 90%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.numero}"/>
-                     </div>
-                </h:panelGroup>
-                <h:panelGroup>
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel  for="comple" class="left3" >Complemento</h:outputLabel> 
-                        <h:inputText class="form-control"  id="comple"  style="width: 90%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.complemento}"/>
-                    </div>
-                </h:panelGroup>
-                <h:panelGroup>
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel  for="cep" class="left3" >CEP</h:outputLabel> 
-                        <p:inputMask id="cep"  readonly="#{cadVendasMB.habilitarCampos}" size="12" maxlength="9" class="form-control" value="#{cadVendasMB.formapagamento.cep}" mask="99999-999"/>
-                    </div>
-                </h:panelGroup>
-            </h:panelGrid>
-           <h:panelGrid columns="3"  style="margin-left: 2%;width: 105%;">
-                <h:panelGroup>
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel  for="bairro" class="left3" >Bairro</h:outputLabel> 
-                        <br/>
-                        <h:inputText class="form-control"  id="bairro"  style="width: 90%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.bairro}"/>
-                     </div>
-                </h:panelGroup>
-                <h:panelGroup>
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel  for="cidade" class="left3" >Cidade</h:outputLabel> 
-                        <h:inputText class="form-control"  id="cidade"  style="width: 90%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.cidade}"/>
-                    </div>
-                </h:panelGroup>
-                <h:panelGroup>
-                    <div class="form-group" style="margin-left: 2%;">
-                        <h:outputLabel  for="estado" class="left3" >Estado</h:outputLabel> 
-                        <br/>
-                        <p:selectOneMenu id="estado"  disabled="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.estado}" class="" style="width:182px">
+            <h:panelGrid id="habilitarCampos" style="width: 96%;">
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 98%;">
+                    <h:panelGroup>
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel  for="nome" class="left3" >Nome</h:outputLabel> 
+                            <h:inputText class="form-control"  id="nome"  style="width: 95%;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.nomeCliente}"/>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel  for="cpfcnpj" class="left3" >N° CPF/CNPJ</h:outputLabel> 
+                            <h:inputText class="form-control"  id="cpfcnpj"  style="width: 104%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.cpf}">
+                                <p:ajax event="blur"/>
+                            </h:inputText>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 69%;">
+                    <h:panelGroup>
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel  for="tipologra" class="left3" >Tipo Logradouro</h:outputLabel> 
+                            <br/>
+                            <p:selectOneMenu id="tipologra" value="#{cadVendasMB.formapagamento.tipoLogradouro}" style="width:154px"  disabled="#{cadVendasMB.habilitarCampos}" class="left">
+                                <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                                <f:selectItem itemLabel="Rua" itemValue="Rua" />  
+                                <f:selectItem itemLabel="Rodivia" itemValue="Rodivia" />  
+                                <f:selectItem itemLabel="Estrada" itemValue="Estrada" />  
+                                <f:selectItem itemLabel="Servidão" itemValue="Servidão" />  
+                                <f:selectItem itemLabel="BR" itemValue="BR" />       
+                            </p:selectOneMenu>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel  for="logra" class="left3" >Logradouro</h:outputLabel> 
+                            <h:inputText class="form-control"  id="logra"  style="width: 187%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.logradouro}"/>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="3"  style="margin-left: 2%;width: 100%;">
+                    <h:panelGroup>
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel  for="numero" class="left3" >Número</h:outputLabel> 
+                            <br/>
+                            <h:inputText class="form-control"  id="numero"  style="width: 90%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.numero}"/>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel  for="comple" class="left3" >Complemento</h:outputLabel> 
+                            <h:inputText class="form-control"  id="comple"  style="width: 90%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.complemento}"/>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel  for="cep" class="left3" >CEP</h:outputLabel> 
+                            <p:inputMask id="cep"  readonly="#{cadVendasMB.habilitarCampos}" size="12" maxlength="9" class="form-control" value="#{cadVendasMB.formapagamento.cep}" mask="99999-999"/>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="3"  style="margin-left: 2%;width: 105%;">
+                    <h:panelGroup>
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel  for="bairro" class="left3" >Bairro</h:outputLabel> 
+                            <br/>
+                            <h:inputText class="form-control"  id="bairro"  style="width: 90%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.bairro}"/>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel  for="cidade" class="left3" >Cidade</h:outputLabel> 
+                            <h:inputText class="form-control"  id="cidade"  style="width: 90%;text-align: right;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.cidade}"/>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <div class="form-group" style="margin-left: 2%;">
+                            <h:outputLabel  for="estado" class="left3" >Estado</h:outputLabel> 
+                            <br/>
+                            <p:selectOneMenu id="estado"  disabled="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.estado}" class="" style="width:182px">
                                 <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                 <f:selectItem itemLabel="Acre" itemValue="AC" /> 
                                 <f:selectItem itemLabel="Alagoas" itemValue="AL" /> 
@@ -186,24 +187,24 @@
                                 <f:selectItem itemLabel="São Paulo" itemValue="SP" />  
                                 <f:selectItem itemLabel="Sergipe" itemValue="SE" />  
                                 <f:selectItem itemLabel="Tocantins" itemValue="TO" /> 
-                         </p:selectOneMenu>
+                            </p:selectOneMenu>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid  style="margin-left: 2%;width: 100%;">
+                    <div class="form-group" style="margin-left: 2%;">
+                        <h:outputLabel  for="obs" class="left3" >Observação</h:outputLabel> 
+                        <h:inputText class="form-control"  id="obs"  style="width: 100%;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.observacao}"/>
                     </div>
-                </h:panelGroup>
+                </h:panelGrid>
             </h:panelGrid>
-           <h:panelGrid  style="margin-left: 2%;width: 100%;">
-                <div class="form-group" style="margin-left: 2%;">
-                       <h:outputLabel  for="obs" class="left3" >Observação</h:outputLabel> 
-                       <h:inputText class="form-control"  id="obs"  style="width: 100%;" readonly="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.observacao}"/>
-                   </div>
-           </h:panelGrid>
-       </h:panelGrid>
-             <br/>
-           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" action="#{cadVendasMB.SalvarFormaPagamento()}" >
+            <br/>
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" action="#{cadVendasMB.SalvarFormaPagamento()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-           </p:commandLink>
-           <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.voltarRecebimento()}" >
+            </p:commandLink>
+            <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.voltarRecebimento()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-           </p:commandLink>     
-		</h:form>
-	</h:body>
+            </p:commandLink>     
+        </h:form>
+    </h:body>
 </html>
