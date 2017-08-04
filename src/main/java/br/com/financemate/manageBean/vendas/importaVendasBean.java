@@ -51,12 +51,17 @@ public class importaVendasBean {
         return vendaImportada;
     }
 
-    public List<VendasSystmBean> pegarListaVendasSystm() throws JAXBException {
+    public VendasSystmBean[] pegarListaVendasSystm(Integer idcliente) throws JAXBException {
         List<VendasSystmBean> listaVendas = new ArrayList<>();
-        VendasSystmBean[] vendasSystmBean;
+        VendasSystmBean[] vendasSystmBean = null;
         try {
-
-            URL url = new URL("http://systm.com.br:8087/wssysfin/webresources/generic/listaVenda");
+            URL url;
+            if (idcliente == 0) {
+                url = new URL("http://systm.com.br:8087/wssysfin/webresources/generic/listaVenda");
+            }else{
+                url = new URL("http://systm.com.br:8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente);
+            }
+            
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Accept", "application/json");
@@ -70,9 +75,9 @@ public class importaVendasBean {
             JsonReader j = new JsonReader(br);
             j.setLenient(true);
             vendasSystmBean = gson.fromJson(j, VendasSystmBean[].class);
-            for (int i = 0; i < vendasSystmBean.length; i++) {
-                listaVendas.add(vendasSystmBean[i]);
-            }
+//            for (int i = 0; i < vendasSystmBean.length; i++) {
+//                listaVendas.add(vendasSystmBean[i]);
+//            }
             br.close();
             con.disconnect();
 
@@ -83,7 +88,7 @@ public class importaVendasBean {
             mensagem m = new mensagem();
             m.faltaInformacao("" + e);
         }
-        return listaVendas;
+        return vendasSystmBean;
     }
 
     public void salvarVendaImportada(int idVendaSystm) throws JAXBException {

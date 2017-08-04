@@ -801,14 +801,14 @@ public class CadVendasMB implements Serializable {
             session.removeAttribute("cliente");
             session.removeAttribute("listaFormaPagamento");
             if (importadoSystm) {
-                importaVendasBean importaVendasBean = new importaVendasBean();
-                try {
-                    importaVendasBean.salvarVendaImportada(vendas.getIdVendaSystm());
-                    getListaVendasSystm();
-                } catch (JAXBException e) {
-                    mensagem m = new mensagem();
-                    m.faltaInformacao("" + e);
-                }
+//                importaVendasBean importaVendasBean = new importaVendasBean();
+//                try {
+//                    importaVendasBean.salvarVendaImportada(vendas.getIdVendaSystm());
+//                    getListaVendasSystm();
+//                } catch (JAXBException e) {
+//                    mensagem m = new mensagem();
+//                    m.faltaInformacao("" + e);
+//                }
                 session.removeAttribute("importadoSystm");
                 return "importarVenda";
             }
@@ -1049,42 +1049,42 @@ public class CadVendasMB implements Serializable {
         emissaonota.setEstado(cliente.getEstado());
     }
 
-    public void getListaVendasSystm() {
-        importaVendasBean importaVendasBean = new importaVendasBean();
-        ListaVendasSystmBean vendaImportada;
-        listaImportada = new ArrayList<>();
-        try {
-            listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
-            if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
-                listaVendasSystm = new ArrayList<>();
-            }
-            for (int i = 0; i < listaVendasSystm.size(); i++) {
-                vendaImportada = new ListaVendasSystmBean();
-                vendaImportada.setConsultor(listaVendasSystm.get(i).getConsultor());
-                vendaImportada.setDataVenda("" + Formatacao.ConvercaoDataPadrao(listaVendasSystm.get(i).getDataVenda()));
-                vendaImportada.setFornecedor(listaVendasSystm.get(i).getFornecedor());
-                vendaImportada.setIdCliente("" + listaVendasSystm.get(i).getIdCliente());
-                vendaImportada.setValorBruto("" + listaVendasSystm.get(i).getValorBruto());
-                vendaImportada.setNomeCliente(listaVendasSystm.get(i).getNomeCliente());
-                vendaImportada.setIdVenda("" + listaVendasSystm.get(i).getIdVenda());
-                vendaImportada.setIdProduto("" + listaVendasSystm.get(i).getIdProduto());
-                vendaImportada.setIdUnidade("" + listaVendasSystm.get(i).getIdUnidade());
-                vendaImportada.setIdUsuario("" + listaVendasSystm.get(i).getIdUsuario());
-                vendaImportada.setLiquidoFranquia("" + listaVendasSystm.get(i).getLiquidoFranquia());
-                if (vendaImportada.getValorBruto() == null || vendaImportada.getValorBruto().equalsIgnoreCase("null")) {
-                    vendaImportada.setValorBruto("0.0");
-                }
-                vendaImportada.setVendasSystmBean(listaVendasSystm.get(i));
-                listaImportada.add(vendaImportada);
-            }
-        } catch (JAXBException e) {
-            mensagem m = new mensagem();
-            m.faltaInformacao("" + e);
-        }
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        session.setAttribute("listaImportada", listaImportada);
-    }
+//    public void getListaVendasSystm() {
+//        importaVendasBean importaVendasBean = new importaVendasBean();
+//        ListaVendasSystmBean vendaImportada;
+//        listaImportada = new ArrayList<>();
+//        try {
+//            listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
+//            if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
+//                listaVendasSystm = new ArrayList<>();
+//            }
+//            for (int i = 0; i < listaVendasSystm.size(); i++) {
+//                vendaImportada = new ListaVendasSystmBean();
+//                vendaImportada.setConsultor(listaVendasSystm.get(i).getConsultor());
+//                vendaImportada.setDataVenda("" + Formatacao.ConvercaoDataPadrao(listaVendasSystm.get(i).getDataVenda()));
+//                vendaImportada.setFornecedor(listaVendasSystm.get(i).getFornecedor());
+//                vendaImportada.setIdCliente("" + listaVendasSystm.get(i).getIdCliente());
+//                vendaImportada.setValorBruto("" + listaVendasSystm.get(i).getValorBruto());
+//                vendaImportada.setNomeCliente(listaVendasSystm.get(i).getNomeCliente());
+//                vendaImportada.setIdVenda("" + listaVendasSystm.get(i).getIdVenda());
+//                vendaImportada.setIdProduto("" + listaVendasSystm.get(i).getIdProduto());
+//                vendaImportada.setIdUnidade("" + listaVendasSystm.get(i).getIdUnidade());
+//                vendaImportada.setIdUsuario("" + listaVendasSystm.get(i).getIdUsuario());
+//                vendaImportada.setLiquidoFranquia("" + listaVendasSystm.get(i).getLiquidoFranquia());
+//                if (vendaImportada.getValorBruto() == null || vendaImportada.getValorBruto().equalsIgnoreCase("null")) {
+//                    vendaImportada.setValorBruto("0.0");
+//                }
+//                vendaImportada.setVendasSystmBean(listaVendasSystm.get(i));
+//                listaImportada.add(vendaImportada);
+//            }
+//        } catch (JAXBException e) {
+//            mensagem m = new mensagem();
+//            m.faltaInformacao("" + e);
+//        }
+//        FacesContext fc = FacesContext.getCurrentInstance();
+//        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+//        session.setAttribute("listaImportada", listaImportada);
+//    }
 
     public String importaVenda(ListaVendasSystmBean vendaImportada) {
         if (vendas == null) {
@@ -1125,44 +1125,36 @@ public class CadVendasMB implements Serializable {
 
     public void filtroListaVendasSystm() {
         importaVendasBean importaVendasBean = new importaVendasBean();
-        ListaVendasSystmBean vendaImportada;
+        ListaVendasSystmBean vendaImportada = null;
         listaImportada = new ArrayList<>();
+        VendasSystmBean[] vendasBean;
         try {
-            listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
-            if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
-                listaVendasSystm = new ArrayList<>();
+            if (clienteImportacao != null) {
+                vendasBean = importaVendasBean.pegarListaVendasSystm(clienteImportacao.getCodigosystm());
+            }else{
+                vendasBean = importaVendasBean.pegarListaVendasSystm(0);
             }
-            for (int i = 0; i < listaVendasSystm.size(); i++) {
-                if (clienteImportacao != null) {
-                    if (clienteImportacao.getCodigosystm() == listaVendasSystm.get(i).getIdUnidade()) {
-                        if (dataInicial == null && dataFinal == null) {
-                            vendaImportada = setandoVenda(listaVendasSystm.get(i));
-                            listaImportada.add(vendaImportada);
-                        } else {
-                            String dataSystmImportada = Formatacao.ConvercaoDataSql(listaVendasSystm.get(i).getDataVenda());
-                            String dataInicialFiltro = Formatacao.ConvercaoDataSql(dataInicial);
-                            String dataFinalFiltro = Formatacao.ConvercaoDataSql(dataFinal);
-                            if ((dataSystmImportada.compareTo(dataInicialFiltro) >= 0) && (dataSystmImportada.compareTo(dataFinalFiltro) <= 0)) {
-                                vendaImportada = setandoVenda(listaVendasSystm.get(i));
-                                listaImportada.add(vendaImportada);
-                            }
-                        }
-
+            for (int i = 0; i < vendasBean.length; i++) {
+                vendaImportada = new ListaVendasSystmBean();
+                if (dataInicial == null && dataFinal == null) {
+                    if (vendasBean[i].getValorBruto() == null) {
+                        vendasBean[i].setValorBruto(0.0f);
                     }
+                    vendaImportada.setVendasSystmBean(vendasBean[i]);
+                    listaImportada.add(vendaImportada);
                 } else {
-                    if (dataInicial == null && dataFinal == null) {
-                        vendaImportada = setandoVenda(listaVendasSystm.get(i));
-                        listaImportada.add(vendaImportada);
-                    } else {
-                        String dataSystmImportada = Formatacao.ConvercaoDataSql(listaVendasSystm.get(i).getDataVenda());
-                        String dataInicialFiltro = Formatacao.ConvercaoDataSql(dataInicial);
-                        String dataFinalFiltro = Formatacao.ConvercaoDataSql(dataFinal);
-                        if ((dataSystmImportada.compareTo(dataInicialFiltro) >= 0) && (dataSystmImportada.compareTo(dataFinalFiltro) <= 0)) {
-                            vendaImportada = setandoVenda(listaVendasSystm.get(i));
-                            listaImportada.add(vendaImportada);
+                    String dataSystmImportada = Formatacao.ConvercaoDataSql(vendasBean[i].getDataVenda());
+                    String dataInicialFiltro = Formatacao.ConvercaoDataSql(dataInicial);
+                    String dataFinalFiltro = Formatacao.ConvercaoDataSql(dataFinal);
+                    if ((dataSystmImportada.compareTo(dataInicialFiltro) >= 0) && (dataSystmImportada.compareTo(dataFinalFiltro) <= 0)) {
+                        if (vendasBean[i].getValorBruto() == null) {
+                            vendasBean[i].setValorBruto(0.0f);
                         }
+                        vendaImportada.setVendasSystmBean(vendasBean[i]);
+                        listaImportada.add(vendaImportada);
                     }
                 }
+
             }
         } catch (JAXBException e) {
             mensagem m = new mensagem();

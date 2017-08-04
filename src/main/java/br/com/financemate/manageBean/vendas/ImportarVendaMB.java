@@ -22,7 +22,7 @@ public class ImportarVendaMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        getListaVendasSystm();
+       // getListaVendasSystm();
     }
 
     public Vendas getVendas() {
@@ -45,17 +45,17 @@ public class ImportarVendaMB implements Serializable {
         this.listaVendasSystm = listaVendasSystm;
     }
 
-    public void getListaVendasSystm() {
-        importaVendasBean importaVendasBean = new importaVendasBean();
-        try {
-            listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
-            if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
-                listaVendasSystm = new ArrayList<>();
-            }
-        } catch (JAXBException e) {
-            mensagem m = new mensagem();
-            m.faltaInformacao("" + e);
-        }
-    }
+//    public void getListaVendasSystm() {
+//        importaVendasBean importaVendasBean = new importaVendasBean();
+//        try {
+//            listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
+//            if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
+//                listaVendasSystm = new ArrayList<>();
+//            }
+//        } catch (JAXBException e) {
+//            mensagem m = new mensagem();
+//            m.faltaInformacao("" + e);
+//        }
+//    }
 
 }

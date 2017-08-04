@@ -631,40 +631,40 @@ public class VendasMB implements Serializable {
         }
     }
 
-    public List<ListaVendasSystmBean> getListaVendasSystm() {
-        importaVendasBean importaVendasBean = new importaVendasBean();
-        ListaVendasSystmBean vendaImportada;
-        List<ListaVendasSystmBean> listaImportada = new ArrayList<>();
-        List<VendasSystmBean> listaVendasSystm;
-        try {
-            listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
-            if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
-                listaVendasSystm = new ArrayList<>();
-            }
-            for (int i = 0; i < listaVendasSystm.size(); i++) {
-                vendaImportada = new ListaVendasSystmBean();
-                vendaImportada.setConsultor(listaVendasSystm.get(i).getConsultor());
-                vendaImportada.setDataVenda("" + Formatacao.ConvercaoDataPadrao(listaVendasSystm.get(i).getDataVenda()));
-                vendaImportada.setFornecedor(listaVendasSystm.get(i).getFornecedor());
-                vendaImportada.setIdCliente("" + listaVendasSystm.get(i).getIdCliente());
-                vendaImportada.setValorBruto("" + listaVendasSystm.get(i).getValorBruto());
-                vendaImportada.setNomeCliente(listaVendasSystm.get(i).getNomeCliente());
-                vendaImportada.setIdVenda("" + listaVendasSystm.get(i).getIdVenda());
-                vendaImportada.setIdProduto("" + listaVendasSystm.get(i).getIdProduto());
-                vendaImportada.setIdUnidade("" + listaVendasSystm.get(i).getIdUnidade());
-                vendaImportada.setIdUsuario("" + listaVendasSystm.get(i).getIdUsuario());
-                vendaImportada.setLiquidoFranquia("" + listaVendasSystm.get(i).getLiquidoFranquia());
-                if (vendaImportada.getValorBruto() == null || vendaImportada.getValorBruto().equalsIgnoreCase("null")) {
-                    vendaImportada.setValorBruto("0.0");
-                }
-                vendaImportada.setVendasSystmBean(listaVendasSystm.get(i));
-                listaImportada.add(vendaImportada);
-            }
-        } catch (JAXBException e) {
-            mensagem m = new mensagem();
-            m.faltaInformacao("" + e);
-        }
-        return listaImportada;
-    }
+//    public List<ListaVendasSystmBean> getListaVendasSystm() {
+//        importaVendasBean importaVendasBean = new importaVendasBean();
+//        ListaVendasSystmBean vendaImportada;
+//        List<ListaVendasSystmBean> listaImportada = new ArrayList<>();
+//        List<VendasSystmBean> listaVendasSystm;
+//        try {
+//            listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
+//            if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
+//                listaVendasSystm = new ArrayList<>();
+//            }
+//            for (int i = 0; i < listaVendasSystm.size(); i++) {
+//                vendaImportada = new ListaVendasSystmBean();
+//                vendaImportada.setConsultor(listaVendasSystm.get(i).getConsultor());
+//                vendaImportada.setDataVenda("" + Formatacao.ConvercaoDataPadrao(listaVendasSystm.get(i).getDataVenda()));
+//                vendaImportada.setFornecedor(listaVendasSystm.get(i).getFornecedor());
+//                vendaImportada.setIdCliente("" + listaVendasSystm.get(i).getIdCliente());
+//                vendaImportada.setValorBruto("" + listaVendasSystm.get(i).getValorBruto());
+//                vendaImportada.setNomeCliente(listaVendasSystm.get(i).getNomeCliente());
+//                vendaImportada.setIdVenda("" + listaVendasSystm.get(i).getIdVenda());
+//                vendaImportada.setIdProduto("" + listaVendasSystm.get(i).getIdProduto());
+//                vendaImportada.setIdUnidade("" + listaVendasSystm.get(i).getIdUnidade());
+//                vendaImportada.setIdUsuario("" + listaVendasSystm.get(i).getIdUsuario());
+//                vendaImportada.setLiquidoFranquia("" + listaVendasSystm.get(i).getLiquidoFranquia());
+//                if (vendaImportada.getValorBruto() == null || vendaImportada.getValorBruto().equalsIgnoreCase("null")) {
+//                    vendaImportada.setValorBruto("0.0");
+//                }
+//                vendaImportada.setVendasSystmBean(listaVendasSystm.get(i));
+//                listaImportada.add(vendaImportada);
+//            }
+//        } catch (JAXBException e) {
+//            mensagem m = new mensagem();
+//            m.faltaInformacao("" + e);
+//        }
+//        return listaImportada;
+//    }
 
 }

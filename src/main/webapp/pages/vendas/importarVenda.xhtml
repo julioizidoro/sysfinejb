@@ -47,18 +47,18 @@
                              scrollRows="10"  scrollable="true" scrollHeight="220"  style="margin-bottom:20px;"> 
 
                     <p:column headerText="ID" style="width: 80px; background:white; color:black; border:none; text-align:left;">
-                        <h:outputText value="#{vendaSystm.idVenda}" /> 
+                        <h:outputText value="#{vendaSystm.vendasSystmBean.idVenda}" /> 
                     </p:column>
                     <p:column headerText="Data" style="background:white; color:black; border:none; width:70px; text-align:center;">
-                        <h:outputText  value="#{vendaSystm.dataVenda}">
+                        <h:outputText  value="#{vendaSystm.vendasSystmBean.dataVenda}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                         </h:outputText> 
                     </p:column>
                     <p:column headerText="Cliente" style=" background:white; color:black; border:none; text-align:left;">
-                        <h:outputText value="#{vendaSystm.nomeCliente}" /> 
+                        <h:outputText value="#{vendaSystm.vendasSystmBean.nomeCliente}" /> 
                     </p:column> 
                     <p:column headerText="Valor"   style="background:white; text-align:left; color:black; width: 80px; border:none;">
-                        <h:outputText value="#{vendaSystm.valorBruto}">
+                        <h:outputText value="#{vendaSystm.vendasSystmBean.valorBruto}">
                             <f:convertNumber currencySymbol="" type="currency"/>
                         </h:outputText>
                     </p:column>
