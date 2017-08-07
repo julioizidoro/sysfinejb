@@ -67,7 +67,7 @@ public class grafico implements Serializable {
     @EJB
     private VendasDao vendasDao;
     private String ano = "" + new Year();
-    private int nVendasGrafico =0;
+    private int nVendasGrafico = 0;
 
     @PostConstruct
     public void init() {
@@ -266,16 +266,13 @@ public class grafico implements Serializable {
     public void setnVendasGrafico(int nVendasGrafico) {
         this.nVendasGrafico = nVendasGrafico;
     }
-    
-    
-    
 
     private void createAnimatedModels() {
         gerarDiasFluxoCaixa();
         animatedModel1 = initLinearModel();
         animatedModel1.setAnimate(true);
         animatedModel1.getAxes().put(AxisType.X, new CategoryAxis("Dia"));
-       // animatedModel1.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
+        // animatedModel1.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         animatedModel1.setSeriesColors("66cc66, FE2E2E, A4A4A4");
         animatedModel1.setLegendPosition("se");
         animatedModel1.setZoom(true);
@@ -408,7 +405,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisJaneiro() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-01-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-01-01'"
                 + " and v.dataVenda<='" + new Year() + "-01-31'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -424,7 +421,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisFevereiro() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-02-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-02-01'"
                 + " and v.dataVenda<='" + new Year() + "-02-28'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -440,7 +437,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisMarco() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-03-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-03-01'"
                 + " and v.dataVenda<='" + new Year() + "-03-31'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -456,7 +453,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisAbril() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-04-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-04-01'"
                 + " and v.dataVenda<='" + new Year() + "-04-30'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -472,7 +469,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisMaio() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-05-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-05-01'"
                 + " and v.dataVenda<='" + new Year() + "-05-31'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -488,7 +485,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisJunho() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-06-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-06-01'"
                 + " and v.dataVenda<='" + new Year() + "-06-30'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -504,7 +501,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisJulho() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-07-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-07-01'"
                 + " and v.dataVenda<='" + new Year() + "-07-31'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -520,7 +517,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisAgosto() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-08-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-08-01'"
                 + " and v.dataVenda<='" + new Year() + "-08-31'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -536,7 +533,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisSetembro() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-09-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-09-01'"
                 + " and v.dataVenda<='" + new Year() + "-09-30'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -552,7 +549,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisOutubro() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-10-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-10-01'"
                 + " and v.dataVenda<='" + new Year() + "-10-31'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -568,7 +565,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisNovembro() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-11-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-11-01'"
                 + " and v.dataVenda<='" + new Year() + "-11-30'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -584,7 +581,7 @@ public class grafico implements Serializable {
     }
 
     public Integer gerarVendasMensaisDezembro() {
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-12-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-12-01'"
                 + " and v.dataVenda<='" + new Year() + "-12-31'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -634,7 +631,7 @@ public class grafico implements Serializable {
     public float recebimentosDia1() {
         Float recebimento = null;
         try {
-            String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(new Date()) + "'";
+            String sql = "select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(new Date()) + "'";
             if (usuarioLogadoMB.getCliente() != null) {
                 sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
             }
@@ -663,7 +660,7 @@ public class grafico implements Serializable {
     public float recebimentosDia2() {
         Float recebimento = null;
         try {
-            String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataInicial) + "'";
+            String sql = "select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataInicial) + "'";
             if (usuarioLogadoMB.getCliente() != null) {
                 sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
             }
@@ -692,7 +689,7 @@ public class grafico implements Serializable {
     public float recebimentosDia3() {
         Float recebimento = null;
         try {
-            String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataTerceiroDia) + "'";
+            String sql = "select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataTerceiroDia) + "'";
             if (usuarioLogadoMB.getCliente() != null) {
                 sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
             }
@@ -721,7 +718,7 @@ public class grafico implements Serializable {
     public float recebimentosDia4() {
         Float recebimento = null;
         try {
-            String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuartoDia) + "'";
+            String sql = "select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuartoDia) + "'";
             if (usuarioLogadoMB.getCliente() != null) {
                 sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
             }
@@ -750,7 +747,7 @@ public class grafico implements Serializable {
     public float recebimentosDia5() {
         Float recebimento = null;
         try {
-            String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuintoDia) + "'";
+            String sql = "select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuintoDia) + "'";
             if (usuarioLogadoMB.getCliente() != null) {
                 sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
             }
@@ -779,7 +776,7 @@ public class grafico implements Serializable {
     public float pagamentodia1() {
         Float pagamento = null;
         try {
-            String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(new Date()) + "'";
+            String sql = "select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(new Date()) + "'";
             if (usuarioLogadoMB.getCliente() != null) {
                 sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
             }
@@ -808,7 +805,7 @@ public class grafico implements Serializable {
     public float pagamentodia2() {
         Float pagamento = null;
         try {
-            String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataInicial) + "'";
+            String sql = "select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataInicial) + "'";
             if (usuarioLogadoMB.getCliente() != null) {
                 sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
             }
@@ -837,7 +834,7 @@ public class grafico implements Serializable {
     public float pagamentodia3() {
         Float pagamento = null;
         try {
-            String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataTerceiroDia) + "'";
+            String sql = "select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataTerceiroDia) + "'";
             if (usuarioLogadoMB.getCliente() != null) {
                 sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
             }
@@ -866,7 +863,7 @@ public class grafico implements Serializable {
     public float pagamentodia4() {
         Float pagamento = null;
         try {
-            String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuartoDia) + "'";
+            String sql = "select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuartoDia) + "'";
             if (usuarioLogadoMB.getCliente() != null) {
                 sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
             }
@@ -895,7 +892,7 @@ public class grafico implements Serializable {
     public float pagamentodia5() {
         Float pagamento = null;
         try {
-            String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuintoDia) + "'";
+            String sql = "select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuintoDia) + "'";
             if (usuarioLogadoMB.getCliente() != null) {
                 sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
             }

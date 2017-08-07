@@ -211,7 +211,7 @@ public class ImprimirContasReceberMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
@@ -296,7 +296,7 @@ public class ImprimirContasReceberMB implements Serializable {
     public String gerarSql() {
         String sql = "";
         if (relatorio.equalsIgnoreCase("Contas a receber")) {
-            sql = "SELECT distinct contasreceber.idcontasReceber, contasreceber.numeroDocumento, contasreceber.nomeCliente as nomeCliente,contasreceber.valorParcela, contasreceber.numeroParcela, contasreceber.dataVencimento, contasreceber.juros,contasreceber.desagio, contasreceber.tipodocumento, contasreceber.venda, contasreceber.dataPagamento, contasreceber.valorPago,cliente.nomeFantasia, banco.nome ";
+            sql = "select distinct contasreceber.idcontasReceber, contasreceber.numeroDocumento, contasreceber.nomeCliente as nomeCliente,contasreceber.valorParcela, contasreceber.numeroParcela, contasreceber.dataVencimento, contasreceber.juros,contasreceber.desagio, contasreceber.tipodocumento, contasreceber.venda, contasreceber.dataPagamento, contasreceber.valorPago,cliente.nomeFantasia, banco.nome ";
             sql = sql + "from ";
             sql = sql + "contasreceber join cliente on contasreceber.cliente_idcliente = cliente.idcliente ";
             sql = sql + "join banco on contasreceber.banco_idbanco = banco.idbanco ";
@@ -378,7 +378,7 @@ public class ImprimirContasReceberMB implements Serializable {
             data = Formatacao.SubtarirDatas(new Date(), 3, "yyyy-MM-dd");
         }
 
-        String sql = "Select c from Contasreceber c where c.dataPagamento is NULL and c.valorPago=0 " +
+        String sql = "select c from Contasreceber c where c.dataPagamento is NULL and c.valorPago=0 " +
                 " and c.status<>'CANCELADA' ";
         if (tipoDocumento != null) {
             if (!tipoDocumento.equalsIgnoreCase("Todos")) {
@@ -402,7 +402,7 @@ public class ImprimirContasReceberMB implements Serializable {
         float valorTotal = 0.0f;
         Contasreceber contasreceber = null;
         List<Cobrancaparcelas> listaCobrancaParcela;
-        listaCobrancaParcela = cobrancaParcelasDao.list("Select c from Cobrancaparcelas c");
+        listaCobrancaParcela = cobrancaParcelasDao.list("select c from Cobrancaparcelas c");
         for (int i = 0; i < listaContas.size(); i++) {
             int idContasReceber = listaContas.get(i).getIdcontasReceber();
             for (int j = 0; j < listaCobrancaParcela.size(); j++) {

@@ -73,9 +73,9 @@ public class UsuarioMB implements Serializable {
     public void gerarListaUsuario() {
         // TODO Auto-generated catch block
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
-            listaUsuario = usuarioDao.list("Select u From Usuario u Where u.cliente=" + usuarioLogadoMB.getUsuario().getCliente());
+            listaUsuario = usuarioDao.list("select u from Usuario u where u.cliente=" + usuarioLogadoMB.getUsuario().getCliente());
         }else{
-            listaUsuario = usuarioDao.list("Select u From Usuario u");
+            listaUsuario = usuarioDao.list("select u from Usuario u");
         }
         if (listaUsuario == null || listaUsuario.isEmpty()) {
             listaUsuario = new ArrayList<>();

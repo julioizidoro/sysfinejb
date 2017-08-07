@@ -188,7 +188,7 @@ public class ConciliacaoMB implements Serializable {
 
     public Banco consultarBanco(String agencia, String conta) {
         Banco banco = new Banco();
-        String sql = "Select b From Banco b Where b.agencia='" + agencia + "' and b.conta='" + conta + "'";
+        String sql = "select b from Banco b where b.agencia='" + agencia + "' and b.conta='" + conta + "'";
         List<Banco> listabanco = bancoDao.list(sql);
         for (int i = 0; i < listabanco.size(); i++) {
             banco = listabanco.get(i);
@@ -197,7 +197,7 @@ public class ConciliacaoMB implements Serializable {
     }
 
     public void carregarOutrosLancamentos() {
-        String sql = "SELECT o FROM Movimentobanco o where o.dataCompensacao>='"
+        String sql = "select o from Movimentobanco o where o.dataCompensacao>='"
                 + Formatacao.ConvercaoDataSql(dataInicial) + "' and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and o.banco.idbanco=" + banco.getIdbanco() + " order by o.dataCompensacao";
         listaLacamentos = outrosLancamentosDao.list(sql);
     }

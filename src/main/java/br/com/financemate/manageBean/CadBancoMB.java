@@ -129,7 +129,7 @@ public class CadBancoMB implements Serializable {
     public void gerarListaCliente() {
         // TODO Auto-generated catch block
 
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }

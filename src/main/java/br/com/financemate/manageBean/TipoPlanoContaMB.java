@@ -67,7 +67,7 @@ public class TipoPlanoContaMB implements Serializable {
     }
 
     public void gerarListaTipoPlanoConta() {
-        listarTipoPlanoContas = tipoPlanoContasDao.list("Select t From Tipoplanocontas t order by t.descricao");
+        listarTipoPlanoContas = tipoPlanoContasDao.list("select t from Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas == null) {
             listarTipoPlanoContas = new ArrayList<>();
         }

@@ -550,13 +550,13 @@ public class ContasReceberMB implements Serializable {
         dataIni = Formatacao.ConvercaoStringData(dataInicial);
         dataFin = Formatacao.ConvercaoStringData(dataFinal);
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
-            sql = " Select v from Contasreceber v where "
+            sql = " select v from Contasreceber v where "
                     + " v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente()
                     + " and v.dataPagamento is null and v.status<>'CANCELADA' and v.status<>'RECEBIMENTO' " +
                     " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataIni) + "' and v.dataVencimento<='" +
                     Formatacao.ConvercaoDataSql(dataFin) + "' order by v.dataVencimento";
         } else {
-            sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and v.cliente.idcliente=" + cliente.getIdcliente()
+            sql = " select v from Contasreceber v where v.cliente.visualizacao='Operacional' and v.cliente.idcliente=" + cliente.getIdcliente()
                     + " and v.dataPagamento is null and v.status<>'CANCELADA' and v.status<>'RECEBIMENTO' " + 
                     " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataIni) + "' and v.dataVencimento<='" +
                     Formatacao.ConvercaoDataSql(dataFin) + "' order by v.dataVencimento";
@@ -635,7 +635,7 @@ public class ContasReceberMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
@@ -693,7 +693,7 @@ public class ContasReceberMB implements Serializable {
 
     private String excluirCobrancaParcela(Integer idcontasReceber) {
         Cobrancaparcelas cobrancaparcelas;
-        cobrancaparcelas = cobrancaParcelasDao.find("SELECT c FROM Cobrancaparcelas c where c.contasreceber.idcontasReceber=" + idcontasReceber);
+        cobrancaparcelas = cobrancaParcelasDao.find("select c from Cobrancaparcelas c where c.contasreceber.idcontasReceber=" + idcontasReceber);
         if (cobrancaparcelas == null) {
             return "";
         } else {
@@ -714,7 +714,7 @@ public class ContasReceberMB implements Serializable {
 
     public void gerarListaBanco() {
         if (cliente != null) {
-            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            String sql = "select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
                 listaBanco = new ArrayList<>();
@@ -731,7 +731,7 @@ public class ContasReceberMB implements Serializable {
     }
 
     public void filtrar() {
-        sql = "Select v from Contasreceber v  where  v.nomeCliente like '%" + nomeCliente + "%'";
+        sql = "select v from Contasreceber v  where  v.nomeCliente like '%" + nomeCliente + "%'";
         if (cliente != null) {
             sql = sql + " and v.cliente.idcliente=" + cliente.getIdcliente();
         } else {
@@ -949,10 +949,10 @@ public class ContasReceberMB implements Serializable {
 
     public Integer numeroCob(int contasreceber) {
         List<Historicocobranca> listahistorico = new ArrayList<>();
-        String sql = "Select cp From Cobrancaparcelas cp  Where cp.contasreceber.idcontasReceber=" + contasreceber;
+        String sql = "select cp from Cobrancaparcelas cp  where cp.contasreceber.idcontasReceber=" + contasreceber;
         Cobrancaparcelas cobrancaparcela = cobrancaParcelasDao.find(sql);
         if (cobrancaparcela != null) {
-            listahistorico = historicoCobrancaDao.list("Select c From Historicocobranca c WHere c.cobranca.idcobranca=" + cobrancaparcela.getCobranca().getIdcobranca());
+            listahistorico = historicoCobrancaDao.list("select c from Historicocobranca c WHere c.cobranca.idcobranca=" + cobrancaparcela.getCobranca().getIdcobranca());
         }else{
            cob = 0;
            return cob;
@@ -1012,7 +1012,7 @@ public class ContasReceberMB implements Serializable {
     
      
     public void excluirRecebimentos(Contasreceber contasreceber){
-        List<Contasreceber> listaContas = contasReceberDao.list("Select c From Contasreceber c Where c.status='RECEBIMENTO-" + contasreceber.getIdcontasReceber() + "'");
+        List<Contasreceber> listaContas = contasReceberDao.list("select c from Contasreceber c where c.status='RECEBIMENTO-" + contasreceber.getIdcontasReceber() + "'");
         for (int i = 0; i < listaContas.size(); i++) {
             contasReceberDao.remove(listaContas.get(i).getIdcontasReceber());
         }

@@ -119,7 +119,7 @@ public class HistoricoMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
             listaCliente = new ArrayList<>();
         }

@@ -81,7 +81,7 @@ public class PlanoContaMB implements Serializable {
     }
 
     public void gerarListaPlanoConta() {
-        listarPlanoContas = planoContasDao.list("Select p From Planocontas p order by p.descricao");
+        listarPlanoContas = planoContasDao.list("select p from Planocontas p order by p.descricao");
         if (listarPlanoContas == null) {
             listarPlanoContas = new ArrayList<>();
         }
@@ -89,7 +89,7 @@ public class PlanoContaMB implements Serializable {
     }
 
     public void gerarlistaTipoPlanoContas() {
-        listarTipoPlanoContas = tipoPlanoContasDao.list("Select t From Tipoplanocontas t order by t.descricao");
+        listarTipoPlanoContas = tipoPlanoContasDao.list("select t from Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas != null) {
             listarTipoPlanoContas = new ArrayList<>();
         }

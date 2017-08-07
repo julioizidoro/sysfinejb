@@ -16,79 +16,76 @@ import net.sf.ofx4j.io.AggregateUnmarshaller;
 import net.sf.ofx4j.io.OFXParseException;
 
 public class LerOFXBean {
-	
-	private List<TransacaoBean> listaTransacao;
-	private String agencia;
-	private String conta;
-	
-	public void iniciarLeitura(InputStream file){
 
-		try{
-			AggregateUnmarshaller<ResponseEnvelope> unmarshaller = new AggregateUnmarshaller<ResponseEnvelope>(ResponseEnvelope.class);
-			ResponseEnvelope envelope = unmarshaller.unmarshal(file);
-			BankingResponseMessageSet messageSet = (BankingResponseMessageSet) envelope.getMessageSet(MessageSetType.banking);
-			if (messageSet != null) {
-				List<BankStatementResponseTransaction> listBanck = messageSet.getStatementResponses();
-				for (BankStatementResponseTransaction b : listBanck) {
-					String dados = b.getMessage().getAccount().getAccountNumber();
-					agencia = dados.substring(0, 4);
-					conta = dados.substring(4,dados.length()-1);
-					System.out.println("cc: " + b.getMessage().getAccount().getAccountNumber());
-					System.out.println("ag: " + b.getMessage().getAccount().getBranchId());
-					System.out.println("balanço final: " + b.getMessage().getLedgerBalance().getAmount());
-					System.out.println("dataDoArquivo: " + b.getMessage().getLedgerBalance().getAsOfDate());
-					BankStatementResponse message = b.getMessage();
-					List<Transaction> listTransactions = message.getTransactionList().getTransactions();
-					listaTransacao = new ArrayList<>();
-					for (Transaction transaction : listTransactions) {
-						TransacaoBean transacao = new TransacaoBean();
-						transacao.setTipo(transaction.getTransactionType().name());
-						transacao.setId(transaction.getId());
-						transacao.setData(transaction.getDatePosted());
-						Double valor = transaction.getAmount();
-						if (valor<0){
-							transacao.setValorSaida(valor.floatValue()*-1);
-							transacao.setValorEntrada(0.0f);
-						}else {
-							transacao.setValorEntrada(valor.floatValue());
-							transacao.setValorSaida(0.0f);
-						}
-						transacao.setDescricao(transaction.getMemo());
-						listaTransacao.add(transacao);
-					}
-				}
-			}
-		}catch (IOException | OFXParseException ex){
-			mensagem m = new mensagem();
-                        m.faltaInformacao("" + ex);
-		}
-	}
+    private List<TransacaoBean> listaTransacao;
+    private String agencia;
+    private String conta;
 
-	public List<TransacaoBean> getListaTransacao() {
-		return listaTransacao;
-	}
+    public void iniciarLeitura(InputStream file) {
 
-	public void setListaTransacao(List<TransacaoBean> listaTransacao) {
-		this.listaTransacao = listaTransacao;
-	}
+        try {
+            AggregateUnmarshaller<ResponseEnvelope> unmarshaller = new AggregateUnmarshaller<ResponseEnvelope>(ResponseEnvelope.class);
+            ResponseEnvelope envelope = unmarshaller.unmarshal(file);
+            BankingResponseMessageSet messageSet = (BankingResponseMessageSet) envelope.getMessageSet(MessageSetType.banking);
+            if (messageSet != null) {
+                List<BankStatementResponseTransaction> listBanck = messageSet.getStatementResponses();
+                for (BankStatementResponseTransaction b : listBanck) {
+                    String dados = b.getMessage().getAccount().getAccountNumber();
+                    agencia = dados.substring(0, 4);
+                    conta = dados.substring(4, dados.length() - 1);
+                    System.out.println("cc: " + b.getMessage().getAccount().getAccountNumber());
+                    System.out.println("ag: " + b.getMessage().getAccount().getBranchId());
+                    System.out.println("balanço final: " + b.getMessage().getLedgerBalance().getAmount());
+                    System.out.println("dataDoArquivo: " + b.getMessage().getLedgerBalance().getAsOfDate());
+                    BankStatementResponse message = b.getMessage();
+                    List<Transaction> listTransactions = message.getTransactionList().getTransactions();
+                    listaTransacao = new ArrayList<>();
+                    for (Transaction transaction : listTransactions) {
+                        TransacaoBean transacao = new TransacaoBean();
+                        transacao.setTipo(transaction.getTransactionType().name());
+                        transacao.setId(transaction.getId());
+                        transacao.setData(transaction.getDatePosted());
+                        Double valor = transaction.getAmount();
+                        if (valor < 0) {
+                            transacao.setValorSaida(valor.floatValue() * -1);
+                            transacao.setValorEntrada(0.0f);
+                        } else {
+                            transacao.setValorEntrada(valor.floatValue());
+                            transacao.setValorSaida(0.0f);
+                        }
+                        transacao.setDescricao(transaction.getMemo());
+                        listaTransacao.add(transacao);
+                    }
+                }
+            }
+        } catch (IOException | OFXParseException ex) {
+            mensagem m = new mensagem();
+            m.faltaInformacao("" + ex);
+        }
+    }
 
-	public String getAgencia() {
-		return agencia;
-	}
+    public List<TransacaoBean> getListaTransacao() {
+        return listaTransacao;
+    }
 
-	public void setAgencia(String agencia) {
-		this.agencia = agencia;
-	}
+    public void setListaTransacao(List<TransacaoBean> listaTransacao) {
+        this.listaTransacao = listaTransacao;
+    }
 
-	public String getConta() {
-		return conta;
-	}
+    public String getAgencia() {
+        return agencia;
+    }
 
-	public void setConta(String conta) {
-		this.conta = conta;
-	}
-	
-	
-	
-	
+    public void setAgencia(String agencia) {
+        this.agencia = agencia;
+    }
+
+    public String getConta() {
+        return conta;
+    }
+
+    public void setConta(String conta) {
+        this.conta = conta;
+    }
+
 }

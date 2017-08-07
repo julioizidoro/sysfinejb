@@ -111,7 +111,7 @@ public class EditarParcelaMB implements Serializable {
         contasReceber.setTipodocumento(tipoDocumento);
         contasReceber.setValorParcela(valorEditado);
         contasReceberDao.update(contasReceber);
-        listarConta = contasReceberDao.list("Select c From Contasreceber c where c.venda=" + contasReceber.getVenda() + " and c.valorParcela=" + valorOriginal);
+        listarConta = contasReceberDao.list("select c from Contasreceber c where c.venda=" + contasReceber.getVenda() + " and c.valorParcela=" + valorOriginal);
         if (listarConta == null) {
             listarConta = new ArrayList<>();
         }

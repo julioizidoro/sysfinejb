@@ -135,7 +135,7 @@ public class CadContasPagarMB implements Serializable {
             gerarListaBanco();
             transferenciaBancaria();
             if (contaPagar.getFormaPagamento().equalsIgnoreCase("transferencia")) {
-                    cptransferencia = cpTransferenciaDao.find("SELECT c FROM Cptransferencia c  WHERE c.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
+                    cptransferencia = cpTransferenciaDao.find("select c from Cptransferencia c  where c.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
                 if (cptransferencia == null) {
                     cptransferencia = new Cptransferencia();
                 }
@@ -340,7 +340,7 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c order by c.nomeFantasia");
+        listaCliente = clienteDao.list("select c from Cliente c order by c.nomeFantasia");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
@@ -349,7 +349,7 @@ public class CadContasPagarMB implements Serializable {
 
     public void gerarListaBanco() {
         if (cliente != null) {
-            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            String sql = "select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
                 listaBanco = new ArrayList<>();
@@ -398,7 +398,7 @@ public class CadContasPagarMB implements Serializable {
             }
             if (file != null) {
                 String arquivoFtp = nomeArquivo();
-                Nomearquivo nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
+                Nomearquivo nomearquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
                 if (nomearquivo != null && nomearquivo.getIdnomearquivo() != null){
                     nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
                 }
@@ -462,7 +462,7 @@ public class CadContasPagarMB implements Serializable {
             if (file != null) {
                 String arquivoFtp = nomeArquivo();
                 if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
-                    Nomearquivo nomearquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
+                    Nomearquivo nomearquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
                     if (nomearquivo.getIdnomearquivo() != null) {
                         nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
                     }
@@ -632,7 +632,7 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public boolean salvarArquivoFTP(String nomeArquivoLocal, String nomeArquivoFTP) {
-        Ftpdados dadosFTP = ftpDadosDao.find("Select f From FtpDados f");
+        Ftpdados dadosFTP = ftpDadosDao.find("select f from FtpDados f");
         if (dadosFTP == null) {
             return false;
         }
@@ -772,7 +772,7 @@ public class CadContasPagarMB implements Serializable {
     public String consultarArquivos() {
         String nomeFile;
         if (contaPagar.getIdcontasPagar() != null) {
-            nomearquivo = nomeArquivoDao.find("SELECT n FROM Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
+            nomearquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
             if (nomearquivo == null) {
                 nomearquivo = new Nomearquivo();
                 nomearquivo.setNomearquivo01("Não existe arquivo anexado");
@@ -807,7 +807,7 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public void gerarListaTotalPlanoConta() {
-        listaPlanoContas = planoContasDao.list("Select p From Planoconta p");
+        listaPlanoContas = planoContasDao.list("select p from Planoconta p");
     }
 
 }

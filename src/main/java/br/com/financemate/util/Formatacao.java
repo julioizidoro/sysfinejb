@@ -260,7 +260,6 @@ public class Formatacao {
         return percentual;
     }
 
-    
     public static String getDataDoDia() {
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         String data = df.format(new Date(System.currentTimeMillis()));

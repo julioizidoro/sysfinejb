@@ -87,9 +87,9 @@ public class PrincipalMB implements Serializable {
         List<Vendas> listaVendas;
         lista10Vendas = new ArrayList<>();
         if (usuarioLogadoMB.getCliente() == null) {
-            listaVendas = vendasDao.list("Select v from Vendas v order by v.idvendas DESC");
+            listaVendas = vendasDao.list("select v from Vendas v order by v.idvendas DESC");
         } else {
-            listaVendas = vendasDao.list("Select v from Vendas v where v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente() + " order by v.idvendas DESC");
+            listaVendas = vendasDao.list("select v from Vendas v where v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente() + " order by v.idvendas DESC");
         }
         for (int i = 0; i < 10; i++) {
             if (i <= lista10Vendas.size()) {
@@ -111,7 +111,7 @@ public class PrincipalMB implements Serializable {
         if (mes < 10) {
             messql = "0" + mes;
         }
-        String sql = "Select v From Vendas v where v.dataVenda>='" + new Year() + "-" + messql + "-01'"
+        String sql = "select v from Vendas v where v.dataVenda>='" + new Year() + "-" + messql + "-01'"
                 + " and v.dataVenda<='" + new Year() + "-" + messql + "-" + dia + "'";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();

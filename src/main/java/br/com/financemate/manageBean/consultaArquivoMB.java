@@ -96,7 +96,7 @@ public class consultaArquivoMB implements Serializable {
     
 
     public void consultarArquivos() {
-        nomeArquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
+        nomeArquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
         if (nomeArquivo == null) {
             nomeArquivo = new Nomearquivo();
             nomeArquivo.setNomearquivo01("Não existe arquivo anexado");
@@ -110,7 +110,7 @@ public class consultaArquivoMB implements Serializable {
     }
 
     public boolean salvarArquivoFTP(String nomeArquivoLocal, String nomeArquivoFTP) {
-        Ftpdados dadosFTP  = ftpDadosDao.find("Select f From Ftpdados f");
+        Ftpdados dadosFTP  = ftpDadosDao.find("select f from Ftpdados f");
         if (dadosFTP == null) {
             return false;
         }

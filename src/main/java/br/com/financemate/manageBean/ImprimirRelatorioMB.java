@@ -222,7 +222,7 @@ public class ImprimirRelatorioMB implements Serializable {
     
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
@@ -292,12 +292,12 @@ public class ImprimirRelatorioMB implements Serializable {
     public String gerarSql() {
         String sql = "";
         if (relatorio.equalsIgnoreCase("Fluxo de caixa")) {
-            sql = "Select * from fluxocaixa where cliente_idcliente=" + cliente.getIdcliente()
+            sql = "select * from fluxocaixa where cliente_idcliente=" + cliente.getIdcliente()
                     + " and fluxocaixa.data>='" + Formatacao.ConvercaoDataSql(dataInicial)
                     + "' and fluxocaixa.data<='" + Formatacao.ConvercaoDataSql(dataFinal)
                     + "' order by fluxocaixa.data";
         } else if (relatorio.equalsIgnoreCase("Pagamentos")) {
-            sql = "Select distinct movimentobanco.dataCompensacao, movimentobanco.descricao, ";
+            sql = "select distinct movimentobanco.dataCompensacao, movimentobanco.descricao, ";
             sql = sql + "movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, ";
             sql = sql + "planocontas.descricao as planoContas, movimentobanco.planoContas_idplanoContas as idPlanoContas, movimentobanco.compentencia ";
             sql = sql + "from movimentobanco join cliente on movimentobanco.cliente_idcliente = cliente.idcliente ";
@@ -317,7 +317,7 @@ public class ImprimirRelatorioMB implements Serializable {
             sql = sql + " order by movimentobanco.planoContas_idplanoContas, movimentobanco.dataCompensacao, movimentobanco.descricao, movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  movimentobanco.compentencia";
 
         } else if (relatorio.equalsIgnoreCase("pagamentoSintetico")) {
-            sql = "Select distinct movimentobanco.dataCompensacao, ";
+            sql = "select distinct movimentobanco.dataCompensacao, ";
             sql = sql + "movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, ";
             sql = sql + "planocontas.descricao, movimentobanco.planoContas_idplanoContas as idPlanoContas ";
             sql = sql + "from movimentobanco join cliente on movimentobanco.cliente_idcliente = cliente.idcliente ";
@@ -341,8 +341,8 @@ public class ImprimirRelatorioMB implements Serializable {
             }
             sql = sql + " order by movimentobanco.planoContas_idplanoContas, movimentobanco.dataCompensacao, movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao";
         } else if (relatorio.equalsIgnoreCase("pagamento vencidas")) {
-            sql = "Select distinct contasPagar.dataVencimento, contasPagar.descricao, contasPagar.valor, contasPagar.dataAgendamento,cliente.nomeFantasia, contasPagar.fornecedor, contasPagar.numeroDocumento";
-            sql = sql + " From ";
+            sql = "select distinct contasPagar.dataVencimento, contasPagar.descricao, contasPagar.valor, contasPagar.dataAgendamento,cliente.nomeFantasia, contasPagar.fornecedor, contasPagar.numeroDocumento";
+            sql = sql + " from ";
             sql = sql + " contasPagar join cliente on contasPagar.cliente_idcliente = cliente.idcliente ";
             sql = sql + " where ";
             if ((dataInicial != null) && (dataFinal != null)) {
@@ -386,7 +386,7 @@ public class ImprimirRelatorioMB implements Serializable {
 
     public void gerarListaBanco() {
         if (cliente != null) {
-            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            String sql = "select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
                 listaBanco = new ArrayList<>();
@@ -407,11 +407,11 @@ public class ImprimirRelatorioMB implements Serializable {
     private void validarRelatorioFluxoCaixa() {
         List<Fluxocaixa> listaFluxo = new ArrayList<>();
         float saldo = 0.0f;
-        List<Contaspagar> listaContaspagar = contasPagarDao.list("Select v from Contaspagar v where v.cliente.idcliente=" + cliente.getIdcliente()
+        List<Contaspagar> listaContaspagar = contasPagarDao.list("select v from Contaspagar v where v.cliente.idcliente=" + cliente.getIdcliente()
                 + " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
                 + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
                 + "' order by v.dataVencimento");
-        List<Contasreceber> listaContasreceber = contasReceberDao.list("Select v from Contasreceber v where v.cliente.idcliente=" + cliente.getIdcliente()
+        List<Contasreceber> listaContasreceber = contasReceberDao.list("select v from Contasreceber v where v.cliente.idcliente=" + cliente.getIdcliente()
                 + " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
                 + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
                 + "' order by v.dataVencimento"); 

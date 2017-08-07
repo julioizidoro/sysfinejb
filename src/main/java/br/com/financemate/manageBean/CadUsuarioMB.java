@@ -196,7 +196,7 @@ public class CadUsuarioMB implements Serializable {
     }
 
     public boolean verificacaoLogin() {
-        Usuario user = usuarioDao.find("Select u From Usuario u Where u.login='" + usuario.getLogin() + "'");
+        Usuario user = usuarioDao.find("select u from Usuario u where u.login='" + usuario.getLogin() + "'");
         if(user == null) {
             return true;
         } else {
@@ -205,7 +205,7 @@ public class CadUsuarioMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }

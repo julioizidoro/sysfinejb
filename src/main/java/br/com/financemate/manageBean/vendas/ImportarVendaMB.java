@@ -1,12 +1,9 @@
 package br.com.financemate.manageBean.vendas;
 
-import br.com.financemate.manageBean.mensagem;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.xml.bind.JAXBException;
 
 import br.com.financemate.model.Vendas;
 
@@ -22,7 +19,7 @@ public class ImportarVendaMB implements Serializable {
 
     @PostConstruct
     public void init() {
-       // getListaVendasSystm();
+        // getListaVendasSystm();
     }
 
     public Vendas getVendas() {
@@ -57,5 +54,4 @@ public class ImportarVendaMB implements Serializable {
 //            m.faltaInformacao("" + e);
 //        }
 //    }
-
 }

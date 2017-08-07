@@ -114,8 +114,8 @@ public class OperacoesUsuarioMB implements Serializable {
 
     public void gerarListaOperacoesUsuarios() {
         if (contasPagar != null) {
-            listaOperacaousuairo = operacaoUsuarioDao.list("SELECT o FROM Operacaousuairo o "
-                    + " WHERE o.contaspagar.idcontasPagar=" + contasPagar.getIdcontasPagar());
+            listaOperacaousuairo = operacaoUsuarioDao.list("select o from Operacaousuairo o "
+                    + " where o.contaspagar.idcontasPagar=" + contasPagar.getIdcontasPagar());
             if (listaOperacaousuairo == null) {
                 listaOperacaousuairo = new ArrayList<>();
             }

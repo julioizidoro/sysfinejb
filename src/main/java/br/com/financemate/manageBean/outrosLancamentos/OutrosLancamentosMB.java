@@ -34,7 +34,6 @@ import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Planocontatipo;
-import br.com.financemate.model.Tipoplanocontas;
 import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
 
@@ -245,13 +244,13 @@ public class OutrosLancamentosMB implements Serializable {
     public void gerarPesquisa() {
         if ((cliente != null) && (dataInicial != null) && (dataFinal != null)) {
             if (banco.getIdbanco() != null) {
-                sql = "Select o from Movimentobanco o where o.banco.idbanco=" + banco.getIdbanco()
+                sql = "select o from Movimentobanco o where o.banco.idbanco=" + banco.getIdbanco()
                         + "  and o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
                         + "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
                         + "' and o.cliente.idcliente=" + cliente.getIdcliente();
                 sql = sql + " order by o.dataCompensacao";
             } else {
-                sql = "Select o from Movimentobanco o where"
+                sql = "select o from Movimentobanco o where"
                         + " o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
                         + "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
                         + "' and o.cliente.idcliente=" + cliente.getIdcliente();
@@ -268,7 +267,7 @@ public class OutrosLancamentosMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaClientes = clienteDao.list("Select c From Cliente c");
+        listaClientes = clienteDao.list("select c from Cliente c");
         if (listaClientes == null || listaClientes.isEmpty()) {
             listaClientes = new ArrayList<>();
         }
@@ -289,7 +288,7 @@ public class OutrosLancamentosMB implements Serializable {
 
     public void gerarListaBanco() {
         if (cliente != null) {
-            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            String sql = "select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBancos = bancoDao.list(sql);
             if (listaBancos == null) {
                 listaBancos = new ArrayList<>();
@@ -359,7 +358,7 @@ public class OutrosLancamentosMB implements Serializable {
     public void salvarTransferencia() {
         Planocontatipo planocontatipo;
         Planocontas planocontas = planoContasDao.find(23);
-        List<Cliente> listaCliente = clienteDao.list("Select c From Cliente c");
+        List<Cliente> listaCliente = clienteDao.list("select c from Cliente c");
         for (int i = 0; i < listaCliente.size(); i++) {
             planocontatipo = new Planocontatipo();
             planocontatipo.setTipoplanocontas(listaCliente.get(i).getTipoplanocontas());
@@ -451,18 +450,18 @@ public class OutrosLancamentosMB implements Serializable {
         float entrada = 0.0f;
         float saida = 0.0f;
         Float saldoInicial = 0f;
-        String sql = "Select max(s.valor) from Saldo s";
+        String sql = "select max(s.valor) from Saldo s";
         if (banco.getIdbanco() != null) {
             sql = sql + " where s.banco.idbanco=" + banco.getIdbanco();
         }
         if (banco.getIdbanco() == null) {
             List<Banco> listaBanco;
-            listaBanco = bancoDao.list("Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente());
+            listaBanco = bancoDao.list("select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente());
             if (listaBanco == null) {
                 listaBanco = new ArrayList<>();
             }
             for (int i = 0; i < listaBanco.size(); i++) {
-                String sql3 = "Select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBanco.get(i).getIdbanco();
+                String sql3 = "select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBanco.get(i).getIdbanco();
                 try {
                     saldoDao.consultar(sql3);
                 } catch (SQLException ex) {
@@ -479,7 +478,7 @@ public class OutrosLancamentosMB implements Serializable {
         if (saldoInicial == null) {
             saldoInicial = 0.0f;
         }
-        String sql2 = "Select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
+        String sql2 = "select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
         if (banco.getIdbanco() != null) {
             sql2 = sql2 + " and o.banco.idbanco=" + banco.getIdbanco();
         }
@@ -514,7 +513,7 @@ public class OutrosLancamentosMB implements Serializable {
         if (cliente != null) {
             gerarListaBanco();
             for (int i = 0; i < listaBancos.size(); i++) {
-                sql = "Select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBancos.get(i).getIdbanco();
+                sql = "select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBancos.get(i).getIdbanco();
                 try {
                     saldoInicial = saldoInicial + saldoDao.consultar(sql);
                 } catch (SQLException ex) {
@@ -522,7 +521,7 @@ public class OutrosLancamentosMB implements Serializable {
                 }
             }
         }
-        String sql2 = "Select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
+        String sql2 = "select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
         if (banco.getIdbanco() != null) {
             sql2 = sql2 + " and o.banco.idbanco=" + banco.getIdbanco();
         }

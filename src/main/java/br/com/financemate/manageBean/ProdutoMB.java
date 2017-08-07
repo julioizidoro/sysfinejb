@@ -80,7 +80,7 @@ public class ProdutoMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
@@ -88,9 +88,9 @@ public class ProdutoMB implements Serializable {
 
     public void gerarListaProdutos() {
         if (usuarioLogadoMB.getCliente() == null) {
-            listaProduto = produtoDao.list("Select p From Produto p");
+            listaProduto = produtoDao.list("select p from Produto p");
         } else {
-            listaProduto = produtoDao.list("Select p from Produto p where p.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente());
+            listaProduto = produtoDao.list("select p from Produto p where p.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente());
         }
         if (listaProduto == null) {
             listaProduto = new ArrayList<>();

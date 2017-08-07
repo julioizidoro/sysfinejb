@@ -1,6 +1,7 @@
 package br.com.financemate.manageBean.vendas;
 
 import br.com.financemate.manageBean.mensagem;
+import br.com.financemate.util.Formatacao;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,6 +16,7 @@ import javax.xml.bind.JAXBException;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import java.util.Date;
 
 public class importaVendasBean {
 
@@ -51,17 +53,21 @@ public class importaVendasBean {
         return vendaImportada;
     }
 
-    public VendasSystmBean[] pegarListaVendasSystm(Integer idcliente) throws JAXBException {
+    public VendasSystmBean[] pegarListaVendasSystm(Integer idcliente, Date dataInicial, Date dataFinal) throws JAXBException {
         List<VendasSystmBean> listaVendas = new ArrayList<>();
         VendasSystmBean[] vendasSystmBean = null;
         try {
             URL url;
-            if (idcliente == 0) {
-                url = new URL("http://systm.com.br:8087/wssysfin/webresources/generic/listaVenda");
+            String endereco;
+            if (dataInicial != null && dataFinal != null) {
+                endereco = "http://systm.com.br:8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente + "&dataInicial="
+                    + Formatacao.ConvercaoDataSql(dataInicial) + "&dataFinal=" + Formatacao.ConvercaoDataSql(dataFinal);
             }else{
-                url = new URL("http://systm.com.br:8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente);
+                endereco = "http://systm.com.br:8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente + "&dataInicial="
+                    + "null" + "&dataFinal=null";
             }
-            
+            url = new URL(endereco);
+
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Accept", "application/json");

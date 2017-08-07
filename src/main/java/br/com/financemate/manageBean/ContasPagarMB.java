@@ -413,7 +413,7 @@ public class ContasPagarMB implements Serializable {
         String dataTermino = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
         setDataInicio(Formatacao.ConvercaoStringData(dataInicial));
         setDataFinal(Formatacao.ConvercaoStringData(dataTermino));
-        sql = " Select v from Contaspagar v where v.dataVencimento>='" + dataInicial
+        sql = " select v from Contaspagar v where v.dataVencimento>='" + dataInicial
                 + "' and v.dataVencimento<='" + dataTermino + "' and v.contaPaga='N' ";
         if (usuarioLogadoMB.getCliente() != null) {
             sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
@@ -433,7 +433,7 @@ public class ContasPagarMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c order by c.nomeFantasia");
+        listaCliente = clienteDao.list("select c from Cliente c order by c.nomeFantasia");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
@@ -589,7 +589,7 @@ public class ContasPagarMB implements Serializable {
     }
 
     public void filtrar() {
-        sql = "Select v from Contaspagar v where v.descricao like '%" + descricao + "%'";
+        sql = "select v from Contaspagar v where v.descricao like '%" + descricao + "%'";
         if (liberadas) {
             sql = sql + " and v.contaPaga='S'";
         } else {
@@ -735,7 +735,7 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String excluirNomeArquivo(int idConta) {
-        Nomearquivo nomearquivo = nomeArquivoDao.find("SELECT n FROM Nomearquivo n where n.contaspagar.idcontasPagar=" + idConta);
+        Nomearquivo nomearquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + idConta);
         if (nomearquivo == null) {
             return "";
         } else {
@@ -767,7 +767,7 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String excluindoTransferencia(Contaspagar conta) {
-        String sql = "Select c from Cptransferencia c join Contaspagar p on c.contaspagar.idcontasPagar= p.idcontasPagar"
+        String sql = "select c from Cptransferencia c join Contaspagar p on c.contaspagar.idcontasPagar= p.idcontasPagar"
                 + " where c.contaspagar.idcontasPagar=" + conta.getIdcontasPagar();
         listaTransferencia = cpTransferenciaDao.list(sql);
         if (listaTransferencia != null) {
@@ -822,7 +822,7 @@ public class ContasPagarMB implements Serializable {
     
     
     public String consultarArquivos(Contaspagar contaspagar) {
-       Nomearquivo nomeArquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
+       Nomearquivo nomeArquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
         if (nomeArquivo == null) {
             return "Não Existe Arquivo";
         }
@@ -836,7 +836,7 @@ public class ContasPagarMB implements Serializable {
      
      
       public boolean verificarArquivo(Contaspagar contaspagar) {
-       Nomearquivo nomeArquivo = nomeArquivoDao.find("Select n From Nomearquivo n Where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
+       Nomearquivo nomeArquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
         if(nomeArquivo == null) {
             return false;
         }

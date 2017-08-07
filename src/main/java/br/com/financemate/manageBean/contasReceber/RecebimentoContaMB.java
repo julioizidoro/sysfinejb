@@ -181,7 +181,7 @@ public class RecebimentoContaMB implements Serializable {
 
     public void gerarListaBanco() {
         if (cliente != null) {
-            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            String sql = "select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
                 listaBanco = new ArrayList<>();
@@ -192,7 +192,7 @@ public class RecebimentoContaMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
             listaCliente = new ArrayList<>();
         }

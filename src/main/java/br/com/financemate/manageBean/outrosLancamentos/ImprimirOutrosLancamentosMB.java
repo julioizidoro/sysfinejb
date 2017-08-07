@@ -251,7 +251,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
@@ -280,7 +280,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 
     public void gerarListaBanco() {
         if (cliente != null) {
-            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            String sql = "select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
                 listaBanco = new ArrayList<>();
@@ -325,7 +325,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
     private List<ConciliacaoBean> gerarListaConciliacao() {
         unidade = "TODAS";
         nomeBanco = "TODOS";
-        String sql = "Select o From Movimentobanco o ";
+        String sql = "select o from Movimentobanco o ";
         if (dataIncial != null || dataFinal != null || cliente != null || banco != null || planocontas != null) {
             sql = sql + " where ";
         }
@@ -359,7 +359,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         lista = outrosLancamentosDao.list(sql);
         List<ConciliacaoBean> listaConciliacao = new ArrayList<>();
         if (lista != null) {
-            List<Movimentobanco> listaOutros = outrosLancamentosDao.list("SELECT o FROM Movimentobanco o"
+            List<Movimentobanco> listaOutros = outrosLancamentosDao.list("select o from Movimentobanco o"
                     + " where o.dataVencimento<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'");
             for (int i = 0; i < listaOutros.size(); i++) {
                 if (listaOutros.get(i).getValorEntrada() > 0f) {
@@ -396,7 +396,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 
     public void gerarListaPlanoContas() {
         try {
-            listaPlanoContas = planoContasDao.list("Select p From Planocontas p");
+            listaPlanoContas = planoContasDao.list("select p from Planocontas p");
             if (listaPlanoContas == null) {
                 listaPlanoContas = new ArrayList<>();
             }
@@ -430,18 +430,18 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         float saida = 0.0f;
         String sql;
         Float saldoInicial = 0f;
-        sql = "Select max(s.valor) from Saldo s";
+        sql = "select max(s.valor) from Saldo s";
         if (banco.getIdbanco() != null) {
             sql = sql + " where s.banco.idbanco=" + banco.getIdbanco();
         }
         if (banco.getIdbanco() == null) {
             List<Banco> listaBanco;
-            listaBanco = bancoDao.list("Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente());
+            listaBanco = bancoDao.list("select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente());
             if (listaBanco == null) {
                 listaBanco = new ArrayList<>();
             }
             for (int i = 0; i < listaBanco.size(); i++) {
-                String sql3 = "Select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBanco.get(i).getIdbanco();
+                String sql3 = "select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBanco.get(i).getIdbanco();
                 try {
                     saldoDao.consultar(sql3);
                 } catch (SQLException ex) {
@@ -458,7 +458,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         if (saldoInicial == null) {
             saldoInicial = 0.0f;
         }
-        String sql2 = "Select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'";
+        String sql2 = "select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'";
         if (banco.getIdbanco() != null) {
             sql2 = sql2 + " and o.banco.idbanco=" + banco.getIdbanco();
         }
@@ -490,7 +490,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         if (cliente != null) {
             gerarListaBanco();
             for (int i = 0; i < listaBanco.size(); i++) {
-                sql = "Select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBanco.get(i).getIdbanco();
+                sql = "select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBanco.get(i).getIdbanco();
                 try {
                     saldoInicial = saldoInicial + saldoDao.consultar(sql);
                 } catch (SQLException ex) {
@@ -498,7 +498,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
                 }
             }
         }
-        String sql2 = "Select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'";
+        String sql2 = "select o from Movimentobanco o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataIncial) + "'";
         if (banco.getIdbanco() != null) {
             sql2 = sql2 + " and o.banco.idbanco=" + banco.getIdbanco();
         }

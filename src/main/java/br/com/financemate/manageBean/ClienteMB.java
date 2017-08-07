@@ -195,7 +195,7 @@ public class ClienteMB implements Serializable {
     }
 
     public void listarTipoPlanoContas() {
-        listarTipoPlanoContas = tipoPlanoContasDao.list("Select t From Tipoplanocontas t order by t.descricao");
+        listarTipoPlanoContas = tipoPlanoContasDao.list("select t from Tipoplanocontas t order by t.descricao");
         if (listarTipoPlanoContas == null) {
             listarTipoPlanoContas = new ArrayList<>();
         }

@@ -18,7 +18,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-import javax.xml.bind.JAXBException;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -295,11 +294,11 @@ public class VendasMB implements Serializable {
         String dataTermino = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
         if (usuarioLogadoMB.getUsuario().getCliente() != null) {
             if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
-                sql = " Select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada'  and v.cliente.idcliente="
+                sql = " select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada'  and v.cliente.idcliente="
                         + usuarioLogadoMB.getUsuario().getCliente() + " and v.dataVenda>='" + dataInicial
                         + "' and v.dataVenda<='" + dataTermino + "' order by v.dataVenda";
             } else {
-                sql = " Select v from Vendas v where v.cliente.visualizacao='Operacional' and "
+                sql = " select v from Vendas v where v.cliente.visualizacao='Operacional' and "
                         + " v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada'"
                         + " and v.dataVenda>='" + dataInicial
                         + "' and v.dataVenda<='" + dataTermino + "' order by v.dataVenda";
@@ -340,12 +339,12 @@ public class VendasMB implements Serializable {
         String dataFinal = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
         sql = null;
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
-            sql = " Select v from Vendas v where v.dataVenda>='" + dataInicial
+            sql = " select v from Vendas v where v.dataVenda>='" + dataInicial
                     + "' and v.dataVenda<='" + dataFinal + "' and v.cliente.situacao<>'verde' and v.cliente.idcliente="
                     + usuarioLogadoMB.getUsuario().getCliente();
             order = " order by v.dataVenda";
         } else {
-            sql = " Select v from Vendas v where v.cliente.visualizacao='Operacional' and "
+            sql = " select v from Vendas v where v.cliente.visualizacao='Operacional' and "
                     + "v.dataVenda>='" + dataInicial
                     + "' and v.dataVenda<='" + dataFinal + "' and v.situacao<>'verde'";
             order = " order by v.dataVenda";
@@ -377,7 +376,7 @@ public class VendasMB implements Serializable {
     }
 
     private void gerarSqlPesquisa() {
-        sql = " Select v from Vendas v where ";
+        sql = " select v from Vendas v where ";
         if ((dataInicial != null) && (dataFinal != null)) {
             sql = sql + "  v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial)
                     + "' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
@@ -456,7 +455,7 @@ public class VendasMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
@@ -479,7 +478,7 @@ public class VendasMB implements Serializable {
     }
 
     public void filtrar() {
-        sql = "Select v from Vendas v where ";
+        sql = "select v from Vendas v where ";
         if (cliente != null) {
             sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente();
             if (!nomeCliente.equalsIgnoreCase("")) {
@@ -618,14 +617,14 @@ public class VendasMB implements Serializable {
     }
 
     public void verificarContaComFormaPagamento(Vendas vendas) {
-        List<Formapagamento> listaforma = formaPagamentoDao.list("Select f from Formapagamento f where f.vendas.idvendas=" + vendas.getIdvendas());
+        List<Formapagamento> listaforma = formaPagamentoDao.list("select f from Formapagamento f where f.vendas.idvendas=" + vendas.getIdvendas());
         for (int i = 0; i < listaforma.size(); i++) {
             formapagamento = listaforma.get(i);
         }
     }
 
     public void verificarParcelasGeradas(Vendas vendas) {
-        List<Contasreceber> listaContas = contasReceberDao.list("Select c from Contasreceber c  where c.venda=" + vendas.getIdvendas());
+        List<Contasreceber> listaContas = contasReceberDao.list("select c from Contasreceber c  where c.venda=" + vendas.getIdvendas());
         for (int i = 0; i < listaContas.size(); i++) {
             contasreceber = listaContas.get(i);
         }
@@ -666,5 +665,4 @@ public class VendasMB implements Serializable {
 //        }
 //        return listaImportada;
 //    }
-
 }

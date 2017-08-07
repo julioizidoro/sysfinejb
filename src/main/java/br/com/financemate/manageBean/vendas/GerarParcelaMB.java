@@ -257,13 +257,13 @@ public class GerarParcelaMB implements Serializable {
                     contasreceber.setNumeroParcela(i + 1 + "/" + vezes);
                     contasreceber.setStatus("Ativo");
                     if (vendas.getCliente() != null) {
-                        List<Banco> listaBanco = bancoDao.list("Select b From Banco b Where b.cliente.idcliente=" + vendas.getCliente().getIdcliente());
+                        List<Banco> listaBanco = bancoDao.list("select b from Banco b where b.cliente.idcliente=" + vendas.getCliente().getIdcliente());
                         contasreceber.setBanco(listaBanco.get(0));
                         contasreceber.setCliente(vendas.getCliente());
                         planocontas = planoContasDao.find(1);
                         contasreceber.setPlanocontas(planocontas);
                     } else {
-                        List<Banco> listaBanco = bancoDao.list("Select b From Banco b Where b.cliente.idcliente=8");
+                        List<Banco> listaBanco = bancoDao.list("select b from Banco b where b.cliente.idcliente=8");
                         contasreceber.setBanco(listaBanco.get(0));
                         cliente = clienteDao.find(8);
                         contasreceber.setCliente(cliente);
@@ -312,7 +312,7 @@ public class GerarParcelaMB implements Serializable {
     }
 
     public void gerarListaFormaPagamento() {
-        listaFormaPagamento = formaPagamentoDao.list("Select f From Formapagamento f Where f.vendas.idvendas=" + vendas.getIdvendas());
+        listaFormaPagamento = formaPagamentoDao.list("select f from Formapagamento f where f.vendas.idvendas=" + vendas.getIdvendas());
         if (listaFormapagamento == null) {
             listaFormapagamento = new ArrayList<>();
         }
@@ -335,7 +335,7 @@ public class GerarParcelaMB implements Serializable {
     }
 
     public void gerarListaParcelas() {
-        listarContasreceber = contasReceberDao.list("Select c from Contasreceber c "
+        listarContasreceber = contasReceberDao.list("select c from Contasreceber c "
                 + " where c.venda=" + vendas.getIdvendas());
         if (listarContasreceber == null) {
             listarContasreceber = new ArrayList<>();

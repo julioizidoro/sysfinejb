@@ -186,7 +186,7 @@ public class cadOutrosLancamentosMB implements Serializable {
 
     public void gerarListaBanco() {
         if (cliente != null) {
-            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            String sql = "select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoDao.list(sql);
             if (listaBanco == null) {
                 listaBanco = new ArrayList<>();
@@ -197,7 +197,7 @@ public class cadOutrosLancamentosMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
     }
 
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
@@ -315,7 +315,7 @@ public class cadOutrosLancamentosMB implements Serializable {
 
     public void gerarListaPlanoContas() {
         try {
-            listaPlanoContaTipo = planoContaTipoDao.list("Select p From Planocontatipo p Where tipoplanocontas.idtipoplanocontas="
+            listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where tipoplanocontas.idtipoplanocontas="
                     + cliente.getTipoplanocontas().getIdtipoplanocontas());
             if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
                 listaPlanoContaTipo = new ArrayList<>();

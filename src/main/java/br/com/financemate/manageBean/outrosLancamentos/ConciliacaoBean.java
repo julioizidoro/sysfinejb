@@ -4,17 +4,17 @@ import java.util.Date;
 
 public class ConciliacaoBean {
 
-	private Date dataCompensacao;
+    private Date dataCompensacao;
     private String planoContas;
     private String descricao;
     private Float valorEntrada;
     private Float valorSaida;
     private Float saldo;
-    
+
     public Date getDataCompensacao() {
         return dataCompensacao;
     }
- 
+
     public void setDataCompensacao(Date dataCompensacao) {
         this.dataCompensacao = dataCompensacao;
     }

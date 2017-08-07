@@ -83,8 +83,8 @@ public class CobrancaMB implements Serializable {
         cliente = contasReceber.getCliente();
         cobranca = (Cobranca) session.getAttribute("cobranca");
         if (cobranca == null) {
-            cobranca = cobrancaDao.find("Select c.cobranca From Cobrancaparcelas c "
-                    + " Where c.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber());
+            cobranca = cobrancaDao.find("select c.cobranca from Cobrancaparcelas c "
+                    + " where c.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber());
         }
         if (cobranca == null) {
             cobranca = new Cobranca();
@@ -262,7 +262,7 @@ public class CobrancaMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
             listaCliente = new ArrayList<>();
         }
@@ -414,7 +414,7 @@ public class CobrancaMB implements Serializable {
         if (cobranca == null) {
             cobranca = (Cobranca) session.getAttribute("cobranca");
         }
-        listaHistorico = historicoCobrancaDao.list("Select h from Historicocobranca h Where h.cobranca.idcobranca=" + cobranca.getIdcobranca());
+        listaHistorico = historicoCobrancaDao.list("select h from Historicocobranca h where h.cobranca.idcobranca=" + cobranca.getIdcobranca());
         if (listaHistorico == null) {
             listaHistorico = new ArrayList<>();
         }
@@ -426,8 +426,8 @@ public class CobrancaMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         cobranca = (Cobranca) session.getAttribute("cobranca");
         contasReceber = (Contasreceber) session.getAttribute("contasreceber");
-        String sql = "Select cp From Cobrancaparcelas cp ";
-        sql = sql + " Where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber();
+        String sql = "select cp from Cobrancaparcelas cp ";
+        sql = sql + " where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber();
         sql = sql + " and cp.cobranca.idcobranca=" + cobranca.getIdcobranca();
         listaCobrancaParcelas = cobrancaParcelaDao.list(sql);
         if (listaCobrancaParcelas.isEmpty()) {

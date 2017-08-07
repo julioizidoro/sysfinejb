@@ -108,7 +108,7 @@ public class BancoMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
             listaCliente = new ArrayList<>();
         }
@@ -123,9 +123,9 @@ public class BancoMB implements Serializable {
     public void gerarListaBanco() {
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
             idcliente = usuarioLogadoMB.getUsuario().getCliente();
-            sql = "Select distinct b from Banco b where b.cliente.idcliente=" + idcliente + " order by b.nome";
+            sql = "select distinct b from Banco b where b.cliente.idcliente=" + idcliente + " order by b.nome";
         } else {
-            sql = "Select distinct b from Banco b  order by b.nome";
+            sql = "select distinct b from Banco b  order by b.nome";
         }
         listaBanco = bancoDao.list(sql);
         if (listaBanco == null) {

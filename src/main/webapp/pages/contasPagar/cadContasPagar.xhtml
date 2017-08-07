@@ -48,10 +48,10 @@
                         <div class="form-group" >
                             <h:outputLabel for="dataEnv">Data de Envio</h:outputLabel>
                             <br/>
-                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataEnv" style="width: 50%;border: 1px solid #ffffff;" readonly="true" value="#{cadContasPagarMB.dataEnvio()}">
-                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            <p:ajax event="change"/>
-                        </p:calendar>
+                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataEnv" style="width: 50%;border: 1px solid #ffffff;" readonly="true" value="#{cadContasPagarMB.dataEnvio()}">
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                <p:ajax event="change"/>
+                            </p:calendar>
                         </div>
                     </h:panelGroup>
                 </h:panelGrid>
@@ -71,7 +71,7 @@
                     </h:panelGroup>
                     <h:panelGroup>
                         <p:commandLink  title="#{cadContasPagarMB.consultarArquivos()}" style="margin-left: 10%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivo()}" >
-                            
+
                             <i class="fa fa-paperclip" style="font-size: 34px; #{cadContasPagarMB.retornarCorAnexo()}"/>
                         </p:commandLink>
                         <h:outputLabel value="#{cadContasPagarMB.nomeAnexo()}" />
@@ -221,6 +221,35 @@
                         </p:commandLink>
                     </h:panelGrid>
                 </h:panelGroup> 
+                <script>
+                    PrimeFaces.locales['pt_BR'] = {
+                        closeText: 'Fechar',
+                        prevText: 'Anterior',
+                        nextText: 'Próximo',
+                        currentText: 'Começo',
+                        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                        dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                        dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                        weekHeader: 'Semana',
+                        firstDay: 1,
+                        isRTL: false,
+                        showMonthAfterYear: false,
+                        yearSuffix: '',
+                        timeOnlyTitle: 'Só Horas',
+                        timeText: 'Tempo',
+                        hourText: 'Hora',
+                        minuteText: 'Minuto',
+                        secondText: 'Segundo',
+                        currentText: 'Data Atual',
+                        ampm: false,
+                        month: 'Mês',
+                        week: 'Semana',
+                        day: 'Dia',
+                        allDayText: 'Todo Dia'
+                    };
+                </script>
             </h:form>
         </f:view>
     </h:body>

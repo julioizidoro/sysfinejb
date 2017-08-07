@@ -290,7 +290,7 @@ public class ImprimirVendasMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
@@ -366,24 +366,24 @@ public class ImprimirVendasMB implements Serializable {
     public String gerarSqlImpresssao() {
         String sql = "";
         if (relatorio.equalsIgnoreCase("vendas")) {
-            sql = sql + "SELECT distinct vendas.dataVenda, vendas.valorBruto, vendas.valordesconto, "
+            sql = sql + "select distinct vendas.dataVenda, vendas.valorBruto, vendas.valordesconto, "
                     + "vendas.comissaoLiquidaTotal, vendas.despesasFinanceiras, vendas.comissaoTerceiros, "
                     + "vendas.comissaoFuncionarios, vendas.liquidoVendas, produto.descricao, "
-                    + "vendas.nomeCliente, vendas.idvendas, cliente.nomeFantasia  From "
+                    + "vendas.nomeCliente, vendas.idvendas, cliente.nomeFantasia  from "
                     + "vendas join cliente on vendas.cliente_idcliente = cliente.idcliente "
                     + "join produto on vendas.produto_idproduto = produto.idproduto "
                     + "where vendas.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' and vendas.dataVenda<='"
                     + Formatacao.ConvercaoDataSql(dataFinal) + "' and cliente.idcliente=" + cliente.getIdcliente()
                     + " order by vendas.dataVenda";
         } else if (relatorio.equalsIgnoreCase("vendasRecebimento")) {
-            sql = sql + "SELECT distinct vendas.dataVenda, vendas.valorBruto,  contasreceber.numeroParcela, vendas.liquidoVendas, cliente.nomeFantasia,"
-                    + " vendas.idvendas, contasreceber.valorParcela, contasreceber.dataVencimento From vendas join "
+            sql = sql + "select distinct vendas.dataVenda, vendas.valorBruto,  contasreceber.numeroParcela, vendas.liquidoVendas, cliente.nomeFantasia,"
+                    + " vendas.idvendas, contasreceber.valorParcela, contasreceber.dataVencimento from vendas join "
                     + "cliente on vendas.cliente_idcliente = cliente.idcliente "
                     + " join contasreceber on vendas.idvendas=contasreceber.venda where vendas.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' and vendas.dataVenda<='"
                     + Formatacao.ConvercaoDataSql(dataFinal) + "' and cliente.idcliente=" + cliente.getIdcliente()
                     + " order by vendas.dataVenda";
         } else if (relatorio.equalsIgnoreCase("faturamentoRecebimento")) {
-            sql = sql + "Select distinct cliente.nomeFantasia from cliente where cliente.idcliente=" + cliente.getIdcliente();
+            sql = sql + "select distinct cliente.nomeFantasia from cliente where cliente.idcliente=" + cliente.getIdcliente();
         }
 
         return sql;
@@ -433,13 +433,13 @@ public class ImprimirVendasMB implements Serializable {
         List<Vendas> listaFaturamentoVendas3;
         List<Vendas> listaFaturamentoVendas4;
 
-        listaFaturamentoVendas = vendasDao.list("Select v from Vendas v where v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial)
+        listaFaturamentoVendas = vendasDao.list("select v from Vendas v where v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial)
                 + "' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(data) + "' and v.cliente.idcliente=" + cliente.getIdcliente());
-        listaFaturamentoVendas2 = vendasDao.list("Select v from Vendas v where v.dataVenda>='" + Formatacao.ConvercaoDataSql(segundaData)
+        listaFaturamentoVendas2 = vendasDao.list("select v from Vendas v where v.dataVenda>='" + Formatacao.ConvercaoDataSql(segundaData)
                 + "' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(data2) + "' and v.cliente.idcliente=" + cliente.getIdcliente());
-        listaFaturamentoVendas3 = vendasDao.list("Select v from Vendas v where v.dataVenda>='" + Formatacao.ConvercaoDataSql(terceiraData)
+        listaFaturamentoVendas3 = vendasDao.list("select v from Vendas v where v.dataVenda>='" + Formatacao.ConvercaoDataSql(terceiraData)
                 + "' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(data3) + "' and v.cliente.idcliente=" + cliente.getIdcliente());
-        listaFaturamentoVendas4 = vendasDao.list("Select v from Vendas v where v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataFinal)
+        listaFaturamentoVendas4 = vendasDao.list("select v from Vendas v where v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataFinal)
                 + "' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(data4) + "' and v.cliente.idcliente=" + cliente.getIdcliente());
         if (listaFaturamentoVendas == null) {
             listaFaturamentoVendas = new ArrayList<>();
@@ -474,16 +474,16 @@ public class ImprimirVendasMB implements Serializable {
         List<Contasreceber> listaTotalRecebidoMes3;
         List<Contasreceber> listaTotalRecebidoMes4;
 
-        listaTotalRecebidoMes = contasReceberDao.list("Select c from Contasreceber c where c.dataVencimento>='"
+        listaTotalRecebidoMes = contasReceberDao.list("select c from Contasreceber c where c.dataVencimento>='"
                 + Formatacao.ConvercaoDataSql(dataInicial) + "' and  c.dataVencimento<='" + Formatacao.ConvercaoDataSql(data)
                 + "' and c.valorPago>0 and c.status<>'CANCELADA' and c.cliente.idcliente=" + cliente.getIdcliente());
-        listaTotalRecebidoMes2 = contasReceberDao.list("Select c from Contasreceber c where c.dataVencimento>='"
+        listaTotalRecebidoMes2 = contasReceberDao.list("select c from Contasreceber c where c.dataVencimento>='"
                 + Formatacao.ConvercaoDataSql(segundaData) + "' and  c.dataVencimento<='" + Formatacao.ConvercaoDataSql(data2)
                 + "' and c.valorPago>0 and c.status<>'CANCELADA' and c.cliente.idcliente=" + cliente.getIdcliente());
-        listaTotalRecebidoMes3 = contasReceberDao.list("Select c from Contasreceber c where c.dataVencimento>='"
+        listaTotalRecebidoMes3 = contasReceberDao.list("select c from Contasreceber c where c.dataVencimento>='"
                 + Formatacao.ConvercaoDataSql(terceiraData) + "' and  c.dataVencimento<='" + Formatacao.ConvercaoDataSql(data3)
                 + "' and c.valorPago>0 and c.status<>'CANCELADA' and c.cliente.idcliente=" + cliente.getIdcliente());
-        listaTotalRecebidoMes4 = contasReceberDao.list("Select c from Contasreceber c where c.dataVencimento>='"
+        listaTotalRecebidoMes4 = contasReceberDao.list("select c from Contasreceber c where c.dataVencimento>='"
                 + Formatacao.ConvercaoDataSql(dataFinal) + "' and  c.dataVencimento<='" + Formatacao.ConvercaoDataSql(data4)
                 + "' and c.valorPago>0 and c.status<>'CANCELADA' and c.cliente.idcliente=" + cliente.getIdcliente());
         if (listaTotalRecebidoMes == null) {
@@ -519,13 +519,13 @@ public class ImprimirVendasMB implements Serializable {
         List<Contasreceber> listaTotalAberto3;
         List<Contasreceber> listaTotalAberto4;
 
-        listaTotalAberto = contasReceberDao.list("Select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
+        listaTotalAberto = contasReceberDao.list("select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
                 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data) + "' and c.valorPago=0 and c.status<>'CANCELADA' and c.cliente.idcliente=" + cliente.getIdcliente());
-        listaTotalAberto2 = contasReceberDao.list("Select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(segundaData)
+        listaTotalAberto2 = contasReceberDao.list("select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(segundaData)
                 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data2) + "' and c.valorPago=0 and c.status<>'CANCELADA' and c.cliente.idcliente=" + cliente.getIdcliente());
-        listaTotalAberto3 = contasReceberDao.list("Select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(terceiraData)
+        listaTotalAberto3 = contasReceberDao.list("select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(terceiraData)
                 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data3) + "' and c.valorPago=0 and c.status<>'CANCELADA' and c.cliente.idcliente=" + cliente.getIdcliente());
-        listaTotalAberto4 = contasReceberDao.list("Select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataFinal)
+        listaTotalAberto4 = contasReceberDao.list("select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataFinal)
                 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data4) + "' and c.valorPago=0 and c.status<>'CANCELADA' and c.cliente.idcliente=" + cliente.getIdcliente());
         if (listaTotalAberto == null) {
             listaTotalAberto = new ArrayList<>();

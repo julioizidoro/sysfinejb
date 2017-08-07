@@ -469,7 +469,7 @@ public class CadVendasMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
@@ -493,7 +493,7 @@ public class CadVendasMB implements Serializable {
 
     public void gerarListaProduto() {
         if (cliente != null) {
-            listaProduto = produtoDao.list("Select p From Produto p Where p.cliente.idcliente=" + cliente.getIdcliente());
+            listaProduto = produtoDao.list("select p from Produto p where p.cliente.idcliente=" + cliente.getIdcliente());
             if (listaProduto == null) {
                 listaProduto = new ArrayList<>();
             }
@@ -689,12 +689,12 @@ public class CadVendasMB implements Serializable {
             contaspagar.setStatus("Ativo");
             contaspagar.setAutorizarPagamento("N");
             if (usuarioLogadoMB.getCliente() != null) {
-                banco = bancoDao.find("Select b From Banco b Where b.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente()
+                banco = bancoDao.find("select b from Banco b where b.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente()
                         + " and b.nome='Nenhum'");
                 contaspagar.setBanco(banco);
                 contaspagar.setCliente(usuarioLogadoMB.getCliente());
             } else {
-                banco = bancoDao.find("Select b From Banco b Where b.cliente.idcliente=8 and b.nome='Nenhum'");
+                banco = bancoDao.find("select b from Banco b where b.cliente.idcliente=8 and b.nome='Nenhum'");
                 contaspagar.setBanco(banco);
                 cliente = clienteDao.find(8);
                 contaspagar.setCliente(cliente);
@@ -715,12 +715,12 @@ public class CadVendasMB implements Serializable {
             contasreceber.setStatus("Ativo");
 
             if (usuarioLogadoMB.getCliente() != null) {
-                banco = bancoDao.find("Select b From Banco b Where b.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente()
+                banco = bancoDao.find("select b from Banco b where b.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente()
                         + " and b.nome='Nenhum'");
                 contasreceber.setBanco(banco);
                 contasreceber.setCliente(usuarioLogadoMB.getCliente());
             } else {
-                banco = bancoDao.find("Select b From Banco b Where b.cliente.idcliente=8 and b.nome='Nenhum'");
+                banco = bancoDao.find("select b from Banco b where b.cliente.idcliente=8 and b.nome='Nenhum'");
                 contasreceber.setBanco(banco);
                 cliente = clienteDao.find(8);
                 contasreceber.setCliente(cliente);
@@ -1085,18 +1085,17 @@ public class CadVendasMB implements Serializable {
 //        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 //        session.setAttribute("listaImportada", listaImportada);
 //    }
-
     public String importaVenda(ListaVendasSystmBean vendaImportada) {
         if (vendas == null) {
             vendas = new Vendas();
         }
-        List<Cliente> lista = clienteDao.list("Select c From Cliente c Where c.codigosystm=" + vendaImportada.getVendasSystmBean().getIdUnidade());
+        List<Cliente> lista = clienteDao.list("select c from Cliente c where c.codigosystm=" + vendaImportada.getVendasSystmBean().getIdUnidade());
         for (int i = 0; i < lista.size(); i++) {
             cliente = lista.get(i);
         }
         if (cliente != null) {
             gerarListaProduto();
-            List<Produto> listaProduto = produtoDao.list("Select p From Produto p Where p.codigosystm=" + vendaImportada.getVendasSystmBean().getIdProduto()
+            List<Produto> listaProduto = produtoDao.list("select p from Produto p where p.codigosystm=" + vendaImportada.getVendasSystmBean().getIdProduto()
                     + " and p.cliente.idcliente=" + cliente.getIdcliente());
             for (int i = 0; i < listaProduto.size(); i++) {
                 produto = listaProduto.get(i);
@@ -1109,7 +1108,7 @@ public class CadVendasMB implements Serializable {
         calculoTotalVenda();
         vendas.setDataVenda(vendaImportada.getVendasSystmBean().getDataVenda());
         vendas.setComissaoLiquidaTotal(vendaImportada.getVendasSystmBean().getLiquidoFranquia());
-        vendas.setIdVendaSystm(Formatacao.formatarStringInteger(vendaImportada.getIdVenda()));
+        vendas.setIdVendaSystm(vendaImportada.getVendasSystmBean().getIdVenda());
         calculoValoresBackOffice();
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -1130,31 +1129,17 @@ public class CadVendasMB implements Serializable {
         VendasSystmBean[] vendasBean;
         try {
             if (clienteImportacao != null) {
-                vendasBean = importaVendasBean.pegarListaVendasSystm(clienteImportacao.getCodigosystm());
-            }else{
-                vendasBean = importaVendasBean.pegarListaVendasSystm(0);
+                vendasBean = importaVendasBean.pegarListaVendasSystm(clienteImportacao.getCodigosystm(), dataInicial, dataFinal);
+            } else {
+                vendasBean = importaVendasBean.pegarListaVendasSystm(0, dataInicial, dataFinal);
             }
             for (int i = 0; i < vendasBean.length; i++) {
                 vendaImportada = new ListaVendasSystmBean();
-                if (dataInicial == null && dataFinal == null) {
-                    if (vendasBean[i].getValorBruto() == null) {
-                        vendasBean[i].setValorBruto(0.0f);
-                    }
-                    vendaImportada.setVendasSystmBean(vendasBean[i]);
-                    listaImportada.add(vendaImportada);
-                } else {
-                    String dataSystmImportada = Formatacao.ConvercaoDataSql(vendasBean[i].getDataVenda());
-                    String dataInicialFiltro = Formatacao.ConvercaoDataSql(dataInicial);
-                    String dataFinalFiltro = Formatacao.ConvercaoDataSql(dataFinal);
-                    if ((dataSystmImportada.compareTo(dataInicialFiltro) >= 0) && (dataSystmImportada.compareTo(dataFinalFiltro) <= 0)) {
-                        if (vendasBean[i].getValorBruto() == null) {
-                            vendasBean[i].setValorBruto(0.0f);
-                        }
-                        vendaImportada.setVendasSystmBean(vendasBean[i]);
-                        listaImportada.add(vendaImportada);
-                    }
+                if (vendasBean[i].getValorBruto() == null) {
+                    vendasBean[i].setValorBruto(0.0f);
                 }
-
+                vendaImportada.setVendasSystmBean(vendasBean[i]);
+                listaImportada.add(vendaImportada);
             }
         } catch (JAXBException e) {
             mensagem m = new mensagem();

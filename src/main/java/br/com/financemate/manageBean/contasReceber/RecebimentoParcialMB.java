@@ -91,7 +91,7 @@ public class RecebimentoParcialMB implements Serializable {
     }
 
     public void gerarListaRecebimentoParcial() {
-        String sql = "Select c from Contasreceber c where c.status='RECEBIMENTO-" + contasReceber.getIdcontasReceber()+ "'"
+        String sql = "select c from Contasreceber c where c.status='RECEBIMENTO-" + contasReceber.getIdcontasReceber()+ "'"
                 + " and  c.dataPagamento<>null order by c.dataPagamento";
         listaRecebimentoParcial = contasReceberDao.list(sql);
         if (listaRecebimentoParcial == null) {

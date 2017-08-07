@@ -152,7 +152,7 @@ public class CadTransferenciaMB implements Serializable {
     }
 
     public void gerarListaBanco() {
-        String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente();
+        String sql = "select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente();
         listaBancoDebito = bancoDao.list(sql);
         listaBancoCredito = bancoDao.list(sql);
         if (listaBancoCredito == null || listaBancoCredito.isEmpty()) {
@@ -216,7 +216,7 @@ public class CadTransferenciaMB implements Serializable {
     }
 
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c");
+        listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null || listaCliente.isEmpty()) {
             listaCliente = new ArrayList<>();
         }

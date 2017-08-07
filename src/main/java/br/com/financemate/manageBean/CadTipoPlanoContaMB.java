@@ -74,7 +74,7 @@ public class CadTipoPlanoContaMB implements Serializable {
                 if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
                     listaPlanoContaTipo = new ArrayList<>();
                 }
-                listaClienteTabela = clienteDao.list("Select c from Cliente c Where c.tipoplanocontas.idtipoplanocontas=" + tipoplanocontas.getIdtipoplanocontas());
+                listaClienteTabela = clienteDao.list("select c from Cliente c where c.tipoplanocontas.idtipoplanocontas=" + tipoplanocontas.getIdtipoplanocontas());
                 verificarListaPlanoContas();
                 verificarListaCliente();
             } catch (Exception e) {
@@ -219,7 +219,7 @@ public class CadTipoPlanoContaMB implements Serializable {
 
     public void gerarListaPlanoContas() {
         try {
-            listarPlanoContas = planoContasDao.list("Select p from Planocontas p  order by p.descricao");
+            listarPlanoContas = planoContasDao.list("select p from Planocontas p  order by p.descricao");
             if (listarPlanoContas == null) {
                 listarPlanoContas = new ArrayList<>();
             }
@@ -288,7 +288,7 @@ public class CadTipoPlanoContaMB implements Serializable {
     }
     
     public void gerarListaCliente() {
-        listaCliente = clienteDao.list("Select c From Cliente c order by c.nomeFantasia");
+        listaCliente = clienteDao.list("select c from Cliente c order by c.nomeFantasia");
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
