@@ -61,13 +61,23 @@ public class cadOutrosLancamentosMB implements Serializable {
     private PlanoContaTipoDao planoContaTipoDao;
     @EJB
     private PlanoContasDao planoContasDao;
+    private Date dataInicial;
+    private Date dataFinal;
 
     @PostConstruct
     public void init() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         outrosLancamentos = (Movimentobanco) session.getAttribute("outroslancamentos");
+        cliente = (Cliente) session.getAttribute("cliente");
+        banco = (Banco) session.getAttribute("banco");
+        dataInicial = (Date) session.getAttribute("dataInicial");
+        dataFinal = (Date) session.getAttribute("dataFinal");
         session.removeAttribute("outroslancamentos");
+        session.removeAttribute("cliente");
+        session.removeAttribute("banco");
+        session.removeAttribute("dataInicial");
+        session.removeAttribute("dataFinal");
         if (outrosLancamentos == null) {
             outrosLancamentos = new Movimentobanco();
         } else {
@@ -210,6 +220,12 @@ public class cadOutrosLancamentosMB implements Serializable {
         outrosLancamentos = setaValoresOutrosLancamentos(outrosLancamentos);
         String mensagem = validarDados();
         if (mensagem.length() < 1) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("cliente", cliente);
+            session.setAttribute("banco", banco);
+            session.setAttribute("dataInicial", dataInicial);
+            session.setAttribute("dataFinal", dataFinal);
             outrosLancamentos = outrosLancamentosDao.update(outrosLancamentos);
             mensagem msg = new mensagem();
             msg.saveMessagem();
@@ -283,6 +299,12 @@ public class cadOutrosLancamentosMB implements Serializable {
     }
 
     public void cancelar() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("cliente", cliente);
+        session.setAttribute("banco", banco);
+        session.setAttribute("dataInicial", dataInicial);
+        session.setAttribute("dataFinal", dataFinal);
         RequestContext.getCurrentInstance().closeDialog(new Movimentobanco());
     }
 
