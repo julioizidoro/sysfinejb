@@ -274,15 +274,11 @@ div.jqplot-table-legend-swatch{
     background-position: 1px -1px;
 }
 
-.menu2  .ui-icon-triangle-1-e {
+/*.menu2  .ui-icon-triangle-1-e {
     background-position: px -1px;
-}
+}*/
 
-.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
-    color: white;
-    text-decoration: none;
-    font-weight: normal;
-}
+
 
 .ui-button{
     background: transparent;
