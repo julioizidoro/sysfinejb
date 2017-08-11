@@ -11,6 +11,11 @@
             <h:form id="frmConciliacaoBancaria" > 
                 <p:growl id="growl" showDetail="true" sticky="true" /> 
                 <br/><br/><br/>
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                    <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+                    <br/> 
+                    <img src="../../resources/img/ajax-carregando.gif" />
+                </p:dialog>
                 <div style="margin-left:39%;"> 
                     <p:outputLabel value="Cliente" for="cliente"  class="left3" style="margin-left:2%;"/>
                     <p:outputLabel value="Periodo" class="left3" style="margin-left:23%;"/>
@@ -32,126 +37,280 @@
                     <p:inputText id="conta" size="10" maxlength="15" class="left6" value="#{conciliacaoMB.banco.conta}" style="margin-left:4.2%;" readonly="true"/>
                     <br/><br/>
                     <p:fileUpload  fileUploadListener="#{conciliacaoMB.carregarArquivo}" label="Carregar"  value="#{conciliacaoMB.arquivo}" mode="advanced"
-                                   update="tabelaConciliacao, banco, agencia, conta, cliente, dataIni, dataFinal" auto="true" style="width:50%;margin-left:2%;">
+                                   update="tabelaDeConciliacao, banco, agencia, conta, cliente, dataIni, dataFinal" auto="true" style="width:50%;margin-left:2%;">
                     </p:fileUpload>
                 </div>
                 <br />
                 <hr style="width:84%; margin-left:16%;"/>
                 <div class="menuTabelaConciliacao" id="divtab" style="width:66%; margin-left:22%;"> 
-                    <p:dataScroller  value="#{conciliacaoMB.listaConciliacaoBancaria}"  var="conciliacao" scrollHeight="50" chunkSize="10" style="width:20px;margin-left:18%;" id="tabelaConciliacao">
-                        <f:facet name="header">
-                            <h4 style="margin-left:-50%;">Transações</h4>
-                            <h4 style="text-align:right;margin-right:18%;margin-top:-3.8%;">Outros Lançamentos</h4>
-                        </f:facet>
-                        <h:panelGrid columns="3"> 
-                            <h:panelGrid  id="tabelaConciliacaoTransacao" columns="2" style="width:100%;margin-left:4%;border-radius:2px;;color:black !important" columnClasses="logo,detail">
-                                <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;">
-                                    <p:tabView>
-                                        <p:tab title="Novo">
-                                            <h:panelGrid columns="1" cellpadding="10">
-                                                <h:panelGrid columns="2" style="width:293px;">
-                                                    <h:outputText value="#{conciliacao.transacao.data}" style="font-weight: bold;font-size: 14px;">
-                                                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                                                    </h:outputText>
+                    <p:tabView  id="tabelaDeConciliacao">
+                        <p:tab title="Conciliadas (#{conciliacaoMB.getnConciliada()})" titleStyle="color:black;" id="idNConciliada">
+                            <p:dataScroller  value="#{conciliacaoMB.listaConciliacaoBancaria}"  var="conciliacao" scrollHeight="50" chunkSize="10" style="width:20px;margin-left:18%;" id="tabelaConciliacao">
+                                <f:facet name="header">
+                                    <h4 style="margin-left:-50%;">Transações</h4>
+                                    <h4 style="text-align:right;margin-right:18%;margin-top:-3.8%;">Outros Lançamentos</h4>
+                                </f:facet>
+                                <h:panelGrid columns="3"> 
+                                    <h:panelGrid  id="tabelaConciliacaoTransacao" columns="2" style="width:100%;margin-left:4%;border-radius:2px;;color:black !important" columnClasses="logo,detail">
+                                        <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;">
+                                            <p:tabView>
+                                                <p:tab title="Dados">
+                                                    <h:panelGrid columns="1" cellpadding="10">
+                                                        <h:panelGrid columns="2" style="width:293px;">
+                                                            <h:outputText value="#{conciliacao.transacao.data}" style="font-weight: bold;font-size: 14px;">
+                                                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                                            </h:outputText>
 
-                                                    <h:outputText  rendered="#{conciliacaoMB.retornoValorEntrada(conciliacao.transacao)}" value="#{conciliacao.transacao.valorEntrada}" style="font-weight: bold;color: #4ABA58;font-size: 14px;">
-                                                        <f:convertNumber currencySymbol="" type="currency"/>
-                                                    </h:outputText>
+                                                            <h:outputText  rendered="#{conciliacaoMB.retornoValorEntrada(conciliacao.transacao)}" value="#{conciliacao.transacao.valorEntrada}" style="font-weight: bold;color: #4ABA58;font-size: 14px;">
+                                                                <f:convertNumber currencySymbol="" type="currency"/>
+                                                            </h:outputText>
 
-                                                    <h:outputText rendered="#{conciliacaoMB.retornoValorSaida(conciliacao.transacao)}" value="#{conciliacao.transacao.valorSaida}" style="font-weight: bold;color:#B54848;font-size: 14px;">
-                                                        <f:convertNumber currencySymbol="" type="currency"/>
-                                                    </h:outputText>
-                                                </h:panelGrid>
-                                                <p:outputLabel/>
-                                                <p:outputLabel/>
-                                                <h:outputText value="#{conciliacao.transacao.descricao}" style="font-weight: bold;font-size: 14px;"/>
-                                                <p:outputLabel/>
-                                                <p:selectBooleanCheckbox disabled="#{conciliacao.transacao.conciliada}" value="#{conciliacao.transacao.selecionado}" style=" color:white !important;"/>
-                                                <p:outputLabel/>
-                                            </h:panelGrid>
-                                        </p:tab>
-                                    </p:tabView>
-                                    <br />
-                                </p:outputPanel> 
-                            </h:panelGrid>
-                            <h:panelGrid columns="2" style="width:100%;margin-left:25%;margin-top:1.2%;" >
-                                <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black;">
-                                    <h:panelGrid columns="2" cellpadding="5" style="font-size:12px;border:1px;border-color:black;width:100%;"> 
-                                        <p:commandButton   disabled="#{conciliacao.transacao.conciliada}" readonly="#{conciliacao.transacao.conciliada}" update=":frmConciliacaoBancaria:growl, :frmConciliacaoBancaria:tabelaConciliacao" class="imagemm" value="#{conciliacaoMB.nomeBotaoConciliar}" action="#{conciliacaoMB.novaConciliacao(conciliacao)}">
-                                           
-                                        </p:commandButton>
-                                    </h:panelGrid>  
-                                </p:outputPanel>
-                            </h:panelGrid>   
+                                                            <h:outputText rendered="#{conciliacaoMB.retornoValorSaida(conciliacao.transacao)}" value="#{conciliacao.transacao.valorSaida}" style="font-weight: bold;color:#B54848;font-size: 14px;">
+                                                                <f:convertNumber currencySymbol="" type="currency"/>
+                                                            </h:outputText>
+                                                        </h:panelGrid>
+                                                        <p:outputLabel/>
+                                                        <p:outputLabel/>
+                                                        <h:outputText value="#{conciliacao.transacao.descricao}" style="font-weight: bold;font-size: 14px;"/>
+                                                        <p:outputLabel/>
+                                                        <p:selectBooleanCheckbox disabled="#{conciliacao.transacao.conciliada}" value="#{conciliacao.transacao.selecionado}" style=" color:white !important;"/>
+                                                        <p:outputLabel/>
+                                                    </h:panelGrid>
+                                                </p:tab>
+                                            </p:tabView>
+                                            <br />
+                                        </p:outputPanel> 
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="2" style="width:100%;margin-left:25%;margin-top:1.2%;" >
+                                        <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black;">
+                                            <h:panelGrid columns="2" cellpadding="5" style="font-size:12px;border:1px;border-color:black;width:100%;"> 
+                                                <p:commandButton   disabled="#{conciliacao.transacao.conciliada}" readonly="#{conciliacao.transacao.conciliada}" update=":frmConciliacaoBancaria:growl, :frmConciliacaoBancaria:tabelaDeConciliacao" class="imagemm" value="Conciliado" action="#{conciliacaoMB.novaConciliacao(conciliacao)}">
 
-                            <h:panelGrid columns="2" id="tabelaConciliacaoOutros" style="width:100%;margin-left:5%;border-radius:2px;background:#D8F6CE !important;color:black !important" columnClasses="logo,detail">
-                                <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;background:#D8F6CE !important;">
+                                                </p:commandButton>
+                                            </h:panelGrid>  
+                                        </p:outputPanel>
+                                    </h:panelGrid>   
 
-                                    <p:tabView>
-                                        <p:tab title="Novo" titleStyle="color:black;">
-                                            <h:panelGrid columns="1" cellpadding="10">
-                                                <div class="form-group">
-                                                    <h:inputText disabled="#{conciliacao.transacao.conciliada}" style="width: 100%;" pt:placeholder="Descrição" id="desc"  class="form-control"  value="#{conciliacao.outroslancamentos.descricao}"/>
-                                                </div>
-                                                <p:outputLabel/>
-                                                <p:selectOneMenu disabled="#{conciliacao.transacao.conciliada}" id="unidade"  style="width: 200px;"  value="#{conciliacaoMB.cliente}" converter="ClienteConverter"
-                                                                 filter="true" filterMatchMode="contains" panelStyle="width:180px">
-                                                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                                                    <f:selectItems  value="#{conciliacaoMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
-                                                    <f:attribute name="listaCliente" value="#{conciliacaoMB.listaCliente}"/>
-                                                </p:selectOneMenu>
-                                                <p:outputLabel/>
-                                                <h:panelGrid columns="2" style="width: 100%;">
-                                                    <p:selectOneMenu id="plano" style="width:300px;" disabled="#{conciliacao.transacao.conciliada}" value="#{conciliacao.outroslancamentos.planocontas}" converter="PlanoContasConverter"
-                                                                     filter="true" filterMatchMode="contains" panelStyle="width:200px">
-                                                        <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                                                        <f:selectItems value="#{conciliacaoMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
-                                                        <f:attribute name="listaPlanoConta" value="#{conciliacaoMB.listaPlanoContas}"/>
-                                                        <p:ajax event="change"/>
-                                                    </p:selectOneMenu> 
-                                                    <p:commandLink title="Novo Lançamento" disabled="#{conciliacao.transacao.conciliada}" style="text-decoration: none;margin-left:18%;font-size: 32px;"   action="#{conciliacaoMB.novoLancamento(conciliacao.transacao)}" >
-                                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                                        <p:ajax event="dialogReturn" listener="#{conciliacaoMB.retornoDialogOutros}" update=":frmConciliacaoBancaria:growl, :frmConciliacaoBancaria:tabelaConciliacao, :frmConciliacaoBancaria:tabelaConciliacao"/>
-                                                    </p:commandLink>
-                                                </h:panelGrid>
-                                            </h:panelGrid>
-                                        </p:tab>
-                                        <p:tab title="Transferência" titleStyle="color:black;">
-                                            <h:panelGrid columns="1" cellpadding="10">
-                                                <div class="form-group">
-                                                    <h:inputText disabled="#{conciliacao.transacao.conciliada}" style="width: 100%;" pt:placeholder="Descrição" id="d"  class="form-control"  value="#{conciliacao.outroslancamentos.descricao}"/>
-                                                </div>  
-                                                <p:outputLabel/>
-                                                <p:selectOneMenu disabled="#{conciliacao.transacao.conciliada}" id="banco" style="width:320px;"  value="#{conciliacaoMB.banco}"  converter="BancoConverter"
-                                                                 filter="true" filterMatchMode="contains" panelStyle="width:150px">
-                                                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
-                                                    <f:selectItems value="#{conciliacaoMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
-                                                    <f:attribute name="listaBanco" value="#{conciliacaoMB.listaBanco}" />
-                                                </p:selectOneMenu> 
-                                                <p:outputLabel/>
-                                                <p:outputLabel/>
-                                                <p:outputLabel/>
-                                            </h:panelGrid>
-                                        </p:tab>
-                                        <p:tab title="Buscar lançamentos" titleStyle="color:black;">
-                                            <h:panelGrid columns="1" cellpadding="10">
-                                                <p:commandLink title="Buscar Lançamento"  style="text-decoration: none;margin-left:18%;font-size: 32px;"   action="#{conciliacaoMB.consultarLancamentos(conciliacao)}" >
-                                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                    <h:panelGrid columns="2" id="tabelaConciliacaoOutros" style="width:100%;margin-left:5%;border-radius:2px;background:#D8F6CE !important;color:black !important" columnClasses="logo,detail">
+                                        <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;background:#D8F6CE !important;">
 
-                                                    <p:ajax event="dialogReturn" listener="#{conciliacaoMB.retornoDialogBusca}" update=":frmConciliacaoBancaria:growl, :frmConciliacaoBancaria:tabelaConciliacao, frmConciliacaoBancaria"/>
-                                                </p:commandLink>
-                                                <h:panelGroup/>
-                                                <h:panelGroup/>
-                                                <h:panelGroup/>
-                                            </h:panelGrid>
-                                        </p:tab>
-                                    </p:tabView>
-                                </p:outputPanel>
-                                <br />
-                            </h:panelGrid>
-                        </h:panelGrid>
-                        <br /><br /><br /><br /><br />
-                    </p:dataScroller>
+                                            <p:tabView>
+                                                <p:tab title="Novo" titleStyle="color:black;">
+                                                    <h:panelGrid columns="1" cellpadding="10">
+                                                        <div class="form-group">
+                                                            <h:inputText disabled="#{conciliacao.transacao.conciliada}" style="width: 100%;" pt:placeholder="Descrição" id="desc"  class="form-control"  value="#{conciliacao.outroslancamentos.descricao}"/>
+                                                        </div>
+                                                        <p:outputLabel/>
+                                                        <p:selectOneMenu disabled="#{conciliacao.transacao.conciliada}" id="unidade"  style="width: 200px;"  value="#{conciliacaoMB.cliente}" converter="ClienteConverter"
+                                                                         filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                                                            <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                                                            <f:selectItems  value="#{conciliacaoMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                                                            <f:attribute name="listaCliente" value="#{conciliacaoMB.listaCliente}"/>
+                                                        </p:selectOneMenu>
+                                                        <p:outputLabel/>
+                                                        <h:panelGrid columns="2" style="width: 100%;">
+                                                            <p:selectOneMenu id="plano" style="width:300px;" disabled="#{conciliacao.transacao.conciliada}" value="#{conciliacao.outroslancamentos.planocontas}" converter="PlanoContasConverter"
+                                                                             filter="true" filterMatchMode="contains" panelStyle="width:200px">
+                                                                <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                                                                <f:selectItems value="#{conciliacaoMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
+                                                                <f:attribute name="listaPlanoConta" value="#{conciliacaoMB.listaPlanoContas}"/>
+                                                                <p:ajax event="change"/>
+                                                            </p:selectOneMenu> 
+                                                            <p:commandLink title="Novo Lançamento" disabled="#{conciliacao.transacao.conciliada}" style="text-decoration: none;margin-left:18%;font-size: 32px;"   action="#{conciliacaoMB.novoLancamento(conciliacao.transacao)}" >
+                                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                <p:ajax event="dialogReturn" listener="#{conciliacaoMB.retornoDialogOutros}" update=":frmConciliacaoBancaria:growl, @form"/>
+                                                            </p:commandLink>
+                                                        </h:panelGrid>
+                                                    </h:panelGrid>
+                                                </p:tab>
+                                                <p:tab title="Transferência" titleStyle="color:black;">
+                                                    <h:panelGrid columns="1" cellpadding="10">
+                                                        <div class="form-group">
+                                                            <h:inputText disabled="#{conciliacao.transacao.conciliada}" style="width: 100%;" pt:placeholder="Descrição" id="d"  class="form-control"  value="#{conciliacao.outroslancamentos.descricao}"/>
+                                                        </div>  
+                                                        <p:outputLabel/>
+                                                        <p:selectOneMenu disabled="#{conciliacao.transacao.conciliada}" id="banco" style="width:320px;"  value="#{conciliacaoMB.banco}"  converter="BancoConverter"
+                                                                         filter="true" filterMatchMode="contains" panelStyle="width:150px">
+                                                            <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+                                                            <f:selectItems value="#{conciliacaoMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+                                                            <f:attribute name="listaBanco" value="#{conciliacaoMB.listaBanco}" />
+                                                        </p:selectOneMenu> 
+                                                        <p:outputLabel/>
+                                                        <p:outputLabel/>
+                                                        <p:outputLabel/>
+                                                    </h:panelGrid>
+                                                </p:tab>
+                                                <p:tab title="Buscar lançamentos" titleStyle="color:black;">
+                                                    <h:panelGrid columns="1" cellpadding="10">
+                                                        <p:commandLink title="Buscar Lançamento"  style="text-decoration: none;margin-left:18%;font-size: 32px;"   action="#{conciliacaoMB.consultarLancamentos(conciliacao)}" >
+                                                            <i class="fa fa-search" aria-hidden="true"></i>
+
+                                                            <p:ajax event="dialogReturn" listener="#{conciliacaoMB.retornoDialogBusca}" update=":frmConciliacaoBancaria:growl, @form, frmConciliacaoBancaria"/>
+                                                        </p:commandLink>
+                                                        <h:panelGroup/>
+                                                        <h:panelGroup/>
+                                                        <h:panelGroup/>
+                                                    </h:panelGrid>
+                                                </p:tab>
+                                            </p:tabView>
+                                        </p:outputPanel>
+                                        <br />
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <br /><br /><br /><br /><br />
+                            </p:dataScroller>
+                        </p:tab>
+                        <p:tab title="Pendentes (#{conciliacaoMB.getnNaoConciliada()})" titleStyle="color:black;" id="idNaoConciliada">
+                            <p:dataScroller  value="#{conciliacaoMB.listaNaoConciliada}"  var="conciliacao" scrollHeight="50" chunkSize="10" style="width:20px;margin-left:18%;" id="tabelaNaoConciliacao">
+                                <f:facet name="header">
+                                    <h4 style="margin-left:-50%;">Transações</h4>
+                                    <h4 style="text-align:right;margin-right:18%;margin-top:-3.8%;">Outros Lançamentos</h4>
+                                </f:facet>
+                                <h:panelGrid columns="3"> 
+                                    <h:panelGrid  id="tabelaNaoConciliacaoTransacao" columns="2" style="width:100%;margin-left:4%;border-radius:2px;;color:black !important" columnClasses="logo,detail">
+                                        <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;">
+                                            <p:tabView>
+                                                <p:tab title="Novo">
+                                                    <h:panelGrid columns="1" cellpadding="10">
+                                                        <h:panelGrid columns="2" style="width:293px;">
+                                                            <h:outputText value="#{conciliacao.transacao.data}" style="font-weight: bold;font-size: 14px;">
+                                                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                                            </h:outputText>
+
+                                                            <h:outputText  rendered="#{conciliacaoMB.retornoValorEntrada(conciliacao.transacao)}" value="#{conciliacao.transacao.valorEntrada}" style="font-weight: bold;color: #4ABA58;font-size: 14px;">
+                                                                <f:convertNumber currencySymbol="" type="currency"/>
+                                                            </h:outputText>
+
+                                                            <h:outputText rendered="#{conciliacaoMB.retornoValorSaida(conciliacao.transacao)}" value="#{conciliacao.transacao.valorSaida}" style="font-weight: bold;color:#B54848;font-size: 14px;">
+                                                                <f:convertNumber currencySymbol="" type="currency"/>
+                                                            </h:outputText>
+                                                        </h:panelGrid>
+                                                        <p:outputLabel/>
+                                                        <p:outputLabel/>
+                                                        <h:outputText value="#{conciliacao.transacao.descricao}" style="font-weight: bold;font-size: 14px;"/>
+                                                        <p:outputLabel/>
+                                                        <p:selectBooleanCheckbox disabled="#{conciliacao.transacao.conciliada}" value="#{conciliacao.transacao.selecionado}" style=" color:white !important;"/>
+                                                        <p:outputLabel/>
+                                                    </h:panelGrid>
+                                                </p:tab>
+                                            </p:tabView>
+                                            <br />
+                                        </p:outputPanel> 
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="2" style="width:100%;margin-left:25%;margin-top:1.2%;" >
+                                        <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black;">
+                                            <h:panelGrid columns="2" cellpadding="5" style="font-size:12px;border:1px;border-color:black;width:100%;"> 
+                                                <p:commandButton   disabled="#{conciliacao.transacao.conciliada}" readonly="#{conciliacao.transacao.conciliada}" update=":frmConciliacaoBancaria:growl, :frmConciliacaoBancaria:tabelaDeConciliacao" class="imagemm" value="#{conciliacaoMB.nomeBotaoConciliar}" action="#{conciliacaoMB.novaConciliacao(conciliacao)}">
+
+                                                </p:commandButton>
+                                            </h:panelGrid>  
+                                        </p:outputPanel>
+                                    </h:panelGrid>   
+
+                                    <h:panelGrid columns="2" id="tabelaNaoConciliacaoOutros" style="width:100%;margin-left:5%;border-radius:2px;background:#D8F6CE !important;color:black !important" columnClasses="logo,detail">
+                                        <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;background:#D8F6CE !important;">
+
+                                            <p:tabView>
+                                                <p:tab title="Novo" titleStyle="color:black;">
+                                                    <h:panelGrid columns="1" cellpadding="10">
+                                                        <div class="form-group">
+                                                            <h:inputText disabled="#{conciliacao.transacao.conciliada}" style="width: 100%;" pt:placeholder="Descrição" id="desc"  class="form-control"  value="#{conciliacao.outroslancamentos.descricao}"/>
+                                                        </div>
+                                                        <p:outputLabel/>
+                                                        <p:selectOneMenu disabled="#{conciliacao.transacao.conciliada}" id="unidade"  style="width: 200px;"  value="#{conciliacaoMB.cliente}" converter="ClienteConverter"
+                                                                         filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                                                            <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                                                            <f:selectItems  value="#{conciliacaoMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                                                            <f:attribute name="listaCliente" value="#{conciliacaoMB.listaCliente}"/>
+                                                        </p:selectOneMenu>
+                                                        <p:outputLabel/>
+                                                        <h:panelGrid columns="2" style="width: 100%;">
+                                                            <p:selectOneMenu id="plano" style="width:300px;" disabled="#{conciliacao.transacao.conciliada}" value="#{conciliacao.outroslancamentos.planocontas}" converter="PlanoContasConverter"
+                                                                             filter="true" filterMatchMode="contains" panelStyle="width:200px">
+                                                                <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                                                                <f:selectItems value="#{conciliacaoMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
+                                                                <f:attribute name="listaPlanoConta" value="#{conciliacaoMB.listaPlanoContas}"/>
+                                                                <p:ajax event="change"/>
+                                                            </p:selectOneMenu> 
+                                                            <p:commandLink title="Novo Lançamento" disabled="#{conciliacao.transacao.conciliada}" style="text-decoration: none;margin-left:18%;font-size: 32px;"   action="#{conciliacaoMB.novoLancamento(conciliacao.transacao)}" >
+                                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                <p:ajax event="dialogReturn" listener="#{conciliacaoMB.retornoDialogOutros}" update=":frmConciliacaoBancaria:growl, @form"/>
+                                                            </p:commandLink>
+                                                        </h:panelGrid>
+                                                    </h:panelGrid>
+                                                </p:tab>
+                                                <p:tab title="Transferência" titleStyle="color:black;">
+                                                    <h:panelGrid columns="1" cellpadding="10">
+                                                        <div class="form-group">
+                                                            <h:inputText disabled="#{conciliacao.transacao.conciliada}" style="width: 100%;" pt:placeholder="Descrição" id="d"  class="form-control"  value="#{conciliacao.outroslancamentos.descricao}"/>
+                                                        </div>  
+                                                        <p:outputLabel/>
+                                                        <p:selectOneMenu disabled="#{conciliacao.transacao.conciliada}" id="banco" style="width:320px;"  value="#{conciliacaoMB.banco}"  converter="BancoConverter"
+                                                                         filter="true" filterMatchMode="contains" panelStyle="width:150px">
+                                                            <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+                                                            <f:selectItems value="#{conciliacaoMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+                                                            <f:attribute name="listaBanco" value="#{conciliacaoMB.listaBanco}" />
+                                                        </p:selectOneMenu> 
+                                                        <p:outputLabel/>
+                                                        <p:outputLabel/>
+                                                        <p:outputLabel/>
+                                                    </h:panelGrid>
+                                                </p:tab>
+                                                <p:tab title="Buscar lançamentos" titleStyle="color:black;">
+                                                    <h:panelGrid columns="1" cellpadding="10"> 
+                                                        <div class="form-group">
+                                                            <h:inputText disabled="#{conciliacao.transacao.conciliada}" style="width: 300px;" pt:placeholder="Descrição ou Plano de Conta" id="descricaoBuscar"  class="form-control"  value="#{conciliacaoMB.descricao}">
+                                                                <p:ajax event="keyup" listener="#{conciliacaoMB.gerarPesquisa()}"
+                                                                        update="tabelaBuscarLancamentos" /> 
+                                                            </h:inputText>
+                                                        </div>
+                                                        <p:overlayPanel id="painelOutrosLancamentos" for="descricaoBuscar"
+                                                                        hideEffect="fade" style="width:500px;background:#fff;">
+                                                            <p:dataScroller id="tabelaBuscarLancamentos" var="outrosLancamentos"
+                                                                            value="#{conciliacaoMB.listaOutrosLancamentos}" chunkSize="10" mode="inline"
+                                                                            scrollHeight="110">
+                                                                <p:outputPanel>    
+                                                                    <h:panelGrid columns="5" style="width:100%;"
+                                                                                 >
+                                                                        <h:outputText  value="#{outrosLancamentos.dataCompensacao}" style="font-size:12px; color:gray;" > 
+                                                                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                                                        </h:outputText> 
+                                                                        
+                                                                        <h:outputLabel value="#{outrosLancamentos.descricao}"
+                                                                                       style="margin-left:1.5%;font-size: 13px;color:#4C4C4C;font-weight: 500;" />
+                                                                        
+                                                                        <h:outputText value="#{outrosLancamentos.valorEntrada}"  style="font-size:12px;color: #4ABA58; text-align:right;">
+                                                                            <f:convertNumber currencySymbol="" type="currency"/>
+                                                                        </h:outputText>    
+                                                                        
+                                                                        <h:outputText value="#{outrosLancamentos.valorSaida}"  style="font-size:12px; color:#B54848; text-align:right;">
+                                                                            <f:convertNumber currencySymbol="" type="currency"/>
+                                                                        </h:outputText>  
+                                                                        <p:selectBooleanCheckbox value="#{outrosLancamentos.selecionado}" style="background:white !important; color:white !important;">
+                                                                            <p:ajax event="change" listener="#{conciliacaoMB.pegarLancamento(outrosLancamentos)}"/>
+                                                                        </p:selectBooleanCheckbox>
+                                                                        
+                                                                        
+                                                                    </h:panelGrid>
+                                                                </p:outputPanel>
+                                                            </p:dataScroller> 
+                                                            <p:commandLink title="Salvar Lançamento"  style="text-decoration: none;float: right; font-size: 32px;"  update=":frmConciliacaoBancaria:growl, :frmConciliacaoBancaria:tabelaDeConciliacao, @form" action="#{conciliacaoMB.salvarBusca(conciliacao)}" >
+                                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                                            </p:commandLink>
+                                                        </p:overlayPanel>
+                                                        
+                                                    </h:panelGrid>
+                                                </p:tab>
+                                            </p:tabView>
+                                        </p:outputPanel>
+                                        <br />
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <br /><br /><br /><br /><br />
+                            </p:dataScroller>
+                        </p:tab>
+                    </p:tabView>
+                    
                 </div>
             </h:form>
         </ui:define>

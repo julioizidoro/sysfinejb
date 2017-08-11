@@ -73,11 +73,19 @@ public class OutrosConciliacaoMB implements Serializable {
         listaLacamentos = (List<Movimentobanco>) session.getAttribute("listaLancamentos");
         banco = (Banco) session.getAttribute("banco");
         conciliacao = (ConciliarBean) session.getAttribute("conciliacao");
+        cliente = (Cliente) session.getAttribute("cliente");
+        dataInicial = (Date) session.getAttribute("dataInicial");
+        dataFinal = (Date) session.getAttribute("dataFinal");
+        session.removeAttribute("cliente");
+        session.removeAttribute("banco");
+        session.removeAttribute("dataInicial");
+        session.removeAttribute("dataFinal");
         session.removeAttribute("listaTransacao");
         session.removeAttribute("listaLancamentos");
-        session.removeAttribute("banco");
-        if (banco != null) {
-            cliente = banco.getCliente();
+        if (cliente == null) {
+            if (banco != null) {
+                cliente = banco.getCliente();
+            }
         }
         gerarListaCliente();
     }

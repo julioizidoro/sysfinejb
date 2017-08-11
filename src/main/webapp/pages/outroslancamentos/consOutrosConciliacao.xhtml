@@ -83,12 +83,12 @@
                     <p:column headerText="Descrição"  sortBy="#{outrosLancamentos.descricao}" style=" font-size:12px; background:white; color:black; border:#fff; text-align:left;">
                         <h:outputText value="#{outrosLancamentos.descricao}" style="font-size:12px; color:gray;"/>
                     </p:column> 
-                    <p:column headerText="Valor Entrada" sortBy="#{outrosLancamentos.valorEntrada}" style="width:15%; background:white; font-size:12px; color:black; border:none; text-align:right;" styleClass="alinharCenter">
+                    <p:column headerText="Valor Entrada" rendered="#{conciliacaoMB.retornoValorEntrada(conciliacao.transacao)}" sortBy="#{outrosLancamentos.valorEntrada}" style="width:15%; background:white; font-size:12px; color: #4ABA58; border:none; text-align:right;" styleClass="alinharCenter">
                         <h:outputText value="#{outrosLancamentos.valorEntrada}" style="font-size:12px; color:#{outrosLancamentosMB.coresValoresEntrada(outrosLancamentos)};">
                             <f:convertNumber currencySymbol="" type="currency"/>
                         </h:outputText>                                     
                     </p:column>
-                    <p:column headerText="Valor Saida" sortBy="#{outrosLancamentos.valorSaida}" style="width:15%; background:white; font-size:12px; color:black; border:none; text-align:right;" styleClass="alinharCenter">
+                    <p:column headerText="Valor Saida" rendered="#{conciliacaoMB.retornoValorSaida(conciliacao.transacao)}" sortBy="#{outrosLancamentos.valorSaida}" style="width:15%; background:white; font-size:12px; color:#B54848; border:none; text-align:right;" styleClass="alinharCenter">
                         <h:outputText value="#{outrosLancamentos.valorSaida}" style="font-size:12px; color:#{outrosLancamentosMB.coresValoresSaida(outrosLancamentos)};">
                             <f:convertNumber currencySymbol="" type="currency"/>
                         </h:outputText>                                    
