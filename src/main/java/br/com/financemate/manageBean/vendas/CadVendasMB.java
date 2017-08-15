@@ -884,6 +884,9 @@ public class CadVendasMB implements Serializable {
                         if (formapagamento.getDataVencimento() != null) {
                             formapagamento.setTipoDocumento(TipoDocumento);
                             listaFormaPagamento.add(formapagamento);
+                            FacesContext fc = FacesContext.getCurrentInstance();
+                            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+                            session.setAttribute("listaFormaPagamento", listaFormaPagamento);
                             return "cadRecebimento";
                         } else {
                             mensagem mensagem = new mensagem();
@@ -898,6 +901,9 @@ public class CadVendasMB implements Serializable {
                 } else if (formapagamento.getDataVencimento() != null) {
                     formapagamento.setTipoDocumento(TipoDocumento);
                     listaFormaPagamento.add(formapagamento);
+                    FacesContext fc = FacesContext.getCurrentInstance();
+                    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+                    session.setAttribute("listaFormaPagamento", listaFormaPagamento);
                     return "cadRecebimento";
                 } else {
                     mensagem mensagem = new mensagem();
