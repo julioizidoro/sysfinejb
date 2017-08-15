@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
@@ -12,35 +11,35 @@
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
     </h:head>
 
- <h:body > 
+    <h:body > 
         <h:form id="idFrmEditarBancoRecebimentoLote" class="body2" style="font-size: 12px; background-color: white;">
-        	
+
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
-            
+
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
             <br />
-            	
-           <h:panelGrid columns="2" style="margin-left:1%;" rendered="false">
-            	<p:outputLabel value="Unidade" class="left3"/>
-           		<p:selectOneMenu  id="cliente"  style="width: 200px;"  value="#{editarBancoRecebimentoLoteMB.cliente}" converter="ClienteConverter"
-                             filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{editarBancoRecebimentoLoteMB.habilitarUnidade}">
+
+            <h:panelGrid columns="2" style="margin-left:1%;" rendered="false">
+                <p:outputLabel value="Unidade" class="left3"/>
+                <p:selectOneMenu  id="cliente"  style="width: 200px;"  value="#{editarBancoRecebimentoLoteMB.cliente}" converter="ClienteConverter"
+                                  filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{editarBancoRecebimentoLoteMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems value="#{editarBancoRecebimentoLoteMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{editarBancoRecebimentoLoteMB.listaCliente}"/>
                     <p:ajax event="change" listener="#{editarBancoRecebimentoLoteMB.gerarListaBanco()}" update="idconta"/>
                 </p:selectOneMenu>
-           </h:panelGrid>
-           
-           <h:panelGrid columns="2" style="margin-left:40%;">
-            	<p:outputLabel value="Banco" for="idconta"/>
-            	<p:selectOneMenu id="idconta"  style="width:150px;"  value="#{editarBancoRecebimentoLoteMB.banco}"
-                    converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" style="margin-left:40%;">
+                <p:outputLabel value="Banco" for="idconta"/>
+                <p:selectOneMenu id="idconta"  style="width:150px;"  value="#{editarBancoRecebimentoLoteMB.banco}"
+                                 converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
                     <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems value="#{editarBancoRecebimentoLoteMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
                     <f:attribute name="listaBanco" value="#{editarBancoRecebimentoLoteMB.listaBanco}"/>
@@ -49,12 +48,12 @@
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
             <br /><br /><br /> 
             <p:commandLink title="Salvar" style="margin-left: 40%;text-decoration: none"   action="#{editarBancoRecebimentoLoteMB.salvar()}" >
-                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/> 
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/> 
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{editarBancoRecebimentoLoteMB.cancelar()}" >
-                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-                 
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+
             </p:commandLink>
         </h:form>
- </h:body>
+    </h:body>
 </html>

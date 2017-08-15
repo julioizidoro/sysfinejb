@@ -1,57 +1,56 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<ui:composition template="/pages/templates/default.xhtml">
-	<ui:define name="corpo">
-		<h:form id="frmConsultaProduto">
-			<br/> 
-                         <div style="margin-left: 20%; float: right;margin-right: 3%;" class="pagination">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                  <li>
-                                      <p:commandLink  rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.iproduto}" action="#{produtoMB.novoProduto()}" title="Novo Lançamento">
-                                          <i class="fa fa-plus" style="color: #3D7E46;font-size: 15px;"/> 
-                                          <p:ajax event="dialogReturn" listener="#{produtoMB.retornoDialog}" update="growl, idTabelaProduto"/>
-                                      </p:commandLink>
-                                  </li>
-                                </ul>
-                              </nav>
-                         </div>
-			<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
-             <br /><br /><br /><br />
-             <h4 style="margin-left:50%;">Consultar Produtos</h4>
-             <hr style="margin-left:17%; width:80%;"/>    
-             <p:dataTable id="idTabelaProduto"  var="produto"  value="#{produtoMB.listaProduto}" style="border:none;" class="tabelacontas" 
-                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{produtoMB.produto}" selectionMode="single" rowKey="#{produto.idproduto}">
-             	<p:column headerText="Código" sortBy="#{produto.codigosystm}" style="width:70px; background:white; font-size:12px; color:black; border:none; text-align:center;">
-                   <h:outputText value="#{produto.codigosystm}" />
-              	</p:column> 
-              	<p:column headerText="Descrição" sortBy="#{produto.descricao}" style="; background:white; font-size:12px; color:black; border:none;text-align:left;">
-                   <h:outputText   value="#{produto.descricao}"/> 
-              	</p:column>
-              	<p:column headerText="Cliente"  sortBy="#{produto.cliente.nomeFantasia}" style="width:140px; background:white; font-size:12px; color:black; border:none;text-align:left;">
-                  	<h:outputText value="#{produto.cliente.nomeFantasia}"/>
-              	</p:column>
-                 <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
-                    <p:commandLink id="btnMenu">
-                        <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
-                        <b class="caret"></b>
-                    </p:commandLink>   
-                    <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width:90px;">
-                        <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.aproduto}" action="#{produtoMB.editar(produto)}" update=":frmConsultaProduto:idTabelaProduto" style="text-align: left;">
-                            <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
-                                <b>Editar</b>
-                            </i> 
-                            <p:ajax event="dialogReturn" listener="#{produtoMB.retornoDialog}" update=":frmConsultaProduto:growl, :frmConsultaProduto:idTabelaProduto"/>
-                        </p:commandLink> 
-                    </p:overlayPanel> 
-                </p:column>
-             </p:dataTable>
-		</h:form> 
-	</ui:define>
-</ui:composition>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form id="frmConsultaProduto">
+                <br/> 
+                <div style="margin-left: 20%; float: right;margin-right: 3%;" class="pagination">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>
+                                <p:commandLink  rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.iproduto}" action="#{produtoMB.novoProduto()}" title="Novo Lançamento">
+                                    <i class="fa fa-plus" style="color: #3D7E46;font-size: 15px;"/> 
+                                    <p:ajax event="dialogReturn" listener="#{produtoMB.retornoDialog}" update="growl, idTabelaProduto"/>
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
+                <br /><br /><br /><br />
+                <h4 style="margin-left:50%;">Consultar Produtos</h4>
+                <hr style="margin-left:17%; width:80%;"/>    
+                <p:dataTable id="idTabelaProduto"  var="produto"  value="#{produtoMB.listaProduto}" style="border:none;" class="tabelacontas" 
+                             scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{produtoMB.produto}" selectionMode="single" rowKey="#{produto.idproduto}">
+                    <p:column headerText="Código" sortBy="#{produto.codigosystm}" style="width:70px; background:white; font-size:12px; color:black; border:none; text-align:center;">
+                        <h:outputText value="#{produto.codigosystm}" />
+                    </p:column> 
+                    <p:column headerText="Descrição" sortBy="#{produto.descricao}" style="; background:white; font-size:12px; color:black; border:none;text-align:left;">
+                        <h:outputText   value="#{produto.descricao}"/> 
+                    </p:column>
+                    <p:column headerText="Cliente"  sortBy="#{produto.cliente.nomeFantasia}" style="width:140px; background:white; font-size:12px; color:black; border:none;text-align:left;">
+                        <h:outputText value="#{produto.cliente.nomeFantasia}"/>
+                    </p:column>
+                    <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                        <p:commandLink id="btnMenu">
+                            <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                            <b class="caret"></b>
+                        </p:commandLink>   
+                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width:90px;">
+                            <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.aproduto}" action="#{produtoMB.editar(produto)}" update=":frmConsultaProduto:idTabelaProduto" style="text-align: left;">
+                                <i class="fa fa-pencil-square-o" style="color: #3D7E46;font-size: 15px;">  
+                                    <b>Editar</b>
+                                </i> 
+                                <p:ajax event="dialogReturn" listener="#{produtoMB.retornoDialog}" update=":frmConsultaProduto:growl, :frmConsultaProduto:idTabelaProduto"/>
+                            </p:commandLink> 
+                        </p:overlayPanel> 
+                    </p:column>
+                </p:dataTable>
+            </h:form> 
+        </ui:define>
+    </ui:composition>
 </html>

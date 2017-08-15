@@ -110,7 +110,7 @@
                 <h:panelGroup>
                     <div class="form-group" style="margin-right:  9%;float: right;">
                         <h:outputLabel  for="pgtclientefornecedor" class="left3" >Pgto Cliente direto fornecedor</h:outputLabel> 
-                        <h:inputText class="form-control" title="Inserir o valor pago pelo cliente direto para o fornecedor. Este valor será abatido do contas a receber e do valor a ser pago ao fornecedor"  id="pgtclientefornecedor"  style="width: 100%;text-align: right;" value="#{cadVendasMB.vendas.liquidoVendas}">
+                        <h:inputText class="form-control" title="Inserir o valor pago pelo cliente direto para o fornecedor. Este valor será abatido do contas a receber e do valor a ser pago ao fornecedor"  id="pgtclientefornecedor"  style="width: 100%;text-align: right;" value="#{cadVendasMB.vendas.valorPagoFornecedor}">
                             <p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec"/>
                             <f:convertNumber pattern="##,###,###,###.##"/>
                         </h:inputText>

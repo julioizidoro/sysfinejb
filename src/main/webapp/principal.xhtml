@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -30,7 +29,7 @@
         <!-- Endless -->
         <link href="resources/css/endless.min.css" rel="stylesheet"/>
         <link href="resources/css/endless-skin.css" rel="stylesheet"/>
-           
+
     </h:head>
 
     <h:body style="color:#E7EBEB !important; background:white;" onload="startTime()">
@@ -66,9 +65,9 @@
                     <h:panelGroup>
                         <a href="#" class="brand" style="background:#302E2E;text-decoration: none;">
                             <span style="margin-left:4%;">
-                                    <img src="resources/img/iconeUsuario.png" style="width: 15%;float: left;text-decoration: none;" >    
-                                        Bem vindo, #{usuarioLogadoMB.usuario.nome}
-                                    </img>
+                                <img src="resources/img/iconeUsuario.png" style="width: 15%;float: left;text-decoration: none;" >    
+                                    Bem vindo, #{usuarioLogadoMB.usuario.nome}
+                                </img>
                             </span>
                         </a>
                     </h:panelGroup>
@@ -76,12 +75,12 @@
                         <h:outputText style="font-size: 30px;color:white;font-family:Trebuchet MS; " value="SYSFIN" />
                     </h:panelGroup>
                     <h:panelGroup style="float: right;">
-                            <p:commandLink action="#{usuarioLogadoMB.validarTrocarSenha()}" title="Trocar Senha">
-                                <img src="resources/img/settings.png" style="width: 25px;"/>
-                            </p:commandLink>
-                            <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style=" text-decoration:none;" title="Sair">
-                                <img src="resources/img/iconeSair.png" border="none" style="text-decoration:none;width: 40px;"/>
-                            </p:commandLink> 
+                        <p:commandLink action="#{usuarioLogadoMB.validarTrocarSenha()}" title="Trocar Senha">
+                            <img src="resources/img/settings.png" style="width: 25px;"/>
+                        </p:commandLink>
+                        <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style=" text-decoration:none;" title="Sair">
+                            <img src="resources/img/iconeSair.png" border="none" style="text-decoration:none;width: 40px;"/>
+                        </p:commandLink> 
                     </h:panelGroup>
                 </h:panelGrid>  
                 <br/>
@@ -89,7 +88,7 @@
             <br/>
             <aside class="fixed" style="background:#302E2E;display:block;width:15%;z-index: 1;">
                 <div class="sidebar-inner scrollable-sidebar" style="background:#302E2E;">
-                    
+
                     <div class="main-menu">
                         <ul>
                             <li  style="background:#302E2E;" >
@@ -123,8 +122,8 @@
                                         <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.cliente}"><li ><a href="pages/cliente/consCliente.jsf"><span class="submenu-label">Cliente</span></a></li></h:panelGroup>
                                         <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.planocontas}"><li><a href="pages/planoconta/consPlanoConta.jsf"><span class="submenu-label">Plano de Conta</span></a></li></h:panelGroup>
                                         <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.produto}"><li><a href="pages/produtos/consProduto.jsf"><span class="submenu-label">Produto</span></a></li></h:panelGroup>
-                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.tipoplanocontas}"><li><a href="pages/tipoPlanoConta/consTipoPlanoConta.jsf"><span class="submenu-label">Tipo Plano Conta</span></a></li></h:panelGroup>
-                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.usuario}"><li><a href="pages/usuario/consUsuario.jsf"><span class="submenu-label">Usuário</span></a></li></h:panelGroup>
+                                        <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.tipoplanocontas}"><li><a href="pages/tipoPlanoConta/consTipoPlanoConta.jsf"><span class="submenu-label">Tipo Plano Conta</span></a></li></h:panelGroup>
+                                        <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.usuario}"><li><a href="pages/usuario/consUsuario.jsf"><span class="submenu-label">Usuário</span></a></li></h:panelGroup>
                                     </ul>
                                 </li> 
                             </h:panelGroup>
@@ -146,7 +145,7 @@
                                         <li><p:commandLink action="#{contasPagarMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
                                     </ul>
                                 </li>
-                             </h:panelGroup>
+                            </h:panelGroup>
                             <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.contasreceber}">
                                 <li class="openable" style="background:#302E2E;">
                                     <a href="#">
@@ -330,7 +329,7 @@
                             </div>
                         </p:commandLink>
                     </div>
-                     <br/>
+                    <br/>
                     <div class="panel-stat3 bg-danger" style="margin-right: 6%;">
                         <p:commandLink action="#{menuMB.contasPagar()}" style="color: white;">
                             <h4>CONTAS A PAGAR</h4>

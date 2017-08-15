@@ -16,7 +16,7 @@
                             <li>
                                 <p:commandLink rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.icontaspagar}"  action="#{contasPagarMB.novaConta()}"  title="Novo Lançamento">
                                     <i class="fa fa-plus" style="color: #3D7E46;font-size: 15px;"/> 
-                                     <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
+                                    <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
                                 </p:commandLink>
                             </li>
                             <li>
@@ -109,7 +109,7 @@
                             </p:commandLink> 
                             <br/><br/>
                             <h:panelGroup rendered="#{contasPagarMB.verificarArquivo(contasPagar)}">
-                                <a  title="Download" name="download" onclick="form.target='_blank'" href="http://#{contasPagarMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{contasPagarMB.consultarArquivos(contasPagar)}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
+                                <a  title="Download" name="download" onclick="form.target = '_blank'" href="http://#{contasPagarMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{contasPagarMB.consultarArquivos(contasPagar)}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
 
                                     <i class="fa fa-eye" style="color: #3D7E46;font-size: 15px;">  
                                         <b>Visualizar Arquivo</b>

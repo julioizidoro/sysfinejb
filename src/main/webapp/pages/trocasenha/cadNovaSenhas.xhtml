@@ -14,49 +14,49 @@
         <!-- Font Awesome -->
         <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
-     
 
- <h:body style="background:white;" > 
+
+    <h:body style="background:white;" > 
         <h:form id="idFrmCadNovaSenha" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog  widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Nova Senha</title>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                
+
             <h:panelGrid columns="1"  style="margin-left: 2%;width: 95%;">
-                    <h:panelGroup>
-                        <div class="form-group" >
-                            <h:outputLabel for="senahAtual">Senha Atual</h:outputLabel>
-                            <h:inputSecret  class="form-control" id="senahAtual" style="width: 80%;" value="#{usuarioLogadoMB.senhaAtual}"/>
-                        </div>
-                    </h:panelGroup> 
-                    <h:panelGroup>
-                        <div class="form-group" >
-                            <h:outputLabel for="nDocumento">Nova Senha</h:outputLabel>
-                            <h:inputSecret  class="form-control" id="nDocumento" style="width: 80%;" value="#{usuarioLogadoMB.novaSenha}"/>
-                        </div>
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <div class="form-group" >
-                            <h:outputLabel for="confirmaSenha">Confirmar Nova Senha</h:outputLabel>
-                            <h:inputSecret  class="form-control" id="confirmaSenha" style="width: 80%;" value="#{usuarioLogadoMB.confirmaNovaSenha}"/>
-                        </div>
-                    </h:panelGroup>
-                </h:panelGrid>
-              <hr />
-              <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none" ajax="false" action="#{usuarioLogadoMB.confirmaNovaSenha()}" > 
-                    <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-              </p:commandLink>
-              <p:commandLink title="Cancelar" style="margin-left: 5%;text-decoration: none" action="#{usuarioLogadoMB.cancelarTrocaSenha()}" >
-                    <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-              </p:commandLink>
-              
+                <h:panelGroup>
+                    <div class="form-group" >
+                        <h:outputLabel for="senahAtual">Senha Atual</h:outputLabel>
+                        <h:inputSecret  class="form-control" id="senahAtual" style="width: 80%;" value="#{usuarioLogadoMB.senhaAtual}"/>
+                    </div>
+                </h:panelGroup> 
+                <h:panelGroup>
+                    <div class="form-group" >
+                        <h:outputLabel for="nDocumento">Nova Senha</h:outputLabel>
+                        <h:inputSecret  class="form-control" id="nDocumento" style="width: 80%;" value="#{usuarioLogadoMB.novaSenha}"/>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <div class="form-group" >
+                        <h:outputLabel for="confirmaSenha">Confirmar Nova Senha</h:outputLabel>
+                        <h:inputSecret  class="form-control" id="confirmaSenha" style="width: 80%;" value="#{usuarioLogadoMB.confirmaNovaSenha}"/>
+                    </div>
+                </h:panelGroup>
+            </h:panelGrid>
+            <hr />
+            <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none" ajax="false" action="#{usuarioLogadoMB.confirmaNovaSenha()}" > 
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <p:commandLink title="Cancelar" style="margin-left: 5%;text-decoration: none" action="#{usuarioLogadoMB.cancelarTrocaSenha()}" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>
+
         </h:form>
-</h:body>
+    </h:body>
 </html>

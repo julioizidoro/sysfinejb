@@ -112,7 +112,7 @@
                         <h:outputLabel for="idconta">Conta</h:outputLabel>
                         <br/>
                         <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{cadOutrosLancamentosMB.banco}"  converter="BancoConverter"
-                                 filter="true" filterMatchMode="contains" panelStyle="width:150px">
+                                         filter="true" filterMatchMode="contains" panelStyle="width:150px">
                             <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
                             <f:selectItems value="#{cadOutrosLancamentosMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
                             <f:attribute name="listaBanco" value="#{cadOutrosLancamentosMB.listaBanco}" />
@@ -124,7 +124,7 @@
                         <h:outputLabel for="idPlanoConta" value="Plano de contas" class="left3" />
                         <br/>
                         <p:selectOneMenu id="idPlanoConta" class="left3" style="width:320px;"  value="#{cadOutrosLancamentosMB.planoContas}" converter="PlanoContasConverter"
-                                 filter="true" filterMatchMode="contains" panelStyle="width:200px">
+                                         filter="true" filterMatchMode="contains" panelStyle="width:200px">
                             <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                             <f:selectItems value="#{cadOutrosLancamentosMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
                             <f:attribute name="listaPlanoConta" value="#{cadOutrosLancamentosMB.listaPlanoContas}"/>
@@ -135,31 +135,31 @@
             </h:panelGrid>
             <h:panelGrid columns="3" style="width: 100%;margin-left: 2%;">
                 <h:panelGroup>
-                        <div class="form-group" >
-                            <h:outputLabel for="valorentrada">Valor Entrada</h:outputLabel>
-                            <h:inputText  class="form-control" id="valorentrada" style="width: 55%;text-align: right;" value="#{cadOutrosLancamentosMB.outrosLancamentos.valorEntrada}">
-                                <f:convertNumber pattern="##,###,###,###.##"/>
-                            </h:inputText>
-                        </div>
+                    <div class="form-group" >
+                        <h:outputLabel for="valorentrada">Valor Entrada</h:outputLabel>
+                        <h:inputText  class="form-control" id="valorentrada" style="width: 55%;text-align: right;" value="#{cadOutrosLancamentosMB.outrosLancamentos.valorEntrada}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
                 </h:panelGroup>
                 <h:panelGroup>
-                        <div class="form-group" >
-                            <h:outputLabel for="valorsaida">Valor Saida</h:outputLabel>
-                            <h:inputText  class="form-control" id="valorsaida" style="width: 55%;text-align: right;" value="#{cadOutrosLancamentosMB.outrosLancamentos.valorSaida}">
-                                <f:convertNumber pattern="##,###,###,###.##"/>
-                            </h:inputText>
-                        </div>
+                    <div class="form-group" >
+                        <h:outputLabel for="valorsaida">Valor Saida</h:outputLabel>
+                        <h:inputText  class="form-control" id="valorsaida" style="width: 55%;text-align: right;" value="#{cadOutrosLancamentosMB.outrosLancamentos.valorSaida}">
+                            <f:convertNumber pattern="##,###,###,###.##"/>
+                        </h:inputText>
+                    </div>
                 </h:panelGroup>
                 <h:panelGroup>
                     <div class="form-group"  >
                         <h:outputLabel for="competencia" value="Competência" class="left3" />
                         <p:inputMask id="competencia" mask="99/9999" style="width: 80%;"  maxlength="15" value="#{cadOutrosLancamentosMB.outrosLancamentos.compentencia}" class="form-control">
-                            
+
                         </p:inputMask>
                     </div>
                 </h:panelGroup>
             </h:panelGrid>
-           
+
             <hr /> 
 
             <h:panelGrid columns="3" style="margin-left:40%;"> 

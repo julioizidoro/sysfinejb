@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
@@ -19,70 +18,70 @@
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog> 
-            
+
             <h2  >Editar Histórico</h2>
             <br />
             <h:panelGrid style="margin-left: 1%">
-            	<p:outputLabel value="Unidade" />
+                <p:outputLabel value="Unidade" />
             </h:panelGrid>
             <h:panelGrid style="margin-left: 10%; margin-top:-4.5%;">
                 <p:inputText id="unidade" style="width: 135px" value="#{historicoMB.contasReceber.cliente.nomeFantasia}" readonly="true" disabled="true"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 37%; margin-top:-5.1%;">
-            	<p:outputLabel value="Cliente" for="nomeCliente"  />
+                <p:outputLabel value="Cliente" for="nomeCliente"  />
             </h:panelGrid>
             <h:panelGrid style="margin-left: 45%; margin-top:-4.5%;">
                 <p:inputText id="nomeCliente" size="48" value="#{historicoMB.contasReceber.nomeCliente}" readonly="true" disabled="true"/>
             </h:panelGrid>
             <br />
             <h:panelGrid style="margin-left:1%;"> 
-            	<p:outputLabel value="Valor"/>
+                <p:outputLabel value="Valor"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:7%; margin-top:-4.5%;">
-            	<p:inputText id="valor" size="17" value="#{historicoMB.contasReceber.valorParcela}" readonly="true" disabled="true"/>
+                <p:inputText id="valor" size="17" value="#{historicoMB.contasReceber.valorParcela}" readonly="true" disabled="true"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 33%; margin-top:-5%;">
-            	<p:outputLabel value="Vencimento" for="dataVenc" /> 
+                <p:outputLabel value="Vencimento" for="dataVenc" /> 
             </h:panelGrid>
             <h:panelGrid style="margin-left: 46%; margin-top:-4.6%;">
-                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{historicoMB.contasReceber.dataVencimento}">
-                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            <p:ajax event="change"/>
-                        </p:calendar>
+                <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{historicoMB.contasReceber.dataVencimento}">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    <p:ajax event="change"/>
+                </p:calendar>
             </h:panelGrid>
             <h:panelGrid style="margin-left:68%; margin-top:-5%;">
-            	<p:outputLabel value="Parcela"/>
+                <p:outputLabel value="Parcela"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:78%; margin-top:-5%;">
-            	<p:inputText style="width:103px;" value="#{historicoMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
+                <p:inputText style="width:103px;" value="#{historicoMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
             </h:panelGrid>
             <br />
             <hr />
             <br />
             <h:panelGrid style="margin-left: 1%;">
-            	<p:outputLabel value="Data" for="dataVencOri" /> 
+                <p:outputLabel value="Data" for="dataVencOri" /> 
             </h:panelGrid>
             <h:panelGrid style="margin-left: 7%; margin-top:-4.6%;">
-                 <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVencOri" style="width: 50%;border: 1px solid #ffffff;" value="#{historicoMB.historicaCobranca.data}">
+                <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVencOri" style="width: 50%;border: 1px solid #ffffff;" value="#{historicoMB.historicaCobranca.data}">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     <p:ajax event="change"/>
-                 </p:calendar>
+                </p:calendar>
             </h:panelGrid> 
             <h:panelGrid style="margin-left:63%; margin-top:-4.5%;">
-            	<p:outputLabel value="Contato"/>
+                <p:outputLabel value="Contato"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:72%; margin-top:-4.5%;">
-            	<p:inputText value="#{historicoMB.historicaCobranca.contato}"/>
+                <p:inputText value="#{historicoMB.historicaCobranca.contato}"/>
             </h:panelGrid>
             <br />
             <h:panelGrid style="margin-left:1%;">
-            	<p:outputLabel value="Descrição" />
+                <p:outputLabel value="Descrição" />
             </h:panelGrid>
             <h:panelGrid style="margin-left:1%;">
-            	<p:inputTextarea style="width:585px;" value="#{historicoMB.historicaCobranca.descricao}"/>
+                <p:inputTextarea style="width:585px;" value="#{historicoMB.historicaCobranca.descricao}"/>
             </h:panelGrid>
             <br />
             <hr /> 
@@ -91,9 +90,9 @@
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{historicoMB.cancelar()}" >
-            	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>     
-             <br />  
-       </h:form>
+            <br />  
+        </h:form>
     </h:body>
 </html>

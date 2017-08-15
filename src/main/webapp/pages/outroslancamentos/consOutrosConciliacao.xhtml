@@ -32,110 +32,110 @@
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
             <h:panelGrid columns="2" style="width: 94%;margin-left: 5%;">
-                    <h:panelGroup>
-                        <p:outputLabel value="Unidade" for="cliente"  class="left3"/>
-                        <br/>
-                        <p:selectOneMenu id="cliente" class="left3" style="width:200px;"  value="#{outrosConciliacaoMB.cliente}"   converter="ClienteConverter"
-                                         filter="true" filterMatchMode="contains" panelStyle="width:150px">
-                            <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
-                            <f:selectItems value="#{outrosConciliacaoMB.listaClientes}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
-                            <f:attribute name="listaCliente" value="#{outrosConciliacaoMB.listaClientes}"/>
-                            <p:ajax event="change" listener="#{outrosConciliacaoMB.gerarListaBanco()}" update="idconta"/>
-                        </p:selectOneMenu> 
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <p:outputLabel value="Conta" for="idconta"  class="left3"/>
-                        <br/>
-                        <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{outrosConciliacaoMB.banco}"  converter="BancoConverter"
-                                         filter="true" filterMatchMode="contains" panelStyle="width:150px">
-                            <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
-                            <f:selectItems value="#{outrosConciliacaoMB.listaBancos}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
-                            <f:attribute name="listaBanco" value="#{outrosConciliacaoMB.listaBancos}" />
-                        </p:selectOneMenu>   
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <h:panelGrid columns="3" style="width: 87%;">
-                            <p:outputLabel value="Periodo" class="left3" />
-                            <p:outputLabel/>
-                            <p:outputLabel/>
-                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIni" style="width: 50%;border: 1px solid #ffffff;" value="#{outrosConciliacaoMB.dataInicial}">
-                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                                <p:ajax event="change"/>
-                            </p:calendar>
-                            <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataFinal" style="width: 50%;border: 1px solid #ffffff;" value="#{outrosConciliacaoMB.dataFinal}">
-                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                                <p:ajax event="change"/>
-                            </p:calendar>
-                            <p:commandLink title="Pesquisar" style="text-decoration: none;margin-left:2%;"   action="#{outrosConciliacaoMB.gerarPesquisa()}" update="idTabelaOutrosLancamentos">
-                                <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
-                            </p:commandLink>
-                        </h:panelGrid>
-                    </h:panelGroup>
-            </h:panelGrid>
-                <p:dataTable id="idTabelaOutrosLancamentos"  var="outrosLancamentos"  value="#{outrosConciliacaoMB.listaOutrosLancamentos}" style="border:none;width:92%;margin-left:5%;" 
-                             scrollRows="10"  scrollable="true" scrollHeight="200" selection="#{outrosConciliacaoMB.outrosLancamentos}" selectionMode="single" rowKey="#{outrosLancamentos.idmovimentobanco}">
-
-                    <p:column headerText="Data" sortBy="#{outrosLancamentos.dataCompensacao}" style="width:10%; font-size:12px; background:white; color:black; border:none; text-align:center;">
-                        <h:outputText  value="#{outrosLancamentos.dataCompensacao}" style="font-size:12px; color:gray;" > 
+                <h:panelGroup>
+                    <p:outputLabel value="Unidade" for="cliente"  class="left3"/>
+                    <br/>
+                    <p:selectOneMenu id="cliente" class="left3" style="width:200px;"  value="#{outrosConciliacaoMB.cliente}"   converter="ClienteConverter"
+                                     filter="true" filterMatchMode="contains" panelStyle="width:150px">
+                        <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+                        <f:selectItems value="#{outrosConciliacaoMB.listaClientes}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                        <f:attribute name="listaCliente" value="#{outrosConciliacaoMB.listaClientes}"/>
+                        <p:ajax event="change" listener="#{outrosConciliacaoMB.gerarListaBanco()}" update="idconta"/>
+                    </p:selectOneMenu> 
+                </h:panelGroup>
+                <h:panelGroup>
+                    <p:outputLabel value="Conta" for="idconta"  class="left3"/>
+                    <br/>
+                    <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{outrosConciliacaoMB.banco}"  converter="BancoConverter"
+                                     filter="true" filterMatchMode="contains" panelStyle="width:150px">
+                        <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+                        <f:selectItems value="#{outrosConciliacaoMB.listaBancos}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+                        <f:attribute name="listaBanco" value="#{outrosConciliacaoMB.listaBancos}" />
+                    </p:selectOneMenu>   
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:panelGrid columns="3" style="width: 87%;">
+                        <p:outputLabel value="Periodo" class="left3" />
+                        <p:outputLabel/>
+                        <p:outputLabel/>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIni" style="width: 50%;border: 1px solid #ffffff;" value="#{outrosConciliacaoMB.dataInicial}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                        </h:outputText> 
-                    </p:column> 
-                    <p:column headerText="Descrição"  sortBy="#{outrosLancamentos.descricao}" style=" font-size:12px; background:white; color:black; border:#fff; text-align:left;">
-                        <h:outputText value="#{outrosLancamentos.descricao}" style="font-size:12px; color:gray;"/>
-                    </p:column> 
-                    <p:column headerText="Valor Entrada" rendered="#{conciliacaoMB.retornoValorEntrada(conciliacao.transacao)}" sortBy="#{outrosLancamentos.valorEntrada}" style="width:15%; background:white; font-size:12px; color: #4ABA58; border:none; text-align:right;" styleClass="alinharCenter">
-                        <h:outputText value="#{outrosLancamentos.valorEntrada}" style="font-size:12px; color:#{outrosLancamentosMB.coresValoresEntrada(outrosLancamentos)};">
-                            <f:convertNumber currencySymbol="" type="currency"/>
-                        </h:outputText>                                     
-                    </p:column>
-                    <p:column headerText="Valor Saida" rendered="#{conciliacaoMB.retornoValorSaida(conciliacao.transacao)}" sortBy="#{outrosLancamentos.valorSaida}" style="width:15%; background:white; font-size:12px; color:#B54848; border:none; text-align:right;" styleClass="alinharCenter">
-                        <h:outputText value="#{outrosLancamentos.valorSaida}" style="font-size:12px; color:#{outrosLancamentosMB.coresValoresSaida(outrosLancamentos)};">
-                            <f:convertNumber currencySymbol="" type="currency"/>
-                        </h:outputText>                                    
-                    </p:column>
-                    <p:column headerText="" width="10%" style=" font-size:12px; background:white; color:black; border:#fff; text-align:left;">
-                        <p:selectBooleanCheckbox value="#{outrosLancamentos.selecionado}" style="background:white !important; color:white !important;"/>
-                    </p:column>
-                </p:dataTable> 
-                <br /><br />
-                <h:panelGrid columns="3" style="margin-left:40%;"> 
-                    <p:commandLink title="Confirmar" style="text-decoration: none"  update=":idFrmCadOutrosLancamentos:messages" action="#{outrosConciliacaoMB.salvar()}" >
-                        <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-                    </p:commandLink>
-                    <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none"  action="#{outrosConciliacaoMB.cancelar()}" >
-                        <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-                    </p:commandLink>
-                </h:panelGrid>   
-                <br />
-                <script>
-                    PrimeFaces.locales['pt_BR'] = {
-                        closeText: 'Fechar',
-                        prevText: 'Anterior',
-                        nextText: 'Próximo',
-                        currentText: 'Começo',
-                        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                        dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-                        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-                        dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
-                        weekHeader: 'Semana',
-                        firstDay: 1,
-                        isRTL: false,
-                        showMonthAfterYear: false,
-                        yearSuffix: '',
-                        timeOnlyTitle: 'Só Horas',
-                        timeText: 'Tempo',
-                        hourText: 'Hora',
-                        minuteText: 'Minuto',
-                        secondText: 'Segundo',
-                        currentText: 'Data Atual',
-                        ampm: false,
-                        month: 'Mês',
-                        week: 'Semana',
-                        day: 'Dia',
-                        allDayText: 'Todo Dia'
-                    };
-                </script>
+                            <p:ajax event="change"/>
+                        </p:calendar>
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataFinal" style="width: 50%;border: 1px solid #ffffff;" value="#{outrosConciliacaoMB.dataFinal}">
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            <p:ajax event="change"/>
+                        </p:calendar>
+                        <p:commandLink title="Pesquisar" style="text-decoration: none;margin-left:2%;"   action="#{outrosConciliacaoMB.gerarPesquisa()}" update="idTabelaOutrosLancamentos">
+                            <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
+                        </p:commandLink>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </h:panelGrid>
+            <p:dataTable id="idTabelaOutrosLancamentos"  var="outrosLancamentos"  value="#{outrosConciliacaoMB.listaOutrosLancamentos}" style="border:none;width:92%;margin-left:5%;" 
+                         scrollRows="10"  scrollable="true" scrollHeight="200" selection="#{outrosConciliacaoMB.outrosLancamentos}" selectionMode="single" rowKey="#{outrosLancamentos.idmovimentobanco}">
+
+                <p:column headerText="Data" sortBy="#{outrosLancamentos.dataCompensacao}" style="width:10%; font-size:12px; background:white; color:black; border:none; text-align:center;">
+                    <h:outputText  value="#{outrosLancamentos.dataCompensacao}" style="font-size:12px; color:gray;" > 
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </h:outputText> 
+                </p:column> 
+                <p:column headerText="Descrição"  sortBy="#{outrosLancamentos.descricao}" style=" font-size:12px; background:white; color:black; border:#fff; text-align:left;">
+                    <h:outputText value="#{outrosLancamentos.descricao}" style="font-size:12px; color:gray;"/>
+                </p:column> 
+                <p:column headerText="Valor Entrada" rendered="#{conciliacaoMB.retornoValorEntrada(conciliacao.transacao)}" sortBy="#{outrosLancamentos.valorEntrada}" style="width:15%; background:white; font-size:12px; color: #4ABA58; border:none; text-align:right;" styleClass="alinharCenter">
+                    <h:outputText value="#{outrosLancamentos.valorEntrada}" style="font-size:12px; color:#{outrosLancamentosMB.coresValoresEntrada(outrosLancamentos)};">
+                        <f:convertNumber currencySymbol="" type="currency"/>
+                    </h:outputText>                                     
+                </p:column>
+                <p:column headerText="Valor Saida" rendered="#{conciliacaoMB.retornoValorSaida(conciliacao.transacao)}" sortBy="#{outrosLancamentos.valorSaida}" style="width:15%; background:white; font-size:12px; color:#B54848; border:none; text-align:right;" styleClass="alinharCenter">
+                    <h:outputText value="#{outrosLancamentos.valorSaida}" style="font-size:12px; color:#{outrosLancamentosMB.coresValoresSaida(outrosLancamentos)};">
+                        <f:convertNumber currencySymbol="" type="currency"/>
+                    </h:outputText>                                    
+                </p:column>
+                <p:column headerText="" width="10%" style=" font-size:12px; background:white; color:black; border:#fff; text-align:left;">
+                    <p:selectBooleanCheckbox value="#{outrosLancamentos.selecionado}" style="background:white !important; color:white !important;"/>
+                </p:column>
+            </p:dataTable> 
+            <br /><br />
+            <h:panelGrid columns="3" style="margin-left:40%;"> 
+                <p:commandLink title="Confirmar" style="text-decoration: none"  update=":idFrmCadOutrosLancamentos:messages" action="#{outrosConciliacaoMB.salvar()}" >
+                    <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+                </p:commandLink>
+                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none"  action="#{outrosConciliacaoMB.cancelar()}" >
+                    <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+                </p:commandLink>
+            </h:panelGrid>   
+            <br />
+            <script>
+                PrimeFaces.locales['pt_BR'] = {
+                    closeText: 'Fechar',
+                    prevText: 'Anterior',
+                    nextText: 'Próximo',
+                    currentText: 'Começo',
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                    weekHeader: 'Semana',
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: '',
+                    timeOnlyTitle: 'Só Horas',
+                    timeText: 'Tempo',
+                    hourText: 'Hora',
+                    minuteText: 'Minuto',
+                    secondText: 'Segundo',
+                    currentText: 'Data Atual',
+                    ampm: false,
+                    month: 'Mês',
+                    week: 'Semana',
+                    day: 'Dia',
+                    allDayText: 'Todo Dia'
+                };
+            </script>
         </h:form>
     </h:body>
 </html>

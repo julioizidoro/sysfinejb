@@ -9,7 +9,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
-         <!-- Bootstrap core CSS -->
+        <!-- Bootstrap core CSS -->
         <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
 
         <!-- Font Awesome -->
@@ -19,24 +19,24 @@
     <h:body >
 
         <h:form id="frmidCobranca" class="body2" style="font-size: 12px;background: white">
-        	<p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
+            <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
+                <br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Cobrança</title>
-            
+
             <br />
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Cobrança&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cobrancaMB.cobranca()}" style="background:#E8E8E8;font-size:16px;color:#696969;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Cobrança">
-			</p:commandLink>  
+            </p:commandLink>  
             <p:commandLink id="listacontas" value="&nbsp;&nbsp;&nbsp;&nbsp;Lista de Contas&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cobrancaMB.listaContasCobrancas()}" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Lista de contas">
-			</p:commandLink>
-			<p:commandLink id="historicoCobranca" value="&nbsp;&nbsp;&nbsp;&nbsp;Histórico de Cobrança&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cobrancaMB.historicoCobrancas()}" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Histórico de Cobrança">
-			</p:commandLink>
+            </p:commandLink>
+            <p:commandLink id="historicoCobranca" value="&nbsp;&nbsp;&nbsp;&nbsp;Histórico de Cobrança&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cobrancaMB.historicoCobrancas()}" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Histórico de Cobrança">
+            </p:commandLink>
             <br/><br/>
             <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
                 <h:panelGroup>
@@ -82,7 +82,7 @@
             <h:panelGrid columns="3"  style="margin-left: 2%;width: 100%;">
                 <h:panelGroup>
                     <div class="form-group">
-                         <h:outputLabel for="fone1" >
+                        <h:outputLabel for="fone1" >
                             Fone
                             <p:selectBooleanCheckbox value="#{cobrancaMB.noveDigito1}">
                                 9°
@@ -94,11 +94,11 @@
                 </h:panelGroup> 
                 <h:panelGroup>
                     <div class="form-group">
-                         <h:outputLabel for="fone2" >
+                        <h:outputLabel for="fone2" >
                             Fone 
                             <p:selectBooleanCheckbox value="#{cobrancaMB.noveDigito2}">
                                 9°
-                                   <p:ajax listener="#{cobrancaMB.verificarDigitoFone2()}" update="fone2" event="change"/>
+                                <p:ajax listener="#{cobrancaMB.verificarDigitoFone2()}" update="fone2" event="change"/>
                             </p:selectBooleanCheckbox>
                         </h:outputLabel>
                         <p:inputMask id="fone2" maxlength="100" style="width: 80%;" class="form-control" mask="#{cobrancaMB.maskFone2}" value="#{cobrancaMB.cobranca.fone2}"/>
@@ -115,7 +115,7 @@
                     </div>
                 </h:panelGroup>
             </h:panelGrid>
-           <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
                 <h:panelGroup>
                     <div class="form-group">
                         <h:outputLabel  for="email" class="left3" >E mail</h:outputLabel> 
@@ -141,6 +141,6 @@
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/> 
             </p:commandLink>
         </h:form> 
-        
+
     </h:body>
 </html>

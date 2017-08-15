@@ -1199,18 +1199,13 @@ public class CadVendasMB implements Serializable {
     }
 
     public void gerarListaPlanoContas() {
-        try {
-            listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
-            if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
-                listaPlanoContaTipo = new ArrayList<>();
-            }
-            listaPlanocontas = new ArrayList<>();
-            for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
-                listaPlanocontas.add(listaPlanoContaTipo.get(i).getPlanocontas());
-            }
-        } catch (Exception e) {
-            mensagem m = new mensagem();
-            m.faltaInformacao("" + e);
+        listaPlanoContaTipo = planoContaTipoDao.list("select p from Planocontatipo p where p.tipoplanocontas.idtipoplanocontas=" + cliente.getTipoplanocontas().getIdtipoplanocontas());
+        if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
+            listaPlanoContaTipo = new ArrayList<>();
+        }
+        listaPlanocontas = new ArrayList<>();
+        for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
+            listaPlanocontas.add(listaPlanoContaTipo.get(i).getPlanocontas());
         }
     }
 }

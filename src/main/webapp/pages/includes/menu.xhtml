@@ -1,231 +1,230 @@
 <h:form xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-            <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        	<br/> 
-            <img src="../../resources/img/ajax-carregando.gif" />
-        </p:dialog>
-        <div class="updateGrowl">
-         	<p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
-         </div> 
-      <div id="top-nav" class="fixed skin-6" style="position:fixed;background:#302E2E;">
-                <h:panelGrid columns="3" width="100%">
-                    <h:panelGroup>
-                        <a href="#" class="brand" style="background:#302E2E;text-decoration: none;">
-                            <span style="margin-left:4%;">
-                                    <img src="../../resources/img/iconeUsuario.png" style="width: 15%;float: left;text-decoration: none;" >    
-                                        Bem vindo, #{usuarioLogadoMB.usuario.nome}
-                                    </img>
+    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+        <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        <br/> 
+        <img src="../../resources/img/ajax-carregando.gif" />
+    </p:dialog>
+    <div class="updateGrowl">
+        <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
+    </div> 
+    <div id="top-nav" class="fixed skin-6" style="position:fixed;background:#302E2E;">
+        <h:panelGrid columns="3" width="100%">
+            <h:panelGroup>
+                <a href="#" class="brand" style="background:#302E2E;text-decoration: none;">
+                    <span style="margin-left:4%;">
+                        <img src="../../resources/img/iconeUsuario.png" style="width: 15%;float: left;text-decoration: none;" >    
+                            Bem vindo, #{usuarioLogadoMB.usuario.nome}
+                        </img>
+                    </span>
+                </a>
+            </h:panelGroup>
+            <h:panelGroup>
+                <h:outputText style="font-size: 30px;color:white;font-family:Trebuchet MS; " value="SYSFIN" />
+            </h:panelGroup>
+            <h:panelGroup style="float: right;">
+                <p:commandLink action="#{usuarioLogadoMB.validarTrocarSenhas()}" title="Trocar Senha">
+                    <img src="../../resources/img/settings.png" style="width: 25px;"/>
+                </p:commandLink>
+                <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style=" text-decoration:none;" title="Sair">
+                    <img src="../../resources/img/iconeSair.png" border="none" style="text-decoration:none;width: 40px;"/>
+                </p:commandLink> 
+            </h:panelGroup>
+        </h:panelGrid>  
+        <br/>
+    </div><!-- /top-nav-->
+
+    <aside class="fixed " style="background:#302E2E;display:block;width:15%;">
+
+        <div class="sidebar-inner scrollable-sidebar" style="background:#302E2E;">
+
+            <div class="main-menu">
+                <ul>
+                    <li  style="background:#302E2E;">
+                        <a href="../../principal.jsf" style="text-decoration:none;">
+                            <span class="menu-icon">
+                                <i>
+                                    <img src="../../resources/img/iconeVisaoGeralSysfin.png" style="width: 14%;"/> 
+                                </i> 
                             </span>
+                            <span class="text">
+                                Visão Geral
+                            </span>
+                            <span class="menu-hover"></span>
                         </a>
+                    </li>
+                    <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.cadastro}">
+                        <li class="openable open" style="background:#302E2E;">
+                            <a href="#" style="text-decoration:none;">
+                                <span class="menu-icon">
+                                    <img src="../../resources/img/iconeCadastroSysfin.png" style="width: 14%;"/>
+                                </span>
+                                <span class="text">
+                                    Cadastro
+                                    <i class="fa fa-caret-down"/>
+                                </span>
+                                <span class="menu-hover"></span>
+                            </a>
+                            <ul class="submenu" style="background:#302E2E;">
+                                <li><a href="../../pages/acesso/consAcesso.jsf"><span class="submenu-label">Acesso</span></a></li>
+                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.banco}"><li><a href="../../pages/banco/consBanco.jsf"><span class="submenu-label">Banco</span></a></li></h:panelGroup>
+                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.cliente}"><li><a href="../../pages/cliente/consCliente.jsf"><span class="submenu-label">Cliente</span></a></li></h:panelGroup>
+                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.planocontas}"><li><a href="../../pages/planoconta/consPlanoConta.jsf"><span class="submenu-label">Plano de Conta</span></a></li></h:panelGroup>
+                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.produto}"><li><a href="../../pages/produtos/consProduto.jsf"><span class="submenu-label">Produto</span></a></li></h:panelGroup>
+                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.tipoplanocontas}"><li><a href="../../pages/tipoPlanoConta/consTipoPlanoConta.jsf"><span class="submenu-label">Tipo Plano Conta</span></a></li></h:panelGroup>
+                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.usuario}"><li><a href="../../pages/usuario/consUsuario.jsf"><span class="submenu-label">Usuário</span></a></li></h:panelGroup>
+                            </ul>
+                        </li> 
                     </h:panelGroup>
-                    <h:panelGroup>
-                        <h:outputText style="font-size: 30px;color:white;font-family:Trebuchet MS; " value="SYSFIN" />
+                    <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.contaspagar}">
+                        <li class="openable" style="background:#302E2E;">
+                            <a href="#" style="text-decoration:none;">
+                                <span class="menu-icon">
+                                    <img src="../../resources/img/iconeContasReceberSysfin.png" style="width: 14%;"/>
+                                </span>
+                                <span class="text">
+                                    Contas a Pagar
+                                    <i class="fa fa-caret-down"/>
+                                </span>
+                                <span class="menu-hover"></span>
+                            </a>
+                            <ul class="submenu">
+                                <li><p:commandLink action="#{contasPagarMB.novaConta()}"><span class="submenu-label">Novo Lançamento</span></p:commandLink></li>
+                                <li><a href="../../pages/contasPagar/consContaPagar.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+                                <li><p:commandLink action="#{contasPagarMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
+                            </ul>
+                        </li>
                     </h:panelGroup>
-                    <h:panelGroup style="float: right;">
-                            <p:commandLink action="#{usuarioLogadoMB.validarTrocarSenhas()}" title="Trocar Senha">
-                                <img src="../../resources/img/settings.png" style="width: 25px;"/>
-                            </p:commandLink>
-                            <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style=" text-decoration:none;" title="Sair">
-                                <img src="../../resources/img/iconeSair.png" border="none" style="text-decoration:none;width: 40px;"/>
-                            </p:commandLink> 
+                    <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.contasreceber}">
+                        <li class="openable" style="background:#302E2E;">
+                            <a href="#" style="text-decoration:none;">
+                                <span class="menu-icon">
+                                    <img src="../../resources/img/iconeContasPagarSysfin.png" style="width: 14%;"/>
+                                </span>
+                                <span class="text">
+                                    Contas a Receber
+                                    <i class="fa fa-caret-down"/>
+                                </span>
+                                <span class="menu-hover"></span>
+                            </a>
+                            <ul class="submenu">
+                                <li><p:commandLink  action="#{contasReceberMB.novaConta()}"><span  class="submenu-label">Novo Lançamento</span></p:commandLink></li>
+                                <li><a href="../../pages/contasReceber/consContasReceber.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+                                <li><p:commandLink action="#{contasReceberMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
+                            </ul>
+                        </li>
                     </h:panelGroup>
-                </h:panelGrid>  
-                <br/>
-            </div><!-- /top-nav-->
-        
-        <aside class="fixed " style="background:#302E2E;display:block;width:15%;">
-       
-			<div class="sidebar-inner scrollable-sidebar" style="background:#302E2E;">
-			
-				<div class="main-menu">
-					<ul>
-						<li  style="background:#302E2E;">
-							<a href="../../principal.jsf" style="text-decoration:none;">
-								<span class="menu-icon">
-									<i>
-										<img src="../../resources/img/iconeVisaoGeralSysfin.png" style="width: 14%;"/> 
-									</i> 
-								</span>
-								<span class="text">
-									Visão Geral
-								</span>
-								<span class="menu-hover"></span>
-							</a>
-						</li>
-                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.cadastro}">
-						<li class="openable open" style="background:#302E2E;">
-							<a href="#" style="text-decoration:none;">
-								<span class="menu-icon">
-									<img src="../../resources/img/iconeCadastroSysfin.png" style="width: 14%;"/>
-								</span>
-								<span class="text">
-									Cadastro
-									<i class="fa fa-caret-down"/>
-								</span>
-								<span class="menu-hover"></span>
-							</a>
-							<ul class="submenu" style="background:#302E2E;">
-                                                                <li><a href="../../pages/acesso/consAcesso.jsf"><span class="submenu-label">Acesso</span></a></li>
-                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.banco}"><li><a href="../../pages/banco/consBanco.jsf"><span class="submenu-label">Banco</span></a></li></h:panelGroup>
-                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.cliente}"><li><a href="../../pages/cliente/consCliente.jsf"><span class="submenu-label">Cliente</span></a></li></h:panelGroup>
-                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.planocontas}"><li><a href="../../pages/planoconta/consPlanoConta.jsf"><span class="submenu-label">Plano de Conta</span></a></li></h:panelGroup>
-                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.produto}"><li><a href="../../pages/produtos/consProduto.jsf"><span class="submenu-label">Produto</span></a></li></h:panelGroup>
-                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.tipoplanocontas}"><li><a href="../../pages/tipoPlanoConta/consTipoPlanoConta.jsf"><span class="submenu-label">Tipo Plano Conta</span></a></li></h:panelGroup>
-                                                                <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.usuario}"><li><a href="../../pages/usuario/consUsuario.jsf"><span class="submenu-label">Usuário</span></a></li></h:panelGroup>
-							</ul>
-						</li> 
-                                            </h:panelGroup>
-                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.contaspagar}">
-						<li class="openable" style="background:#302E2E;">
-							<a href="#" style="text-decoration:none;">
-								<span class="menu-icon">
-									<img src="../../resources/img/iconeContasReceberSysfin.png" style="width: 14%;"/>
-								</span>
-								<span class="text">
-									Contas a Pagar
-									<i class="fa fa-caret-down"/>
-								</span>
-								<span class="menu-hover"></span>
-							</a>
-							<ul class="submenu">
-								<li><p:commandLink action="#{contasPagarMB.novaConta()}"><span class="submenu-label">Novo Lançamento</span></p:commandLink></li>
-								<li><a href="../../pages/contasPagar/consContaPagar.jsf"><span class="submenu-label">Lançamentos</span></a></li>
-								<li><p:commandLink action="#{contasPagarMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
-							</ul>
-						</li>
-                                            </h:panelGroup>
-                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.contasreceber}">
-						<li class="openable" style="background:#302E2E;">
-							<a href="#" style="text-decoration:none;">
-								<span class="menu-icon">
-									<img src="../../resources/img/iconeContasPagarSysfin.png" style="width: 14%;"/>
-								</span>
-								<span class="text">
-									Contas a Receber
-									<i class="fa fa-caret-down"/>
-								</span>
-								<span class="menu-hover"></span>
-							</a>
-							<ul class="submenu">
-								<li><p:commandLink  action="#{contasReceberMB.novaConta()}"><span  class="submenu-label">Novo Lançamento</span></p:commandLink></li>
-								<li><a href="../../pages/contasReceber/consContasReceber.jsf"><span class="submenu-label">Lançamentos</span></a></li>
-								<li><p:commandLink action="#{contasReceberMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
-							</ul>
-						</li>
-                                            </h:panelGroup>
-                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.vendas}">
-						<li class="openable" style="background:#302E2E;">
-							<a href="#" style="text-decoration:none;">
-								<span class="menu-icon">
-									<img src="../../resources/img/iconeVendasSysfin.png" style="width: 14%;"/>
-								</span>
-								<span class="text">
-									Vendas
-									<i class="fa fa-caret-down"/>
-								</span>
-								<span class="menu-hover"></span>
-							</a>
-							<ul class="submenu">
-								<li><p:commandLink action="#{vendasMB.novaVenda()}"><span class="submenu-label">Novo Lançamento</span></p:commandLink></li>
-								<li><a href="../../pages/vendas/consVendas.jsf"><span class="submenu-label">Lançamentos</span></a></li>
-								<li><p:commandLink action="#{vendasMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
-							</ul>
-						</li>
-                                            </h:panelGroup>
-                                            <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.outroslancamentos}">
-						<li class="openable" style="background:#302E2E;">
-							<a href="#" style="text-decoration:none;">
-								<span class="menu-icon">
-									<img src="../../resources/img/iconeOutrosLancamentosSysfin.png" style="width: 14%;"/> 
-								</span>
-								<span class="text">
-									Outros Lançamentos
-									<i class="fa fa-caret-down"/>
-								</span>
-								<span class="menu-hover"></span>
-							</a>
-							<ul class="submenu">
-								<li><p:commandLink action="#{outrosLancamentosMB.novoLancamento()}"><span class="submenu-label">Novo Lançamento</span></p:commandLink></li>
-								<li><a href="../../pages/outroslancamentos/consOutrosLancamentos.jsf"><span class="submenu-label">Lançamentos</span></a></li>
-								<li><p:commandLink action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
-							</ul>
-						</li>
-                                            </h:panelGroup>
-						<li class="openable" style="background:#302E2E;">
-							<a href="#" style="text-decoration:none;">
-								<span class="menu-icon">
-									<img src="../../resources/img/iconeRelatoriosSysfin.png" style="width: 14%;"/> 
-								</span>
-								<span class="text">
-									Relatórios
-									<i class="fa fa-caret-down"/>
-								</span>
-								<span class="menu-hover"></span>
-							</a>
-							<ul class="submenu">
-								<li><p:commandLink action="#{contasPagarMB.novaImpressao()}"><span class="submenu-label">Contas a Pagar</span></p:commandLink></li>
-								<li><p:commandLink action="#{contasReceberMB.novaImpressao()}"><span class="submenu-label">Contas a Receber</span></p:commandLink></li>
-								<li><p:commandLink action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}"><span class="submenu-label">Outros Lançamentos</span></p:commandLink></li>
-								<li><p:commandLink action="#{vendasMB.novaImpressao()}"><span class="submenu-label">Vendas</span></p:commandLink></li>
-							</ul>
-						</li>
-						<li  style="background:#302E2E;">
-                                                    <p:commandLink update="growl" action="#{principalMB.mensagemEmBreve()}" style="text-decoration:none;">
-								<span class="menu-icon">
-									<i>
-										<img src="../../resources/img/iconeAreaClienteSysfin.png" style="width: 14%;"/>
-									</i> 
-								</span>
-								<span class="text">
-									Área do Cliente
-								</span> 
-								<span class="menu-hover"></span>
-							</p:commandLink>
-						</li>
-						<li  style="background:#302E2E;">
-							<a href="http://www.financemate.com.br/" target="_blank" style="text-decoration:none;">
-								<span class="menu-icon">
-									<i>
-										<img src="../../resources/img/logofinance.png" style="width: 14%;"/>
-									</i> 
-								</span>
-								<span class="text">
-									Sobre Financemate 
-								</span>
-								<span class="menu-hover"></span>
-							</a>
-						</li>
-					</ul>
-					
-				</div><!-- /main-menu -->
-			</div><!-- /sidebar-inner -->
-        </aside> 
-        	<script src='../../resources/js/jquery.sparkline.min.js'></script>
+                    <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.vendas}">
+                        <li class="openable" style="background:#302E2E;">
+                            <a href="#" style="text-decoration:none;">
+                                <span class="menu-icon">
+                                    <img src="../../resources/img/iconeVendasSysfin.png" style="width: 14%;"/>
+                                </span>
+                                <span class="text">
+                                    Vendas
+                                    <i class="fa fa-caret-down"/>
+                                </span>
+                                <span class="menu-hover"></span>
+                            </a>
+                            <ul class="submenu">
+                                <li><p:commandLink action="#{vendasMB.novaVenda()}"><span class="submenu-label">Novo Lançamento</span></p:commandLink></li>
+                                <li><a href="../../pages/vendas/consVendas.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+                                <li><p:commandLink action="#{vendasMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
+                            </ul>
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.outroslancamentos}">
+                        <li class="openable" style="background:#302E2E;">
+                            <a href="#" style="text-decoration:none;">
+                                <span class="menu-icon">
+                                    <img src="../../resources/img/iconeOutrosLancamentosSysfin.png" style="width: 14%;"/> 
+                                </span>
+                                <span class="text">
+                                    Outros Lançamentos
+                                    <i class="fa fa-caret-down"/>
+                                </span>
+                                <span class="menu-hover"></span>
+                            </a>
+                            <ul class="submenu">
+                                <li><p:commandLink action="#{outrosLancamentosMB.novoLancamento()}"><span class="submenu-label">Novo Lançamento</span></p:commandLink></li>
+                                <li><a href="../../pages/outroslancamentos/consOutrosLancamentos.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+                                <li><p:commandLink action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
+                            </ul>
+                        </li>
+                    </h:panelGroup>
+                    <li class="openable" style="background:#302E2E;">
+                        <a href="#" style="text-decoration:none;">
+                            <span class="menu-icon">
+                                <img src="../../resources/img/iconeRelatoriosSysfin.png" style="width: 14%;"/> 
+                            </span>
+                            <span class="text">
+                                Relatórios
+                                <i class="fa fa-caret-down"/>
+                            </span>
+                            <span class="menu-hover"></span>
+                        </a>
+                        <ul class="submenu">
+                            <li><p:commandLink action="#{contasPagarMB.novaImpressao()}"><span class="submenu-label">Contas a Pagar</span></p:commandLink></li>
+                            <li><p:commandLink action="#{contasReceberMB.novaImpressao()}"><span class="submenu-label">Contas a Receber</span></p:commandLink></li>
+                            <li><p:commandLink action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}"><span class="submenu-label">Outros Lançamentos</span></p:commandLink></li>
+                            <li><p:commandLink action="#{vendasMB.novaImpressao()}"><span class="submenu-label">Vendas</span></p:commandLink></li>
+                        </ul>
+                    </li>
+                    <li  style="background:#302E2E;">
+                        <p:commandLink update="growl" action="#{principalMB.mensagemEmBreve()}" style="text-decoration:none;">
+                            <span class="menu-icon">
+                                <i>
+                                    <img src="../../resources/img/iconeAreaClienteSysfin.png" style="width: 14%;"/>
+                                </i> 
+                            </span>
+                            <span class="text">
+                                Área do Cliente
+                            </span> 
+                            <span class="menu-hover"></span>
+                        </p:commandLink>
+                    </li>
+                    <li  style="background:#302E2E;">
+                        <a href="http://www.financemate.com.br/" target="_blank" style="text-decoration:none;">
+                            <span class="menu-icon">
+                                <i>
+                                    <img src="../../resources/img/logofinance.png" style="width: 14%;"/>
+                                </i> 
+                            </span>
+                            <span class="text">
+                                Sobre Financemate 
+                            </span>
+                            <span class="menu-hover"></span>
+                        </a>
+                    </li>
+                </ul>
 
-		<!-- Pace -->
-		<script src='../../resources/js/uncompressed/pace.js'></script>
+            </div><!-- /main-menu -->
+        </div><!-- /sidebar-inner -->
+    </aside> 
+    <script src='../../resources/js/jquery.sparkline.min.js'></script>
 
-		<!-- Popup Overlay -->
-		<script src='../../resources/js/jquery.popupoverlay.min.js'></script>
+    <!-- Pace -->
+    <script src='../../resources/js/uncompressed/pace.js'></script>
 
-		<!-- Slimscroll -->
-		<script src='../../resources/js/jquery.slimscroll.min.js'></script>
+    <!-- Popup Overlay -->
+    <script src='../../resources/js/jquery.popupoverlay.min.js'></script>
 
-		<!-- Modernizr -->
-		<script src='../../resources/js/modernizr.min.js'></script>
+    <!-- Slimscroll -->
+    <script src='../../resources/js/jquery.slimscroll.min.js'></script>
 
-		<!-- Cookie -->
-		<script src='../../resources/js/jquery.cookie.min.js'></script>
-		
-		<!-- Endless -->
-		 <link href='../../resources/css/endless.min.css' rel="stylesheet"/>
-		 <link href='../../resources/css/endless-skin.css' rel="stylesheet"/>
+    <!-- Modernizr -->
+    <script src='../../resources/js/modernizr.min.js'></script>
+
+    <!-- Cookie -->
+    <script src='../../resources/js/jquery.cookie.min.js'></script>
+
+    <!-- Endless -->
+    <link href='../../resources/css/endless.min.css' rel="stylesheet"/>
+    <link href='../../resources/css/endless-skin.css' rel="stylesheet"/>
 
 </h:form>
 
-	

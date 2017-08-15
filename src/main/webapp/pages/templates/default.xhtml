@@ -1,67 +1,66 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:f="http://java.sun.com/jsf/core">
-      
- <h:head>
+      xmlns:h="http://java.sun.com/jsf/html" >
+
+    <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>...SysFIN...</title> 
         <link rel="icon" href="../../resources/img/logotipoFinancemate.png" type="image/x-icon" />
         <link href="../../resources/css/css.css" rel="stylesheet" media="screen" />
-        
-          <!-- Bootstrap core CSS -->
+
+        <!-- Bootstrap core CSS -->
         <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
-	    
-		 <!-- Font Awesome -->
-		 <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
-	
-		 <!-- Pace -->
-		 <link href="../../resources/css/pace.css" rel="stylesheet"/>
-	
-		 <!-- Color box -->
-		 <link href="../../resources/css/colorbox/colorbox.css" rel="stylesheet"/>
-	
-		 <!-- Morris -->
-		 <link href="../../resources/css/morris.css" rel="stylesheet"/>	
-	
-		 <!-- Endless -->
-		 <link href="../../resources/css/endless.min.css" rel="stylesheet"/>
-		 <link href="../../resources/css/endless-skin.css" rel="stylesheet"/>
-		 
-		 <h:outputScript name="../../resources/js/jquery-1.12.0.js" />
-		 <!-- Endless -->
-		<script src="../../resources/js/endless/endless.js"></script>
-		 
-        
-</h:head>
-<h:body style="background:white;">
-			 <!-- rolando o titulo da pagina -->
-		<script> var repeat=1 // 0 para rolar uma vez, 1 para rolar infinitamente
-			var title=document.title
-			var leng=title.length
-			var start=1
-			function titlemove() {
-				titl=title.substring(start, leng) + title.substring(0, start)
-				document.title=titl
-				start++
-				if (start==leng+1) {
-					start=0
-				if (repeat==0)
-					return
-				}
-				setTimeout("titlemove()",300)  // aqui vc pode aumentar ou diminuir a velocidade 
-			}
-			if (document.title)
-			titlemove()
-		</script>
-            <ui:insert name="menu">
-                <ui:include src="/pages/includes/menu.xhtml" />
-            </ui:insert>
+
+        <!-- Font Awesome -->
+        <link href="../../resources/css/font-awesome.min.css" rel="stylesheet"/>
+
+        <!-- Pace -->
+        <link href="../../resources/css/pace.css" rel="stylesheet"/>
+
+        <!-- Color box -->
+        <link href="../../resources/css/colorbox/colorbox.css" rel="stylesheet"/>
+
+        <!-- Morris -->
+        <link href="../../resources/css/morris.css" rel="stylesheet"/>	
+
+        <!-- Endless -->
+        <link href="../../resources/css/endless.min.css" rel="stylesheet"/>
+        <link href="../../resources/css/endless-skin.css" rel="stylesheet"/>
+
+        <h:outputScript name="../../resources/js/jquery-1.12.0.js" />
+        <!-- Endless -->
+        <script src="../../resources/js/endless/endless.js"></script>
+
+
+    </h:head>
+    <h:body style="background:white;">
+        <!-- rolando o titulo da pagina -->
+        <script> var repeat = 1 // 0 para rolar uma vez, 1 para rolar infinitamente
+            var title = document.title
+            var leng = title.length
+            var start = 1
+            function titlemove() {
+                titl = title.substring(start, leng) + title.substring(0, start)
+                document.title = titl
+                start++
+                if (start == leng + 1) {
+                    start = 0
+                    if (repeat == 0)
+                        return
+                }
+                setTimeout("titlemove()", 300)  // aqui vc pode aumentar ou diminuir a velocidade 
+            }
+            if (document.title)
+                titlemove()
+        </script>
+        <ui:insert name="menu">
+            <ui:include src="/pages/includes/menu.xhtml" />
+        </ui:insert>
         <div  class="center_content">
             <ui:insert name="corpo">Corpo</ui:insert>
         </div>
     </h:body>
-   
-   
+
+
 </html>
