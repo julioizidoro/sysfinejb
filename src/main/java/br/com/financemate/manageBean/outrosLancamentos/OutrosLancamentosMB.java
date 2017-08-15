@@ -418,7 +418,9 @@ public class OutrosLancamentosMB implements Serializable {
                 listaOutrosLancamentos.get(i).setSaldo(saldo);
             }
         }
-
+        if (saldo < 0) {
+            saldo = saldo * (-1);
+        }
         setValorEntrada(Formatacao.foramtarFloatString(entrada));
         setValorSaida(Formatacao.foramtarFloatString(saida));
         setValorTotal(Formatacao.foramtarFloatString(saldo));

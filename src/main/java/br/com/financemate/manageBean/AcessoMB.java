@@ -60,7 +60,7 @@ public class AcessoMB implements Serializable{
     
     
     public void listarTipoAcesso(){
-        listaTipoAcesso = tipoAcessoDao.list("select t srom Tipoacesso t");
+        listaTipoAcesso = tipoAcessoDao.list("select t from Tipoacesso t");
         if (listaTipoAcesso == null || listaTipoAcesso.isEmpty()) {
             listaTipoAcesso = new ArrayList<>();
         }

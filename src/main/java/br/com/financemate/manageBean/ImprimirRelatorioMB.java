@@ -372,9 +372,9 @@ public class ImprimirRelatorioMB implements Serializable {
 
     public Boolean habilitarCompetencia() {
         if (relatorio.equalsIgnoreCase("Pagamentos")) {
-            desabilitarCompetencia = false;
+            return desabilitarCompetencia = false;
         }
-        return desabilitarCompetencia;
+        return true;
     }
 
     public Boolean habilitarBanco() {
