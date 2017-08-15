@@ -118,12 +118,14 @@ public class CadVendasMB implements Serializable {
         listaVendasSystm = (List<VendasSystmBean>) session.getAttribute("listaVendasSystm");
         listaImportada = (List<ListaVendasSystmBean>) session.getAttribute("listaImportada");
         importadoSystm = (Boolean) session.getAttribute("importadoSystm");
+        listaFormaPagamento = (List<Formapagamento>) session.getAttribute("listaFormaPagamento");
         session.removeAttribute("formapagamento");
         session.removeAttribute("saldoRestante");
         session.removeAttribute("corPagarReceber");
         session.removeAttribute("listaVendasSystm");
         session.removeAttribute("listaImportada");
         session.removeAttribute("vendas");
+        session.removeAttribute("listaFormaPagamento");
         gerarListaCliente();
         if (vendas == null) {
             vendas = new Vendas();
@@ -513,6 +515,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("valorPagarReceber", valorPagarReceber);
         session.setAttribute("corPagarReceber", corPagarReceber);
         session.setAttribute("importadoSystm", importadoSystm);
+        session.setAttribute("listaFormaPagamento", listaFormaPagamento);
         return "cadBackOffice";
     }
 
@@ -523,6 +526,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("planocontas", planocontas);
         session.setAttribute("produto", produto);
         session.setAttribute("cliente", cliente);
+        session.setAttribute("listaFormaPagamento", listaFormaPagamento);
         session.setAttribute("valorPagarReceber", valorPagarReceber);
         session.setAttribute("corPagarReceber", corPagarReceber);
         session.setAttribute("importadoSystm", importadoSystm);
@@ -592,6 +596,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("cliente", cliente);
         session.setAttribute("corPagarReceber", corPagarReceber);
         session.setAttribute("importadoSystm", importadoSystm);
+        session.setAttribute("listaFormaPagamento", listaFormaPagamento);
         return "notaFiscal";
     }
 
@@ -1110,12 +1115,38 @@ public class CadVendasMB implements Serializable {
         vendas.setComissaoLiquidaTotal(vendaImportada.getVendasSystmBean().getLiquidoFranquia());
         vendas.setIdVendaSystm(vendaImportada.getVendasSystmBean().getIdVenda());
         calculoValoresBackOffice();
+        importacaoFormaPagamento(vendaImportada);
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
         session.setAttribute("cliente", cliente);
         session.setAttribute("produto", produto);
+        session.setAttribute("listaFormaPagamento", listaFormaPagamento);
         return "cadVendas";
+    }
+    
+    public void importacaoFormaPagamento(ListaVendasSystmBean vendaImportada){
+        listaFormaPagamento = new ArrayList<>();
+        Formapagamento pagamento;
+        if (vendaImportada.getVendasSystmBean().getLista() != null && vendaImportada.getVendasSystmBean().getLista().size() > 0) {
+            for (int i = 0; i < vendaImportada.getVendasSystmBean().getLista().size(); i++) {
+                pagamento = new Formapagamento();
+                pagamento.setValor(vendaImportada.getVendasSystmBean().getLista().get(i).getValorParcelamento());
+                pagamento.setValorParcela(vendaImportada.getVendasSystmBean().getLista().get(i).getValorParcela());
+                if (vendaImportada.getVendasSystmBean().getLista().get(i).getTipoPagamento().equalsIgnoreCase("Depósito")) {
+                    pagamento.setTipoDocumento("Deposito");
+                }else if(vendaImportada.getVendasSystmBean().getLista().get(i).getTipoPagamento().equalsIgnoreCase("Cartão de crédito")
+                            || vendaImportada.getVendasSystmBean().getLista().get(i).getTipoPagamento().equalsIgnoreCase("Cartão débito")){
+                    pagamento.setTipoDocumento("Cartao");
+                }else{
+                    pagamento.setTipoDocumento(vendaImportada.getVendasSystmBean().getLista().get(i).getTipoPagamento());
+                }
+                pagamento.setNumeroParcelas(vendaImportada.getVendasSystmBean().getLista().get(i).getnParcela());
+                pagamento.setDataVencimento(vendaImportada.getVendasSystmBean().getLista().get(i).getDataPagamento());
+                listaFormaPagamento.add(pagamento);
+            }
+            saldoRestante();
+        }
     }
 
     public void voltarImportacao() {

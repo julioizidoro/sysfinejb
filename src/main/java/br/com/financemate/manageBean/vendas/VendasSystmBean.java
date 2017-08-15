@@ -1,6 +1,7 @@
 package br.com.financemate.manageBean.vendas;
 
 import java.util.Date;
+import java.util.List;
 
 public class VendasSystmBean {
 
@@ -16,6 +17,12 @@ public class VendasSystmBean {
     private int idVenda;
     private int idUsuario;
     private int idUnidade;
+    private String tipoPagamento;
+    private int nParcela;
+    private Date dataPagamento;
+    private Float valorParcelamento;
+    private Float valorParcela;
+    private List<VendasSystmBean> lista;
 
     public int getIdProduto() {
         return idProduto;
@@ -111,6 +118,54 @@ public class VendasSystmBean {
 
     public void setIdUnidade(int idUnidade) {
         this.idUnidade = idUnidade;
+    }
+
+    public String getTipoPagamento() {
+        return tipoPagamento;
+    }
+
+    public void setTipoPagamento(String tipoPagamento) {
+        this.tipoPagamento = tipoPagamento;
+    }
+
+    public int getnParcela() {
+        return nParcela;
+    }
+
+    public void setnParcela(int nParcela) {
+        this.nParcela = nParcela;
+    }
+
+    public Date getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(Date dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+
+    public Float getValorParcelamento() {
+        return valorParcelamento;
+    }
+
+    public void setValorParcelamento(Float valorParcelamento) {
+        this.valorParcelamento = valorParcelamento;
+    }
+
+    public Float getValorParcela() {
+        return valorParcela;
+    }
+
+    public void setValorParcela(Float valorParcela) {
+        this.valorParcela = valorParcela;
+    }
+
+    public List<VendasSystmBean> getLista() {
+        return lista;
+    }
+
+    public void setLista(List<VendasSystmBean> lista) {
+        this.lista = lista;
     }
 
 }

@@ -277,13 +277,13 @@
                                                                         </h:outputText> 
                                                                         
                                                                         <h:outputLabel value="#{outrosLancamentos.descricao}"
-                                                                                       style="margin-left:1.5%;font-size: 13px;color:#4C4C4C;font-weight: 500;" />
+                                                                                       style="font-size: 13px;color:#4C4C4C;font-weight: 500;" />
                                                                         
-                                                                        <h:outputText value="#{outrosLancamentos.valorEntrada}"  style="font-size:12px;color: #4ABA58; text-align:right;">
+                                                                        <h:outputText value="#{outrosLancamentos.valorEntrada}" rendered="#{conciliacaoMB.retornoValorEntradaBusca(outrosLancamentos)}"  style="font-size:12px;color: #4ABA58; text-align:right;">
                                                                             <f:convertNumber currencySymbol="" type="currency"/>
                                                                         </h:outputText>    
                                                                         
-                                                                        <h:outputText value="#{outrosLancamentos.valorSaida}"  style="font-size:12px; color:#B54848; text-align:right;">
+                                                                        <h:outputText value="#{outrosLancamentos.valorSaida}" rendered="#{conciliacaoMB.retornoValorSaidaBusca(outrosLancamentos)}"  style="font-size:12px; color:#B54848; text-align:right;">
                                                                             <f:convertNumber currencySymbol="" type="currency"/>
                                                                         </h:outputText>  
                                                                         <p:selectBooleanCheckbox value="#{outrosLancamentos.selecionado}" style="background:white !important; color:white !important;">

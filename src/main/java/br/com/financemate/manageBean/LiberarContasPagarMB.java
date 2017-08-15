@@ -170,6 +170,7 @@ public class LiberarContasPagarMB implements Serializable {
         outroslancamentos.setPlanocontas(conta.getPlanocontas());
         outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
         outroslancamentos.setValorEntrada(0.0f);
+        outroslancamentos.setConciliacao("não");
         outroslancamentos.setValorSaida(conta.getValor());
         if (conta.getDataCompensacao() == null) {
             outroslancamentos.setDataCompensacao(new Date());

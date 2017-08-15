@@ -174,6 +174,7 @@ public class RecebimentoLoteMB implements Serializable {
         outroslancamentos.setValorEntrada(conta.getValorPago());
         outroslancamentos.setValorSaida(0f);
         outroslancamentos.setDataRegistro(new Date());
+        outroslancamentos.setConciliacao("não");
         outroslancamentos.setDescricao("Recebimento através do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
         outrosLancamentosDao.update(outroslancamentos);

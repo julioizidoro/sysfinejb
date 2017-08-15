@@ -328,6 +328,7 @@ public class RecebimentoContaMB implements Serializable {
         outroslancamentos.setDataRegistro(new Date());
         outroslancamentos.setDescricao("Recebimento através do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
+        outroslancamentos.setConciliacao("não");
         outrosLancamentosDao.update(outroslancamentos);
 
     }
@@ -374,6 +375,7 @@ public class RecebimentoContaMB implements Serializable {
         outroslancamentos.setValorEntrada(valorParcial);
         outroslancamentos.setValorSaida(0f);
         outroslancamentos.setDataRegistro(new Date());
+        outroslancamentos.setConciliacao("não");
         outroslancamentos.setDescricao("Recebimento parcial através do contas a receber de " + conta.getNomeCliente());
         outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
         outrosLancamentosDao.update(outroslancamentos);

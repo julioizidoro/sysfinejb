@@ -463,7 +463,7 @@ public class ConciliacaoMB implements Serializable {
             for (int j = 0; j < listaLacamentos.size(); j++) {
                 if (listaLacamentos.get(j).getConciliada() == false) {
                     if (listaNaoConciliada.get(i).getTransacao().getDescricao().equalsIgnoreCase(listaLacamentos.get(j).getDescricao())) {
-                        listaLacamentos.get(j).setConciliada(false);
+                        listaLacamentos.get(j).setConciliada(true);
                         listaNaoConciliada.get(i).setOutroslancamentos(listaLacamentos.get(j));
                     }
                 }
@@ -496,6 +496,7 @@ public class ConciliacaoMB implements Serializable {
             outros.setDataRegistro(new Date());
             outros.setIdcontaspagar(0);
             outros.setIdcontasreceber(0);
+            outros.setConciliacao("sim");
             if (banco == null) {
                List<Banco> lista = bancoDao.list("select b from Banco b where b.agencia='" + agencia + "' and b.conta like '" + conta + "%'");
                outros.setBanco(lista.get(0));
@@ -564,7 +565,7 @@ public class ConciliacaoMB implements Serializable {
     }
 
     public boolean retornoValorEntrada(TransacaoBean transacaoBean) {
-        if (transacaoBean.getValorEntrada() > 0.0f) {
+        if (transacaoBean.getValorEntrada() > 0.00f) {
             return true;
         } else {
             return false;
@@ -572,7 +573,7 @@ public class ConciliacaoMB implements Serializable {
     }
 
     public boolean retornoValorSaida(TransacaoBean transacaoBean) {
-        if (transacaoBean.getValorEntrada() > 0.0f) {
+        if (transacaoBean.getValorEntrada() > 0.00f) {
             return false;
         } else {
             return true;
@@ -674,13 +675,13 @@ public class ConciliacaoMB implements Serializable {
                 sql = "select o from Movimentobanco o where (o.descricao like '%"+ descricao +"%' or o.planocontas.descricao like '%"+ descricao +"%') and o.banco.idbanco=" + banco.getIdbanco()
                         + "  and o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
                         + "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
-                        + "' and o.cliente.idcliente=" + cliente.getIdcliente();
+                        + "' and o.cliente.idcliente=" + cliente.getIdcliente() + " and o.conciliacao<>'sim' ";
                 sql = sql + " order by o.dataCompensacao";
             } else {
                 sql = "select o from Movimentobanco o where"
                         + " o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
                         + "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
-                        + "' and o.cliente.idcliente=" + cliente.getIdcliente();
+                        + "' and o.cliente.idcliente=" + cliente.getIdcliente() + " and o.conciliacao<>'sim' ";
                 sql = sql + " order by o.dataCompensacao";
             }
             listaOutrosLancamentos = outrosLancamentosDao.list(sql);
@@ -697,7 +698,9 @@ public class ConciliacaoMB implements Serializable {
         if (listaOutrosSelecionados == null) {
             listaOutrosSelecionados = new ArrayList<>();
         }
-        listaOutrosSelecionados.add(movimentobanco);
+        if (movimentobanco.isSelecionado()) {
+            listaOutrosSelecionados.add(movimentobanco);
+        }
     }
     
     
@@ -715,6 +718,7 @@ public class ConciliacaoMB implements Serializable {
             outros.setUsuario(usuarioLogadoMB.getUsuario());
             outros.setDataVencimento(listaOutrosSelecionados.get(0).getDataVencimento());
             outros.setTipoDocumento(listaOutrosSelecionados.get(0).getTipoDocumento());
+            outros.setConciliacao("sim");
             outrosLancamentosDao.update(outros);
             for (int i = 0; i < listaOutrosSelecionados.size(); i++) {
                 Movimentobanco movimentobanco = listaOutrosSelecionados.get(i);
@@ -733,6 +737,24 @@ public class ConciliacaoMB implements Serializable {
         listaConciliacaoBancaria.add(conciliacao);
         nNaoConciliada = nNaoConciliada - 1;
         nConciliada = nConciliada + 1;
+        listaOutrosSelecionados = new ArrayList<>();
+    }
+     
+     
+      public boolean retornoValorEntradaBusca(Movimentobanco movimentobanco) {
+        if (movimentobanco.getValorEntrada() > 0.00f) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean retornoValorSaidaBusca(Movimentobanco movimentobanco) {
+        if (movimentobanco.getValorEntrada() > 0.00f) {
+            return false;
+        } else {
+            return true;
+        }
     }
     
 

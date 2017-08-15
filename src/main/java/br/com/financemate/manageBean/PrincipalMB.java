@@ -91,13 +91,12 @@ public class PrincipalMB implements Serializable {
         } else {
             listaVendas = vendasDao.list("select v from Vendas v where v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente() + " order by v.idvendas DESC");
         }
+        if (listaVendas == null) {
+            listaVendas = new ArrayList<>();
+        }
         for (int i = 0; i < 10; i++) {
-            if (i <= lista10Vendas.size()) {
-                if (listaVendas == null || listaVendas.isEmpty()) {
-                    listaVendas = new ArrayList<>();
-                } else {
-                    lista10Vendas.add(listaVendas.get(i)); 
-                }
+            if (i <= lista10Vendas.size() && i <= (listaVendas.size() - 1)) {
+                lista10Vendas.add(listaVendas.get(i)); 
             }
         }
     }

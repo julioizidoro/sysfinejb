@@ -72,7 +72,7 @@
                 <h:panelGroup style="margin-left: 3%;">
                     <h:outputLabel value="Conta" for="idconta" class="left3"/>
                     <br/>
-                    <p:selectOneMenu id="idconta" class="left3" style="width:150px;" disabled="#{imprimirRelatorioMB.desabilitarBanco}" value="#{imprimirRelatorioMB.banco}"  converter="BancoConverter"
+                    <p:selectOneMenu id="idconta" class="left3" style="width:150px;" value="#{imprimirRelatorioMB.banco}"  converter="BancoConverter"
                                      filter="true" filterMatchMode="contains" panelStyle="width:150px">
                         <f:selectItem itemLabel="#{imprimirRelatorioMB.nomeComboBanco}" itemValue="0" noSelectionOption="true" /> 
                         <f:selectItems value="#{imprimirRelatorioMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>

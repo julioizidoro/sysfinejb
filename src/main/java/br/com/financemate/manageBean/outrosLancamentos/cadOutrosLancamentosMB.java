@@ -226,6 +226,7 @@ public class cadOutrosLancamentosMB implements Serializable {
             session.setAttribute("banco", banco);
             session.setAttribute("dataInicial", dataInicial);
             session.setAttribute("dataFinal", dataFinal);
+            outrosLancamentos.setConciliacao("não");
             outrosLancamentos = outrosLancamentosDao.update(outrosLancamentos);
             mensagem msg = new mensagem();
             msg.saveMessagem();
@@ -243,6 +244,7 @@ public class cadOutrosLancamentosMB implements Serializable {
         if (mensagem.length() < 1) {
             outrosLancamentos = outrosLancamentosDao.update(outrosLancamentos);
             Movimentobanco copia = outrosLancamentos;
+            outrosLancamentos.setConciliacao("não");
             outrosLancamentos = repetirValoresOutrosLancamentos(copia);
             mensagem msg = new mensagem();
             msg.saveMessagem();

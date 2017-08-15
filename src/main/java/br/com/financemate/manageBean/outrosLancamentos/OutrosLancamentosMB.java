@@ -380,6 +380,13 @@ public class OutrosLancamentosMB implements Serializable {
     }
 
     public void retornoDialogNovo(SelectEvent event) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("outroslancamentos");
+        session.removeAttribute("cliente");
+        session.removeAttribute("banco");
+        session.removeAttribute("dataInicial");
+        session.removeAttribute("dataFinal");
         Movimentobanco outroslancamentos = (Movimentobanco) event.getObject();
         if (outroslancamentos.getIdmovimentobanco() != null) {
             mensagem mensagem = new mensagem();
