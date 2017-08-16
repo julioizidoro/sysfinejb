@@ -76,7 +76,12 @@
                     <p:column headerText="Cliente" sortBy="#{vendas.nomeCliente}"   style=" font-size:12px; background:white; color:black; border:none;" >
                         <h:outputText  value="#{vendas.nomeCliente}" style=" font-size:12px; text-align:center;"/>
                     </p:column>
-                    <p:column headerText="Valor" sortBy="#{vendas.valorLiquido}" style="text-align:right; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                    <p:column headerText="Valor Bruto" sortBy="#{vendas.valorBruto}" style="text-align:right; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                        <h:outputText value="#{vendas.valorBruto}" style="font-size:12px;"> 
+                            <f:convertNumber currencySymbol="" type="currency"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Valor Total" sortBy="#{vendas.valorLiquido}" style="text-align:right; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
                         <h:outputText value="#{vendas.valorLiquido}" style="font-size:12px;"> 
                             <f:convertNumber currencySymbol="" type="currency"/>
                         </h:outputText>
