@@ -47,6 +47,7 @@ public class LiberarContasPagarMB implements Serializable {
     private OutrosLancamentosDao outrosLancamentosDao;
     @EJB
     private OperacaoUsuarioDao operacaoUsuarioDao;
+    private String sql;
 
     @PostConstruct
     public void init() {
@@ -55,7 +56,10 @@ public class LiberarContasPagarMB implements Serializable {
         listaContasSelecionadas = (List<Contaspagar>) session.getAttribute("listaContasSelecionadas");
         totalLiberadas = (String) session.getAttribute("totalLiberadas");
         contasPagar = (Contaspagar) session.getAttribute("contasPagar");
+        sql = (String) session.getAttribute("sql");
+        session.removeAttribute("sql");
         session.removeAttribute("contasPagar");
+        dataLiberacao = new Date();
         if (contasPagar == null) {
             contasPagar = new Contaspagar();
         }
@@ -131,19 +135,20 @@ public class LiberarContasPagarMB implements Serializable {
         return dataLiberacao;
     }
 
-    public String salvarContasLiberadas(Contaspagar conta) {
+    public String salvarContasLiberadas() {
         mensagem msg = new mensagem();
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         for (int i = 0; i < listaContasSelecionadas.size(); i++) {
             String mensagem = validarDados(listaContasSelecionadas.get(i));
             if (mensagem.length() == 0) {
                 if (listaContasSelecionadas.get(i).getAutorizarPagamento().equals("S")) {
-
+                    listaContasSelecionadas.get(i).setDataLiberacao(dataLiberacao);
                     salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
                     salvarOperacaoUsuarioLiberou(listaContasSelecionadas.get(i));
                     msg.liberar();
-                    FacesContext fc = FacesContext.getCurrentInstance();
-                    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
                     session.removeAttribute("totalLiberadas");
+                    session.setAttribute("sql", sql);
                 } else {
                     msg.naoLiberar();
                     RequestContext.getCurrentInstance().closeDialog(contasPagar);
@@ -155,6 +160,7 @@ public class LiberarContasPagarMB implements Serializable {
             }
             calculosContasMB.calcularTotalContasPagar();
         }
+        session.setAttribute("sql", sql);
         RequestContext.getCurrentInstance().closeDialog(contasPagar);
         return "";
     }
@@ -187,6 +193,9 @@ public class LiberarContasPagarMB implements Serializable {
     }
 
     public String cancelar() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("sql", sql);
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
     }

@@ -95,6 +95,7 @@ public class CadContasPagarMB implements Serializable {
     private PlanoContasDao planoContasDao;
     private List<String> nomeArquivos;
     private String corAnexo = "color:#000000;";
+    private String sql;
 
     @PostConstruct
     public void init() {
@@ -106,6 +107,8 @@ public class CadContasPagarMB implements Serializable {
         cptransferencia = (Cptransferencia) session.getAttribute("cptransferencia");
         banco = (Banco) session.getAttribute("banco");
         planoContas = (Planocontas) session.getAttribute("planocontas");
+        sql = (String) session.getAttribute("sql");
+        session.removeAttribute("sql");
         session.removeAttribute("contapagar");
         session.removeAttribute("cliente");
         session.removeAttribute("banco");
@@ -330,6 +333,7 @@ public class CadContasPagarMB implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.removeAttribute("file");
+        session.setAttribute("sql", sql);
         RequestContext.getCurrentInstance().closeDialog(new Contaspagar());
     }
 
@@ -410,6 +414,7 @@ public class CadContasPagarMB implements Serializable {
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.removeAttribute("file");
+            session.setAttribute("sql", sql);
             RequestContext.getCurrentInstance().closeDialog(contaPagar);
 
         } else {
@@ -726,6 +731,7 @@ public class CadContasPagarMB implements Serializable {
         session.setAttribute("cliente", cliente);
         session.setAttribute("banco", banco);
         session.setAttribute("planocontas", planoContas);
+        session.setAttribute("sql", sql);
         return "anexarArquivo";
     }
 
@@ -736,6 +742,7 @@ public class CadContasPagarMB implements Serializable {
         session.setAttribute("cliente", cliente);
         session.setAttribute("banco", banco);
         session.setAttribute("planocontas", planoContas);
+        session.setAttribute("sql", sql);
         return "anexarArquivoPrincipal";
     }
 
@@ -747,6 +754,7 @@ public class CadContasPagarMB implements Serializable {
         session.setAttribute("cliente", cliente);
         session.setAttribute("banco", banco);
         session.setAttribute("planocontas", planoContas);
+        session.setAttribute("sql", sql);
         return "cadContasPagar";
     }
 

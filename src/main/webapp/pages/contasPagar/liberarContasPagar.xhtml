@@ -62,9 +62,9 @@
                     <div class="form-group" >
                         <h:outputLabel for="dataliberacao" style="margin-left:2% ">Data da liberação</h:outputLabel>
                         <br/>
-                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataliberacao" style="width: 50%;border: 1px solid #ffffff;" value="#{liberarContasPagarMB.dataLibercao()}">
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataliberacao" style="width: 50%;border: 1px solid #ffffff;" value="#{liberarContasPagarMB.dataLiberacao}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            <p:ajax event="change"/>
+                            <p:ajax event="blur"/>
                         </p:calendar>
                     </div>
                 </h:panelGroup>
@@ -76,7 +76,7 @@
                 </h:panelGroup>
             </h:panelGrid>
             <hr />
-            <p:commandLink title="Salvar" style="margin-left: 40%;text-decoration: none"   action="#{liberarContasPagarMB.salvarContasLiberadas(contasPagar)}" >
+            <p:commandLink title="Salvar" style="margin-left: 40%;text-decoration: none"   action="#{liberarContasPagarMB.salvarContasLiberadas()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/> 
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{liberarContasPagarMB.cancelar()}" >

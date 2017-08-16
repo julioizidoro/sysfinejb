@@ -95,6 +95,10 @@ public class ContasPagarMB implements Serializable {
 
     @PostConstruct
     public void init() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        sql = (String) session.getAttribute("sql");
+        session.removeAttribute("sql");
         gerarListaCliente();
         desabilitarUnidade();
         if (usuarioLogadoMB.getCliente() != null) {
@@ -449,6 +453,9 @@ public class ContasPagarMB implements Serializable {
     public String novaConta() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("closable", false);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("sql", sql);
         RequestContext.getCurrentInstance().openDialog("cadContasPagar", options, null);
         return "";
     }
@@ -456,13 +463,19 @@ public class ContasPagarMB implements Serializable {
     public String novaContaTelaPrincipal() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("closable", false);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("sql", sql);
         RequestContext.getCurrentInstance().openDialog("cadContasPagarPrincipal", options, null);
         return "";
     }
 
     public void retornoDialogNovo(SelectEvent event) {
         Contaspagar contaspagar = (Contaspagar) event.getObject();
-        criarConsultaContasPagarInicial();
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        sql = (String) session.getAttribute("sql");
+        session.removeAttribute("sql");
         gerarListaContas();
         if (contaspagar.getIdcontasPagar() != null) {
             mensagem mensagem = new mensagem();
@@ -550,6 +563,7 @@ public class ContasPagarMB implements Serializable {
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("contapagar", contaspagar);
             session.setAttribute("cptransferencia", cpTransferencia);
+            session.setAttribute("sql", sql);
             Map<String, Object> options = new HashMap<String, Object>();
             options.put("closable", false);
             RequestContext.getCurrentInstance().openDialog("cadContasPagar", options, null);
@@ -584,6 +598,7 @@ public class ContasPagarMB implements Serializable {
         session.setAttribute("listaContasSelecionadas", listaContasSelecionadas);
         session.setAttribute("totalLiberadas", totalLiberadas);
         session.setAttribute("contasPagar", contasPagar);
+        session.setAttribute("sql", sql);
         RequestContext.getCurrentInstance().openDialog("liberarContasPagar", options, null);
         return "";
     }
@@ -633,7 +648,7 @@ public class ContasPagarMB implements Serializable {
 
 
     public void retornoDialogFiltrar(SelectEvent event) {
-        String sql = (String) event.getObject();
+        sql = (String) event.getObject();
         if (sql.length() > 1) {
             gerarListaContaas(sql);  
         }

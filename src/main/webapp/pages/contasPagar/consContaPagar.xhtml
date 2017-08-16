@@ -28,6 +28,7 @@
                             <li>
                                 <p:commandLink id="idImagemLiberar"  action="#{contasPagarMB.novaLiberacao()}" update="idImagemFiltro" title="Liberar">
                                     <i class="fa fa-check" style="color: #3D7E46;font-size: 15px;"/> 
+                                    <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogLiberar}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
                                 </p:commandLink>
                             </li>
                             <li>
