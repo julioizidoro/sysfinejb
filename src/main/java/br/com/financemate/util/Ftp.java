@@ -1,9 +1,11 @@
 package br.com.financemate.util;
 
 import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.primefaces.model.UploadedFile;
@@ -37,12 +39,28 @@ public class Ftp {
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
         InputStream arquivo;
         arquivo = new BufferedInputStream(uploadedFile.getInputstream());
+        String nomeArquivo = arquivoFTP + "_" +  new String(uploadedFile.getFileName().trim().getBytes(Charset.defaultCharset()), "UTF-8");
         arquivoFTP = new String(arquivoFTP.getBytes("ISO-8859-1"), "UTF-8");
-        if (ftpClient.storeFile(arquivoFTP, arquivo)) {
+        if (ftpClient.storeFile(nomeArquivo, arquivo)) {
             arquivo.close();
-            return "Arquivo: " + arquivoFTP + " salvo com Sucesso";
+            return "Arquivo: " + nomeArquivo + " salvo com Sucesso";
         } else {
             arquivo.close();
+            return "Erro Salvar Arquivo";
+        }
+    }
+    
+    
+    public String enviarArquivoDOCS(UploadedFile uploadedFile, String arquivoFTP) throws IOException{
+        ftpClient.changeWorkingDirectory("/sysfin/contasPagar/");
+        ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+        FileInputStream arqEnviar = (FileInputStream) uploadedFile.getInputstream();
+        String nomeArquivo = arquivoFTP + "_" +  new String(uploadedFile.getFileName().trim().getBytes(Charset.defaultCharset()), "UTF-8");
+        if (ftpClient.storeFile(nomeArquivo, arqEnviar)) {
+        	arqEnviar.close();
+            return "Arquivo: "+ nomeArquivo + " salvo com Sucesso";
+        } else {
+        	arqEnviar.close();   
             return "Erro Salvar Arquivo";
         }
     }

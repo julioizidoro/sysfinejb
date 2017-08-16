@@ -401,7 +401,12 @@ public class CadContasPagarMB implements Serializable {
                 salvarTransferencia();
             }
             if (file != null) {
-                String arquivoFtp = nomeArquivo();
+                String arquivoFtp = "";
+                try {
+                    arquivoFtp = nomeArquivo() + "_" +  new String(file.getFileName().trim().getBytes(Charset.defaultCharset()), "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 Nomearquivo nomearquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
                 if (nomearquivo != null && nomearquivo.getIdnomearquivo() != null){
                     nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
@@ -465,7 +470,12 @@ public class CadContasPagarMB implements Serializable {
                 cptransferencia = repetirValoresTransferencia(copiaTranferencia);
             }
             if (file != null) {
-                String arquivoFtp = nomeArquivo();
+               String arquivoFtp = "";
+                try {
+                    arquivoFtp = nomeArquivo() + "_" +  new String(file.getFileName().trim().getBytes(Charset.defaultCharset()), "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
                     Nomearquivo nomearquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
                     if (nomearquivo.getIdnomearquivo() != null) {
@@ -675,13 +685,13 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public String nomeArquivo() {
-        String nome = file.getFileName().trim();
-        try {
-            nome = new String(nome.getBytes(Charset.defaultCharset()), "UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        nomeAquivoFTP = "ContasPagar-" + nome;
+//        String nome = file.getFileName().trim();
+//        try {
+//            nome = new String(nome.getBytes(Charset.defaultCharset()), "UTF-8");
+//        } catch (UnsupportedEncodingException ex) {
+//            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        nomeAquivoFTP = "ContasPagar-";
         return nomeAquivoFTP;
     }
 
