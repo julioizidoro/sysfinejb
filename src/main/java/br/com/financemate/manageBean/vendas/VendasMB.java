@@ -582,7 +582,9 @@ public class VendasMB implements Serializable {
     public void cancelarVenda(Vendas vendas) {
         vendas.setSituacao("CANCELADA");
         vendasDao.update(vendas);
-        gerarListaVendas();
+        if (listaVendas != null && listaVendas.size() > 0) {
+            listaVendas.remove(vendas);
+        }
     }
 
     public String gerarParcelas(Vendas vendas) {

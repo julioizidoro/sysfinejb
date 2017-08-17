@@ -57,15 +57,15 @@
                 <p:dataTable id="idTabelaVendas"  var="vendas"  value="#{vendasMB.listaVendas}" style="border:none;" class="tabelacontas" 
                              scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{vendasMB.venda}" selectionMode="single" rowKey="#{vendas.idvendas}">
 
-                    <p:column headerText="Situação"  style="width:8%; text-align:center; background:white; color:black; border:none; font-size:12px;" styleClass="alinharCenter">
+                    <p:column headerText=""  style="width:3%; text-align:center; background:white; color:black; border:none; font-size:12px;" styleClass="alinharCenter">
                         <p:commandLink>
                             <img src="#{vendasMB.verStatus(vendas)}"/> 
                         </p:commandLink>
                     </p:column>
-                    <p:column headerText="N° Venda" style="width:7%; background:white;text-align:center; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
+                    <p:column headerText="ID" style="width:7%; background:white;text-align:center; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
                         <h:outputText  value="#{vendas.idvendas}" style="font-size:12px;"/>                                     
                     </p:column>
-                    <p:column headerText=" Data Venda" sortBy="#{vendas.dataVenda}" style="text-align:center;width:12%; font-size:12px; background:white; color:black; border:none;">
+                    <p:column headerText="Data Venda" sortBy="#{vendas.dataVenda}" style="text-align:center;width:12%; font-size:12px; background:white; color:black; border:none;">
                         <h:outputText  value="#{vendas.dataVenda}" style="font-size:12px;" > 
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/> 
                         </h:outputText> 
@@ -94,7 +94,7 @@
                             <f:convertNumber currencySymbol="" type="currency"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                    <p:column headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;width:5%;">
                         <p:commandLink id="btnMenu">
                             <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                             <b class="caret"></b>
