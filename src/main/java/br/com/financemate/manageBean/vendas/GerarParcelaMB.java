@@ -236,7 +236,7 @@ public class GerarParcelaMB implements Serializable {
 
     public void SalvarParcela() {
         if (!vezes.equalsIgnoreCase("") && valorParcela != 0f && dataVencimento != null) {
-            if (valorParcela <= saldoTotal()) {
+            if (valorParcela.floatValue() <= saldoTotal().floatValue()) {
                 Integer numerovezes = Integer.parseInt(vezes);
                 Contasreceber contasreceber = new Contasreceber();
                 contasreceber.setDataVencimento(dataVencimento);
@@ -293,7 +293,7 @@ public class GerarParcelaMB implements Serializable {
                 dataVencimento = null;
             } else {
                 mensagem mensagem = new mensagem();
-                if (valorParcela > saldoTotal()) {
+                if (valorParcela.floatValue() > saldoTotal().floatValue()) {
                     mensagem.valorAcimaPermitidoGerarParcela();
                 } else {
                     mensagem.valorAbaixoPermitidoGerarParcela();

@@ -128,7 +128,7 @@
                 <p:menuitem value="Editar"   icon=" ui-icon-pencil"   action="#{gerarParcelaMB.editarParcela(gerarParcelaMB.contasReceber)}"/> 
             </p:contextMenu>  
             <p:dataTable id="idparcelas" var="parcelas"  rowStyleClass="tabela" class="tabelaselecionar" value="#{gerarParcelaMB.listarContasreceber}" 
-                         scrollRows="10" selectionMode="single" scrollable="true" selection="#{gerarParcelaMB.contasReceber}" rowKey="#{parcelas.idcontasReceber}" scrollHeight="120"   rows="10" style="margin-bottom:20px"> 
+                         scrollRows="10" selectionMode="single" scrollable="true" selection="#{gerarParcelaMB.contasReceber}" rowKey="#{parcelas.idcontasReceber}" scrollHeight="120"  style="margin-bottom:20px"> 
                 <p:column headerText="Parcela" style=" background:white; color:black; border:none; text-align: center;">
                     <h:outputText value="#{parcelas.numeroParcela}"/> 
                 </p:column>

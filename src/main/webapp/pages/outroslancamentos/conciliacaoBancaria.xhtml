@@ -123,35 +123,6 @@
                                                         </h:panelGrid>
                                                     </h:panelGrid>
                                                 </p:tab>
-                                                <p:tab title="Transferência" titleStyle="color:black;">
-                                                    <h:panelGrid columns="1" cellpadding="10">
-                                                        <div class="form-group">
-                                                            <h:inputText disabled="#{conciliacao.transacao.conciliada}" style="width: 100%;" pt:placeholder="Descrição" id="d"  class="form-control"  value="#{conciliacao.outroslancamentos.descricao}"/>
-                                                        </div>  
-                                                        <p:outputLabel/>
-                                                        <p:selectOneMenu disabled="#{conciliacao.transacao.conciliada}" id="banco" style="width:320px;"  value="#{conciliacaoMB.banco}"  converter="BancoConverter"
-                                                                         filter="true" filterMatchMode="contains" panelStyle="width:150px">
-                                                            <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
-                                                            <f:selectItems value="#{conciliacaoMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
-                                                            <f:attribute name="listaBanco" value="#{conciliacaoMB.listaBanco}" />
-                                                        </p:selectOneMenu> 
-                                                        <p:outputLabel/>
-                                                        <p:outputLabel/>
-                                                        <p:outputLabel/>
-                                                    </h:panelGrid>
-                                                </p:tab>
-                                                <p:tab title="Buscar lançamentos" titleStyle="color:black;">
-                                                    <h:panelGrid columns="1" cellpadding="10">
-                                                        <p:commandLink title="Buscar Lançamento"  style="text-decoration: none;margin-left:18%;font-size: 32px;"   action="#{conciliacaoMB.consultarLancamentos(conciliacao)}" >
-                                                            <i class="fa fa-search" aria-hidden="true"></i>
-
-                                                            <p:ajax event="dialogReturn" listener="#{conciliacaoMB.retornoDialogBusca}" update=":frmConciliacaoBancaria:growl, @form, frmConciliacaoBancaria"/>
-                                                        </p:commandLink>
-                                                        <h:panelGroup/>
-                                                        <h:panelGroup/>
-                                                        <h:panelGroup/>
-                                                    </h:panelGrid>
-                                                </p:tab>
                                             </p:tabView>
                                         </p:outputPanel>
                                         <br />
@@ -170,7 +141,7 @@
                                     <h:panelGrid  id="tabelaNaoConciliacaoTransacao" columns="2" style="width:100%;margin-left:4%;border-radius:2px;;color:black !important" columnClasses="logo,detail">
                                         <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black !important;border-radius:2px;">
                                             <p:tabView>
-                                                <p:tab title="Novo">
+                                                <p:tab title="Dados">
                                                     <h:panelGrid columns="1" cellpadding="10">
                                                         <h:panelGrid columns="2" style="width:293px;">
                                                             <h:outputText value="#{conciliacao.transacao.data}" style="font-weight: bold;font-size: 14px;">
@@ -277,15 +248,21 @@
                                                                         </h:outputText> 
 
                                                                         <h:outputLabel value="#{outrosLancamentos.descricao}"
-                                                                                       style="font-size: 13px;color:#4C4C4C;font-weight: 500;" />
+                                                                                       style="font-size: 13px;color:#4C4C4C;" />
+                                                                        <h:panelGroup>
+                                                                            <h:outputText value="#{outrosLancamentos.valorEntrada}" rendered="#{conciliacaoMB.retornoValorEntradaBusca(outrosLancamentos)}"  style="font-size:12px;color: #4ABA58; text-align:right;">
+                                                                                <f:convertNumber currencySymbol="" type="currency"/>
+                                                                            </h:outputText>    
 
-                                                                        <h:outputText value="#{outrosLancamentos.valorEntrada}" rendered="#{conciliacaoMB.retornoValorEntradaBusca(outrosLancamentos)}"  style="font-size:12px;color: #4ABA58; text-align:right;">
-                                                                            <f:convertNumber currencySymbol="" type="currency"/>
-                                                                        </h:outputText>    
-
-                                                                        <h:outputText value="#{outrosLancamentos.valorSaida}" rendered="#{conciliacaoMB.retornoValorSaidaBusca(outrosLancamentos)}"  style="font-size:12px; color:#B54848; text-align:right;">
-                                                                            <f:convertNumber currencySymbol="" type="currency"/>
-                                                                        </h:outputText>  
+                                                                            <h:outputText value="#{outrosLancamentos.valorSaida}" rendered="#{conciliacaoMB.retornoValorSaidaBusca(outrosLancamentos)}"  style="font-size:12px; color:#B54848; text-align:right;">
+                                                                                <f:convertNumber currencySymbol="" type="currency"/>
+                                                                            </h:outputText>  
+                                                                        </h:panelGroup>
+                                                                        <p:commandLink title="Editar" disabled="#{conciliacao.transacao.conciliada}" style="text-decoration: none;margin-left:18%;font-size: 15px;"   action="#{conciliacaoMB.editarLancamento(outrosLancamentos)}" >
+                                                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                                            <p:ajax event="dialogReturn" listener="#{conciliacaoMB.retornoDialogOutros}" update=":frmConciliacaoBancaria:growl, @form"/>
+                                                                        </p:commandLink>
+                                                                        
                                                                         <p:selectBooleanCheckbox value="#{outrosLancamentos.selecionado}" style="background:white !important; color:white !important;">
                                                                             <p:ajax event="change" listener="#{conciliacaoMB.pegarLancamento(outrosLancamentos)}"/>
                                                                         </p:selectBooleanCheckbox>

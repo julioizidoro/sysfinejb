@@ -607,6 +607,22 @@ public class ConciliacaoMB implements Serializable {
         }
         return "";
     }
+    
+    public String editarLancamento(Movimentobanco movimentobanco) {
+        if (movimentobanco != null) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("outroslancamentos", movimentobanco);
+            session.setAttribute("cliente", cliente);
+            session.setAttribute("banco", banco);
+            session.setAttribute("dataInicial", dataInicial);
+            session.setAttribute("dataFinal", dataFinal);
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("closable", false);
+            RequestContext.getCurrentInstance().openDialog("cadOutrosConciliacao", options, null);
+        }
+        return "";
+    }
 
     public void retornoDialogOutros(SelectEvent event) {
         FacesContext fc = FacesContext.getCurrentInstance();
