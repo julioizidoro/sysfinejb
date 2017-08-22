@@ -107,7 +107,7 @@
                     <div class="form-group">
                         <h:outputLabel value="1° Vencimento" class="left3" />
                         <br/>
-                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIni" style="width: 50%;border: 1px solid #ffffff;" value="#{gerarParcelaMB.dataVencimento}">
+                        <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataIni" style="width: 30%;border: 1px solid #ffffff;" value="#{gerarParcelaMB.dataVencimento}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             <p:ajax event="change"/>
                         </p:calendar>
