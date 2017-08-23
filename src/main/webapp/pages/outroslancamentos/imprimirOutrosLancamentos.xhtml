@@ -29,12 +29,11 @@
 
             <title>Imprimir</title>
             <br />
-
-            <h:panelGrid>
-                <br></br>
-                <p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 10%"/>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
+            <h:panelGrid columns="3" style="width: 100%;">
+                <p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 2%"/>
+                <p:outputLabel value="Tipo Conciliação" for="idtipo" class="left3"/> 
+                <p:outputLabel value="Conta" for="idconta" class="left3"/> 
+                
                 <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{imprimirOutrosLancamentosMB.cliente}" converter="ClienteConverter"
                                   filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadContasPagarMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
@@ -43,16 +42,21 @@
                     <p:ajax event="change" listener="#{imprimirOutrosLancamentosMB.gerarListaBanco()}" update="idconta"/>
                     <p:ajax event="change" listener="#{imprimirOutrosLancamentosMB.nomeComboPlanoConta()}" update="idPlanoConta"/>
                 </p:selectOneMenu> 
-            </h:panelGrid>
-            <h:panelGrid columns="2" style="margin-left:65%; margin-top:-6%;"> 
-                <p:outputLabel value="Conta" for="idconta" class="left3"/> 
+
+                <p:selectOneMenu id="idtipo" class="left5" style="width:156px"  value="#{imprimirOutrosLancamentosMB.tipoConciliacao}">
+                    <f:selectItem itemLabel="Todas" itemValue="sn" noSelectionOption="true"/> 
+                    <f:selectItem itemLabel="Conciliado" itemValue="Conciliados" />  
+                    <f:selectItem itemLabel="Pendentes" itemValue="Pendentes" /> 
+                </p:selectOneMenu>
+                
                 <p:selectOneMenu id="idconta" class="left3" style="width:155px;"  value="#{imprimirOutrosLancamentosMB.banco}"  converter="BancoConverter"
                                  filter="true" filterMatchMode="contains" panelStyle="width:150px">
                     <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
                     <f:selectItems value="#{imprimirOutrosLancamentosMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
                     <f:attribute name="listaBanco" value="#{imprimirOutrosLancamentosMB.listaBanco}" />
                 </p:selectOneMenu>  
-            </h:panelGrid> 
+            </h:panelGrid>
+           
             <br />
             <h:panelGrid style="margin-left: 2%;width: 100%;" columns="2">
                 <h:panelGroup>

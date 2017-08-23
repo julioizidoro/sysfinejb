@@ -32,7 +32,7 @@
 
     </h:head>
 
-    <h:body style="color:#E7EBEB !important; background:white;" onload="startTime()">
+    <h:body style="color:#E7EBEB !important; background:white;font-family: Segoe UI Semibold;" onload="startTime()">
         <!-- rolando o titulo da pagina -->
        
         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
@@ -69,7 +69,7 @@
                 <br/>
             </div><!-- /top-nav-->
             <br/>
-            <aside class="fixed" style="background:#302E2E;display:block;width:15%;z-index: 1;">
+            <aside class="fixed" style="background:#302E2E;display:block;width:17%;z-index: 1;">
                 <div class="sidebar-inner scrollable-sidebar" style="background:#302E2E;">
 
                     <div class="main-menu">
@@ -237,39 +237,39 @@
             </aside>
             <br /><br />
         </h:form>
-        <h:form style="margin-left:16%;" id="formDashBoard">
+        <h:form style="margin-left:18%;" id="formDashBoard">
             <br/>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="panel-stat3 bg-success">  
+                    <div class="panel-stat3 bg-success" style="background: #145B7A;">  
                         <h4>FATURAMENTO </h4>
                         <h3 class="m-top-none" id="userCount" style="color:black;">R$: #{grafico.valorTotalFaturamento}</h3>
                         <span class="m-left-xs" style="color:black;">em #{grafico.ano}</span>
-                        <div class="stat-icon">
-                            <i class="fa fa-usd fa-3x"></i> 
+                        <div class="stat-icon" style="opacity: 0.9;">
+                            <i class="fa fa-usd fa-3x" style="color: #DAA520;"></i> 
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="panel-stat3 bg-info" style="margin-right: 6%;">
+                    <div class="panel-stat3 bg-info" style="margin-right: 6%;background: #145B7A;">
                         <p:commandLink action="#{menuMB.consContasReceber()}" style="color: white;">
                             <h4>CONTAS A RECEBER</h4>
                             <h3 class="m-top-none" style="color:black;">R$: #{calculosContasMB.crVencendo}</h3>
                             <span class="m-left-xs" style="color:black;">para o dia de hoje</span>
-                            <div class="stat-icon">
-                                <i class="fa fa-signal fa-3x"></i> 
+                            <div class="stat-icon" style="opacity: 0.9;">
+                                <i class="fa fa-plus fa-3x" style="color: #DAA520;"></i> 
                             </div>
                         </p:commandLink>
                     </div>
                 </div>
                 <div class="col-md-4">  
-                    <div class="panel-stat3 bg-danger" style="margin-right: 6%;">
+                    <div class="panel-stat3" style="margin-right: 6%;background: #145B7A;">
                         <p:commandLink action="#{menuMB.contasPagar()}" style="color: white;">
                             <h4>CONTAS A PAGAR</h4>
                             <h3 class="m-top-none" id="visitorCount" style="color:black;">R$:  #{contasPagarMB.totalVencendo}</h3>
                             <span class="m-left-xs" style="color:black;">para o dia de hoje</span>
-                            <div class="stat-icon">
-                                <i class="fa fa-signal fa-flip-horizontal fa-rotate-180 fa-3x"></i> 
+                            <div class="stat-icon" style="opacity: 0.9;">
+                                <i class="fa fa-minus fa-3x" style="color: #DAA520;"></i> 
                             </div>
                         </p:commandLink>
                     </div>

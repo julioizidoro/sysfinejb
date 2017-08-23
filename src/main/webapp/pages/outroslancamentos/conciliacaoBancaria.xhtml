@@ -171,10 +171,11 @@
                                     <h:panelGrid columns="2" style="width:100%;margin-left:25%;margin-top:1.2%;" >
                                         <p:outputPanel style="width:100%;font-size:12px;border:1px;border-color:black;">
                                             <h:panelGrid columns="1" cellpadding="5" style="font-size:12px;border:1px;border-color:black;width:100%;"> 
-                                                <p:commandButton   disabled="#{conciliacao.transacao.conciliada}" readonly="#{conciliacao.transacao.conciliada}" update=":frmConciliacaoBancaria:growl, :frmConciliacaoBancaria:tabelaDeConciliacao" class="imagemm" value="#{conciliacaoMB.nomeBotaoConciliar}" action="#{conciliacaoMB.novaConciliacao(conciliacao)}">
+                                                <p:commandButton style="background: green;border-color: green;"  disabled="#{conciliacao.transacao.conciliada}" readonly="#{conciliacao.transacao.conciliada}" update=":frmConciliacaoBancaria:growl, :frmConciliacaoBancaria:tabelaDeConciliacao" class="imagemm" value="#{conciliacaoMB.nomeBotaoConciliar}" action="#{conciliacaoMB.novaConciliacao(conciliacao)}">
 
                                                 </p:commandButton>
-                                                <p:commandButton   disabled="#{conciliacao.transacao.conciliada}" readonly="#{conciliacao.transacao.conciliada}" update=":frmConciliacaoBancaria:growl, :frmConciliacaoBancaria:tabelaDeConciliacao" class="imagemm" value="Pendente" action="#{conciliacaoMB.novaPendencia(conciliacao)}">
+                                                <br/>
+                                                <p:commandButton style="background: red;border-color:red;"  disabled="#{conciliacao.transacao.conciliada}" readonly="#{conciliacao.transacao.conciliada}" update=":frmConciliacaoBancaria:growl, :frmConciliacaoBancaria:tabelaDeConciliacao" class="imagemm" value="Pendente" action="#{conciliacaoMB.novaPendencia(conciliacao)}">
 
                                                 </p:commandButton>
                                             </h:panelGrid>  

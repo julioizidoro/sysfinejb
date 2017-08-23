@@ -732,6 +732,9 @@ public class ContasReceberMB implements Serializable {
 
     public void filtrar() {
         sql = "select v from Contasreceber v  where  v.nomeCliente like '%" + nomeCliente + "%'";
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+        }
         if (cliente != null) {
             sql = sql + " and v.cliente.idcliente=" + cliente.getIdcliente();
         } else {

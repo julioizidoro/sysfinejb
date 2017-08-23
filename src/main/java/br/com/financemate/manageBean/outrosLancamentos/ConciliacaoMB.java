@@ -400,7 +400,11 @@ public class ConciliacaoMB implements Serializable {
             if (transacao.getTipo().equalsIgnoreCase("DEBIT")) {
                 valor = transacao.getValorSaida();
                 if ((listaLacamentos.get(j).getValorSaida().floatValue() == valor.floatValue()) && (dataTransacao.equals(dataLancamento))) {
-                    listaLacamentos.get(j).setConciliacao(transacao.getId());
+                    if (listaLacamentos.get(j).getConciliacao() == null || listaLacamentos.get(j).getConciliacao().equalsIgnoreCase("nao")) {
+                        listaLacamentos.get(j).setConciliacao("sim");
+                        outrosLancamentosDao.update(listaLacamentos.get(j));
+                    }
+                    listaLacamentos.get(j).setConciliacao("sim");
                     listaLacamentos.get(j).setConciliada(true);
                     transacao.setConciliada(true);
                     cb = new ConciliarBean();
@@ -411,6 +415,10 @@ public class ConciliacaoMB implements Serializable {
             } else if (transacao.getTipo().equalsIgnoreCase("CREDIT")) {
                 valor = transacao.getValorEntrada();
                 if ((listaLacamentos.get(j).getValorEntrada().floatValue() == valor.floatValue()) && (dataTransacao.equals(dataLancamento))) {
+                    if (listaLacamentos.get(j).getConciliacao() == null || listaLacamentos.get(j).getConciliacao().equalsIgnoreCase("não")) {
+                        listaLacamentos.get(j).setConciliacao("sim");
+                        outrosLancamentosDao.update(listaLacamentos.get(j));
+                    }
                     listaLacamentos.get(j).setConciliacao(transacao.getId());
                     listaLacamentos.get(j).setConciliada(true);
                     transacao.setConciliada(true);
@@ -420,7 +428,6 @@ public class ConciliacaoMB implements Serializable {
                     listaConciliacaoBancaria.add(cb);
                 }
             }
-
         }
 
     }

@@ -78,6 +78,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
     private float totalSaida = 0.0f;
     @EJB
     private SaldoDao saldoDao;
+    private String tipoConciliacao;
 
     @PostConstruct
     public void init() {
@@ -250,6 +251,14 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         this.totalSaida = totalSaida;
     }
 
+    public String getTipoConciliacao() {
+        return tipoConciliacao;
+    }
+
+    public void setTipoConciliacao(String tipoConciliacao) {
+        this.tipoConciliacao = tipoConciliacao;
+    }
+
     public void gerarListaCliente() {
         listaCliente = clienteDao.list("select c from Cliente c");
         if (listaCliente == null) {
@@ -325,35 +334,32 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
     private List<ConciliacaoBean> gerarListaConciliacao() {
         unidade = "TODAS";
         nomeBanco = "TODOS";
-        String sql = "select o from Movimentobanco o ";
-        if (dataIncial != null || dataFinal != null || cliente != null || banco != null || planocontas != null) {
-            sql = sql + " where ";
-        }
+        String sql = "select o from Movimentobanco o where o.descricao like '%%' ";
         if (dataIncial != null && dataFinal != null) {
-            sql = sql + "o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataIncial) + "' and"
+            sql = sql + " and o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataIncial) + "' and"
                     + " o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
-            if (cliente != null || banco.getIdbanco() != null || planocontas != null) {
-                sql = sql + " and ";
-            }
-        }
 
+        }
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+        }
         if (cliente != null) {
-            sql = sql + " o.cliente.idcliente=" + cliente.getIdcliente();
+            sql = sql + " and o.cliente.idcliente=" + cliente.getIdcliente();
             unidade = cliente.getNomeFantasia();
-            if (banco.getIdbanco() != null || planocontas != null) {
-                sql = sql + " and ";
-            }
         }
         if (banco != null && banco.getIdbanco() != null) {
-            sql = sql + " o.banco.idbanco=" + banco.getIdbanco();
+            sql = sql + " and o.banco.idbanco=" + banco.getIdbanco();
             nomeBanco = banco.getNome();
-            if (planocontas != null) {
-                sql = sql + " and ";
-            }
         }
         if (planocontas != null) {
-            sql = sql + " o.planocontas.idplanoContas=" + planocontas.getIdplanoContas();
+            sql = sql + " and o.planocontas.idplanoContas=" + planocontas.getIdplanoContas();
         }
+        if (tipoConciliacao.equalsIgnoreCase("Conciliados")) {
+            sql = sql + " and o.conciliacao='sim' ";
+        }else if(tipoConciliacao.equalsIgnoreCase("Pendentes")){
+            sql = sql + " and o.conciliacao='não' or o.conciliacao is null ";
+        }
+        
         sql = sql + " order by o.dataCompensacao";
         List<Movimentobanco> lista;
         lista = outrosLancamentosDao.list(sql);

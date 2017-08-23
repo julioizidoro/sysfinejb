@@ -77,6 +77,8 @@ public class OutrosLancamentosMB implements Serializable {
     private PlanoContasDao planoContasDao;
     @EJB
     private SaldoDao saldoDao;
+    private int numeroPendente = 0;
+    private List<Movimentobanco> listaPendentes;
 
     @PostConstruct
     public void init() {
@@ -235,6 +237,22 @@ public class OutrosLancamentosMB implements Serializable {
         this.verCliente = verCliente;
     }
 
+    public int getNumeroPendente() {
+        return numeroPendente;
+    }
+
+    public void setNumeroPendente(int numeroPendente) {
+        this.numeroPendente = numeroPendente;
+    }
+
+    public List<Movimentobanco> getListaPendentes() {
+        return listaPendentes;
+    }
+
+    public void setListaPendentes(List<Movimentobanco> listaPendentes) {
+        this.listaPendentes = listaPendentes;
+    }
+
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
@@ -259,6 +277,14 @@ public class OutrosLancamentosMB implements Serializable {
             listaOutrosLancamentos = outrosLancamentosDao.list(sql);
             if (listaOutrosLancamentos == null) {
                 listaOutrosLancamentos = new ArrayList<>();
+            }
+            listaPendentes = new ArrayList<>();
+            numeroPendente = 0;
+            for (int i = 0; i < listaOutrosLancamentos.size(); i++) {
+                if (listaOutrosLancamentos.get(i).getConciliacao()== null || listaOutrosLancamentos.get(i).getConciliacao().equalsIgnoreCase("não")) {
+                    listaPendentes.add(listaOutrosLancamentos.get(i));
+                    numeroPendente = numeroPendente + 1;
+                }
             }
             calcularTotal();
         } else {
@@ -550,6 +576,13 @@ public class OutrosLancamentosMB implements Serializable {
             }
         }
         return saldoInicial;
+    }
+    
+    public void listarContasPendentes(){
+        mensagem mensagem = new mensagem();
+        mensagem.faltaInformacao("Listagem de contas pendentes");
+        listaOutrosLancamentos = listaPendentes;
+        calcularTotal();
     }
 
 }

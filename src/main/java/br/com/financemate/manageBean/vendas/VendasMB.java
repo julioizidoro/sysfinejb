@@ -479,6 +479,9 @@ public class VendasMB implements Serializable {
 
     public void filtrar() {
         sql = "select v from Vendas v where ";
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+            cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
+        }
         if (cliente != null) {
             sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente();
             if (!nomeCliente.equalsIgnoreCase("")) {
