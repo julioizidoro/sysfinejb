@@ -383,6 +383,11 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
                 conciliacao.setSaldo(saldoAtual);
                 conciliacao.setValorEntrada(lista.get(i).getValorEntrada());
                 conciliacao.setValorSaida(lista.get(i).getValorSaida());
+                if (lista.get(i).getConciliacao() == null) {
+                    conciliacao.setConciliacao("");
+                }else{
+                    conciliacao.setConciliacao(lista.get(i).getConciliacao());
+                }
                 listaConciliacao.add(conciliacao);
             }
         }

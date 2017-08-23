@@ -36,7 +36,7 @@
                         <p:column headerText="Email" sortBy="#{cliente.email}" style="widht:55%; text-align:left; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{cliente.email}"/>
                         </p:column>
-                        <p:column headerText="" rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.acliente}"  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
+                        <p:column exportable="false" headerText="" rendered="#{usuarioLogadoMB.usuario.tipoacesso.acesso.acliente}"  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;">
                             <p:commandLink id="btnMenu">
                                 <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
                                 <b class="caret"></b>

@@ -10,6 +10,7 @@ public class ConciliacaoBean {
     private Float valorEntrada;
     private Float valorSaida;
     private Float saldo;
+    private String conciliacao;
 
     public Date getDataCompensacao() {
         return dataCompensacao;
@@ -57,5 +58,13 @@ public class ConciliacaoBean {
 
     public void setSaldo(Float saldo) {
         this.saldo = saldo;
+    }
+
+    public String getConciliacao() {
+        return conciliacao;
+    }
+
+    public void setConciliacao(String conciliacao) {
+        this.conciliacao = conciliacao;
     }
 }

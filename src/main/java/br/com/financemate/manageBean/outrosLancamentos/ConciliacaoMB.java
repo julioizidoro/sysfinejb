@@ -773,5 +773,65 @@ public class ConciliacaoMB implements Serializable {
         }
     }
     
+    
+    public String novaPendencia(ConciliarBean conciliacao) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("conciliacao", conciliacao);
+        session.setAttribute("listaTransacao", listaTransacao);
+        session.setAttribute("listaLancamentos", listaLacamentos);
+        session.setAttribute("banco", banco);
+        session.setAttribute("dataInicial", dataInicial);
+        session.setAttribute("dataFinal", dataFinal);
+        if (conciliacao != null) {
+            Movimentobanco outros = conciliacao.getOutroslancamentos();
+            if (outros == null) {
+                outros = new Movimentobanco();
+            }
+            outros.setDataCompensacao(conciliacao.getTransacao().getData());
+            outros.setDescricao(conciliacao.getTransacao().getDescricao());
+            
+            if (conciliacao.getTransacao().getValorEntrada() > 0) {
+                outros.setValorEntrada(conciliacao.getTransacao().getValorEntrada() - 0.01f);
+            } else {
+                outros.setValorEntrada(conciliacao.getTransacao().getValorEntrada());
+            }
+
+            if (conciliacao.getTransacao().getValorSaida() > 0) {
+                outros.setValorSaida(conciliacao.getTransacao().getValorSaida() - 0.01f);
+            } else {
+                outros.setValorSaida(conciliacao.getTransacao().getValorSaida());
+            }
+            outros.setUsuario(usuarioLogadoMB.getUsuario());
+            outros.setDataVencimento(conciliacao.getTransacao().getData());
+            outros.setTipoDocumento(conciliacao.getTransacao().getTipo());
+            outros.setDataRegistro(new Date());
+            outros.setIdcontaspagar(0);
+            outros.setIdcontasreceber(0);
+            outros.setConciliacao("não");
+            if (banco == null) {
+               List<Banco> lista = bancoDao.list("select b from Banco b where b.agencia='" + agencia + "' and b.conta like '" + conta + "%'");
+               outros.setBanco(lista.get(0));
+               outros.setCliente(lista.get(0).getCliente());
+            }else{
+                outros.setBanco(banco);
+                outros.setCliente(banco.getCliente());
+            }
+            if (outros.getPlanocontas() == null) {
+                outros.setPlanocontas(planocontas);
+            }
+            outrosLancamentosDao.update(outros);
+            if (listaLacamentos == null) {
+                listaLacamentos = new ArrayList<>();
+            }
+            listaLacamentos.add(outros);
+        }
+        conciliar();
+        mensagem mensagem = new mensagem();
+        mensagem.faltaInformacao("Lançamento feito com sucesso");
+        return "";
+
+    }
+    
 
 }

@@ -14,9 +14,10 @@ import javax.inject.Named;
 
 import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
+import javax.faces.view.ViewScoped;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class CalculosContasMB implements Serializable {
 
     /**
