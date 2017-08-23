@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Mapa de Vendas Gerencial" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="320dd56b-4281-455e-becf-bdbfae77892b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="14"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -45,6 +45,7 @@
 	<field name="valorSaida" class="java.lang.Float">
 		<fieldDescription><![CDATA[valorSaida]]></fieldDescription>
 	</field>
+	<field name="conciliacao" class="java.lang.String"/>
 	<variable name="totalEntrada" class="java.lang.Float" calculation="Sum">
 		<variableExpression><![CDATA[$F{valorEntrada}]]></variableExpression>
 	</variable>
@@ -167,7 +168,7 @@
 				<text><![CDATA[Plano de Contas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="342" y="5" width="55" height="15" uuid="ca145b00-b653-4579-8cb8-36d22ce41438"/>
+				<reportElement style="Column header" x="337" y="5" width="55" height="15" uuid="ca145b00-b653-4579-8cb8-36d22ce41438"/>
 				<text><![CDATA[ Entradas]]></text>
 			</staticText>
 			<staticText>
@@ -175,12 +176,16 @@
 				<text><![CDATA[Descrição]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="422" y="3" width="39" height="15" uuid="c636b7a4-e5f5-44ea-b789-31d646af217a"/>
+				<reportElement style="Column header" x="397" y="3" width="39" height="15" uuid="c636b7a4-e5f5-44ea-b789-31d646af217a"/>
 				<text><![CDATA[Saídas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="487" y="4" width="39" height="15" uuid="2af0c07a-e85f-474a-9267-704f347555f3"/>
+				<reportElement style="Column header" x="454" y="4" width="39" height="15" uuid="2af0c07a-e85f-474a-9267-704f347555f3"/>
 				<text><![CDATA[Saldo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="511" y="4" width="43" height="15" uuid="445d443c-cb4d-47ae-a26d-0f4a41c90fef"/>
+				<text><![CDATA[Conc..]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -197,39 +202,46 @@
 				<textFieldExpression><![CDATA[$F{dataCompensacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="59" y="2" width="121" height="22" uuid="e0df543e-f9a3-4983-8b5f-111cc992c08b"/>
+				<reportElement style="Detail" x="59" y="2" width="121" height="36" uuid="e0df543e-f9a3-4983-8b5f-111cc992c08b"/>
 				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{planoContas}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="343" y="2" width="72" height="15" uuid="4c0b5781-b7bb-4213-a971-00ea0f01211d"/>
+				<reportElement style="Detail" x="338" y="2" width="55" height="15" uuid="4c0b5781-b7bb-4213-a971-00ea0f01211d"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{valorEntrada}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement style="Detail" x="183" y="2" width="159" height="36" uuid="292c73a8-45fe-48d9-b46b-e85bf4b09d50"/>
+				<reportElement style="Detail" x="183" y="2" width="153" height="36" uuid="292c73a8-45fe-48d9-b46b-e85bf4b09d50"/>
 				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement style="Detail" x="487" y="2" width="65" height="15" uuid="4d77b402-de9a-4751-8969-4aa056573073"/>
+				<reportElement style="Detail" x="453" y="2" width="58" height="15" uuid="4d77b402-de9a-4751-8969-4aa056573073"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="422" y="2" width="59" height="15" uuid="d4edab43-c0ec-430f-8014-e493b1ff6bcc"/>
+				<reportElement style="Detail" x="397" y="2" width="51" height="15" uuid="d4edab43-c0ec-430f-8014-e493b1ff6bcc"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{valorSaida}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement style="Detail" x="522" y="2" width="32" height="15" uuid="a35a4608-87d0-4b87-ae19-7c363e8edfef"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{conciliacao}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -256,6 +268,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement style="Column header" x="443" y="0" width="109" height="15" uuid="306c4ba2-2503-4a27-a0f1-8b26992f21e5"/>
+				<text><![CDATA[Conc = Conciliado]]></text>
+			</staticText>
 		</band>
 	</lastPageFooter>
 </jasperReport>
