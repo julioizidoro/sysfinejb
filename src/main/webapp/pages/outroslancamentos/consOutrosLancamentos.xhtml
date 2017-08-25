@@ -52,7 +52,7 @@
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 <p:ajax event="change"/>
                             </p:calendar>
-                            <p:commandLink title="Pesquisar" style="text-decoration: none;margin-left:2%;"   action="#{outrosLancamentosMB.gerarPesquisa()}" update="idTabelaOutrosLancamentos, idsaida, identrada, idtotal, :frmConsultaOutrosLancamentos:pendencia">
+                            <p:commandLink title="Pesquisar" style="text-decoration: none;margin-left:2%;"   action="#{outrosLancamentosMB.gerarPesquisa()}" update="idTabelaOutrosLancamentos, idsaida, identrada, idtotal, :frmConsultaOutrosLancamentos:pendencia, growl">
                                 <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
                             </p:commandLink>
                         </h:panelGrid>

@@ -287,6 +287,8 @@ public class OutrosLancamentosMB implements Serializable {
                 }
             }
             calcularTotal();
+            mensagem mensagem = new mensagem();
+            mensagem.faltaInformacao("Pesquisa feita com sucesso");
         } else {
             mostrarMensagem(null, "Dados invalidos", "Aviso");
         }

@@ -79,6 +79,7 @@ public class ImprimirRelatorioMB implements Serializable {
         gerarListaCliente();
         if (usuarioLogadoMB.getCliente() != null) {
             cliente = usuarioLogadoMB.getCliente();
+            gerarListaBanco();
         }
         desabilitarUnidade();
     }
