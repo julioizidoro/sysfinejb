@@ -484,13 +484,20 @@ public class OutrosLancamentosMB implements Serializable {
     }
 
     public float geralSqlSaldoInicial() {
+        Date dataMaxima = null;
         float entrada = 0.0f;
         float saida = 0.0f;
         Float saldoInicial = 0f;
         String sql = "select max(s.valor) from Saldo s";
+        
         if (banco.getIdbanco() != null) {
-            sql = sql + " where s.datainclusao=(select max(su.datainclusao) from Saldo su where su.banco.idbanco=" + banco.getIdbanco()+
-                    " and su.banco.cliente.idcliente="+ cliente.getIdcliente()+") and s.banco.idbanco=" + banco.getIdbanco() 
+            try {
+                dataMaxima = saldoDao.consultarData("select max(su.datainclusao) from Saldo su where su.banco.idbanco=" + banco.getIdbanco() +
+                        " and su.banco.cliente.idcliente="+ cliente.getIdcliente());
+            } catch (SQLException ex) {
+                Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            sql = sql + " where s.datainclusao='"+ Formatacao.ConvercaoDataSql(dataMaxima) +"' and s.banco.idbanco=" + banco.getIdbanco() 
                     + "and s.banco.cliente.idcliente="+ cliente.getIdcliente();
         }
         if (banco.getIdbanco() == null) {
@@ -499,10 +506,15 @@ public class OutrosLancamentosMB implements Serializable {
             if (listaBanco == null) {
                 listaBanco = new ArrayList<>();
             }
-            for (int i = 0; i < listaBanco.size(); i++) {   
-                String sql3 = "select max(s.valor) from Saldo s where s.datainclusao=(select max(su.datainclusao) from Saldo su where  su.banco.idbanco=" 
-                        + listaBanco.get(i).getIdbanco() + " and su.banco.cliente.idcliente="+ cliente.getIdcliente() +
-                        ") and s.banco.idbanco=" + listaBanco.get(i).getIdbanco() + " and s.banco.cliente.idcliente="+ cliente.getIdcliente();
+            for (int i = 0; i < listaBanco.size(); i++) { 
+                try {
+                    dataMaxima = saldoDao.consultarData("select max(su.datainclusao) from Saldo su where su.banco.idbanco=" + listaBanco.get(i).getIdbanco()
+                            + " and su.banco.cliente.idcliente=" + cliente.getIdcliente());
+                } catch (SQLException ex) {
+                    Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                String sql3 = "select max(s.valor) from Saldo s where s.datainclusao='"+ Formatacao.ConvercaoDataSql(dataMaxima) 
+                        +"' and s.banco.idbanco=" + listaBanco.get(i).getIdbanco() + " and s.banco.cliente.idcliente="+ cliente.getIdcliente();
                 try {
                    saldoInicial = saldoInicial +  saldoDao.consultar(sql3);
                 } catch (SQLException ex) {
@@ -551,13 +563,19 @@ public class OutrosLancamentosMB implements Serializable {
         float entrada = 0.0f;
         float saida = 0.0f;
         String sql;
+        Date dataMaxima = null;
         Float saldoInicial = 0f;
         if (cliente != null) {
             gerarListaBanco();
             for (int i = 0; i < listaBancos.size(); i++) {
-                sql = "select max(s.valor) from Saldo s where s.datainclusao=(select max(su.datainclusao) from Saldo su s.banco.idbanco="
-                        + listaBancos.get(i).getIdbanco() + " and su.banco.cliente.idcliente="+ cliente.getIdcliente() + 
-                        ") and s.banco.idbanco=" + listaBancos.get(i).getIdbanco() + " and s.banco.cliente.idcliente=" + cliente.getIdcliente();
+                try {
+                    dataMaxima = saldoDao.consultarData("select max(su.datainclusao) from Saldo su su.banco.idbanco="
+                            + listaBancos.get(i).getIdbanco() + " and su.banco.cliente.idcliente="+ cliente.getIdcliente());
+                } catch (SQLException ex) {
+                    Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                sql = "select max(s.valor) from Saldo s where s.datainclusao='"+ Formatacao.ConvercaoDataSql(dataMaxima)
+                        +"' and s.banco.idbanco=" + listaBancos.get(i).getIdbanco() + " and s.banco.cliente.idcliente=" + cliente.getIdcliente();
                 try {
                     saldoInicial = saldoInicial + saldoDao.consultar(sql);
                 } catch (SQLException ex) {

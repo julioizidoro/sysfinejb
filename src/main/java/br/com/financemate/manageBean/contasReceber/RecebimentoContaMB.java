@@ -4,12 +4,14 @@ import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.OutrosLancamentosDao;
+import br.com.financemate.dao.PlanoContasDao;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Movimentobanco;
+import br.com.financemate.model.Planocontas;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,6 +59,8 @@ public class RecebimentoContaMB implements Serializable {
     private BancoDao bancoDao;
     private Float valorAnteriorJuros = 0.0f;
     private Float valorAnteriorDesagio= 0.0f;
+    @EJB
+    private PlanoContasDao planoContasDao;
 
     @PostConstruct
     public void init() {
@@ -315,13 +319,14 @@ public class RecebimentoContaMB implements Serializable {
     }
 
     public void lancaOutrosLancamentos(Contasreceber conta) {
+        Planocontas planocontas = planoContasDao.find(3);
         Movimentobanco outroslancamentos = new Movimentobanco();
         outroslancamentos.setBanco(conta.getBanco());
         outroslancamentos.setCliente(conta.getCliente());
         outroslancamentos.setDataVencimento(conta.getDataVencimento());
         outroslancamentos.setDataCompensacao(conta.getDataPagamento());
         outroslancamentos.setDataRegistro(new Date());
-        outroslancamentos.setPlanocontas(conta.getPlanocontas());
+        outroslancamentos.setPlanocontas(planocontas);
         outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
         outroslancamentos.setValorEntrada(conta.getValorPago());
         outroslancamentos.setValorSaida(0f);
@@ -364,13 +369,14 @@ public class RecebimentoContaMB implements Serializable {
     }
 
     public void lancaOutrosLancamentosParcial(Contasreceber conta) {
+        Planocontas planocontas = planoContasDao.find(3);
         Movimentobanco outroslancamentos = new Movimentobanco();
         outroslancamentos.setBanco(conta.getBanco());
         outroslancamentos.setCliente(conta.getCliente());
         outroslancamentos.setDataVencimento(conta.getDataVencimento());
         outroslancamentos.setDataCompensacao(dataRecebimentoParcial);
         outroslancamentos.setDataRegistro(new Date());
-        outroslancamentos.setPlanocontas(conta.getPlanocontas());
+        outroslancamentos.setPlanocontas(planocontas);
         outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
         outroslancamentos.setValorEntrada(valorParcial);
         outroslancamentos.setValorSaida(0f);

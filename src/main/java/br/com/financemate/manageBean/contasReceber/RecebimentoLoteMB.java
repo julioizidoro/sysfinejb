@@ -2,6 +2,7 @@ package br.com.financemate.manageBean.contasReceber;
 
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.OutrosLancamentosDao;
+import br.com.financemate.dao.PlanoContasDao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +24,7 @@ import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Movimentobanco;
+import br.com.financemate.model.Planocontas;
 import javax.ejb.EJB;
 
 @Named
@@ -47,6 +49,8 @@ public class RecebimentoLoteMB implements Serializable {
     private OutrosLancamentosDao outrosLancamentosDao;
     @EJB
     private ContasReceberDao contasReceberDao;
+    @EJB
+    private PlanoContasDao planoContasDao;
 
     @PostConstruct
     public void init() {
@@ -163,13 +167,14 @@ public class RecebimentoLoteMB implements Serializable {
     }
 
     public void lancaOutrosLancamentos(Contasreceber conta) {
+        Planocontas planocontas = planoContasDao.find(3);
         Movimentobanco outroslancamentos = new Movimentobanco();
         outroslancamentos.setBanco(conta.getBanco());
         outroslancamentos.setCliente(conta.getCliente());
         outroslancamentos.setDataVencimento(conta.getDataVencimento());
         outroslancamentos.setDataCompensacao(conta.getDataPagamento());
         outroslancamentos.setDataRegistro(new Date());
-        outroslancamentos.setPlanocontas(conta.getPlanocontas());
+        outroslancamentos.setPlanocontas(planocontas);
         outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
         outroslancamentos.setValorEntrada(conta.getValorPago());
         outroslancamentos.setValorSaida(0f);

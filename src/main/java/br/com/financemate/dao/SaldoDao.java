@@ -2,6 +2,7 @@ package br.com.financemate.dao;
 
 import br.com.financemate.model.Saldo;
 import java.sql.SQLException;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,6 +30,15 @@ public class SaldoDao extends AbstractDao<Saldo> {
         if (saldo == null) {
             saldo = 0f;
         }
+        return saldo;
+    } 
+    
+    public Date consultarData(String sql) throws SQLException {
+        Query q = manager.createQuery(sql);
+        Date saldo = null;
+        if (q.getResultList().size() > 0) {
+            saldo = (Date) q.getResultList().get(0);
+        } 
         return saldo;
     } 
 
