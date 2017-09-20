@@ -56,7 +56,7 @@
                     <div class="form-group" >
                         <h:outputLabel for="dataRecebimento" style="margin-left:2% ">Data</h:outputLabel>
                         <br/> 
-                        <p:calendar pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoLoteMB.dataPagamento}">
+                        <p:calendar pattern="dd/MM/yyyy" id="dataRecebimento" style="width: 50%;border: 1px solid #ffffff;" value="#{recebimentoLoteMB.dataPagamento}">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             <p:ajax event="change"/>
                         </p:calendar>

@@ -419,7 +419,7 @@ public class ConciliacaoMB implements Serializable {
                         listaLacamentos.get(j).setConciliacao("sim");
                         outrosLancamentosDao.update(listaLacamentos.get(j));
                     }
-                    listaLacamentos.get(j).setConciliacao(transacao.getId());
+                    listaLacamentos.get(j).setConciliacao("sim");
                     listaLacamentos.get(j).setConciliada(true);
                     transacao.setConciliada(true);
                     cb = new ConciliarBean();

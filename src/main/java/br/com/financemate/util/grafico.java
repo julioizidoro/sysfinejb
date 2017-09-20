@@ -282,7 +282,7 @@ public class grafico implements Serializable {
         yAxis.setMax(valorMaximo.floatValue() + 100);
 
         animatedModel2 = initBarModel();
-        animatedModel2.setSeriesColors("145B7A; opacity:0.1;");
+        animatedModel2.setSeriesColors("145B7A");
         animatedModel2.setAnimate(true);
         yAxis = animatedModel2.getAxis(AxisType.Y);
         yAxis.setMin(0);
