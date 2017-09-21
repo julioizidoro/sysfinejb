@@ -497,8 +497,13 @@ public class OutrosLancamentosMB implements Serializable {
             } catch (SQLException ex) {
                 Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
             }
-            sql = sql + " where s.datainclusao='"+ Formatacao.ConvercaoDataSql(dataMaxima) +"' and s.banco.idbanco=" + banco.getIdbanco() 
+            if (dataMaxima == null) {
+                sql = sql + " where s.banco.idbanco=" + banco.getIdbanco() 
                     + "and s.banco.cliente.idcliente="+ cliente.getIdcliente();
+            }else{
+                sql = sql + " where s.datainclusao='"+ Formatacao.ConvercaoDataSql(dataMaxima) +"' and s.banco.idbanco=" + banco.getIdbanco() 
+                    + "and s.banco.cliente.idcliente="+ cliente.getIdcliente();
+            }
         }
         if (banco.getIdbanco() == null) {
             List<Banco> listaBanco;
@@ -513,12 +518,17 @@ public class OutrosLancamentosMB implements Serializable {
                 } catch (SQLException ex) {
                     Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                String sql3 = "select max(s.valor) from Saldo s where s.datainclusao='"+ Formatacao.ConvercaoDataSql(dataMaxima) 
-                        +"' and s.banco.idbanco=" + listaBanco.get(i).getIdbanco() + " and s.banco.cliente.idcliente="+ cliente.getIdcliente();
-                try {
-                   saldoInicial = saldoInicial +  saldoDao.consultar(sql3);
-                } catch (SQLException ex) {
-                    Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
+                if (dataMaxima != null) {
+                    String sql3 = "select max(s.valor) from Saldo s where s.datainclusao='"+ Formatacao.ConvercaoDataSql(dataMaxima) 
+                            +"' and s.banco.idbanco=" + listaBanco.get(i).getIdbanco() + " and s.banco.cliente.idcliente="+ cliente.getIdcliente();
+                    try {
+                       saldoInicial = saldoInicial +  saldoDao.consultar(sql3);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (saldoInicial == null) {
+                    saldoInicial = 0f;
                 }
             }
         } else {
@@ -569,17 +579,22 @@ public class OutrosLancamentosMB implements Serializable {
             gerarListaBanco();
             for (int i = 0; i < listaBancos.size(); i++) {
                 try {
-                    dataMaxima = saldoDao.consultarData("select max(su.datainclusao) from Saldo su su.banco.idbanco="
+                    dataMaxima = saldoDao.consultarData("select max(su.datainclusao) from Saldo su where su.banco.idbanco="
                             + listaBancos.get(i).getIdbanco() + " and su.banco.cliente.idcliente="+ cliente.getIdcliente());
                 } catch (SQLException ex) {
                     Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                sql = "select max(s.valor) from Saldo s where s.datainclusao='"+ Formatacao.ConvercaoDataSql(dataMaxima)
-                        +"' and s.banco.idbanco=" + listaBancos.get(i).getIdbanco() + " and s.banco.cliente.idcliente=" + cliente.getIdcliente();
-                try {
-                    saldoInicial = saldoInicial + saldoDao.consultar(sql);
-                } catch (SQLException ex) {
-                    Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
+                if (dataMaxima != null) {
+                    sql = "select max(s.valor) from Saldo s where s.datainclusao='"+ Formatacao.ConvercaoDataSql(dataMaxima)
+                            +"' and s.banco.idbanco=" + listaBancos.get(i).getIdbanco() + " and s.banco.cliente.idcliente=" + cliente.getIdcliente();
+                    try {
+                        saldoInicial = saldoInicial + saldoDao.consultar(sql);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (saldoInicial == null) {
+                    saldoInicial = 0f;
                 }
             }
         }
