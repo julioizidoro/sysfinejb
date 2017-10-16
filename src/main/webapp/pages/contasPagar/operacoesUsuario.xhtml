@@ -34,6 +34,9 @@
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
+                <p:column headerText="Hora" style="background:white; color:black; border:none; width:17%; text-align:center;">
+                    <h:outputText  value="#{operacoes.hora}"/>
+                </p:column>
                 <p:column headerText="Operação" style="text-align:left; background:white; color:black; border:none;">
                     <h:outputText value="#{operacoes.tipooperacao}"/> 
                 </p:column>

@@ -39,6 +39,7 @@ import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Planocontatipo;
+import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.Ftp;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -96,6 +97,8 @@ public class CadContasPagarMB implements Serializable {
     private List<String> nomeArquivos;
     private String corAnexo = "color:#000000;";
     private String sql;
+    private List<String> listaArquivos;
+    private Float valorPagamento;
 
     @PostConstruct
     public void init() {
@@ -108,6 +111,8 @@ public class CadContasPagarMB implements Serializable {
         banco = (Banco) session.getAttribute("banco");
         planoContas = (Planocontas) session.getAttribute("planocontas");
         sql = (String) session.getAttribute("sql");
+        listaArquivos = (List<String>) session.getAttribute("listaArquivos");
+        session.removeAttribute("listaArquivos");
         session.removeAttribute("sql");
         session.removeAttribute("contapagar");
         session.removeAttribute("cliente");
@@ -143,6 +148,7 @@ public class CadContasPagarMB implements Serializable {
                     cptransferencia = new Cptransferencia();
                 }
             }
+            valorPagamento = (contaPagar.getValor() + contaPagar.getValorJuros()) - contaPagar.getValorDesconto();
         }
         desabilitarUnidade();
         if (nomeArquivos == null) {
@@ -325,6 +331,14 @@ public class CadContasPagarMB implements Serializable {
     public void setCorAnexo(String corAnexo) {
         this.corAnexo = corAnexo;
     }
+
+    public Float getValorPagamento() {
+        return valorPagamento;
+    }
+
+    public void setValorPagamento(Float valorPagamento) {
+        this.valorPagamento = valorPagamento;
+    }
     
     
     
@@ -400,21 +414,13 @@ public class CadContasPagarMB implements Serializable {
             if (cptransferencia != null) {
                 salvarTransferencia();
             }
-            if (file != null) {
-                String arquivoFtp = "";
-                try {
-                    arquivoFtp = nomeArquivo() + "_" +  new String(file.getFileName().trim().getBytes(Charset.defaultCharset()), "UTF-8");
-                } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            if (listaArquivos != null) {
+                for (int i = 0; i < listaArquivos.size(); i++) {
+                    nomearquivo = new Nomearquivo();
+                    nomearquivo.setNomearquivo01(listaArquivos.get(i));
+                    nomearquivo.setContaspagar(contaPagar);
+                    nomeArquivoDao.update(nomearquivo);
                 }
-                Nomearquivo nomearquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
-                if (nomearquivo != null && nomearquivo.getIdnomearquivo() != null){
-                    nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
-                }
-                nomearquivo = new Nomearquivo();
-                nomearquivo.setNomearquivo01(arquivoFtp);
-                nomearquivo.setContaspagar(contaPagar);
-                nomeArquivoDao.update(nomearquivo);
             }
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -469,20 +475,10 @@ public class CadContasPagarMB implements Serializable {
                 Cptransferencia copiaTranferencia = cptransferencia;
                 cptransferencia = repetirValoresTransferencia(copiaTranferencia);
             }
-            if (file != null) {
-               String arquivoFtp = "";
-                try {
-                    arquivoFtp = nomeArquivo() + "_" +  new String(file.getFileName().trim().getBytes(Charset.defaultCharset()), "UTF-8");
-                } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
-                    Nomearquivo nomearquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
-                    if (nomearquivo.getIdnomearquivo() != null) {
-                        nomeArquivoDao.remove(nomearquivo.getIdnomearquivo());
-                    }
+            if (listaArquivos != null) {
+                for (int i = 0; i < listaArquivos.size(); i++) {
                     nomearquivo = new Nomearquivo();
-                    nomearquivo.setNomearquivo01(arquivoFtp);
+                    nomearquivo.setNomearquivo01(listaArquivos.get(i));
                     nomearquivo.setContaspagar(contaPagar);
                     nomeArquivoDao.update(nomearquivo);
                 }
@@ -575,16 +571,6 @@ public class CadContasPagarMB implements Serializable {
             }
         }
         return selecionada;
-    }
-
-    public String nomeAnexo() {
-        if (consultarArquivos().equalsIgnoreCase("Não existe arquivo anexado")) {
-            nomeAnexo = "Anexar";
-            return nomeAnexo;
-        } else {
-            nomeAnexo = "Anexado";
-            return nomeAnexo;
-        }
     }
     
     public String retornarCorAnexo(){
@@ -709,6 +695,16 @@ public class CadContasPagarMB implements Serializable {
     public void fileUploadListener(FileUploadEvent e) {
         this.file = e.getFile();
         salvarArquivoFTP();
+        String nome = e.getFile().getFileName();
+        try {
+            nome = new String(nome.getBytes(Charset.defaultCharset()), "UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        }
+        if (listaArquivos == null) {
+            listaArquivos = new ArrayList<String>();
+        }
+        listaArquivos.add("ContasPagar-_" + nome);
     }
 
     public Date dataEnvio() {
@@ -765,6 +761,7 @@ public class CadContasPagarMB implements Serializable {
         session.setAttribute("banco", banco);
         session.setAttribute("planocontas", planoContas);
         session.setAttribute("sql", sql);
+        session.setAttribute("listaArquivos", listaArquivos);
         return "cadContasPagar";
     }
 
@@ -782,31 +779,12 @@ public class CadContasPagarMB implements Serializable {
     public Operacaousuairo salvarOperacaoUsuario(Contaspagar contaspagar, Operacaousuairo operacaousuairo) {
         operacaousuairo.setContaspagar(contaspagar);
         operacaousuairo.setData(new Date());
+        operacaousuairo.setHora(Formatacao.foramtarHoraString());
         operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
         operacaousuairo = operacaoUsuarioDao.update(operacaousuairo);
         return operacaousuairo;
     }
 
-    public String consultarArquivos() {
-        String nomeFile;
-        if (contaPagar.getIdcontasPagar() != null) {
-            nomearquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaPagar.getIdcontasPagar());
-            if (nomearquivo == null) {
-                nomearquivo = new Nomearquivo();
-                nomearquivo.setNomearquivo01("Não existe arquivo anexado");
-
-            }
-            nomeFile = nomearquivo.getNomearquivo01();
-            return nomeFile;
-        } else {
-            if (file != null) {
-                nomeFile = file.getFileName();
-            } else {
-                nomeFile = "Não existe arquivo anexado";
-            }
-            return nomeFile;
-        }
-    }
 
     public void gerarListaPlanoContas() {
         try {
@@ -826,6 +804,10 @@ public class CadContasPagarMB implements Serializable {
 
     public void gerarListaTotalPlanoConta() {
         listaPlanoContas = planoContasDao.list("select p from Planoconta p");
+    }
+    
+    public void calcularValorPagamento(){
+        valorPagamento = (contaPagar.getValor() + contaPagar.getValorJuros()) - contaPagar.getValorDesconto();
     }
 
 }

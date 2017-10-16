@@ -40,7 +40,6 @@ public class Ftp {
         InputStream arquivo;
         arquivo = new BufferedInputStream(uploadedFile.getInputstream());
         String nomeArquivo = arquivoFTP + "_" +  new String(uploadedFile.getFileName().trim().getBytes(Charset.defaultCharset()), "UTF-8");
-        arquivoFTP = new String(arquivoFTP.getBytes("ISO-8859-1"), "UTF-8");
         if (ftpClient.storeFile(nomeArquivo, arquivo)) {
             arquivo.close();
             return "Arquivo: " + nomeArquivo + " salvo com Sucesso";

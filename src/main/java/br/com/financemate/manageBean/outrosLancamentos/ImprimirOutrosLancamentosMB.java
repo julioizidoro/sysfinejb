@@ -440,7 +440,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         float entrada = 0.0f;
         float saida = 0.0f;
         String sql;
-        Float saldoInicial = 0f;
+        saldoInicial = 0f;
         sql = "select max(s.valor) from Saldo s";
         if (banco.getIdbanco() != null) {
             sql = sql + " where s.banco.idbanco=" + banco.getIdbanco();
@@ -497,7 +497,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         float entrada = 0.0f;
         float saida = 0.0f;
         String sql;
-        Float saldoInicial = 0f;
+        saldoInicial = 0f;
         if (cliente != null) {
             gerarListaBanco();
             for (int i = 0; i < listaBanco.size(); i++) {

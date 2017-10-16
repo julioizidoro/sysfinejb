@@ -373,7 +373,7 @@ public class ContasPagarMB implements Serializable {
             return "../../resources/img/bolaVerde.png";
         } else if (contaspagar.getDataVencimento().before(data)) {
             return "../../resources/img/bolaVermelha.png";
-        } else if (contaspagar.equals(data)) {
+        } else if (contaspagar.getDataVencimento().equals(data)) {
             return "../../resources/img/bolaAmarela.png";
         }
         return "../../resources/img/bolaVerde.png";
@@ -529,6 +529,7 @@ public class ContasPagarMB implements Serializable {
                 Operacaousuairo operacaousuairo = new Operacaousuairo();
                 operacaousuairo.setContaspagar(contaspagar);
                 operacaousuairo.setData(new Date());
+                operacaousuairo.setHora(Formatacao.foramtarHoraString());
                 operacaousuairo.setTipooperacao("Usuário Desautorizou");
                 operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
                 operacaoUsuarioDao.update(operacaousuairo);
@@ -542,6 +543,7 @@ public class ContasPagarMB implements Serializable {
                 Operacaousuairo operacaousuairo = new Operacaousuairo();
                 operacaousuairo.setContaspagar(contaspagar);
                 operacaousuairo.setData(new Date());
+                operacaousuairo.setHora(Formatacao.foramtarHoraString());
                 operacaousuairo.setTipooperacao("Usuário Autorizou");
                 operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
                 operacaoUsuarioDao.update(operacaousuairo);
@@ -659,6 +661,7 @@ public class ContasPagarMB implements Serializable {
         if (listaContasPagar == null) {
             listaContasPagar = new ArrayList<>();
         }
+        calcularTotal();
     }
 
     public String coresFiltrar() {

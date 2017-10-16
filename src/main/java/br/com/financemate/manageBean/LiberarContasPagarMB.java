@@ -20,6 +20,7 @@ import org.primefaces.context.RequestContext;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Movimentobanco;
+import br.com.financemate.util.Formatacao;
 import javax.ejb.EJB;
 
 @Named
@@ -235,6 +236,7 @@ public class LiberarContasPagarMB implements Serializable {
             Operacaousuairo operacaousuairo = new Operacaousuairo();
             operacaousuairo.setContaspagar(contaspagar);
             operacaousuairo.setData(new Date());
+            operacaousuairo.setHora(Formatacao.foramtarHoraString());
             operacaousuairo.setTipooperacao("Usuário Liberou");
             operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
             operacaoUsuarioDao.update(operacaousuairo);

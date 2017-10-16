@@ -626,7 +626,7 @@ public class ContasReceberMB implements Serializable {
             corStatus = "../../resources/img/bolaAmarela.png";
         }
         
-        if (contasreceber.getNumeroDocumento().equalsIgnoreCase("CANCELADA")) {
+        if (contasreceber.getStatus().equalsIgnoreCase("CANCELADA")) {
             corStatus = "../../resources/img/bolinhaPretaS.ico";
         }else if (contasreceber.getDataPagamento() != null){
             corStatus =  "../../resources/img/bolaVerde.png";
@@ -756,7 +756,7 @@ public class ContasReceberMB implements Serializable {
         if (status.equalsIgnoreCase("Recebidas")) {
             sql = sql + " and v.valorPago>0";
         } else if (status.equalsIgnoreCase("Vencidas")) {
-            sql = sql + " and v.dataVencimento<'" + Formatacao.ConvercaoDataSql(new Date()) + "' and v.dataPagamento=null";
+            sql = sql + " and v.dataVencimento<'" + Formatacao.ConvercaoDataSql(new Date()) + "' and v.dataPagamento=null and v.status<>'CANCELADA'";
         } else if (status.equalsIgnoreCase("A vencer")) {
             sql = sql + " and v.dataVencimento>'" + Formatacao.ConvercaoDataSql(new Date()) + "'";
         } else if (status.equalsIgnoreCase("Canceladas")) {

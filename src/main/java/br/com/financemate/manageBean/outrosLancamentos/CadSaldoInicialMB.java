@@ -38,12 +38,15 @@ public class CadSaldoInicialMB implements Serializable {
     private BancoDao bancoDao;
     @EJB
     private SaldoDao saldoDao;
+    private List<Saldo> listaSaldo;
 
     @PostConstruct
     public void init() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         cliente = (Cliente) session.getAttribute("cliente");
+        banco = (Banco) session.getAttribute("banco");
+        listaSaldo = (List<Saldo>) session.getAttribute("listaSaldo");
         if (saldo == null) {
             saldo = new Saldo();
             saldo.setDatainclusao(new Date());
@@ -109,10 +112,20 @@ public class CadSaldoInicialMB implements Serializable {
         saldo.setUsuario(usuarioLogadoMB.getUsuario());
         saldo.setBanco(banco);
         saldo = saldoDao.update(saldo);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("cliente", cliente);
+        session.setAttribute("banco", banco);
+        session.setAttribute("listaSaldo", listaSaldo);
         return "consSaldoIncial";
     }
 
     public String cancelar() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("cliente", cliente);
+        session.setAttribute("banco", banco);
+        session.setAttribute("listaSaldo", listaSaldo);
         return "consSaldoIncial";
     }
 

@@ -31,7 +31,7 @@
                 <title  >Novo Pagamento</title>
                 <p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
 
-                <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGrid columns="2"  style="margin-left: 1%;width: 100%;">
                     <h:panelGroup>
                         <h:outputLabel for="cliente" style="margin-left: 2%;" class="left3">Unidade</h:outputLabel>
                         <br/>
@@ -55,8 +55,7 @@
                         </div>
                     </h:panelGroup>
                 </h:panelGrid>
-                <hr/>	 
-                <h:panelGrid columns="3"  style="margin-left: 2%;width: 95%;">
+                <h:panelGrid columns="3"  style="margin-left: 2%;width: 97%;">
                     <h:panelGroup>
                         <div class="form-group" >
                             <h:outputLabel for="fornecedor">Fornecedor</h:outputLabel>
@@ -70,18 +69,46 @@
                         </div>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <p:commandLink  title="#{cadContasPagarMB.consultarArquivos()}" style="margin-left: 10%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivo()}" >
+                        <p:commandLink  title="Anexar Arquivos" style="margin-left: 10%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivo()}" >
 
                             <i class="fa fa-paperclip" style="font-size: 34px; #{cadContasPagarMB.retornarCorAnexo()}"/>
                         </p:commandLink>
-                        <h:outputLabel value="#{cadContasPagarMB.nomeAnexo()}" />
                     </h:panelGroup>
                 </h:panelGrid>
-                <h:panelGrid columns="2"  style="margin-left: 2%;width: 81%;">
+                <h:panelGrid columns="3"  style="margin-left: 2%;width: 107%;">
                     <h:panelGroup>
                         <div class="form-group" >
                             <h:outputLabel for="valor">Valor</h:outputLabel>
                             <h:inputText  class="form-control" id="valor" style="width: 63%;text-align: right;" value="#{cadContasPagarMB.contaPagar.valor}">
+                                <f:convertNumber pattern="##,###,###,###.##"/>
+                                <p:ajax event="change" listener="#{cadContasPagarMB.calcularValorPagamento()}" update="valorPagamento"/>
+                            </h:inputText>
+                        </div>
+                    </h:panelGroup> 
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="valorJuros">Juros</h:outputLabel>
+                            <h:inputText  class="form-control" id="valorJuros" style="width: 63%;text-align: right;" value="#{cadContasPagarMB.contaPagar.valorJuros}">
+                                <f:convertNumber pattern="##,###,###,###.##"/>
+                                <p:ajax event="change" listener="#{cadContasPagarMB.calcularValorPagamento()}" update="valorPagamento"/>
+                            </h:inputText>
+                        </div>
+                    </h:panelGroup> 
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="valorDesconto">Desconto</h:outputLabel>
+                            <h:inputText  class="form-control" id="valorDesconto" style="width: 63%;text-align: right;" value="#{cadContasPagarMB.contaPagar.valorDesconto}">
+                                <f:convertNumber pattern="##,###,###,###.##"/>
+                                <p:ajax event="change" listener="#{cadContasPagarMB.calcularValorPagamento()}" update="valorPagamento"/>
+                            </h:inputText>
+                        </div>
+                    </h:panelGroup> 
+                </h:panelGrid>
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 99%;">
+                    <h:panelGroup>
+                        <div class="form-group" >
+                            <h:outputLabel for="valorPagamento">Valor Pagamento</h:outputLabel>
+                            <h:inputText  class="form-control" id="valorPagamento" style="width: 63%;text-align: right;" value="#{cadContasPagarMB.valorPagamento}">
                                 <f:convertNumber pattern="##,###,###,###.##"/>
                             </h:inputText>
                         </div>
@@ -89,35 +116,25 @@
                     <h:panelGroup>
                         <div class="form-group" >
                             <h:outputLabel for="descricao">Descrição</h:outputLabel>
-                            <h:inputText  class="form-control" id="descricao" style="width: 126%;" value="#{cadContasPagarMB.contaPagar.descricao}"/>
+                            <h:inputText  class="form-control" id="descricao" style="width: 90%;" value="#{cadContasPagarMB.contaPagar.descricao}"/>
                         </div>
                     </h:panelGroup>
                 </h:panelGrid>
                 <h:panelGrid columns="3"  style="margin-left: 2%;width: 106%;">
-                    <h:panelGroup>
-                        <div class="form-group" >
                             <h:outputLabel for="dataVenc">Vencimento</h:outputLabel>
-                            <br/>
+                            <h:outputLabel value="Conta" for="idconta" />
+                            <h:outputLabel value="Forma" for="formaPaga" class="left2" />  
                             <p:calendar locale="pt_BR" pattern="dd/MM/yyyy" id="dataVenc" style="width: 50%;border: 1px solid #ffffff;" value="#{cadContasPagarMB.contaPagar.dataVencimento}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 <p:ajax event="change"/>
                             </p:calendar>
-                        </div>
-                    </h:panelGroup> 
-                    <h:panelGroup>
-                        <h:outputLabel value="Conta" for="idconta" />
-                        <br/>
                         <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{cadContasPagarMB.banco}"  converter="BancoConverter"
                                          filter="true" filterMatchMode="contains" panelStyle="width:150px">
                             <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
                             <f:selectItems value="#{cadContasPagarMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
                             <f:attribute name="listaBanco" value="#{cadContasPagarMB.listaBanco}" />
 
-                        </p:selectOneMenu> 
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <p:outputLabel value="Forma" for="formaPaga" class="left2" />   
-                        <br/>
+                        </p:selectOneMenu>  
                         <p:selectOneMenu id="formaPaga" class="left5" style="width:156px;"  value="#{cadContasPagarMB.contaPagar.formaPagamento}">
                             <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                             <f:selectItem itemLabel="Cartão" itemValue="Cartao" />  
@@ -129,10 +146,9 @@
                             <f:selectItem itemLabel="Transferencia" itemValue="Transferencia"/>
                             <p:ajax event="change" listener="#{cadContasPagarMB.transferenciaBancaria()}"  update="renderizar"/>   
                         </p:selectOneMenu>
-                    </h:panelGroup>
                 </h:panelGrid>
-                <hr />
-                <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <hr/>
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 105%;">
                     <h:panelGroup>
                         <h:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
                         <br/>
@@ -150,7 +166,7 @@
                         </div>
                     </h:panelGroup>
                 </h:panelGrid>
-                <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
+                <h:panelGrid columns="2"  style="margin-left: 2%;width: 53%;">
                     <h:panelGroup>
                         <div class="form-group" >
                             <h:outputLabel for="dataAgen">Agendamento</h:outputLabel>
@@ -172,7 +188,6 @@
                         </div>
                     </h:panelGroup>
                 </h:panelGrid>
-                <hr />
                 <h:panelGroup id="renderizar">
                     <h:panelGrid id="idtransferencia" columns="3"  rendered="#{cadContasPagarMB.selecionada}" style="width: 100%;margin-left: 2%;">
                         <h:panelGroup>

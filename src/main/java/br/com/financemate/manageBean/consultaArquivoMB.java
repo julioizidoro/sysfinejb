@@ -22,6 +22,8 @@ import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Ftpdados;
 import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.util.Ftp;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 
 @Named
@@ -42,6 +44,7 @@ public class consultaArquivoMB implements Serializable {
     @EJB
     private NomeArquivoDao nomeArquivoDao;
     private Ftpdados ftpdados;
+    private List<Nomearquivo> listaArquivo;
 
     @PostConstruct
     public void init() {
@@ -92,14 +95,21 @@ public class consultaArquivoMB implements Serializable {
     public void setFtpdados(Ftpdados ftpdados) {
         this.ftpdados = ftpdados;
     }
+
+    public List<Nomearquivo> getListaArquivo() {
+        return listaArquivo;
+    }
+
+    public void setListaArquivo(List<Nomearquivo> listaArquivo) {
+        this.listaArquivo = listaArquivo;
+    }
     
     
 
     public void consultarArquivos() {
-        nomeArquivo = nomeArquivoDao.find("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
-        if (nomeArquivo == null) {
-            nomeArquivo = new Nomearquivo();
-            nomeArquivo.setNomearquivo01("Não existe arquivo anexado");
+        listaArquivo = nomeArquivoDao.list("select n from Nomearquivo n where n.contaspagar.idcontasPagar=" + contaspagar.getIdcontasPagar());
+        if (listaArquivo == null) {
+            listaArquivo = new ArrayList<Nomearquivo>();
         }
     }
 

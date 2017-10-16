@@ -49,12 +49,20 @@ public class SaldoInicialMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        listaSaldo = new ArrayList<>();
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        cliente = (Cliente) session.getAttribute("cliente");
+        banco = (Banco) session.getAttribute("banco");
+        listaSaldo = (List<Saldo>) session.getAttribute("listaSaldo");
         gerarListaCliente();
         desabilitarUnidade();
         if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
             cliente = clienteDao.find(usuarioLogadoMB.getUsuario().getCliente());
             gerarListaBanco();
+        }else{
+            if (cliente != null) {
+                gerarListaBanco();
+            }
         }
     }
 
@@ -151,6 +159,8 @@ public class SaldoInicialMB implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("cliente", cliente);
+        session.setAttribute("banco", banco);
+        session.setAttribute("listaSaldo", listaSaldo);
         return "cadSaldoInicial";
     }
 

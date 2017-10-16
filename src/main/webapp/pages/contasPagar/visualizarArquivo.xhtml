@@ -24,33 +24,22 @@
             </p:dialog>
             <title  >Visualizar Arquivo</title>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-            <h:panelGrid columns="2"  style="margin-left: 2%;width: 100%;">
-                <h:panelGroup style="margin-left: 2%;">
-                    <div class="form-group">
-                        <h:outputLabel for="nomearquivo" style="margin-left:2% ">Nome Arquivo</h:outputLabel>
-                        <h:inputText  class="form-control" id="nomearquivo" style="width: 80%;margin-left: 2%;" value="#{consultaArquivoMB.nomeArquivo.nomearquivo01}" readonly="true"/>
-                    </div>
-                </h:panelGroup>
-                <h:panelGroup   rendered="#{consultaArquivoMB.desabilitarDownload()}"> 
-                    <h:outputLabel/>
-                    <a  title="Download" name="download" onclick="form.target = '_blank'" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
-
-                        <img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
-
+            
+            <p:dataTable id="idConsultaArquivo" var="arquivo"  rowStyleClass="tabela" class="tabelaselecionar" value="#{consultaArquivoMB.listaArquivo}" 
+                         scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{consultaArquivoMB.nomeArquivo}" rowKey="#{arquivo.idnomearquivo}"  rows="10" style="margin-bottom:20px;"> 
+                <p:column headerText="Arquivo" style=" background:white; text-align:left; color:black; border:none;">
+                    <h:outputText value="#{arquivo.nomearquivo01}"/> 
+                </p:column>
+                <p:column headerText="" style="background:white; color:black; border:none; width:17%; text-align:center;">
+                    <a  title="Download" name="download" onclick="form.target = '_blank'" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{arquivo.nomearquivo01}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
+                        <img src="../../resources/img/iconeDownload.png" width="21" height="21"/> 
                     </a>
-                </h:panelGroup>
-
-
-            </h:panelGrid>
-            <a  title="Download" name="download" onclick="form.target = '_blank'" href="http://#{consultaArquivoMB.ftpdados.host}:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank"  style="text-decoration:none;font-size:18px;" type="button">
-
-                <img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
-
-            </a>
+                </p:column>
+            </p:dataTable>
             <hr />
             <p:commandLink title="Fechar" style="margin-left: 45%;text-decoration: none" action="#{consultaArquivoMB.voltar()}" >
-                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-            </p:commandLink>
+                        <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+                    </p:commandLink>
         </h:form>
     </h:body>
 </html>

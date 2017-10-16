@@ -86,6 +86,10 @@ public class Contaspagar implements Serializable {
     @Size(max = 10)
     @Column(name = "status")
     private String status;
+    @Column(name = "valorJuros")
+    private Float valorJuros;
+    @Column(name = "valorDesconto")
+    private Float valorDesconto;
     @Size(max = 1)
     @Column(name = "autorizarPagamento")
     private String autorizarPagamento;
@@ -104,6 +108,9 @@ public class Contaspagar implements Serializable {
     private boolean selecionado;
 
     public Contaspagar() {
+        valorDesconto = 0.0f;
+        valor = 0.0f;
+        valorJuros = 0.0f;
     }
 
     public Contaspagar(Integer idcontasPagar) {
@@ -310,6 +317,22 @@ public class Contaspagar implements Serializable {
 
     public void setSelecionado(boolean selecionado) {
         this.selecionado = selecionado;
+    }
+
+    public Float getValorJuros() {
+        return valorJuros;
+    }
+
+    public void setValorJuros(Float valorJuros) {
+        this.valorJuros = valorJuros;
+    }
+
+    public Float getValorDesconto() {
+        return valorDesconto;
+    }
+
+    public void setValorDesconto(Float valorDesconto) {
+        this.valorDesconto = valorDesconto;
     }
 
     @Override
