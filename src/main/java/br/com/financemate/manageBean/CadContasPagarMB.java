@@ -121,7 +121,7 @@ public class CadContasPagarMB implements Serializable {
         gerarListaCliente();
         if (contaPagar == null) {
             contaPagar = new Contaspagar();
-            if (usuarioLogadoMB.getCliente() != null) {
+            if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
                 cliente = usuarioLogadoMB.getCliente();
                 gerarListaBanco();
                 gerarListaPlanoContas();
@@ -382,25 +382,8 @@ public class CadContasPagarMB implements Serializable {
         contaPagar.setBanco(banco);
         contaPagar.setCliente(cliente);
         contaPagar.setContaPaga("N");
-        if (planoContas != null) {
-            contaPagar.setPlanocontas(planoContas);
-        } else {
-            planoContas = planoContasDao.find(1);
-            contaPagar.setPlanocontas(planoContas);
-        }
-        if (contaPagar.getCompetencia() == null) {
-            contaPagar.setCompetencia("");
-        }
-        if (contaPagar.getDataAgendamento() == null) {
-            contaPagar.setDataAgendamento(null);
-        }
-        if (contaPagar.getDataCompensacao() == null) {
-            contaPagar.setDataCompensacao(null);
-        }
-        if (contaPagar.getAutorizarPagamento() == null || contaPagar.getAutorizarPagamento().equalsIgnoreCase("N")) {
-            contaPagar.setAutorizarPagamento("N");
-        }
-
+        contaPagar.setValorPagamento(valorPagamento);
+        setandoValores();
         String mensagem = validarDados();
         if (mensagem.length() == 0) {
             contaPagar.setStatus("Ativo");
@@ -415,12 +398,7 @@ public class CadContasPagarMB implements Serializable {
                 salvarTransferencia();
             }
             if (listaArquivos != null) {
-                for (int i = 0; i < listaArquivos.size(); i++) {
-                    nomearquivo = new Nomearquivo();
-                    nomearquivo.setNomearquivo01(listaArquivos.get(i));
-                    nomearquivo.setContaspagar(contaPagar);
-                    nomeArquivoDao.update(nomearquivo);
-                }
+                salvarArquivos();
             }
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -433,13 +411,17 @@ public class CadContasPagarMB implements Serializable {
             context.addMessage(null, new FacesMessage(mensagem, ""));
         }
     }
-
-    public void salvarRepetir() {
-        Operacaousuairo operacaousuairo = new Operacaousuairo();
-        contaPagar.setBanco(banco);
-        contaPagar.setPlanocontas(planoContas);
-        contaPagar.setCliente(cliente);
-        contaPagar.setContaPaga("N");
+    
+    public void salvarArquivos(){
+        for (int i = 0; i < listaArquivos.size(); i++) {
+            nomearquivo = new Nomearquivo();
+            nomearquivo.setNomearquivo01(listaArquivos.get(i));
+            nomearquivo.setContaspagar(contaPagar);
+            nomeArquivoDao.update(nomearquivo);
+        }
+    }
+    
+    public void setandoValores(){
         if (planoContas != null) {
             contaPagar.setPlanocontas(planoContas);
         } else {
@@ -455,11 +437,18 @@ public class CadContasPagarMB implements Serializable {
         if (contaPagar.getDataCompensacao() == null) {
             contaPagar.setDataCompensacao(null);
         }
-
         if (contaPagar.getAutorizarPagamento() == null || contaPagar.getAutorizarPagamento().equalsIgnoreCase("N")) {
             contaPagar.setAutorizarPagamento("N");
         }
+    }
 
+    public void salvarRepetir() {
+        Operacaousuairo operacaousuairo = new Operacaousuairo();
+        contaPagar.setBanco(banco);
+        contaPagar.setPlanocontas(planoContas);
+        contaPagar.setCliente(cliente);
+        contaPagar.setContaPaga("N");
+        setandoValores();
         String mensagem = validarDados();
         if (mensagem.length() == 0) {
             contaPagar.setStatus("Ativo");
@@ -476,12 +465,7 @@ public class CadContasPagarMB implements Serializable {
                 cptransferencia = repetirValoresTransferencia(copiaTranferencia);
             }
             if (listaArquivos != null) {
-                for (int i = 0; i < listaArquivos.size(); i++) {
-                    nomearquivo = new Nomearquivo();
-                    nomearquivo.setNomearquivo01(listaArquivos.get(i));
-                    nomearquivo.setContaspagar(contaPagar);
-                    nomeArquivoDao.update(nomearquivo);
-                }
+                salvarArquivos();
             }
             Contaspagar copia = contaPagar;
             contaPagar = repetirValoresContasPagar(copia);
@@ -671,12 +655,6 @@ public class CadContasPagarMB implements Serializable {
     }
 
     public String nomeArquivo() {
-//        String nome = file.getFileName().trim();
-//        try {
-//            nome = new String(nome.getBytes(Charset.defaultCharset()), "UTF-8");
-//        } catch (UnsupportedEncodingException ex) {
-//            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         nomeAquivoFTP = "ContasPagar-";
         return nomeAquivoFTP;
     }

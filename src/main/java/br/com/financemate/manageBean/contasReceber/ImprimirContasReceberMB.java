@@ -215,7 +215,6 @@ public class ImprimirContasReceberMB implements Serializable {
         if (listaCliente == null) {
             listaCliente = new ArrayList<>();
         }
-
     }
 
     public void mostrarMensagem(Exception ex, String erro, String titulo) {
@@ -368,16 +367,6 @@ public class ImprimirContasReceberMB implements Serializable {
 
     public void carregarListaContasReceber() {
         listaRelatorio = new ArrayList<>();
-        int diaSemana = Formatacao.diaSemana(new Date());
-        String data = "";
-        if (diaSemana == 1) {
-            data = Formatacao.SubtarirDatas(new Date(), 5, "yyyy-MM-dd");
-        } else if (diaSemana == 7) {
-            data = Formatacao.SubtarirDatas(new Date(), 4, "yyyy-MM-dd");
-        } else {
-            data = Formatacao.SubtarirDatas(new Date(), 3, "yyyy-MM-dd");
-        }
-
         String sql = "select c from Contasreceber c where c.dataPagamento is NULL and c.valorPago=0 " +
                 " and c.status<>'CANCELADA' ";
         if (tipoDocumento != null) {

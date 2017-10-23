@@ -989,10 +989,7 @@ public class ContasReceberMB implements Serializable {
     }
 
     public void retornoDialogCobranca(SelectEvent event) {
-        String msg = "";
         criarConsultaContaReceber();
-        //mensagem mensagem = new mensagem();
-       // mensagem.cobranca(msg);
     }
 
     public String informacoesVendas(Contasreceber contasreceber) {

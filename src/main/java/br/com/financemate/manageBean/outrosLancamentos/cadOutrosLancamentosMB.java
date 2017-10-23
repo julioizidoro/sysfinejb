@@ -256,7 +256,7 @@ public class cadOutrosLancamentosMB implements Serializable {
     }
 
     public void desabilitarUnidade() {
-        if (usuarioLogadoMB.getCliente() != null) {
+        if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
             habilitarUnidade = true;
         } else {
             habilitarUnidade = false;

@@ -74,7 +74,6 @@ public class CobrancaMB implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contasReceber = (Contasreceber) session.getAttribute("contasreceber");
-        //listaContasSelecionadas = (List<Contasreceber>) session.getAttribute("listaContasSelecionadas");
         if (listaContasSelecionadas == null) {
             listaContasSelecionadas = new ArrayList<>();
             listaContasSelecionadas.add(contasReceber);
@@ -309,7 +308,6 @@ public class CobrancaMB implements Serializable {
     public String salvarHitorico() {
         if (cobranca.getIdcobranca() == null) {
             cobranca = cobrancaDao.update(cobranca);
-
         }
         historico.setData(new Date());
         historico.setCobranca(cobranca);

@@ -43,8 +43,8 @@
                 <p:column headerText="Conta" style="width:120px; background:white; color:black; border:none; text-align:center;">
                     <h:outputText value="#{contasPagar.banco.nome}" /> 
                 </p:column>
-                <p:column headerText="Valor da Conta"   style=" background:white; color:black; border:none; text-align:right;">
-                    <h:outputText value="#{contasPagar.valor}">
+                <p:column headerText="Valor Conta"   style=" background:white; color:black; border:none; text-align:right;">
+                    <h:outputText value="#{contasPagar.valorPagamento}">
                         <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>  
                 </p:column>

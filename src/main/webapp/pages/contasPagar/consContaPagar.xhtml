@@ -73,7 +73,7 @@
                         <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" title="#{contasPagarMB.condicaodeAutorizacao(contasPagar)}" style="width:18%; font-size:11px;"/>
                     </p:column>
                     <p:column headerText="Valor Conta" sortBy="#{contasPagar.valor}" style="width:8%; background:white; font-size:11px; color:black; border:none; text-align:right;" styleClass="alinharCenter">
-                        <h:outputText value="#{contasPagar.valor}" style="font-size:12px; color:red;"> 
+                        <h:outputText value="#{contasPagar.valorPagamento}" style="font-size:12px; color:red;"> 
                             <f:convertNumber currencySymbol="" type="currency"/>
                         </h:outputText>                                    
                     </p:column>
@@ -110,7 +110,7 @@
                             </p:commandLink> 
                             <br/><br/>
                             <p:commandLink title="Movimentação de Usuários na Conta"   action="#{contasPagarMB.consultarArquivo(contasPagar)}" update=":frmConsultaPagar:idTabelaContaPagar" style="text-align: left;">
-                                <i class="fa fa-user" style="color: #3D7E46;font-size: 15px;">  
+                                <i class="fa fa-file" style="color: #3D7E46;font-size: 15px;">  
                                     <b>Arquivo</b>
                                 </i> 
                             </p:commandLink> 

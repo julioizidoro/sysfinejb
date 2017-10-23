@@ -90,6 +90,8 @@ public class Contaspagar implements Serializable {
     private Float valorJuros;
     @Column(name = "valorDesconto")
     private Float valorDesconto;
+    @Column(name = "valorPagamento")
+    private Float valorPagamento;
     @Size(max = 1)
     @Column(name = "autorizarPagamento")
     private String autorizarPagamento;
@@ -333,6 +335,14 @@ public class Contaspagar implements Serializable {
 
     public void setValorDesconto(Float valorDesconto) {
         this.valorDesconto = valorDesconto;
+    }
+
+    public Float getValorPagamento() {
+        return valorPagamento;
+    }
+
+    public void setValorPagamento(Float valorPagamento) {
+        this.valorPagamento = valorPagamento;
     }
 
     @Override

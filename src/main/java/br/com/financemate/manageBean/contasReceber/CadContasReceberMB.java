@@ -303,61 +303,8 @@ public class CadContasReceberMB implements Serializable {
 
     public String salvar() {
         if (vezes != null) {
-
-            int numeroVezes = Integer.parseInt(vezes);
-            for (int i = 1; i <= numeroVezes; i++) {
-                contasReceber.setBanco(banco);
-                contasReceber.setPlanocontas(planoContas);
-                contasReceber.setCliente(cliente);
-                contasReceber.setValorPago(0.0f);
-                contasReceber.setDesagio(0.0f);
-                contasReceber.setJuros(0.0f);
-                contasReceber.setNumeroParcela(i + "/" + vezes);
-                contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-                contasReceber.setStatus("Ativo");
-                String mensagem = validarDados();
-                if (mensagem.length() < 1) {
-                    Contasreceber copia = new Contasreceber();
-                    copia = contasReceber;
-                    contasReceber = contasReceberDao.update(contasReceber);
-                    if (frequencia != null) {
-                        if (frequencia.equalsIgnoreCase("mensal")) {
-                            Calendar c = new GregorianCalendar();
-                            c.setTime(copia.getDataVencimento());
-                            c.add(Calendar.MONTH, 1);
-                            Date data = c.getTime();
-                            copia.setDataVencimento(data);
-                        } else if (frequencia.equalsIgnoreCase("Diaria")) {
-                            Calendar c = new GregorianCalendar();
-                            c.setTime(copia.getDataVencimento());
-                            c.add(Calendar.DAY_OF_MONTH, 1);
-                            Date data = c.getTime();
-                            copia.setDataVencimento(data);
-                        } else if (frequencia.equalsIgnoreCase("anual")) {
-                            Calendar c = new GregorianCalendar();
-                            c.setTime(copia.getDataVencimento());
-                            c.add(Calendar.YEAR, 1);
-                            Date data = c.getTime();
-                            copia.setDataVencimento(data);
-                        } else if (frequencia.equalsIgnoreCase("Semanal")) {
-                            Calendar c = new GregorianCalendar();
-                            c.setTime(copia.getDataVencimento());
-                            c.add(Calendar.DAY_OF_MONTH, 7);
-                            Date data = c.getTime();
-                            copia.setDataVencimento(data);
-                        }
-                    }
-                    if (i < numeroVezes) {
-                        contasReceber = new Contasreceber();
-                        contasReceber = copia;
-                    }
-                } else {
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage(null, new FacesMessage(mensagem, ""));
-                }
-            }
+            salvarParcelas();
             RequestContext.getCurrentInstance().closeDialog(contasReceber);
-
         } else {
 
             contasReceber.setBanco(banco);
@@ -379,6 +326,61 @@ public class CadContasReceberMB implements Serializable {
             }
         }
         return "";
+    }
+    
+    public void salvarParcelas() {
+        int numeroVezes = Integer.parseInt(vezes);
+        for (int i = 1; i <= numeroVezes; i++) {
+            contasReceber.setBanco(banco);
+            contasReceber.setPlanocontas(planoContas);
+            contasReceber.setCliente(cliente);
+            contasReceber.setValorPago(0.0f);
+            contasReceber.setDesagio(0.0f);
+            contasReceber.setJuros(0.0f);
+            contasReceber.setNumeroParcela(i + "/" + vezes);
+            contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+            contasReceber.setStatus("Ativo");
+            String mensagem = validarDados();
+            if (mensagem.length() < 1) {
+                Contasreceber copia = new Contasreceber();
+                copia = contasReceber;
+                contasReceber = contasReceberDao.update(contasReceber);
+                if (frequencia != null) {
+                    if (frequencia.equalsIgnoreCase("mensal")) {
+                        Calendar c = new GregorianCalendar();
+                        c.setTime(copia.getDataVencimento());
+                        c.add(Calendar.MONTH, 1);
+                        Date data = c.getTime();
+                        copia.setDataVencimento(data);
+                    } else if (frequencia.equalsIgnoreCase("Diaria")) {
+                        Calendar c = new GregorianCalendar();
+                        c.setTime(copia.getDataVencimento());
+                        c.add(Calendar.DAY_OF_MONTH, 1);
+                        Date data = c.getTime();
+                        copia.setDataVencimento(data);
+                    } else if (frequencia.equalsIgnoreCase("anual")) {
+                        Calendar c = new GregorianCalendar();
+                        c.setTime(copia.getDataVencimento());
+                        c.add(Calendar.YEAR, 1);
+                        Date data = c.getTime();
+                        copia.setDataVencimento(data);
+                    } else if (frequencia.equalsIgnoreCase("Semanal")) {
+                        Calendar c = new GregorianCalendar();
+                        c.setTime(copia.getDataVencimento());
+                        c.add(Calendar.DAY_OF_MONTH, 7);
+                        Date data = c.getTime();
+                        copia.setDataVencimento(data);
+                    }
+                }
+                if (i < numeroVezes) {
+                    contasReceber = new Contasreceber();
+                    contasReceber = copia;
+                }
+            } else {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage(mensagem, ""));
+            }
+        }
     }
 
     public String cancelar() {
