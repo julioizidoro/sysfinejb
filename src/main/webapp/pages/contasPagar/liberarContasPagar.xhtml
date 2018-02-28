@@ -37,13 +37,28 @@
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
-                <p:column headerText="Descrição" style="width: 200px; background:white; color:black; border:none; text-align:left;">
+                <p:column headerText="Descrição" style="width: 150px; background:white; color:black; border:none; text-align:left;">
                     <h:outputText value="#{contasPagar.descricao}" /> 
                 </p:column> 
-                <p:column headerText="Conta" style="width:120px; background:white; color:black; border:none; text-align:center;">
+                <p:column headerText="Conta" style="width:100px; background:white; color:black; border:none; text-align:center;">
                     <h:outputText value="#{contasPagar.banco.nome}" /> 
                 </p:column>
-                <p:column headerText="Valor Conta"   style=" background:white; color:black; border:none; text-align:right;">
+                <p:column headerText="Valor Bruto"   style=" background:white; color:black; border:none; text-align:right;">
+                    <h:outputText value="#{contasPagar.valor}">
+                        <f:convertNumber currencySymbol="" type="currency"/>
+                    </h:outputText>  
+                </p:column>
+                <p:column headerText="Juros"   style=" background:white; color:black; border:none; text-align:right;">
+                    <h:outputText value="#{contasPagar.valorJuros}">
+                        <f:convertNumber currencySymbol="" type="currency"/>
+                    </h:outputText>  
+                </p:column>
+                <p:column headerText="Desconto"   style=" background:white; color:black; border:none; text-align:right;">
+                    <h:outputText value="#{contasPagar.valorDesconto}">
+                        <f:convertNumber currencySymbol="" type="currency"/>
+                    </h:outputText>  
+                </p:column>
+                <p:column headerText="Valor Liquido"   style=" background:white; color:black; border:none; text-align:right;">
                     <h:outputText value="#{contasPagar.valorPagamento}">
                         <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>  

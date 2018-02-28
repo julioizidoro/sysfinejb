@@ -65,7 +65,7 @@
 
             <p:dataTable id="idConsultaSaldoInicial" var="saldo"  rowStyleClass="tabela" class="tabelaselecionar" value="#{saldoInicialMB.listaSaldo}" 
                          scrollRows="10"  scrollable="true" scrollHeight="150"  selectionMode="single" selection="#{saldoInicialMB.saldo}" rowKey="#{saldo.idsaldo}"  rows="10" style="margin-bottom:20px;"> 
-                <p:column headerText="Data" style="background:white; text-align:center; color:black; border:none; width:70px;">
+                <p:column headerText="Data" style="background:white; text-align:center; color:black; border:none; width:80px;">
                     <h:outputText  value="#{saldo.datasaldo}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
@@ -81,6 +81,20 @@
                 <p:column headerText="Usuario"   style="background:white; text-align:left; color:black; width: 80px; border:none;">
                     <h:outputText value="#{saldo.usuario.nome}"/>
                 </p:column>
+                  <p:column exportable="false" headerText=""  style="text-align:right; font-size:11.5px; background:white; color:black; border:none;width:5%;">
+                        <p:commandLink id="btnMenu">
+                            <i class="fa fa-bars" style="font-size:17px;color:#000;"></i> 
+                            <b class="caret"></b>
+                        </p:commandLink>   
+                        <p:overlayPanel id="painelMenu" for="btnMenu" hideEffect="fade" style="width:140px;">
+                            <p:commandLink title="Excluir saldo"  action="#{saldoInicialMB.excluirSaldo(saldo)}" style="text-align: left;" update="idConsultaSaldoInicial">
+                                <i class="fa fa-trash-alt" style="color: #3D7E46;font-size: 15px;">  
+                                    <b>Excluir</b>
+                                </i> 
+                           </p:commandLink> 
+                             
+                        </p:overlayPanel> 
+                    </p:column>
 
             </p:dataTable>
             <br /><br />

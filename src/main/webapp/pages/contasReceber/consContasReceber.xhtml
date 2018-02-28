@@ -111,6 +111,9 @@
                             <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogCobranca}" update=" :frmConsultaReceber:growl, idTabelaContaReceber, :frmConsultaReceber:contasVenc, :frmConsultaReceber:contasVencer, :frmConsultaReceber:contasReceber"/>
                         </p:commandLink> 
                     </p:column>  
+                    <p:column headerText="Tipo" sortBy="#{contasReceber.tipodocumento}" style="width:8%; font-size:11.5px; background:white; color:black; border:none;text-align:center;" styleClass="alinharCenter">
+                        <h:outputText value="#{contasReceber.tipodocumento}" style=" font-size:12px;"/> 
+                    </p:column>  
                     <p:column exportable="false" style="width:6%; background:white; color:black; border:none;text-align:right;">
                         <p:selectBooleanCheckbox value="#{contasReceber.selecionado}" style="background:white"/>
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

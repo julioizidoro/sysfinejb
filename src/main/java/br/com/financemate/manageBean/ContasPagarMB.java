@@ -588,13 +588,14 @@ public class ContasPagarMB implements Serializable {
         for (int i = 0; i < listaContasPagar.size(); i++) {
             if (listaContasPagar.get(i).isSelecionado()) {
                 listaContasSelecionadas.add(listaContasPagar.get(i));
-                valorTotal = valorTotal + listaContasPagar.get(i).getValor();
+                valorTotal = valorTotal + listaContasPagar.get(i).getValorPagamento();
             }
 
         }
         totalLiberadas = Formatacao.foramtarFloatString(valorTotal);
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("closable", false);
+        options.put("contentWidth", 700);
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("listaContasSelecionadas", listaContasSelecionadas);

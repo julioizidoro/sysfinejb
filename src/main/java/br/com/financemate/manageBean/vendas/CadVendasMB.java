@@ -704,6 +704,9 @@ public class CadVendasMB implements Serializable {
                 cliente = clienteDao.find(8);
                 contaspagar.setCliente(cliente);
             }
+            if (contaspagar.getBanco() == null || contaspagar.getBanco().getIdbanco() == null) {
+                contaspagar.setBanco(bancoDao.find(22));
+            }
             contasPagarDao.update(contaspagar);
         } else if (corPagarReceber.equalsIgnoreCase("color:blue;")) {
             Contasreceber contasreceber = new Contasreceber();
@@ -725,10 +728,21 @@ public class CadVendasMB implements Serializable {
                 contasreceber.setBanco(banco);
                 contasreceber.setCliente(usuarioLogadoMB.getCliente());
             } else {
-                banco = bancoDao.find("select b from Banco b where b.cliente.idcliente=8 and b.nome='Nenhum'");
-                contasreceber.setBanco(banco);
-                cliente = clienteDao.find(8);
-                contasreceber.setCliente(cliente);
+                if (cliente != null && cliente.getIdcliente() != null) {
+                    banco = bancoDao.find("select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente()
+                        + " and b.nome='Nenhum'");
+                    contasreceber.setBanco(banco);
+                    contasreceber.setCliente(cliente);
+                }else{
+                    banco = bancoDao.find("select b from Banco b where b.cliente.idcliente=8 and b.nome='Nenhum'");
+                    contasreceber.setBanco(banco);
+                    cliente = clienteDao.find(8);
+                    contasreceber.setCliente(cliente);
+                }
+            }
+            
+            if (contasreceber.getBanco() == null || contasreceber.getBanco().getIdbanco() == null) {
+                contasreceber.setBanco(bancoDao.find(22));
             }
             contasreceber = contasReceberDao.update(contasreceber);
             contasreceber.setNumeroDocumento("" + contasreceber.getIdcontasReceber());

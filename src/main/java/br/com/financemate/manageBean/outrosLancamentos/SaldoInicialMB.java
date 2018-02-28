@@ -4,6 +4,7 @@ import br.com.financemate.dao.BancoDao;
 import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.SaldoDao;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -176,6 +177,14 @@ public class SaldoInicialMB implements Serializable {
             habilitarUnidade = false;
         }
 
+    }
+    
+    
+    public void excluirSaldo(Saldo saldo){
+        saldoDao.remove(saldo.getIdsaldo());
+        mensagem  mensagem = new mensagem();
+        mensagem.faltaInformacao("Excluir com sucesso!!");
+        gerarListaSaldoInicial();
     }
 
 }
