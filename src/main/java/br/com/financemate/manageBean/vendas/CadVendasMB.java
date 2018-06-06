@@ -584,6 +584,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("saldoRestante", saldoRestante);
         session.setAttribute("corPagarReceber", corPagarReceber);
         session.setAttribute("importadoSystm", importadoSystm);
+        session.setAttribute("listaFormaPagamento", listaFormaPagamento);
         return "lancaFormaPagamento";
     }
 
