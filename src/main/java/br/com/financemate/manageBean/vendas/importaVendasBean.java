@@ -1,6 +1,7 @@
 package br.com.financemate.manageBean.vendas;
 
 import br.com.financemate.manageBean.mensagem;
+import br.com.financemate.model.Ftpdados;
 import br.com.financemate.util.Formatacao;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,12 +22,19 @@ import java.util.Date;
 public class importaVendasBean {
 
     private static int HTTP_COD_SUCESSO = 200;
+    private Ftpdados ftpdados;
+
+    public importaVendasBean(Ftpdados ftpdados) {
+        this.ftpdados = ftpdados;
+    }
+    
+    
 
     public VendasSystmBean pegarInformacao() throws JAXBException {
         VendasSystmBean vendaImportada = new VendasSystmBean();
         try {
 
-            URL url = new URL("http://systm.com.br:8087/wssysfin/webresources/generic/retornoVenda");
+            URL url = new URL("http://"+ ftpdados.getHost() +":8087/wssysfin/webresources/generic/retornoVenda");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Accept", "application/json");
@@ -60,10 +68,10 @@ public class importaVendasBean {
             URL url;
             String endereco;
             if (dataInicial != null && dataFinal != null) {
-                endereco = "http://192.168.25.240:8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente + "&dataInicial="
+                endereco = "http://"+ ftpdados.getHost() +":8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente + "&dataInicial="
                     + Formatacao.ConvercaoDataSql(dataInicial) + "&dataFinal=" + Formatacao.ConvercaoDataSql(dataFinal);
             }else{
-                endereco = "http://192.168.25.240:8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente + "&dataInicial="
+                endereco = "http://"+ ftpdados.getHost() +":8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente + "&dataInicial="
                     + "null" + "&dataFinal=null";
             }
             url = new URL(endereco);
@@ -104,7 +112,7 @@ public class importaVendasBean {
             String vendasSystmJSon = gson.toJson(idVendaSystm);
 
             try {
-                URL url = new URL("http://systm.com.br:8087/wssysfin/webresources/generic/salvarImportacao");
+                URL url = new URL("http://"+ ftpdados.getHost() +":8087/wssysfin/webresources/generic/salvarImportacao");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/json");

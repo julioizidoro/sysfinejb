@@ -5,6 +5,7 @@ import br.com.financemate.dao.ClienteDao;
 import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.dao.FormaPagamentoDao;
+import br.com.financemate.dao.FtpDadosDao;
 import br.com.financemate.dao.PlanoContaTipoDao;
 import br.com.financemate.dao.PlanoContasDao;
 import br.com.financemate.dao.ProdutoDao;
@@ -36,6 +37,7 @@ import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Emissaonota;
 import br.com.financemate.model.Formapagamento;
+import br.com.financemate.model.Ftpdados;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Planocontatipo;
 import br.com.financemate.model.Produto;
@@ -100,6 +102,8 @@ public class CadVendasMB implements Serializable {
     private Planocontatipo planocontatipo;
     @EJB
     private PlanoContaTipoDao planoContaTipoDao;
+    @EJB
+    private FtpDadosDao ftpDadosDao;
     private List<Planocontatipo> listaPlanoContaTipo;
     private Formapagamento formapagamentoAnterior;
 
@@ -1175,7 +1179,8 @@ public class CadVendasMB implements Serializable {
     }
 
     public void filtroListaVendasSystm() {
-        importaVendasBean importaVendasBean = new importaVendasBean();
+        Ftpdados ftpdados = ftpDadosDao.find(1);
+        importaVendasBean importaVendasBean = new importaVendasBean(ftpdados);
         ListaVendasSystmBean vendaImportada = null;
         listaImportada = new ArrayList<>();
         VendasSystmBean[] vendasBean;
