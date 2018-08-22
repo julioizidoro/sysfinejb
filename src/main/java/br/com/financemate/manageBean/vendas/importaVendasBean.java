@@ -112,7 +112,7 @@ public class importaVendasBean {
             String vendasSystmJSon = gson.toJson(idVendaSystm);
 
             try {
-                URL url = new URL("http://"+ ftpdados.getHost() +":8087/wssysfin/webresources/generic/salvarImportacao");
+                URL url = new URL("http://localhost:8087/wssysfin/webresources/generic/salvarImportacao");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/json");
