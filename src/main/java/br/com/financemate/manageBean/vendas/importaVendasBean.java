@@ -34,7 +34,7 @@ public class importaVendasBean {
         VendasSystmBean vendaImportada = new VendasSystmBean();
         try {
 
-            URL url = new URL("http://"+ ftpdados.getHost() +":8087/wssysfin/webresources/generic/retornoVenda");
+            URL url = new URL("http://localhost:8087/wssysfin/webresources/generic/retornoVenda");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Accept", "application/json");

@@ -762,7 +762,7 @@ public class ContasReceberMB implements Serializable {
         } else if (status.equalsIgnoreCase("Canceladas")) {
             sql = sql + " and v.status=" + "'CANCELADA'";
         }else{
-            sql = sql + " and v.status<>" + "'RECEBIMENTO'";
+            sql = sql + " and v.status<>" + "'RECEBIMENTO' && and v.status<>'CANCELADA'";
         }
 
         if ((dataRecebimentoInicial != null) && (dataRecebimentoFinal != null)) {
