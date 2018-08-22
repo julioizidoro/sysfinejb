@@ -68,10 +68,10 @@ public class importaVendasBean {
             URL url;
             String endereco;
             if (dataInicial != null && dataFinal != null) {
-                endereco = "http://"+ ftpdados.getHost() +":8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente + "&dataInicial="
+                endereco = "http://localhost:8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente + "&dataInicial="
                     + Formatacao.ConvercaoDataSql(dataInicial) + "&dataFinal=" + Formatacao.ConvercaoDataSql(dataFinal);
             }else{
-                endereco = "http://"+ ftpdados.getHost() +":8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente + "&dataInicial="
+                endereco = "http://localhost:8087/wssysfin/webresources/generic/listaVenda?unidade=" + idcliente + "&dataInicial="
                     + "null" + "&dataFinal=null";
             }
             url = new URL(endereco);
