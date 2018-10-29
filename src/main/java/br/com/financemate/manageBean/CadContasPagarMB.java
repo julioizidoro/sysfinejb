@@ -671,10 +671,10 @@ public class CadContasPagarMB implements Serializable {
 		} catch (UnsupportedEncodingException ex) {
 			Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		nomeAquivoFTP = "ContasPagar-" + nome;
+		nomeAquivoFTP = "ContasPagar" + nome;
 		return nomeAquivoFTP;
 	}
-
+   
 //    public void fileUploadListener(FileUploadEvent e) {
 //        this.file = e.getFile();
 //        salvarArquivoFTP();
