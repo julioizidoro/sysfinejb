@@ -729,6 +729,10 @@ public class ContasReceberMB implements Serializable {
         options.put("closable", false);
         RequestContext.getCurrentInstance().openDialog("filtroConsContaReceber", options, null);
     }
+    
+    public void cancelarFiltro() {
+        RequestContext.getCurrentInstance().closeDialog("");
+    }
 
     public void filtrar() {
         sql = "select v from Contasreceber v  where  v.nomeCliente like '%" + nomeCliente + "%'";
@@ -762,7 +766,7 @@ public class ContasReceberMB implements Serializable {
         } else if (status.equalsIgnoreCase("Canceladas")) {
             sql = sql + " and v.status=" + "'CANCELADA'";
         }else{
-            sql = sql + " and v.status<>" + "'RECEBIMENTO' && and v.status<>'CANCELADA'";
+            sql = sql + " and v.status<>" + "'RECEBIMENTO' and v.status<>'CANCELADA'";
         }
 
         if ((dataRecebimentoInicial != null) && (dataRecebimentoFinal != null)) {

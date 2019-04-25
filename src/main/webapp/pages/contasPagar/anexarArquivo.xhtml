@@ -22,8 +22,9 @@
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
             <h:panelGrid style="margin-left:1%;">
-                <p:fileUpload dragDropSupport="false" multiple="true" fileLimit="6" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|docx|xls|xlsx|doc|pptx|cdr|eps|bmp|mp4|ai|psd)$/" label="#{cadContasPagarMB.AdicionarNomeAnexado()}" fileUploadListener="#{cadContasPagarMB.fileUploadListener}"  value="#{cadContasPagarMB.file}" mode="advanced"
-                              update="messages" >
+                
+                <p:fileUpload multiple="true"  label="Anexar" fileUploadListener="#{cadContasPagarMB.fileUploadListener}" value="#{cadContasPagarMB.file}"  mode="advanced" 
+                     update="messages" fileLimit="6"  allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|docx|xls|xlsx|doc|pptx|cdr|eps|bmp|mp4|ai|psd)$/"  >
                 </p:fileUpload>
             </h:panelGrid> 
 
